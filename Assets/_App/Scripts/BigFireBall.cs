@@ -108,7 +108,7 @@ namespace MobaVR
                     if (enemy.TryGetComponent(out IHit hitEnemy))
                     {
                         //hitEnemy.Die();
-                        hitEnemy.Hit(1f);
+                        hitEnemy.RpcHit(1f);
                         
                         /*
                         hitEnemy.Explode(m_ExplosionForce, 

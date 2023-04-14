@@ -139,7 +139,7 @@ namespace MobaVR
             m_DestinationPoint = destination;
         }
 
-        public void Hit(float damage)
+        public void RpcHit(float damage)
         {
             if (m_IsLife)
             {

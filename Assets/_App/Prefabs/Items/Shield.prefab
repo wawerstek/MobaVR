@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 148277194731219044}
   - component: {fileID: 8182633719713912646}
+  - component: {fileID: 4859293738653145728}
   m_Layer: 0
   m_Name: Shield
   m_TagString: Untagged
@@ -47,10 +48,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61d11e4fb1d4557488910b8448fe1892, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Health: 1
+  m_Health: 15
   m_CooldownTime: 5
+  m_ScaleDuration: 0.8
   m_Shield: {fileID: 1045520090547111144}
   m_Collider: {fileID: 5268960405145848414}
+  m_Renderer: {fileID: 1457693128312552107}
+  m_TeamItem: {fileID: 4859293738653145728}
+--- !u!114 &4859293738653145728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 148277194731219047}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8dbd55a67fa84af383bf325f7bfa18d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TeamType: 0
+  m_RedTeamThemeSo: {fileID: 11400000, guid: d9a75f2ca82451b4ab0684d0945f04a2, type: 2}
+  m_BlueTeamThemeSo: {fileID: 11400000, guid: f0548a8be222d024394f7595294ade09, type: 2}
   m_Renderer: {fileID: 1457693128312552107}
 --- !u!1 &1045520090547111144
 GameObject:

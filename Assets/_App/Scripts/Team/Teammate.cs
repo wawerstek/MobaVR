@@ -13,7 +13,7 @@ namespace MobaVR
         {
             if (m_TeamItems.Count == 0)
             {
-                m_TeamItems.AddRange(GetComponentsInChildren<TeamItem>());
+                //m_TeamItems.AddRange(GetComponentsInChildren<TeamItem>());
             }
         }
 

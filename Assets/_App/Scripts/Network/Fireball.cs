@@ -98,7 +98,7 @@ namespace MobaVR
                     //    wizardPlayer.Hit(0f);
                     //}
                     //else
-                    wizardPlayer.RpcHit(this, CalculateDamage());
+                    wizardPlayer.Hit(this, CalculateDamage());
                     //wizardPlayer.Hit(this, CalculateDamage());
                 }
 

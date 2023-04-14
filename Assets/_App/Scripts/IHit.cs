@@ -5,7 +5,7 @@ namespace MobaVR
 {
     public interface IHit
     {
-        public void Hit(float damage);
+        public void RpcHit(float damage);
         public void Die();
 
         public void Explode(float explosionForce,

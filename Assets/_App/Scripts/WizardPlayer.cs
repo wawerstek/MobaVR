@@ -17,8 +17,8 @@ namespace MobaVR
         [SerializeField] private SmallFireBall m_SmallFireballPrefab;
 
         [Header("Shields")]
-        [SerializeField] private GameObject m_LeftShield;
-        [SerializeField] private GameObject m_RightShield;
+        [SerializeField] private Shield m_LeftShield;
+        [SerializeField] private Shield m_RightShield;
 
         [Header("Player")]
         [SerializeField] private Teammate m_Teammate;
@@ -216,7 +216,7 @@ namespace MobaVR
                     m_LeftBigFireBall.ThrowByDirection(m_LeftGrabber.transform.forward);
                 }
             }
-            
+
             if (Input.GetKeyDown(KeyCode.Alpha2))
             {
                 CreateBigFireBall(out m_RightBigFireBall, m_RightGrabber);
@@ -236,7 +236,7 @@ namespace MobaVR
                     m_LeftSmallFireBall.ThrowByDirection(m_LeftGrabber.transform.forward);
                 }
             }
-            
+
             if (Input.GetKeyDown(KeyCode.Alpha4))
             {
                 CreateSmallFireBall(out m_RightSmallFireBall, m_RightGrabber);
@@ -245,6 +245,26 @@ namespace MobaVR
                     m_RightSmallFireBall.transform.parent = null;
                     m_RightSmallFireBall.ThrowByDirection(m_RightGrabber.transform.forward);
                 }
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha5))
+            {
+                ShowShield(m_LeftShield, true);
+            }
+
+            if (Input.GetKeyUp(KeyCode.Alpha5))
+            {
+                ShowShield(m_LeftShield, false);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha6))
+            {
+                ShowShield(m_RightShield, true);
+            }
+
+            if (Input.GetKeyUp(KeyCode.Alpha6))
+            {
+                ShowShield(m_RightShield, false);
             }
 
             if (Input.GetMouseButtonDown(0))
@@ -289,9 +309,10 @@ namespace MobaVR
             }
         }
 
-        private void ShowShield(GameObject shield, bool isShow)
+        private void ShowShield(Shield shield, bool isShow)
         {
-            shield.SetActive(isShow);
+            //shield.SetActive(isShow);
+            shield.RpcShow(isShow);
         }
 
         private void ThrowBigFireBall(BigFireBall fireBall)
@@ -396,15 +417,15 @@ namespace MobaVR
             GameObject networkFireball =PhotonNetwork.Instantiate($"Spells/{m_SmallFireBallCurrentPrefab.name}", Vector3.zero,
                                           Quaternion.identity);
             */
-            
-            GameObject networkFireball = PhotonNetwork.Instantiate($"Spells/{m_SmallFireBallCurrentPrefab.name}", 
+
+            GameObject networkFireball = PhotonNetwork.Instantiate($"Spells/{m_SmallFireBallCurrentPrefab.name}",
                                                                    point.transform.position,
                                                                    point.transform.rotation);
             if (networkFireball.TryGetComponent(out fireBall))
             {
                 fireBall.Init(m_TeamType);
                 //fireBall.Team.SetTeam(m_TeamType);
-                
+
                 Transform fireBallTransform = fireBall.transform;
                 fireBallTransform.parent = null;
                 fireBallTransform.position = point.transform.position;
@@ -413,7 +434,7 @@ namespace MobaVR
             }
         }
 
-        public void RpcHit(Fireball fireball, float damage)
+        public void Hit(Fireball fireball, float damage)
         {
             if ((fireball.Team.IsRed && m_Teammate.IsRed)
                 || (!fireball.Team.IsRed && !m_Teammate.IsRed))
@@ -421,11 +442,11 @@ namespace MobaVR
                 return;
             }
 
-            photonView.RPC(nameof(Hit), RpcTarget.All, damage);
+            photonView.RPC(nameof(RpcHit), RpcTarget.All, damage);
         }
 
         [PunRPC]
-        public void Hit(float damage)
+        public void RpcHit(float damage)
         {
             if (photonView.IsMine)
             {
@@ -434,7 +455,7 @@ namespace MobaVR
             }
         }
 
-        public void Hit(Fireball fireball, float damage)
+        public void RpcHit(Fireball fireball, float damage)
         {
             if (photonView.IsMine)
             {
