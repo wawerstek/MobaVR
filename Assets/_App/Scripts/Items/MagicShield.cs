@@ -26,6 +26,7 @@ namespace MobaVR
         {
             base.Reset();
             m_CurrentScale = 0f;
+            UpdateVisualState();
         }
 
         protected void RestoreHp()
@@ -45,12 +46,26 @@ namespace MobaVR
             m_MaxScale = m_Shield.transform.lossyScale.x;
         }
 
-        private void Update()
+        protected void Update()
         {
             if (m_IsAvailable)
             {
                 m_Shield.transform.Rotate(Vector3.forward * m_SpeedRotation * Time.deltaTime, Space.Self);
             }
+        }
+
+        protected override void UpdateVisualState()
+        {
+            base.UpdateVisualState();
+            float auraAlpha = m_CurrentHealth * 0.33f;
+            Color auraColor = m_AuraRenderer.material.color;
+            auraColor.a = auraAlpha;
+            m_AuraRenderer.material.color = auraColor;
+            
+            float backgroundAlpha = m_CurrentHealth * 0.2f;
+            Color backgroundColor = m_AuraRenderer.material.color;
+            backgroundColor.a = backgroundAlpha;
+            m_BackgroundRenderer.material.color = backgroundColor;
         }
 
         [PunRPC]
@@ -105,7 +120,7 @@ namespace MobaVR
             damage = 1f;
             base.RpcHit(damage);
         }
-
+        
         [ContextMenu("Die")]
         public override void Die()
         {

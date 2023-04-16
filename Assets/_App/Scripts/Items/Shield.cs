@@ -39,6 +39,11 @@ namespace MobaVR
             m_Shield.SetActive(false);
         }
 
+        protected virtual void UpdateVisualState()
+        {
+            
+        }
+
         public virtual void Show(bool isShow)
         {
             m_Use = isShow;
@@ -75,6 +80,11 @@ namespace MobaVR
                 return;
             }
 
+            if (fireball is SmallFireBall)
+            {
+                return;
+            }
+
             photonView.RPC(nameof(RpcHit), RpcTarget.All, damage);
         }
 
@@ -84,6 +94,7 @@ namespace MobaVR
             if (IsLife)
             {
                 m_CurrentHealth -= damage;
+                UpdateVisualState();
                 if (m_CurrentHealth <= 0)
                 {
                     Die();

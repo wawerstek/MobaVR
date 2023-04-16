@@ -23,6 +23,7 @@ namespace MobaVR
         {
             if (m_IsShow)
             {
+                //TODO: bag with time
                 m_Time -= Time.deltaTime;
 
                 if (m_Time <= 0)
@@ -31,13 +32,15 @@ namespace MobaVR
                     Show(false);
                 }
 
-                m_TimeText.text = $"{m_Time:F}";
+                m_TimeText.text = $"{m_Time:F} sec";
             }
         }
 
         public void SetTime(float time)
         {
-            m_Time = time;
+            //TODO: bag with time
+            //m_Time = time;
+            m_Time = time + 1f;
         }
 
         public void Show(bool isShow)
