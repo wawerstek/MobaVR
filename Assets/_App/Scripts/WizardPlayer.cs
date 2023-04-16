@@ -54,8 +54,11 @@ namespace MobaVR
         private float m_CurrentHealth = 100f;
         private bool m_IsLife = true;
 
-        private bool m_IsAttackLeftHand = true;
-        private bool m_IsAttackRightHand = true;
+        private bool m_IsAttackLeftHand = false;
+        private bool m_IsAttackRightHand = false;
+
+        private bool m_UseLeftShield = false;
+        private bool m_UseRightShield = false;
 
         public float CurrentHealth => m_CurrentHealth;
         public bool IsLife => m_CurrentHealth > 0;
@@ -117,6 +120,7 @@ namespace MobaVR
                 Debug.Log($"{TAG}: RightGrab: performed");
                 if (IsLife)
                 {
+                    /*
                     if (m_IsAttackRightHand)
                     {
                         CreateBigFireBall(out m_RightBigFireBall, m_RightGrabber);
@@ -125,6 +129,12 @@ namespace MobaVR
                     {
                         ShowShield(m_RightShield, true);
                     }
+                    */
+
+                    if (!m_UseRightShield)
+                    {
+                        CreateBigFireBall(out m_RightBigFireBall, m_RightGrabber);
+                    }
                 }
             };
             m_LeftGrabInput.action.performed += context =>
@@ -132,6 +142,7 @@ namespace MobaVR
                 Debug.Log($"{TAG}: LeftGrab: performed");
                 if (IsLife)
                 {
+                    /*
                     if (m_IsAttackLeftHand)
                     {
                         CreateBigFireBall(out m_LeftBigFireBall, m_LeftGrabber);
@@ -139,6 +150,12 @@ namespace MobaVR
                     else
                     {
                         ShowShield(m_LeftShield, true);
+                    }
+                    */
+
+                    if (!m_UseLeftShield)
+                    {
+                        CreateBigFireBall(out m_LeftBigFireBall, m_LeftGrabber);
                     }
                 }
             };
@@ -148,6 +165,7 @@ namespace MobaVR
                 Debug.Log($"{TAG}: RightGrab: canceled");
                 if (IsLife)
                 {
+                    /*
                     if (m_IsAttackRightHand)
                     {
                         ThrowBigFireBall(m_RightBigFireBall);
@@ -156,6 +174,9 @@ namespace MobaVR
                     {
                         ShowShield(m_RightShield, false);
                     }
+                    */
+
+                    ThrowBigFireBall(m_RightBigFireBall);
                 }
             };
             m_LeftGrabInput.action.canceled += context =>
@@ -163,6 +184,7 @@ namespace MobaVR
                 Debug.Log($"{TAG}: LeftGrab: canceled");
                 if (IsLife)
                 {
+                    /*
                     if (m_IsAttackLeftHand)
                     {
                         ThrowBigFireBall(m_LeftBigFireBall);
@@ -171,6 +193,9 @@ namespace MobaVR
                     {
                         ShowShield(m_LeftShield, false);
                     }
+                    */
+
+                    ThrowBigFireBall(m_LeftBigFireBall);
                 }
             };
 
@@ -182,6 +207,7 @@ namespace MobaVR
                 Debug.Log($"{TAG}: RightActivate: performed");
                 if (IsLife)
                 {
+                    /*
                     if (m_IsAttackRightHand)
                     {
                         ShootFireBall(m_RightBigFireBall,
@@ -191,6 +217,24 @@ namespace MobaVR
                                       m_RightSmallFireballPoint,
                                       -m_RightGrabber.transform.right);
                     }
+                    */
+
+                    if (m_IsAttackRightHand)
+                    {
+                        ShootFireBall(m_RightBigFireBall,
+                                      out m_RightSmallFireBall,
+                                      m_RightGrabber,
+                                      m_RightBigFireballPoint,
+                                      m_RightSmallFireballPoint,
+                                      -m_RightGrabber.transform.right);
+                    }
+                    else
+                    {
+                        ThrowBigFireBall(m_RightBigFireBall);
+                        
+                        m_UseRightShield = true;
+                        ShowShield(m_RightShield, true);
+                    }
                 }
             };
             m_LeftActivateInput.action.performed += context =>
@@ -198,6 +242,7 @@ namespace MobaVR
                 Debug.Log($"{TAG}: LeftActivate: performed");
                 if (IsLife)
                 {
+                    /*
                     if (m_IsAttackLeftHand)
                     {
                         ShootFireBall(m_LeftBigFireBall,
@@ -207,11 +252,50 @@ namespace MobaVR
                                       m_LeftSmallFireballPoint,
                                       m_LeftGrabber.transform.right);
                     }
+                    */
+
+                    if (m_IsAttackLeftHand)
+                    {
+                        if (m_IsAttackLeftHand)
+                        {
+                            ShootFireBall(m_LeftBigFireBall,
+                                          out m_LeftSmallFireBall,
+                                          m_LeftGrabber,
+                                          m_LeftBigFireballPoint,
+                                          m_LeftSmallFireballPoint,
+                                          m_LeftGrabber.transform.right);
+                        }
+                    }
+                    else
+                    {
+                        ThrowBigFireBall(m_LeftBigFireBall);
+                        
+                        m_UseLeftShield = true;
+                        ShowShield(m_LeftShield, true);
+                    }
                 }
             };
 
-            m_RightActivateInput.action.canceled += context => { Debug.Log($"{TAG}: RightActivate: canceled"); };
-            m_LeftActivateInput.action.canceled += context => { Debug.Log($"{TAG}: LeftActivate: canceled"); };
+            m_RightActivateInput.action.canceled += context =>
+            {
+                Debug.Log($"{TAG}: RightActivate: canceled");
+                
+                if (m_UseRightShield)
+                {
+                    m_UseRightShield = false;
+                    ShowShield(m_RightShield, false);
+                }
+            };
+            m_LeftActivateInput.action.canceled += context =>
+            {
+                Debug.Log($"{TAG}: LeftActivate: canceled");
+                
+                if (m_UseLeftShield)
+                {
+                    m_UseLeftShield = false;
+                    ShowShield(m_LeftShield, false);
+                }
+            };
 
             m_HealthInput.action.performed += context =>
             {
