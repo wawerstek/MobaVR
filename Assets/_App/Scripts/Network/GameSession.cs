@@ -1,27 +1,20 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using ExitGames.Client.Photon;
 using MetaConference;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace MobaVR
 {
-    public class GameSession : MonoBehaviourPunCallbacks, IOnEventCallback
+    public class GameSession : MonoBehaviourPunCallbacks
     {
-        public const byte CustomManualInstantiationEventCode = 101;
-
         [Header("Network")]
         [SerializeField] private NetworkSession m_NetworkSession;
         [SerializeField] private InputVR m_InputVR;
 
         [Space]
         [Header("Players")]
-        [SerializeField] private PlayerVR m_RedPlayer;
-        [SerializeField] private PlayerVR m_BluePlayer;
+        [SerializeField] private bool m_IsRedFirst = true;
+        [SerializeField] private PlayerVR m_PlayerPrefab;
         [SerializeField] private Transform m_Position1;
         [SerializeField] private Transform m_Position2;
 
@@ -62,9 +55,10 @@ namespace MobaVR
             }
             */
 
-            string prefabName = $"Players/{m_BluePlayer.name}";
+            string prefabName = $"Players/{m_PlayerPrefab.name}";
             Vector3 position;
-            TeamType teamType = PhotonNetwork.CurrentRoom.PlayerCount % 2 == 1 ? TeamType.RED : TeamType.BLUE;
+            int remainder = m_IsRedFirst ? 0 : 1;
+            TeamType teamType = PhotonNetwork.CurrentRoom.PlayerCount % 2 == remainder ? TeamType.RED : TeamType.BLUE;
 
             //GameObject localPlayer = PhotonNetwork.Instantiate(prefabName, position, Quaternion.identity);
             
@@ -74,68 +68,6 @@ namespace MobaVR
             {
                 playerVR.SetTeam(teamType);
                 playerVR.SetLocalPlayer(m_InputVR);
-            }
-
-            /*
-            PlayerVR localPlayer = Instantiate(m_BluePlayer, Vector3.zero, Quaternion.identity);
-            PhotonView playerPhotonView = localPlayer.GetComponent<PhotonView>();
-            localPlayer.name += "_" + Random.Range(1, 1000);
-
-            //localPlayer.SetTeam(teamType);
-            localPlayer.SetLocalPlayer(m_InputVR);
-
-            if (PhotonNetwork.AllocateViewID(playerPhotonView))
-            {
-                object[] data = new object[]
-                {
-                    teamType, 
-                    localPlayer.transform.position,
-                    localPlayer.transform.rotation,
-                    playerPhotonView.ViewID
-                };
-
-                RaiseEventOptions raiseEventOptions = new RaiseEventOptions
-                {
-                    //Receivers = ReceiverGroup.Others,
-                    Receivers = ReceiverGroup.All,
-                    CachingOption = EventCaching.AddToRoomCache
-                };
-
-                SendOptions sendOptions = new SendOptions
-                {
-                    Reliability = true
-                };
-
-                PhotonNetwork.RaiseEvent(CustomManualInstantiationEventCode, data, raiseEventOptions, sendOptions);
-            }
-            else
-            {
-                Debug.LogError("Failed to allocate a ViewId.");
-                Destroy(localPlayer);
-            }
-            */
-        }
-
-        public override void OnEnable()
-        {
-            //PhotonNetwork.AddCallbackTarget(this);
-        }
-
-        public override void OnDisable()
-        {
-            //PhotonNetwork.RemoveCallbackTarget(this);
-        }
-
-        public void OnEvent(EventData photonEvent)
-        {
-            if (photonEvent.Code == CustomManualInstantiationEventCode)
-            {
-                object[] data = (object[])photonEvent.CustomData;
-
-                PlayerVR player = Instantiate(m_BluePlayer, Vector3.zero, Quaternion.identity);
-                PhotonView playerPhotonView = player.GetComponent<PhotonView>();
-                playerPhotonView.ViewID = (int)data[3];
-                player.SetTeam((TeamType)data[0]);
             }
         }
     }

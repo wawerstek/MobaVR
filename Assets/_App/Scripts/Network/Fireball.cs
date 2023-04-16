@@ -77,16 +77,16 @@ namespace MobaVR
                 return;
             }
 
+            if (other.transform.TryGetComponent(out PhotonView colliderPhoton))
+            {
+                if (colliderPhoton == photonView)
+                {
+                    return;
+                }
+            }
+            
             if (m_IsThrown && other.CompareTag("Player"))
             {
-                if (other.transform.TryGetComponent(out PhotonView colliderPhoton))
-                {
-                    if (colliderPhoton == photonView)
-                    {
-                        return;
-                    }
-                }
-
                 if (other.transform.TryGetComponent(out WizardPlayer wizardPlayer))
                 {
                     if (wizardPlayer == Owner)
@@ -102,7 +102,27 @@ namespace MobaVR
                     //wizardPlayer.Hit(this, CalculateDamage());
                 }
 
+                Shield shield = other.GetComponentInParent<Shield>();
+                if (shield != null)
+                {
+                    shield.Hit(this, CalculateDamage());
+                }
+
                 InteractBall(other.transform);
+                return;
+            }
+            
+            //if (m_IsThrown)
+            if (m_IsThrown && other.CompareTag("Item"))
+            {
+                Shield shield = other.GetComponentInParent<Shield>();
+                if (shield != null)
+                {
+                    shield.Hit(this, CalculateDamage());
+                }
+
+                InteractBall(other.transform);
+                return;
             }
         }
 

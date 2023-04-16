@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using BNG;
 using DG.Tweening;
 using DG.Tweening.Core;
@@ -35,6 +33,7 @@ namespace MobaVR
         [Space]
         [Header("Explosion Wave")]
         [SerializeField] private LayerMask m_ExplosionLayers;
+        [SerializeField] private float m_GravityDelay = 0.5f;
         [SerializeField] private float m_ExplosionCollisionRadius = 10f;
         [SerializeField] private float m_ExplosionForce = 400f;
         [SerializeField] private float m_ExplosionForceRadius = 4f;
@@ -180,7 +179,7 @@ namespace MobaVR
         }
 
         [PunRPC]
-        private void FailDestroyBall()
+        private void RpcFailDestroyBall()
         {
             m_ExplosionFx.SetActive(true);
             m_ExplosionFx.transform.parent = null;
@@ -211,13 +210,22 @@ namespace MobaVR
                 //FailDestroyBall();
                 if (photonView.IsMine)
                 {
-                    photonView.RPC(nameof(FailDestroyBall), RpcTarget.All);
+                    photonView.RPC(nameof(RpcFailDestroyBall), RpcTarget.All);
                     StopAllCoroutines();
                 }
             }
             else
             {
-                m_Rigidbody.useGravity = true;
+                if (m_GravityDelay > 0f)
+                {
+                    m_Rigidbody.useGravity = false;
+                    Invoke(nameof(ActivateGravity), m_GravityDelay);
+                }
+                else
+                {
+                    m_Rigidbody.useGravity = true;
+                }
+     
                 m_Rigidbody.isKinematic = false;
 
                 m_Ball.transform.parent = m_Trail.transform;
@@ -238,6 +246,11 @@ namespace MobaVR
                                .onUpdate = () => { UpdateColliderRadius(ballScale); };
                 };
             }
+        }
+
+        private void ActivateGravity()
+        {
+            m_Rigidbody.useGravity = true;
         }
 
         private void UpdateColliderRadius(TweenerCore<Vector3, Vector3, VectorOptions> ballScale)

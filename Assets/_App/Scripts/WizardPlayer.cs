@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using BNG;
 using Photon.Pun;
 using UnityEngine;
@@ -84,9 +81,33 @@ namespace MobaVR
             ShowShield(m_LeftShield, false);
             ShowShield(m_RightShield, false);
 
-            m_SwitchModeLeftHandInput.action.performed += context => { m_IsAttackLeftHand = !m_IsAttackLeftHand; };
+            m_SwitchModeLeftHandInput.action.performed += context =>
+            {
+                if (m_IsAttackLeftHand)
+                {
+                    ThrowBigFireBall(m_LeftBigFireBall);
+                }
+                else
+                {
+                    m_LeftShield.Show(false);
+                }
 
-            m_SwitchModeRightHandInput.action.performed += context => { m_IsAttackRightHand = !m_IsAttackRightHand; };
+                m_IsAttackLeftHand = !m_IsAttackLeftHand;
+            };
+
+            m_SwitchModeRightHandInput.action.performed += context =>
+            {
+                if (m_IsAttackRightHand)
+                {
+                    ThrowBigFireBall(m_RightBigFireBall);
+                }
+                else
+                {
+                    m_RightShield.Show(false);
+                }
+
+                m_IsAttackRightHand = !m_IsAttackRightHand;
+            };
 
             m_RightGrabInput.action.started += context => { Debug.Log($"{TAG}: RightGrab: started"); };
             m_LeftGrabInput.action.started += context => { Debug.Log($"{TAG}: LeftGrab: started"); };
@@ -161,12 +182,15 @@ namespace MobaVR
                 Debug.Log($"{TAG}: RightActivate: performed");
                 if (IsLife)
                 {
-                    ShootFireBall(m_RightBigFireBall,
-                                  out m_RightSmallFireBall,
-                                  m_RightGrabber,
-                                  m_RightBigFireballPoint,
-                                  m_RightSmallFireballPoint,
-                                  -m_RightGrabber.transform.right);
+                    if (m_IsAttackRightHand)
+                    {
+                        ShootFireBall(m_RightBigFireBall,
+                                      out m_RightSmallFireBall,
+                                      m_RightGrabber,
+                                      m_RightBigFireballPoint,
+                                      m_RightSmallFireballPoint,
+                                      -m_RightGrabber.transform.right);
+                    }
                 }
             };
             m_LeftActivateInput.action.performed += context =>
@@ -174,12 +198,15 @@ namespace MobaVR
                 Debug.Log($"{TAG}: LeftActivate: performed");
                 if (IsLife)
                 {
-                    ShootFireBall(m_LeftBigFireBall,
-                                  out m_LeftSmallFireBall,
-                                  m_LeftGrabber,
-                                  m_LeftBigFireballPoint,
-                                  m_LeftSmallFireballPoint,
-                                  m_LeftGrabber.transform.right);
+                    if (m_IsAttackLeftHand)
+                    {
+                        ShootFireBall(m_LeftBigFireBall,
+                                      out m_LeftSmallFireBall,
+                                      m_LeftGrabber,
+                                      m_LeftBigFireballPoint,
+                                      m_LeftSmallFireballPoint,
+                                      m_LeftGrabber.transform.right);
+                    }
                 }
             };
 
@@ -252,17 +279,17 @@ namespace MobaVR
                 ShowShield(m_LeftShield, true);
             }
 
-            if (Input.GetKeyUp(KeyCode.Alpha5))
+            if (Input.GetKeyUp(KeyCode.Alpha6))
             {
                 ShowShield(m_LeftShield, false);
             }
 
-            if (Input.GetKeyDown(KeyCode.Alpha6))
+            if (Input.GetKeyDown(KeyCode.Alpha7))
             {
                 ShowShield(m_RightShield, true);
             }
 
-            if (Input.GetKeyUp(KeyCode.Alpha6))
+            if (Input.GetKeyUp(KeyCode.Alpha8))
             {
                 ShowShield(m_RightShield, false);
             }
@@ -312,7 +339,7 @@ namespace MobaVR
         private void ShowShield(Shield shield, bool isShow)
         {
             //shield.SetActive(isShow);
-            shield.RpcShow(isShow);
+            shield.Show(isShow);
         }
 
         private void ThrowBigFireBall(BigFireBall fireBall)

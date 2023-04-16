@@ -10,5 +10,12 @@ namespace MobaVR.Utils
             colorOverLifetime.enabled = true;
             colorOverLifetime.color = color;
         }
+        
+        public static void SetTrailColor(this ParticleSystem particleSystem, ParticleSystem.MinMaxGradient color)
+        {
+            ParticleSystem.TrailModule trailModule = particleSystem.trails;
+            trailModule.enabled = true;
+            trailModule.colorOverTrail = color;
+        }
     }
 }
