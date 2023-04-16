@@ -133,7 +133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Health: 3
-  m_CooldownTime: 5
+  m_CooldownTime: 10
   m_ScaleDuration: 10
   m_TeamItem: {fileID: 4247183444678281463}
   m_Shield: {fileID: 7087443854195981070}
@@ -141,6 +141,7 @@ MonoBehaviour:
   m_AuraRenderer: {fileID: 7087443854401501263}
   m_BackgroundRenderer: {fileID: 7087443852451118099}
   m_Particle: {fileID: 7087443853352170509}
+  m_DelayRestoreHp: 10
   m_SpeedRotation: 30
 --- !u!114 &4247183444678281463
 MonoBehaviour:

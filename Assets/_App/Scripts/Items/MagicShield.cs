@@ -15,6 +15,7 @@ namespace MobaVR
         [SerializeField] private Renderer m_AuraRenderer;
         [SerializeField] private Renderer m_BackgroundRenderer;
         [SerializeField] private ParticleSystem m_Particle = new();
+        [SerializeField] private float m_DelayRestoreHp = 10f;
         [SerializeField] private float m_SpeedRotation = 10f;
 
         private float m_CurrentScale = 0f;
@@ -25,6 +26,17 @@ namespace MobaVR
         {
             base.Reset();
             m_CurrentScale = 0f;
+        }
+
+        protected void RestoreHp()
+        {
+            if (m_CurrentHealth >= m_Health || m_Use)
+            {
+                return;
+            }
+
+            m_CurrentHealth++;
+            Invoke(nameof(RestoreHp), m_DelayRestoreHp);
         }
 
         protected override void Awake()
@@ -94,6 +106,7 @@ namespace MobaVR
             base.RpcHit(damage);
         }
 
+        [ContextMenu("Die")]
         public override void Die()
         {
             base.Die();
