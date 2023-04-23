@@ -21,6 +21,12 @@ namespace MobaVR
         [SerializeField] private Teammate m_Teammate;
         [SerializeField] private PlayerView m_PlayerView;
 
+        [Header("Input Platform")]
+        [SerializeField] private InputActionSO m_ActiveInput;
+        [SerializeField] private bool m_IsAutoDetect = false;
+        [SerializeField] private InputActionSO m_OculusInput;
+        [SerializeField] private InputActionSO m_PicoInput;
+        
         [Header("Input")]
         [SerializeField] private InputActionReference m_HealthInput;
         [SerializeField] private InputActionReference m_SwitchModeLeftHandInput;
@@ -75,6 +81,28 @@ namespace MobaVR
                 return;
             }
 
+            InputActionSO inputActionSO = m_ActiveInput;
+            InputBridge inputBridge = FindObjectOfType<InputBridge>();
+            if (inputBridge != null && m_IsAutoDetect)
+            {
+                if (inputBridge.InputSource == XRInputSource.Pico)
+                {
+                    inputActionSO = m_PicoInput;
+                }
+                else
+                {
+                    inputActionSO = m_OculusInput;
+                }
+            }
+            
+            m_HealthInput = inputActionSO.HealthInput;
+            m_SwitchModeLeftHandInput = inputActionSO.SwitchModeLeftHandInput;
+            m_SwitchModeRightHandInput = inputActionSO.SwitchModeRightHandInput;
+            m_LeftGrabInput = inputActionSO.LeftGrabInput;
+            m_LeftActivateInput = inputActionSO.LeftActivateInput;
+            m_RightGrabInput = inputActionSO.RightGrabInput;
+            m_RightActivateInput = inputActionSO.RightActivateInput;
+            
             if (m_Teammate != null)
             {
                 m_BigFireBallCurrentPrefab = m_BigFireballPrefab;

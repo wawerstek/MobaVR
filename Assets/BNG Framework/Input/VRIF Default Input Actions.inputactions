@@ -81,9 +81,27 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Grab_Pico",
+                    "type": "Button",
+                    "id": "b5151565-c240-4d87-90f0-3194a67989a0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Activate",
                     "type": "Button",
                     "id": "0c0991c5-d329-4afc-8892-1076b440477c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Activate_Pico",
+                    "type": "Button",
+                    "id": "e0d6d2b9-c1d4-47b5-9a9b-26968ffb45f7",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -201,6 +219,24 @@
                     "name": "SwitchMode",
                     "type": "Button",
                     "id": "b9dee6b9-f398-411e-a750-5d7522f3948f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SwitchMode_Pico",
+                    "type": "Button",
+                    "id": "dd9f3a3d-9f0e-45c1-931a-f99743d4cb91",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SwitchMode_Pico_XR",
+                    "type": "Button",
+                    "id": "1be8639f-11dc-4af6-a9f6-76d97d33b09b",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -495,6 +531,17 @@
                     "isPartOfComposite": false
                 },
                 {
+                    "name": "",
+                    "id": "d7d8582a-696f-4faf-b694-fcdb3f832b8d",
+                    "path": "<XRController>{LeftHand}/menu",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Menu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
                     "name": "2D Vector Keyboard",
                     "id": "146a3d26-d500-465d-b918-3d044f109140",
                     "path": "2DVector",
@@ -537,6 +584,72 @@
                     "action": "SwitchMode",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9e50a65b-96e9-40d3-b46c-859ad7941a2a",
+                    "path": "<XRInputV1::PicoVR::PICOLivePreviewControllerLeft>{LeftHand}/primarybutton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "SwitchMode_Pico",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "dd5b6261-b68b-45c9-b295-e6f388001263",
+                    "path": "<Keyboard>/t",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchMode_Pico",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "27f4b545-9b63-4e4d-bd55-0ca93d46ead2",
+                    "path": "<PXR_Controller>{LeftHand}/gripPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "Grab_Pico",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "801b3000-4b04-477c-9637-eb46ed0e92bd",
+                    "path": "<PXR_Controller>{LeftHand}/triggerPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "Activate_Pico",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6ca7a0f0-f7dd-439c-b695-10f678040493",
+                    "path": "<XRController>{LeftHand}/primaryButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "SwitchMode_Pico_XR",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4551dfe6-4c61-49bd-ba8c-a7264a923a26",
+                    "path": "<Keyboard>/t",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchMode_Pico_XR",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -572,9 +685,27 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Grab_Pico",
+                    "type": "Button",
+                    "id": "c7faf66c-a546-4746-9c35-0fae961fc4dc",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Activate",
                     "type": "Button",
                     "id": "41976d89-60de-4deb-bff9-16b4af96b290",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Activate_Pico",
+                    "type": "Button",
+                    "id": "6d92dfc0-4780-4ce8-860a-2b4c70c2c37b",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -662,9 +793,45 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "HelpButton_Pico",
+                    "type": "Button",
+                    "id": "78ae5e59-aafb-40fe-bd3d-cdc7602aaad8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "HelpButton_Pico_XR",
+                    "type": "Button",
+                    "id": "7475392e-7bbf-41e2-abb8-bb0c4bf75c44",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "SwitchMode",
                     "type": "Button",
                     "id": "96b86ef9-4904-4549-8d89-8ad3f45a50a7",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SwitchMode_Pico",
+                    "type": "Button",
+                    "id": "daf6cf7b-3826-4762-92a4-1866a17df606",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SwitchMode_Pico_XR",
+                    "type": "Button",
+                    "id": "c8efd887-1eaf-410c-aa44-829812d39d3b",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -946,6 +1113,94 @@
                     "action": "SwitchMode",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f5a9427a-a170-434a-84df-61d2c8106760",
+                    "path": "<PXR_Controller>{RightHand}/primaryButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "SwitchMode_Pico",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0f7ba769-a7f0-446f-bacc-7e37386341b7",
+                    "path": "<Keyboard>/t",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchMode_Pico",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "008eb8d8-ce78-4ae7-90d3-b02b51779717",
+                    "path": "<PXR_Controller>{RightHand}/secondaryButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "HelpButton_Pico",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "225a2b4d-e20e-4c4e-877e-e36e5efb3110",
+                    "path": "<PXR_Controller>{RightHand}/gripPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "Grab_Pico",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e58d652e-505a-4b9a-8460-cbf3a6991722",
+                    "path": "<PXR_Controller>{RightHand}/triggerPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "Activate_Pico",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "da9dd957-75ec-47b5-a0a0-653d23f3bd42",
+                    "path": "<XRController>{RightHand}/primaryButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "SwitchMode_Pico_XR",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3a65f6c2-dacc-492b-ad39-09d00d66a8ce",
+                    "path": "<Keyboard>/t",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchMode_Pico_XR",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "235fd809-1e13-461b-8929-909d031da9ba",
+                    "path": "<XRController>{RightHand}/secondaryButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "HelpButton_Pico_XR",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -997,6 +1252,17 @@
                     "name": "",
                     "id": "5a8e82d1-3811-4c2b-bcaf-02622d6df432",
                     "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "093519ba-4b2d-42e7-a5c7-b9125b0c9e64",
+                    "path": "<XRController>{RightHand}/triggerPressed",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
