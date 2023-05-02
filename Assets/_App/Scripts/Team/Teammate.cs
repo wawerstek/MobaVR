@@ -1,9 +1,11 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace MobaVR
 {
+    /// <summary>
+    /// Все элементы игрока кастомизирует под команду: красную или синию
+    /// </summary>
     public class Teammate : TeamItem
     {
         [Header("Theme")]

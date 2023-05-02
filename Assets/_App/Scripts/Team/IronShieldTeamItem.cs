@@ -1,5 +1,4 @@
-﻿using System;
-using AmazingAssets.AdvancedDissolve;
+﻿using AmazingAssets.AdvancedDissolve;
 using UnityEngine;
 
 namespace MobaVR

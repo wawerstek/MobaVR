@@ -5,6 +5,11 @@ using UnityEngine;
 
 namespace MobaVR
 {
+    /// <summary>
+    /// Основной класс, который содержит в себе все зависимости игрока.
+    /// Этот класс используется для инициализации игрока, передачи ему InputVR, выбор команды
+    /// ИК: сейчас не работает.
+    /// </summary>
     public class PlayerVR : MonoBehaviourPunCallbacks
     {
         [SerializeField] private WizardPlayer m_WizardPlayer;
@@ -19,7 +24,6 @@ namespace MobaVR
         [SerializeField] private bool m_IsRender = false;
         [SerializeField] private List<Renderer> m_Renderers;
         
-
         private InputVR m_InputVR;
         private bool m_IsLocalPlayer = false;
         private bool m_IsInit = false;

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace BNG {
 
@@ -188,7 +186,7 @@ namespace BNG {
                 if(grabber.HeldGrabbable == null && PreviousHeldObject != null) {                    
                     OnGrabDrop();
                 }
-                else if(grabber.HeldGrabbable != null && !GameObject.ReferenceEquals(grabber.HeldGrabbable.gameObject, PreviousHeldObject)) {
+                else if(grabber.HeldGrabbable != null && !ReferenceEquals(grabber.HeldGrabbable.gameObject, PreviousHeldObject)) {
                     OnGrabChange(grabber.HeldGrabbable.gameObject);
                 }
             }

@@ -1,13 +1,15 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using BNG;
-using DG.Tweening;
-using Photon.Pun;
+﻿using Photon.Pun;
 using UnityEngine;
 
 namespace MobaVR
 {
+    /// <summary>
+    /// Базовый класс для большого и маленького шаров
+    /// Обработка всех столкновений пока в это классе.
+    /// TODO: обрабатывать OnTriggerEnter в отдельных сущностях
+    ///
+    /// На игроках и щите должен висеть IsTrigger, чтобы прошла проверка
+    /// </summary>
     public abstract class Fireball : MonoBehaviourPunCallbacks
     {
         [Space]
@@ -18,10 +20,15 @@ namespace MobaVR
         [SerializeField] protected float m_DestroyLifeTime = 20.0f;
 
         protected bool m_IsThrown = false;
-        [HideInInspector] public WizardPlayer Owner;
+        protected WizardPlayer m_Owner;
 
         public TeamItem Team => m_TeamItem;
-        
+        public WizardPlayer Owner
+        {
+            get => m_Owner;
+            set => m_Owner = value;
+        }
+
         protected virtual void OnValidate()
         {
             if (m_TeamItem == null)
@@ -85,44 +92,28 @@ namespace MobaVR
                 }
             }
             
-            if (m_IsThrown && other.CompareTag("Player"))
+            if (m_IsThrown)
             {
-                if (other.transform.TryGetComponent(out WizardPlayer wizardPlayer))
+                if (other.CompareTag("Player") && other.transform.TryGetComponent(out WizardPlayer wizardPlayer))
                 {
                     if (wizardPlayer == Owner)
                     {
                         return;
                     }
-                    //if (wizardPlayer.IsRedTeam == Owner.IsRedTeam)
-                    //{
-                    //    wizardPlayer.Hit(0f);
-                    //}
-                    //else
+                    
                     wizardPlayer.Hit(this, CalculateDamage());
-                    //wizardPlayer.Hit(this, CalculateDamage());
                 }
 
-                Shield shield = other.GetComponentInParent<Shield>();
-                if (shield != null)
+                if (other.CompareTag("Item"))
                 {
-                    shield.Hit(this, CalculateDamage());
+                    Shield shield = other.GetComponentInParent<Shield>();
+                    if (shield != null)
+                    {
+                        shield.Hit(this, CalculateDamage());
+                    }
                 }
-
+                
                 InteractBall(other.transform);
-                return;
-            }
-            
-            //if (m_IsThrown)
-            if (m_IsThrown && other.CompareTag("Item"))
-            {
-                Shield shield = other.GetComponentInParent<Shield>();
-                if (shield != null)
-                {
-                    shield.Hit(this, CalculateDamage());
-                }
-
-                InteractBall(other.transform);
-                return;
             }
         }
 

@@ -5,6 +5,9 @@ using UnityEngine.InputSystem;
 
 namespace MobaVR
 {
+    /// <summary>
+    /// Отвечает за существование игрока, ХП, каст заклинаний, обработку ввода контроллера
+    /// </summary>
     public class WizardPlayer : MonoBehaviourPunCallbacks
     {
         protected const string TAG = nameof(WizardPlayer);
@@ -21,17 +24,23 @@ namespace MobaVR
         [SerializeField] private Teammate m_Teammate;
         [SerializeField] private PlayerView m_PlayerView;
 
+        /// <summary>
+        /// TODO: input for Oculus and Pico
+        /// </summary>
         [Header("Input Platform")]
         [SerializeField] private InputActionSO m_ActiveInput;
         [SerializeField] private bool m_IsAutoDetect = false;
         [SerializeField] private InputActionSO m_OculusInput;
         [SerializeField] private InputActionSO m_PicoInput;
-        
+
         [Header("Input")]
         [SerializeField] private InputActionReference m_HealthInput;
         [SerializeField] private InputActionReference m_SwitchModeLeftHandInput;
         [SerializeField] private InputActionReference m_SwitchModeRightHandInput;
 
+        /// <summary>
+        /// TODO: make new class for left and right hand with this dependencies
+        /// </summary>
         [Header("Right Hand")]
         [SerializeField] private Grabber m_RightGrabber;
         [SerializeField] private Transform m_RightBigFireballPoint;
@@ -46,9 +55,6 @@ namespace MobaVR
         [SerializeField] private InputActionReference m_LeftGrabInput;
         [SerializeField] private InputActionReference m_LeftActivateInput;
 
-        private BigFireBall m_BigFireBallCurrentPrefab;
-        private SmallFireBall m_SmallFireBallCurrentPrefab;
-
         private BigFireBall m_RightBigFireBall;
         private BigFireBall m_LeftBigFireBall;
 
@@ -58,8 +64,10 @@ namespace MobaVR
         private TeamType m_TeamType = TeamType.RED;
         private float m_Health = 100f;
         private float m_CurrentHealth = 100f;
-        private bool m_IsLife = true;
 
+        /// <summary>
+        /// TODO: move this logic to new class
+        /// </summary>
         private bool m_IsAttackLeftHand = false;
         private bool m_IsAttackRightHand = false;
 
@@ -85,16 +93,9 @@ namespace MobaVR
             InputBridge inputBridge = FindObjectOfType<InputBridge>();
             if (inputBridge != null && m_IsAutoDetect)
             {
-                if (inputBridge.InputSource == XRInputSource.Pico)
-                {
-                    inputActionSO = m_PicoInput;
-                }
-                else
-                {
-                    inputActionSO = m_OculusInput;
-                }
+                inputActionSO = inputBridge.InputSource == XRInputSource.Pico ? m_PicoInput : m_OculusInput;
             }
-            
+
             m_HealthInput = inputActionSO.HealthInput;
             m_SwitchModeLeftHandInput = inputActionSO.SwitchModeLeftHandInput;
             m_SwitchModeRightHandInput = inputActionSO.SwitchModeRightHandInput;
@@ -102,15 +103,11 @@ namespace MobaVR
             m_LeftActivateInput = inputActionSO.LeftActivateInput;
             m_RightGrabInput = inputActionSO.RightGrabInput;
             m_RightActivateInput = inputActionSO.RightActivateInput;
-            
-            if (m_Teammate != null)
-            {
-                m_BigFireBallCurrentPrefab = m_BigFireballPrefab;
-                m_SmallFireBallCurrentPrefab = m_SmallFireballPrefab;
-            }
 
             ShowShield(m_LeftShield, false);
             ShowShield(m_RightShield, false);
+
+            #region Switch Mode
 
             m_SwitchModeLeftHandInput.action.performed += context =>
             {
@@ -140,6 +137,10 @@ namespace MobaVR
                 m_IsAttackRightHand = !m_IsAttackRightHand;
             };
 
+            #endregion
+
+            #region Attack big fireballs
+
             m_RightGrabInput.action.started += context => { Debug.Log($"{TAG}: RightGrab: started"); };
             m_LeftGrabInput.action.started += context => { Debug.Log($"{TAG}: LeftGrab: started"); };
 
@@ -148,17 +149,6 @@ namespace MobaVR
                 Debug.Log($"{TAG}: RightGrab: performed");
                 if (IsLife)
                 {
-                    /*
-                    if (m_IsAttackRightHand)
-                    {
-                        CreateBigFireBall(out m_RightBigFireBall, m_RightGrabber);
-                    }
-                    else
-                    {
-                        ShowShield(m_RightShield, true);
-                    }
-                    */
-
                     if (!m_UseRightShield)
                     {
                         CreateBigFireBall(out m_RightBigFireBall, m_RightGrabber);
@@ -170,17 +160,6 @@ namespace MobaVR
                 Debug.Log($"{TAG}: LeftGrab: performed");
                 if (IsLife)
                 {
-                    /*
-                    if (m_IsAttackLeftHand)
-                    {
-                        CreateBigFireBall(out m_LeftBigFireBall, m_LeftGrabber);
-                    }
-                    else
-                    {
-                        ShowShield(m_LeftShield, true);
-                    }
-                    */
-
                     if (!m_UseLeftShield)
                     {
                         CreateBigFireBall(out m_LeftBigFireBall, m_LeftGrabber);
@@ -193,17 +172,6 @@ namespace MobaVR
                 Debug.Log($"{TAG}: RightGrab: canceled");
                 if (IsLife)
                 {
-                    /*
-                    if (m_IsAttackRightHand)
-                    {
-                        ThrowBigFireBall(m_RightBigFireBall);
-                    }
-                    else
-                    {
-                        ShowShield(m_RightShield, false);
-                    }
-                    */
-
                     ThrowBigFireBall(m_RightBigFireBall);
                 }
             };
@@ -212,20 +180,13 @@ namespace MobaVR
                 Debug.Log($"{TAG}: LeftGrab: canceled");
                 if (IsLife)
                 {
-                    /*
-                    if (m_IsAttackLeftHand)
-                    {
-                        ThrowBigFireBall(m_LeftBigFireBall);
-                    }
-                    else
-                    {
-                        ShowShield(m_LeftShield, false);
-                    }
-                    */
-
                     ThrowBigFireBall(m_LeftBigFireBall);
                 }
             };
+
+            #endregion
+
+            #region Attack small fireballs or use shield
 
             m_RightActivateInput.action.started += context => { Debug.Log($"{TAG}: RightActivate: started"); };
             m_LeftActivateInput.action.started += context => { Debug.Log($"{TAG}: LeftActivate: started"); };
@@ -235,18 +196,6 @@ namespace MobaVR
                 Debug.Log($"{TAG}: RightActivate: performed");
                 if (IsLife)
                 {
-                    /*
-                    if (m_IsAttackRightHand)
-                    {
-                        ShootFireBall(m_RightBigFireBall,
-                                      out m_RightSmallFireBall,
-                                      m_RightGrabber,
-                                      m_RightBigFireballPoint,
-                                      m_RightSmallFireballPoint,
-                                      -m_RightGrabber.transform.right);
-                    }
-                    */
-
                     if (m_IsAttackRightHand)
                     {
                         ShootFireBall(m_RightBigFireBall,
@@ -259,7 +208,7 @@ namespace MobaVR
                     else
                     {
                         ThrowBigFireBall(m_RightBigFireBall);
-                        
+
                         m_UseRightShield = true;
                         ShowShield(m_RightShield, true);
                     }
@@ -270,18 +219,6 @@ namespace MobaVR
                 Debug.Log($"{TAG}: LeftActivate: performed");
                 if (IsLife)
                 {
-                    /*
-                    if (m_IsAttackLeftHand)
-                    {
-                        ShootFireBall(m_LeftBigFireBall,
-                                      out m_LeftSmallFireBall,
-                                      m_LeftGrabber,
-                                      m_LeftBigFireballPoint,
-                                      m_LeftSmallFireballPoint,
-                                      m_LeftGrabber.transform.right);
-                    }
-                    */
-
                     if (m_IsAttackLeftHand)
                     {
                         if (m_IsAttackLeftHand)
@@ -297,7 +234,7 @@ namespace MobaVR
                     else
                     {
                         ThrowBigFireBall(m_LeftBigFireBall);
-                        
+
                         m_UseLeftShield = true;
                         ShowShield(m_LeftShield, true);
                     }
@@ -307,7 +244,7 @@ namespace MobaVR
             m_RightActivateInput.action.canceled += context =>
             {
                 Debug.Log($"{TAG}: RightActivate: canceled");
-                
+
                 if (m_UseRightShield)
                 {
                     m_UseRightShield = false;
@@ -317,13 +254,17 @@ namespace MobaVR
             m_LeftActivateInput.action.canceled += context =>
             {
                 Debug.Log($"{TAG}: LeftActivate: canceled");
-                
+
                 if (m_UseLeftShield)
                 {
                     m_UseLeftShield = false;
                     ShowShield(m_LeftShield, false);
                 }
             };
+
+            #endregion
+
+            #region Other Inputs
 
             m_HealthInput.action.performed += context =>
             {
@@ -332,6 +273,8 @@ namespace MobaVR
                 transform.position = Vector3.zero;
                 transform.rotation = Quaternion.identity;
             };
+
+            #endregion
         }
 
         private void Update()
@@ -448,11 +391,17 @@ namespace MobaVR
             }
         }
 
+        #region Shields
+
         private void ShowShield(Shield shield, bool isShow)
         {
             //shield.SetActive(isShow);
             shield.Show(isShow);
         }
+
+        #endregion
+
+        #region Throw Fireballs
 
         private void ThrowBigFireBall(BigFireBall fireBall)
         {
@@ -474,6 +423,12 @@ namespace MobaVR
             }
         }
 
+        /// <summary>
+        /// TODO: need refactoring
+        /// У большого шара возможно два варианта полета: от руки / от плеча и по нажатию курка.
+        /// Этот метод активируется при нажатии курка и проверяет, есть ли у игрока сейчас шар,
+        /// Если есть, то мы управляем шаром в воздухе = меняем направление его движения.
+        /// Если нет, то мы стреляем маленькими снарядами. 
         private void ShootFireBall(BigFireBall bigFireBall,
                                    out SmallFireBall smallFireBall,
                                    Grabber grabber,
@@ -483,13 +438,10 @@ namespace MobaVR
         {
             if (bigFireBall != null)
             {
-                //m_RightBigFireBall.Grabbable.DropItem(m_RightGrabber, true, true);
-                //bigFireBall.ThrowForce(direction);
                 bigFireBall.ThrowByDirection(direction);
             }
             else
             {
-                //CreateSmallFireBall(out smallFireBall, grabber);
                 CreateSmallFireBall(out smallFireBall, smallFireballPoint);
                 ThrowSmallFireBall(smallFireBall, grabber, direction);
             }
@@ -498,15 +450,18 @@ namespace MobaVR
             smallFireBall = null;
         }
 
+        #endregion
+
+        #region Create Big Fireball
+
+        private void CreateBigFireBall(out BigFireBall fireBall, Grabber grabber)
+        {
+            CreateBigFireBall(out fireBall, grabber.transform);
+        }
+
         private void CreateBigFireBall(out BigFireBall fireBall, Transform point)
         {
-            //fireBall = Instantiate(m_BigFireballPrefab);
-            /*
-            GameObject networkFireball = PhotonNetwork.Instantiate($"Spells/{m_BigFireBallCurrentPrefab.name}",
-                                                                   Vector3.zero,
-                                                                   Quaternion.identity);
-                                                                   */
-            GameObject networkFireball = PhotonNetwork.Instantiate($"Spells/{m_BigFireBallCurrentPrefab.name}",
+            GameObject networkFireball = PhotonNetwork.Instantiate($"Spells/{m_BigFireballPrefab.name}",
                                                                    point.transform.position,
                                                                    point.transform.rotation);
             if (networkFireball.TryGetComponent(out fireBall))
@@ -521,28 +476,9 @@ namespace MobaVR
             }
         }
 
-        [PunRPC]
-        private void DisableFireball(BigFireBall fireBall)
-        {
-            if (!photonView.IsMine)
-            {
-                if (fireBall.TryGetComponent(out Grabbable grabbable))
-                {
-                    grabbable.enabled = false;
-                }
+        #endregion
 
-                if (fireBall.TryGetComponent(out Rigidbody rigidbody))
-                {
-                    rigidbody.isKinematic = true;
-                    rigidbody.useGravity = true;
-                }
-            }
-        }
-
-        private void CreateBigFireBall(out BigFireBall fireBall, Grabber grabber)
-        {
-            CreateBigFireBall(out fireBall, grabber.transform);
-        }
+        #region Create Small Fireball
 
         private void CreateSmallFireBall(out SmallFireBall fireBall, Grabber grabber)
         {
@@ -551,25 +487,31 @@ namespace MobaVR
 
         private void CreateSmallFireBall(out SmallFireBall fireBall, Transform point)
         {
-            //fireBall = Instantiate(m_SmallFireballPrefab);
-            /*
-            GameObject networkFireball =PhotonNetwork.Instantiate($"Spells/{m_SmallFireBallCurrentPrefab.name}", Vector3.zero,
-                                          Quaternion.identity);
-            */
-
-            GameObject networkFireball = PhotonNetwork.Instantiate($"Spells/{m_SmallFireBallCurrentPrefab.name}",
+            GameObject networkFireball = PhotonNetwork.Instantiate($"Spells/{m_SmallFireballPrefab.name}",
                                                                    point.transform.position,
                                                                    point.transform.rotation);
             if (networkFireball.TryGetComponent(out fireBall))
             {
                 fireBall.Init(m_TeamType);
-                //fireBall.Team.SetTeam(m_TeamType);
 
                 Transform fireBallTransform = fireBall.transform;
                 fireBallTransform.parent = null;
                 fireBallTransform.position = point.transform.position;
                 fireBallTransform.rotation = Quaternion.identity;
                 fireBall.Owner = this;
+            }
+        }
+
+        #endregion
+
+        #region HP
+
+        private void RestoreHp()
+        {
+            if (photonView.IsMine)
+            {
+                m_CurrentHealth = m_Health;
+                m_PlayerView.RpcSetHealth(m_CurrentHealth);
             }
         }
 
@@ -594,29 +536,7 @@ namespace MobaVR
             }
         }
 
-        public void RpcHit(Fireball fireball, float damage)
-        {
-            if (photonView.IsMine)
-            {
-                if ((fireball.Team.IsRed && m_Teammate.IsRed)
-                    || (!fireball.Team.IsRed && !m_Teammate.IsRed))
-                {
-                    return;
-                }
-
-                m_CurrentHealth -= damage;
-                m_PlayerView.RpcSetHealth(m_CurrentHealth);
-            }
-        }
-
-        public void RestoreHp()
-        {
-            if (photonView.IsMine)
-            {
-                m_CurrentHealth = m_Health;
-                m_PlayerView.RpcSetHealth(m_CurrentHealth);
-            }
-        }
+        #endregion
 
         #region Init Transforms
 
