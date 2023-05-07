@@ -102,6 +102,7 @@ namespace MobaVR
                     }
                     
                     wizardPlayer.Hit(this, CalculateDamage());
+                    InteractBall(other.transform);
                 }
 
                 if (other.CompareTag("Item"))
@@ -110,10 +111,11 @@ namespace MobaVR
                     if (shield != null)
                     {
                         shield.Hit(this, CalculateDamage());
+                        InteractBall(other.transform);
                     }
                 }
                 
-                InteractBall(other.transform);
+                //InteractBall(other.transform);
             }
         }
 
