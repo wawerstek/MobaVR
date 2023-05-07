@@ -38,12 +38,12 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 2081622899}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 11
+  serializedVersion: 12
   m_GIWorkflowMode: 1
   m_GISettings:
     serializedVersion: 2
@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -118,6 +118,8 @@ NavMeshSettings:
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
+    maxJobWorkers: 0
+    preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
@@ -151,10 +153,12 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -179,6 +183,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!64 &102621716
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -211,6 +216,7 @@ Transform:
   m_LocalRotation: {x: -0.28776076, y: 0.64590544, z: -0.6459054, w: -0.2877608}
   m_LocalPosition: {x: 2.571, y: 0.37, z: 2.28}
   m_LocalScale: {x: 0.15665132, y: 0.15665129, z: 0.15665129}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 593818661}
   - {fileID: 1823068462}
@@ -224,6 +230,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 844676313}
     m_Modifications:
+    - target: {fileID: 6813231611603224232, guid: 0f9df8d02c9bafe49a092afcdf1f5074,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6813231611603224232, guid: 0f9df8d02c9bafe49a092afcdf1f5074,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -241,6 +252,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6813231611603224232, guid: 0f9df8d02c9bafe49a092afcdf1f5074,
         type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6813231611603224232, guid: 0f9df8d02c9bafe49a092afcdf1f5074,
+        type: 3}
       propertyPath: m_LocalRotation.x
       value: -0
       objectReference: {fileID: 0}
@@ -253,16 +269,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.z
       value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6813231611603224232, guid: 0f9df8d02c9bafe49a092afcdf1f5074,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6813231611603224232, guid: 0f9df8d02c9bafe49a092afcdf1f5074,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6813231611603224232, guid: 0f9df8d02c9bafe49a092afcdf1f5074,
         type: 3}
@@ -337,10 +343,12 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -365,6 +373,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!4 &248053667
 Transform:
   m_ObjectHideFlags: 0
@@ -375,6 +384,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 4.27, z: 13.57}
   m_LocalScale: {x: 0.6603279, y: 0.6603279, z: 0.6603279}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -454,10 +464,12 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -482,6 +494,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &455217729
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -500,6 +513,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -6, z: 0}
   m_LocalScale: {x: 100, y: 10, z: 100}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
@@ -513,13 +527,18 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4567605641618450651, guid: 6e987ed47215b3a46af930a293e59f19,
         type: 3}
-      propertyPath: MustChamberRounds
+      propertyPath: ReloadMethod
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4567605641618450651, guid: 6e987ed47215b3a46af930a293e59f19,
         type: 3}
-      propertyPath: ReloadMethod
+      propertyPath: MustChamberRounds
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6024261396410624979, guid: 6e987ed47215b3a46af930a293e59f19,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6024261396410624979, guid: 6e987ed47215b3a46af930a293e59f19,
         type: 3}
@@ -538,6 +557,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6024261396410624979, guid: 6e987ed47215b3a46af930a293e59f19,
         type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6024261396410624979, guid: 6e987ed47215b3a46af930a293e59f19,
+        type: 3}
       propertyPath: m_LocalRotation.x
       value: -0
       objectReference: {fileID: 0}
@@ -550,16 +574,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.z
       value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6024261396410624979, guid: 6e987ed47215b3a46af930a293e59f19,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6024261396410624979, guid: 6e987ed47215b3a46af930a293e59f19,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6024261396410624979, guid: 6e987ed47215b3a46af930a293e59f19,
         type: 3}
@@ -623,6 +637,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: -0.71, z: 0}
   m_LocalScale: {x: 11.0579, y: 1, z: 11.071615}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 102621718}
   m_RootOrder: 0
@@ -638,10 +653,12 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -666,6 +683,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!65 &593818663
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -713,6 +731,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.434965, y: -4.7355666, z: 7.206788}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2069491415}
   - {fileID: 2070903822}
@@ -730,13 +749,18 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4567605641618450651, guid: 6e987ed47215b3a46af930a293e59f19,
         type: 3}
-      propertyPath: MustChamberRounds
+      propertyPath: ReloadMethod
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4567605641618450651, guid: 6e987ed47215b3a46af930a293e59f19,
         type: 3}
-      propertyPath: ReloadMethod
+      propertyPath: MustChamberRounds
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6024261396410624979, guid: 6e987ed47215b3a46af930a293e59f19,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6024261396410624979, guid: 6e987ed47215b3a46af930a293e59f19,
         type: 3}
@@ -755,6 +779,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6024261396410624979, guid: 6e987ed47215b3a46af930a293e59f19,
         type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6024261396410624979, guid: 6e987ed47215b3a46af930a293e59f19,
+        type: 3}
       propertyPath: m_LocalRotation.x
       value: -0
       objectReference: {fileID: 0}
@@ -767,16 +796,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.z
       value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6024261396410624979, guid: 6e987ed47215b3a46af930a293e59f19,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6024261396410624979, guid: 6e987ed47215b3a46af930a293e59f19,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6024261396410624979, guid: 6e987ed47215b3a46af930a293e59f19,
         type: 3}
@@ -820,6 +839,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6813231611603224232, guid: 0f9df8d02c9bafe49a092afcdf1f5074,
         type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6813231611603224232, guid: 0f9df8d02c9bafe49a092afcdf1f5074,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.8136545
       objectReference: {fileID: 0}
@@ -835,6 +859,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6813231611603224232, guid: 0f9df8d02c9bafe49a092afcdf1f5074,
         type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6813231611603224232, guid: 0f9df8d02c9bafe49a092afcdf1f5074,
+        type: 3}
       propertyPath: m_LocalRotation.x
       value: -0
       objectReference: {fileID: 0}
@@ -847,16 +876,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.z
       value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6813231611603224232, guid: 0f9df8d02c9bafe49a092afcdf1f5074,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6813231611603224232, guid: 0f9df8d02c9bafe49a092afcdf1f5074,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6813231611603224232, guid: 0f9df8d02c9bafe49a092afcdf1f5074,
         type: 3}
@@ -889,6 +908,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3360272215875649293, guid: fb0faa36c0126be41a6efe9af5995c9d,
         type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3360272215875649293, guid: fb0faa36c0126be41a6efe9af5995c9d,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -904,6 +928,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3360272215875649293, guid: fb0faa36c0126be41a6efe9af5995c9d,
         type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3360272215875649293, guid: fb0faa36c0126be41a6efe9af5995c9d,
+        type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
@@ -916,16 +945,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3360272215875649293, guid: fb0faa36c0126be41a6efe9af5995c9d,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3360272215875649293, guid: fb0faa36c0126be41a6efe9af5995c9d,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3360272215875649293, guid: fb0faa36c0126be41a6efe9af5995c9d,
         type: 3}
@@ -946,6 +965,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: XR Rig Advanced - IK
+      objectReference: {fileID: 0}
+    - target: {fileID: 5753837391600221672, guid: fb0faa36c0126be41a6efe9af5995c9d,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5753837391600221672, guid: fb0faa36c0126be41a6efe9af5995c9d,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 7ce8778db696f41419dca4c59c9ee1c8, type: 2}
+    - target: {fileID: 5753837391600221679, guid: fb0faa36c0126be41a6efe9af5995c9d,
+        type: 3}
+      propertyPath: solver.locomotion.mode
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fb0faa36c0126be41a6efe9af5995c9d, type: 3}
@@ -977,6 +1011,7 @@ Transform:
   m_LocalRotation: {x: -0.64353305, y: -0, z: 0.000000059604638, w: 0.76541835}
   m_LocalPosition: {x: 0, y: -0, z: -3.15}
   m_LocalScale: {x: 6.3836093, y: 6.383606, z: 6.383609}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 102621718}
   m_RootOrder: 1
@@ -1063,6 +1098,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -1.78, y: 0.973, z: -0.54}
   m_LocalScale: {x: 0.1, y: 2, z: 0.1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
@@ -1161,10 +1197,12 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1189,6 +1227,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1894701137
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1301,6 +1340,7 @@ Light:
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
 --- !u!4 &2081622900
@@ -1313,6 +1353,7 @@ Transform:
   m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5
@@ -1324,6 +1365,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 9165342806373082573, guid: a789d0b9ce34ff842880e59ef8261779,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9165342806373082573, guid: a789d0b9ce34ff842880e59ef8261779,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1341,6 +1387,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9165342806373082573, guid: a789d0b9ce34ff842880e59ef8261779,
         type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9165342806373082573, guid: a789d0b9ce34ff842880e59ef8261779,
+        type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
@@ -1353,16 +1404,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9165342806373082573, guid: a789d0b9ce34ff842880e59ef8261779,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9165342806373082573, guid: a789d0b9ce34ff842880e59ef8261779,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9165342806373082573, guid: a789d0b9ce34ff842880e59ef8261779,
         type: 3}
