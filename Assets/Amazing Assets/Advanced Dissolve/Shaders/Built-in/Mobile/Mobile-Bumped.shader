@@ -13,6 +13,7 @@ Properties
     _Color("Color", Color) = (1, 1, 1, 1)
     _MainTex ("Base (RGB)", 2D) = "white" {}
     [NoScaleOffset] _BumpMap ("Normalmap", 2D) = "bump" {}
+    _Cull ("Culling", int) = 1
 
 //Advanced Dissolve Properties Start////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -126,7 +127,7 @@ Properties
 SubShader {
     Tags { "RenderType"="Opaque" }
     LOD 250
-
+    Cull [_Cull]
 
 	// ------------------------------------------------------------
 	// Surface shader code generated out of a CGPROGRAM block:
@@ -842,8 +843,10 @@ ENDCG
 	Pass {
 		Name "Meta"
 		Tags { "LightMode" = "Meta" }
-		Cull Off
+		//Cull Off
+	  Cull [_Cull]
 
+	  
 CGPROGRAM
 // compile directives
 #pragma vertex vert_surf
@@ -1188,7 +1191,8 @@ ENDCG
         {
             Name "ShadowCaster"
             Tags { "LIGHTMODE"="SHADOWCASTER" "SHADOWSUPPORT"="true" "RenderType"="AdvancedDissolve_Opaque" }
-            Cull Off
+            //Cull Off
+            Cull [_Cull]
             ZWrite On ZTest LEqual
 
             CGPROGRAM
