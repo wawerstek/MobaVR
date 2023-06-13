@@ -142,4 +142,12 @@ public class ChangeSkinPlayer : MonoBehaviourPun
     //}
 
 
-}
+    // Если нажали на кнопку "Смена команды"
+    public void ChangeTeam()
+    {
+        //нужно найти скрипт Teammate и выполнить функцию в нём
+        _PlayerVR = _GameSession.localPlayer;
+        _PlayerVR.GetComponent<PlayerVR>().ChangeTeamOnClick();
+    }
+
+    }
