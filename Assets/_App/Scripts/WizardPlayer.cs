@@ -2,6 +2,7 @@ using BNG;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using MobaVR;
 
 namespace MobaVR
 {
@@ -13,7 +14,7 @@ namespace MobaVR
         protected const string TAG = nameof(WizardPlayer);
 
         [Header("Fireballs")]
-        [SerializeField] private BigFireBall m_BigFireballPrefab;
+        [SerializeField] public BigFireBall m_BigFireballPrefab;
         [SerializeField] private SmallFireBall m_SmallFireballPrefab;
 
         [Header("Shields")]
@@ -485,6 +486,22 @@ namespace MobaVR
             }
         }
 
+
+        public void ChangeBall(BigFireBall newBall)
+        {
+            photonView.RPC(nameof(ChangeBallRPC), RpcTarget.AllBuffered, newBall);
+           
+        }
+
+        [PunRPC]
+        public void ChangeBallRPC(BigFireBall newBall)
+        {
+
+            m_BigFireballPrefab = newBall;
+        }
+
+
+
         #endregion
 
         #region Create Small Fireball
@@ -551,9 +568,17 @@ namespace MobaVR
         }
 
 
+        public void Die()
+        {
+            m_Health = 0f;
+            if (photonView.IsMine)
+            {
+                m_CurrentHealth = m_Health;
+                m_PlayerView.RpcSetHealth(m_CurrentHealth);
+            }
+        }
 
-        
-        public void Respown()
+            public void Respown()
         {
             m_Health = 100f;
             if (photonView.IsMine)
