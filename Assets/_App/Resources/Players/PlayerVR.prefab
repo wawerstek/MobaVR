@@ -5970,6 +5970,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ProgressBar: {fileID: 7084666821434880098}
   m_PointPlayer: {fileID: 5754792542940441842}
+  playerVR: {fileID: 0}
 --- !u!114 &8987728605770040927
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6321,6 +6322,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ProgressBar: {fileID: 8539642343981476062}
   m_PointPlayer: {fileID: 0}
+  playerVR: {fileID: 0}
 --- !u!114 &2052073979292514058
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6776,6 +6778,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ProgressBar: {fileID: 8045507368420010833}
   m_PointPlayer: {fileID: 0}
+  playerVR: {fileID: 0}
 --- !u!114 &8735035437135796200
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7041,9 +7044,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8f3061654174c1419cb72e7c9222b5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_CurrentTeam: 0
   m_WizardPlayer: {fileID: 7702456167165704558}
   m_PlayerMode: {fileID: 6239950121779509238}
   m_Teammate: {fileID: 1988228306184941464}
+  m_CharacterIK: {fileID: 0}
   m_LeftHand: {fileID: 7627057033046537557}
   m_RightHand: {fileID: 2285395068931859365}
   m_IsRender: 0
@@ -7061,6 +7066,10 @@ MonoBehaviour:
   - {fileID: 1988228305672822425}
   - {fileID: 8647842683958570607}
   - {fileID: 1297287654969358875}
+  skinDieRespawnObjects: []
+  colliders: []
+  playerView: {fileID: 0}
+  m_TeamType: 0
 --- !u!114 &7702456167165704558
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7086,6 +7095,7 @@ MonoBehaviour:
   m_PlayerVR: {fileID: 7702456167165704557}
   m_Teammate: {fileID: 1988228306184941464}
   m_PlayerView: {fileID: 8470141115260666604}
+  inputBridge: {fileID: 0}
   m_State: {fileID: 6239950121779509238}
   m_Collider: {fileID: 9190832358937657957}
   m_ActiveInput: {fileID: 11400000, guid: d3c7e9075daed3044919e6d7278fd3aa, type: 2}

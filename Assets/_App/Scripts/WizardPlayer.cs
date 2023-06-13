@@ -1,3 +1,4 @@
+using System;
 using BNG;
 using Photon.Pun;
 using UnityEngine;
@@ -605,6 +606,7 @@ namespace MobaVR
                 Reborn();
                 //RestoreHp();
             }
+        }
 
         private void ResetSpells()
         {
