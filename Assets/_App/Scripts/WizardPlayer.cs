@@ -1,4 +1,3 @@
-using System;
 using BNG;
 using Photon.Pun;
 using UnityEngine;
@@ -33,6 +32,7 @@ namespace MobaVR
         [SerializeField] private PlayerVR m_PlayerVR;
         [SerializeField] private Teammate m_Teammate;
         [SerializeField] private PlayerView m_PlayerView;
+        [SerializeField] private InputBridge inputBridge;
         [SerializeField] private PlayerMode m_State;
         [SerializeField] private Collider m_Collider;
 
@@ -137,6 +137,7 @@ namespace MobaVR
         {
             if (!photonView.IsMine)
             {
+                enabled = false; //TODO: merge
                 return;
             }
 
@@ -604,7 +605,6 @@ namespace MobaVR
                 Reborn();
                 //RestoreHp();
             }
-        }
 
         private void ResetSpells()
         {
@@ -914,6 +914,7 @@ namespace MobaVR
 
             if (photonView.IsMine)
             {
+                //TODO: merge
                 //m_CurrentHealth -= damage;
                 m_PlayerView.RpcSetHealth(m_CurrentHealth);
                 m_DamageIndicator.Show();

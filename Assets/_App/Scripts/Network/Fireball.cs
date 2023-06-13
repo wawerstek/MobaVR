@@ -77,7 +77,7 @@ namespace MobaVR
                 return;
             }
             
-            if (m_IsThrown && !collision.transform.CompareTag("Player"))
+            if (m_IsThrown && !collision.transform.CompareTag("RemotePlayer"))
             {
                 InteractBall(collision.transform);
             }
@@ -100,7 +100,7 @@ namespace MobaVR
             
             if (m_IsThrown)
             {
-                if (other.CompareTag("Player") && other.transform.TryGetComponent(out WizardPlayer wizardPlayer))
+                if (other.CompareTag("RemotePlayer") && other.transform.TryGetComponent(out WizardPlayer wizardPlayer))
                 {
                     if (wizardPlayer == Owner)
                     {
