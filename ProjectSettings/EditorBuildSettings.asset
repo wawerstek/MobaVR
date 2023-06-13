@@ -5,12 +5,33 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
+  - enabled: 0
+    path: Assets/Photon/PhotonUnityNetworking/Demos/PunCockpit/PunCockpit-Scene.unity
+    guid: 9d6d60c803e244e51ba945a84b88757d
+  - enabled: 0
+    path: Assets/Photon/PhotonUnityNetworking/Demos/DemoAsteroids/Scenes/DemoAsteroids-LobbyScene.unity
+    guid: c8a9d1312a49dc8488a9b32d83d659c7
+  - enabled: 0
+    path: Assets/Photon/PhotonUnityNetworking/Demos/DemoAsteroids/Scenes/DemoAsteroids-GameScene.unity
+    guid: 98efc37d6307844488eb3e4247dde7e9
   - enabled: 1
     path: Assets/_App/Scenes/Lobby.unity
     guid: 4644c23fbfd0dbf468af54cb2ff9feb6
-  - enabled: 1
+  - enabled: 0
     path: Assets/_App/Scenes/Game_PVP.unity
     guid: d3dd3f5b10313634c98ec5a0353ca5ad
+  - enabled: 0
+    path: Assets/_App/Scenes/Lich.unity
+    guid: adf383ba9e5b3b248b697ac6c46a1859
+  - enabled: 1
+    path: Assets/_App/Scenes/Game_China_PvP_Lich.unity
+    guid: d57ecfb5fb18bdb4282470bfb3c9a04c
+  - enabled: 0
+    path: Assets/_App/Scenes/Bomberman.unity
+    guid: 1e90fcceadc49c648a3f5b52413964d6
+  - enabled: 1
+    path: Assets/_App/Scenes/Game_PvP_Simple.unity
+    guid: b3a07f83d091faa43b5ffb4a3df9a1c9
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 2f6b61df1e59c58448188b5ceed5c6e0,
       type: 2}

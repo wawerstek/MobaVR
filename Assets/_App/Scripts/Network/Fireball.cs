@@ -1,4 +1,5 @@
-﻿using Photon.Pun;
+﻿using System;
+using Photon.Pun;
 using UnityEngine;
 
 namespace MobaVR
@@ -19,8 +20,13 @@ namespace MobaVR
         [SerializeField] protected float m_Force = 4000f;
         [SerializeField] protected float m_DestroyLifeTime = 20.0f;
 
+        protected TeamType m_TeamType;
         protected bool m_IsThrown = false;
         protected WizardPlayer m_Owner;
+
+        public Action OnDestroySpell;
+        public Action OnInitSpell;
+        public Action OnThrown;
 
         public TeamItem Team => m_TeamItem;
         public WizardPlayer Owner
@@ -118,12 +124,21 @@ namespace MobaVR
                 //InteractBall(other.transform);
             }
         }
+        
+        public virtual void Init(WizardPlayer wizardPlayer, TeamType teamType)
+        {
+            m_Owner = wizardPlayer;
+            m_TeamType = teamType;
+            photonView.RPC(nameof(RpcInit), RpcTarget.All, teamType);
+        }
 
-        public void Init(TeamType teamType)
+        /*
+        public virtual void Init(TeamType teamType)
         {
             //m_TeamItem.SetTeam(teamType);
             photonView.RPC(nameof(RpcInit), RpcTarget.All, teamType);
         }
+        */
 
         [PunRPC]
         public virtual void RpcInit(TeamType teamType)

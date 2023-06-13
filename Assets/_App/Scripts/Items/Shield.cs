@@ -70,6 +70,11 @@ namespace MobaVR
         {
             photonView.RPC(nameof(RpcHit), RpcTarget.All, 1f);
         }
+        
+        public virtual void Hit(float damage)
+        {
+            photonView.RPC(nameof(RpcHit), RpcTarget.All, damage);
+        }
 
         public virtual void Hit(Fireball fireball, float damage)
         {
@@ -112,18 +117,17 @@ namespace MobaVR
                 m_IsAvailable = false;
 
                 //Invoke(nameof(Reset), m_CooldownTime);
-                m_CurrentCooldownTime = m_CooldownTime;
-                DOTween
-                    .To(() => m_CurrentCooldownTime, x => m_CurrentCooldownTime = x, 0f, m_CooldownTime)
-                    .OnUpdate(() =>
-                    {
-                        
-                    })
-                    .OnComplete(() =>
-                    {
-                        Reset();
-                    });
+                WaitBeforeReset();
             }
+        }
+
+        protected void WaitBeforeReset()
+        {
+            m_CurrentCooldownTime = m_CooldownTime;
+            DOTween
+                .To(() => m_CurrentCooldownTime, x => m_CurrentCooldownTime = x, 0f, m_CooldownTime)
+                .OnUpdate(() => { })
+                .OnComplete(() => { Reset(); });
         }
 
         public virtual void Explode(float explosionForce, Vector3 position, float radius, float modifier)

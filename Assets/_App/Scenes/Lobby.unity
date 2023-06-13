@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: f5dcd562bbe8e6741845a6ba29547444, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: c81599feeec05d14fbf3dd64b71864c8, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.41085896, g: 0.23164682, b: 0.09852996, a: 1}
+  m_IndirectSpecularColor: {r: 0.18248926, g: 0.22820087, b: 0.30724502, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -124,7 +124,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: 3082b774d527e064e8365a60ab09604e, type: 2}
 --- !u!1 &118483161
 GameObject:
   m_ObjectHideFlags: 0
@@ -239,7 +239,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32bf49b17a5aa2e4fb8e46bc01850344, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SceneName: Game_PVP
+  m_SceneName: Game_PvP_Simple
   m_MaxPlayersPerRoom: 12
   m_RoomName: MobaVR
   m_GameVersion: 1
@@ -312,7 +312,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 3895
 --- !u!114 &909933734
 MonoBehaviour:
   m_ObjectHideFlags: 0

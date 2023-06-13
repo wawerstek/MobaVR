@@ -54,6 +54,15 @@
             "id": "5fe596f9-1b7b-49b7-80a7-3b5195caf74d",
             "actions": [
                 {
+                    "name": "ActivateGrabCombo",
+                    "type": "Button",
+                    "id": "0b9a2809-1bc2-4e8e-9a48-e37b44dfc93c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Position",
                     "type": "Value",
                     "id": "83a7af0b-87e3-42c3-a909-95fbf8091e4f",
@@ -78,6 +87,24 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "GrabLong",
+                    "type": "Button",
+                    "id": "d9eaa5b2-406e-404c-972b-9296827a70c4",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Hold",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "GrabDoubleTap",
+                    "type": "Button",
+                    "id": "9e8977f0-c641-4704-af30-2a0b965fbab0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "MultiTap",
                     "initialStateCheck": false
                 },
                 {
@@ -650,6 +677,61 @@
                     "action": "SwitchMode_Pico_XR",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "47caae8e-a00c-41c9-85dc-0df51ed96aad",
+                    "path": "<XRController>{LeftHand}/gripPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "GrabLong",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "323fd664-74f3-4abb-98c6-d4f7e06030f5",
+                    "path": "<XRController>{LeftHand}/gripPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "GrabDoubleTap",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Button With One Modifier",
+                    "id": "f16df9d2-99f8-42d4-b860-5507b5e9aee9",
+                    "path": "ButtonWithOneModifier",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ActivateGrabCombo",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Modifier",
+                    "id": "4da993ce-0830-4741-98b3-ac7f0daf01c1",
+                    "path": "<XRController>{LeftHand}/triggerPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ActivateGrabCombo",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Button",
+                    "id": "8f020ed2-de28-407b-9501-466157966b92",
+                    "path": "<XRController>{LeftHand}/gripPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ActivateGrabCombo",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         },
@@ -657,6 +739,15 @@
             "name": "XR RightHand",
             "id": "7960f8ef-2bf3-4281-aecc-4c03809d6c8c",
             "actions": [
+                {
+                    "name": "ActivateGrabCombo",
+                    "type": "Button",
+                    "id": "a11a6c3f-bc0c-410d-bacc-ec3119511f6e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
                 {
                     "name": "Position",
                     "type": "Value",
@@ -682,6 +773,24 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "GrabLong",
+                    "type": "Button",
+                    "id": "8633f5b1-2dab-4fb5-a70f-680b7b5456b3",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Hold",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "GrabDoubleTap",
+                    "type": "Button",
+                    "id": "52414140-9780-4040-a839-97e9a40aac1b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "MultiTap",
                     "initialStateCheck": false
                 },
                 {
@@ -1199,6 +1308,61 @@
                     "processors": "",
                     "groups": "Generic XR Controller",
                     "action": "HelpButton_Pico_XR",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Button With One Modifier",
+                    "id": "74ff8a9a-9889-4fa3-b8d7-07ef225f207a",
+                    "path": "ButtonWithOneModifier",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ActivateGrabCombo",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "modifier",
+                    "id": "d675589f-069c-4017-afc9-5b5e649f820a",
+                    "path": "<XRController>{RightHand}/triggerPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ActivateGrabCombo",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "button",
+                    "id": "1bb1585a-cc5c-488e-9da5-3cd56e722924",
+                    "path": "<XRController>{RightHand}/gripPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ActivateGrabCombo",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "5534ee1a-b7ac-4b6a-98fb-b8a344a070b5",
+                    "path": "<XRController>{RightHand}/gripPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "GrabLong",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7755f3c5-a00d-48ee-91f7-075f78fb515f",
+                    "path": "<XRController>{RightHand}/gripPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "GrabDoubleTap",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

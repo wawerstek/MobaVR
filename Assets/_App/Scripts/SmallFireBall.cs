@@ -11,10 +11,12 @@ namespace MobaVR
         [SerializeField] private GameObject m_Trail;
         [SerializeField] private GameObject m_ProjectileFx;
         [SerializeField] private GameObject m_ExplosionFx;
+        [SerializeField] private bool m_UseGravity = false;
         
         [SerializeField] private float m_DestroyExplosion = 4.0f;
         [SerializeField] private float m_DestroyChildren = 2.0f;
         [SerializeField] private float m_Delay = 0.1f;
+        [SerializeField] private float m_KMonsterDamage = 5f;
 
         [SerializeField] private Rigidbody m_Rigidbody;
         [SerializeField] private Collider m_Collider;
@@ -49,6 +51,11 @@ namespace MobaVR
         {
             if (photonView.IsMine)
             {
+                if (interactable.TryGetComponent(out IHit hitEnemy))
+                {
+                    hitEnemy.RpcHit(CalculateDamage() * m_KMonsterDamage);
+                }
+                
                 photonView.RPC(nameof(RpcDestroyBall), RpcTarget.All);
                 //DestroyBall();
             }
@@ -62,6 +69,8 @@ namespace MobaVR
         [PunRPC]
         private void RpcDestroyBall()
         {
+            OnDestroySpell?.Invoke();
+            
             m_Trail.transform.parent = null;
             Destroy(m_Trail.gameObject, m_DestroyChildren);
             
@@ -104,8 +113,10 @@ namespace MobaVR
         [PunRPC]
         private void RpcThrowByDirection(Vector3 direction)
         {
+            OnThrown?.Invoke();
+            
             m_Rigidbody.isKinematic = false;
-            m_Rigidbody.useGravity = false;
+            m_Rigidbody.useGravity = m_UseGravity;
             m_Rigidbody.AddForce(direction * m_Force);
             
             m_ProjectileFx.SetActive(true);

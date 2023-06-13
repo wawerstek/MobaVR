@@ -1,3 +1,4 @@
+using System;
 using BNG;
 using Photon.Pun;
 using UnityEngine;
@@ -11,18 +12,29 @@ namespace MobaVR
     public class WizardPlayer : MonoBehaviourPunCallbacks
     {
         protected const string TAG = nameof(WizardPlayer);
-
-        [Header("Fireballs")]
+        
+        [Header("Big Fireball")]
         [SerializeField] private BigFireBall m_BigFireballPrefab;
+        [SerializeField] private BigFireballType m_BigFireballGravityType = BigFireballType.REAL_GRAVITY;
+
+        [Header("Small Fireball")]
         [SerializeField] private SmallFireBall m_SmallFireballPrefab;
+
+        [Header("Test FireBreath")]
+        [SerializeField] private bool m_UseFireBreath = true;
+        [SerializeField] private FireBreath m_LeftFireBreath;
+        [SerializeField] private FireBreath m_RightFireBreath;
 
         [Header("Shields")]
         [SerializeField] private Shield m_LeftShield;
         [SerializeField] private Shield m_RightShield;
 
         [Header("Player")]
+        [SerializeField] private PlayerVR m_PlayerVR;
         [SerializeField] private Teammate m_Teammate;
         [SerializeField] private PlayerView m_PlayerView;
+        [SerializeField] private PlayerMode m_State;
+        [SerializeField] private Collider m_Collider;
 
         /// <summary>
         /// TODO: input for Oculus and Pico
@@ -47,6 +59,8 @@ namespace MobaVR
         [SerializeField] private Transform m_RightSmallFireballPoint;
         [SerializeField] private InputActionReference m_RightGrabInput;
         [SerializeField] private InputActionReference m_RightActivateInput;
+        [SerializeField] private InputActionReference m_RightGrabActivateInput;
+        [SerializeField] private InputActionReference m_RightGrabDoubleTapInput;
 
         [Header("Left Hand")]
         [SerializeField] private Grabber m_LeftGrabber;
@@ -54,6 +68,8 @@ namespace MobaVR
         [SerializeField] private Transform m_LeftSmallFireballPoint;
         [SerializeField] private InputActionReference m_LeftGrabInput;
         [SerializeField] private InputActionReference m_LeftActivateInput;
+        [SerializeField] private InputActionReference m_LeftGrabActivateInput;
+        [SerializeField] private InputActionReference m_LeftGrabDoubleTapInput;
 
         private BigFireBall m_RightBigFireBall;
         private BigFireBall m_LeftBigFireBall;
@@ -61,26 +77,61 @@ namespace MobaVR
         private SmallFireBall m_RightSmallFireBall;
         private SmallFireBall m_LeftSmallFireBall;
 
+        private IDamageIndicator m_DamageIndicator;
         private TeamType m_TeamType = TeamType.RED;
         private float m_Health = 100f;
-        private float m_CurrentHealth = 100f;
+        [SerializeField] private float m_ThrowForce = 10f;
+        [SerializeField] private bool m_UseAim = false;
+        [SerializeField] private float m_CurrentHealth = 100f;
+        //[SerializeField] [ReadOnly] private float m_CurrentHealth = 100f;
 
         /// <summary>
         /// TODO: move this logic to new class
         /// </summary>
-        private bool m_IsAttackLeftHand = false;
-        private bool m_IsAttackRightHand = false;
+        private bool m_IsAttackLeftHand = true;
+        private bool m_IsAttackRightHand = true;
 
         private bool m_UseLeftShield = false;
         private bool m_UseRightShield = false;
 
+        private bool m_UseLeftFireBreath = false;
+        private bool m_UseRightFireBreath = false;
+
         public float CurrentHealth => m_CurrentHealth;
+        public BigFireballType GravityFireballType
+        {
+            get => m_BigFireballGravityType;
+            set => m_BigFireballGravityType = value;
+        }
+        public float ThrowForce
+        {
+            get => m_ThrowForce;
+            set => m_ThrowForce = value;
+        }
+        public bool UseAim
+        {
+            get => m_UseAim;
+            set => m_UseAim = value;
+        }
+        public PlayerMode PlayerState => m_State;
+        public PlayerStateSO CurrentPlayerState => m_State.StateSo;
+        public InputVR InputVR => m_PlayerVR.InputVR;
         public bool IsLife => m_CurrentHealth > 0;
         public TeamType TeamType
         {
             get => m_TeamType;
             set => m_TeamType = value;
         }
+        public IDamageIndicator DamageIndicator
+        {
+            get => m_DamageIndicator;
+            set => m_DamageIndicator = value;
+        }
+
+        public Action OnInit;
+        public Action<float> OnHit;
+        public Action OnDie;
+        public Action OnReborn;
 
         private void Start()
         {
@@ -88,6 +139,8 @@ namespace MobaVR
             {
                 return;
             }
+
+            m_Collider.enabled = true;
 
             InputActionSO inputActionSO = m_ActiveInput;
             InputBridge inputBridge = FindObjectOfType<InputBridge>();
@@ -109,6 +162,7 @@ namespace MobaVR
 
             #region Switch Mode
 
+            /*
             m_SwitchModeLeftHandInput.action.performed += context =>
             {
                 if (m_IsAttackLeftHand)
@@ -136,48 +190,90 @@ namespace MobaVR
 
                 m_IsAttackRightHand = !m_IsAttackRightHand;
             };
+            */
 
             #endregion
 
             #region Attack big fireballs
 
-            m_RightGrabInput.action.started += context => { Debug.Log($"{TAG}: RightGrab: started"); };
             m_LeftGrabInput.action.started += context => { Debug.Log($"{TAG}: LeftGrab: started"); };
+            m_RightGrabInput.action.started += context => { Debug.Log($"{TAG}: RightGrab: started"); };
+
+            m_LeftGrabInput.action.performed += context =>
+            {
+                Debug.Log($"{TAG}: LeftGrab: performed");
+
+                if (!m_State.StateSo.CanCast)
+                {
+                    return;
+                }
+
+                if (IsLife)
+                {
+                    if (!m_UseLeftShield && !m_UseLeftFireBreath)
+                    {
+                        CreateBigFireBall(out m_LeftBigFireBall, m_LeftGrabber);
+                    }
+                    else
+                    {
+                        if (m_LeftShield is AttackMagicShield attackMagicShield)
+                        {
+                            //attackMagicShield.Throw(m_LeftGrabber.transform.forward);
+                        }
+                    }
+                }
+            };
 
             m_RightGrabInput.action.performed += context =>
             {
                 Debug.Log($"{TAG}: RightGrab: performed");
+
+                if (!m_State.StateSo.CanCast)
+                {
+                    return;
+                }
+
                 if (IsLife)
                 {
-                    if (!m_UseRightShield)
+                    if (!m_UseRightShield && !m_UseRightFireBreath)
                     {
                         CreateBigFireBall(out m_RightBigFireBall, m_RightGrabber);
                     }
-                }
-            };
-            m_LeftGrabInput.action.performed += context =>
-            {
-                Debug.Log($"{TAG}: LeftGrab: performed");
-                if (IsLife)
-                {
-                    if (!m_UseLeftShield)
+                    else
                     {
-                        CreateBigFireBall(out m_LeftBigFireBall, m_LeftGrabber);
+                        if (m_RightShield is AttackMagicShield attackMagicShield)
+                        {
+                            //attackMagicShield.Throw(m_RightGrabber.transform.forward);
+                        }
                     }
                 }
             };
 
+
             m_RightGrabInput.action.canceled += context =>
             {
                 Debug.Log($"{TAG}: RightGrab: canceled");
+
+                if (!m_State.StateSo.CanCast)
+                {
+                    return;
+                }
+
                 if (IsLife)
                 {
                     ThrowBigFireBall(m_RightBigFireBall);
                 }
             };
+
             m_LeftGrabInput.action.canceled += context =>
             {
                 Debug.Log($"{TAG}: LeftGrab: canceled");
+
+                if (!m_State.StateSo.CanCast)
+                {
+                    return;
+                }
+
                 if (IsLife)
                 {
                     ThrowBigFireBall(m_LeftBigFireBall);
@@ -186,16 +282,177 @@ namespace MobaVR
 
             #endregion
 
+            #region Firebreath
+
+            /*
+            
+            m_LeftGrabDoubleTapInput.action.performed += context =>
+            {
+                Debug.Log($"{TAG}: LeftGrabDoubleTapInput: performed");
+
+                if (!m_State.StateSo.CanCast)
+                {
+                    return;
+                }
+
+                if (IsLife)
+                {
+                    if (!m_UseLeftShield)
+                    {
+                        m_UseLeftFireBreath = true;
+                        m_LeftFireBreath.gameObject.SetActive(true);
+                    }
+                    else
+                    {
+                        ThrowBigFireBall(m_LeftBigFireBall);
+                    }
+                }
+            };
+
+            m_RightGrabDoubleTapInput.action.performed += context =>
+            {
+                Debug.Log($"{TAG}: RightGrabDoubleTapInput: performed");
+
+                if (!m_State.StateSo.CanCast)
+                {
+                    return;
+                }
+
+                if (IsLife)
+                {
+                    if (!m_UseRightShield)
+                    {
+                        m_UseRightFireBreath = true;
+                        m_RightFireBreath.gameObject.SetActive(true);
+                    }
+                    else
+                    {
+                        ThrowBigFireBall(m_RightBigFireBall);
+                    }
+                }
+            };
+
+            m_LeftGrabDoubleTapInput.action.canceled += context =>
+            {
+                Debug.Log($"{TAG}: LeftGrabDoubleTapInput: canceled");
+
+                if (!m_State.StateSo.CanCast)
+                {
+                    return;
+                }
+
+                if (IsLife)
+                {
+                    m_UseLeftFireBreath = false;
+                    m_LeftFireBreath.gameObject.SetActive(false);
+                }
+            };
+
+            m_RightGrabDoubleTapInput.action.canceled += context =>
+            {
+                Debug.Log($"{TAG}: RightGrabDoubleTapInput: canceled");
+
+                if (!m_State.StateSo.CanCast)
+                {
+                    return;
+                }
+
+                if (IsLife)
+                {
+                    m_UseRightFireBreath = false;
+                    m_RightFireBreath.gameObject.SetActive(false);
+                }
+            };
+            
+            */
+
+            #endregion
+
             #region Attack small fireballs or use shield
 
             m_RightActivateInput.action.started += context => { Debug.Log($"{TAG}: RightActivate: started"); };
             m_LeftActivateInput.action.started += context => { Debug.Log($"{TAG}: LeftActivate: started"); };
 
+            m_LeftActivateInput.action.performed += context =>
+            {
+                Debug.Log($"{TAG}: LeftActivate: performed");
+
+                if (!m_State.StateSo.CanCast)
+                {
+                    return;
+                }
+
+                if (IsLife)
+                {
+                    if (!m_UseLeftShield && !m_UseLeftFireBreath)
+                    {
+                        ShootFireBall(m_LeftBigFireBall,
+                                      out m_LeftSmallFireBall,
+                                      m_LeftGrabber,
+                                      m_LeftBigFireballPoint,
+                                      m_LeftSmallFireballPoint,
+                                      m_LeftGrabber.transform.right);
+                    }
+                    else
+                    {
+                        ThrowBigFireBall(m_LeftBigFireBall);
+                    }
+
+                    /*
+                    if (m_IsAttackLeftHand)
+                    {
+                        ShootFireBall(m_LeftBigFireBall,
+                                      out m_LeftSmallFireBall,
+                                      m_LeftGrabber,
+                                      m_LeftBigFireballPoint,
+                                      m_LeftSmallFireballPoint,
+                                      m_LeftGrabber.transform.right);
+                    }
+                    else
+                    {
+                        ThrowBigFireBall(m_LeftBigFireBall);
+
+                        m_UseLeftShield = true;
+                        if (!m_UseFireBreath)
+                        {
+                            ShowShield(m_LeftShield, true);
+                        }
+                        else
+                        {
+                            m_LeftFireBreath.gameObject.SetActive(true);
+                        }
+                    }
+                    */
+                }
+            };
+
             m_RightActivateInput.action.performed += context =>
             {
                 Debug.Log($"{TAG}: RightActivate: performed");
+
+                if (!m_State.StateSo.CanCast)
+                {
+                    return;
+                }
+
                 if (IsLife)
                 {
+                    if (!m_UseRightShield && !m_UseRightShield)
+                    {
+                        ShootFireBall(m_RightBigFireBall,
+                                      out m_RightSmallFireBall,
+                                      m_RightGrabber,
+                                      m_RightBigFireballPoint,
+                                      m_RightSmallFireballPoint,
+                                      -m_RightGrabber.transform.right);
+                    }
+                    else
+                    {
+                        ThrowBigFireBall(m_RightBigFireBall);
+                    }
+
+                    //if (!m_RightGrabInput.action.inProgress)
+                    /*
                     if (m_IsAttackRightHand)
                     {
                         ShootFireBall(m_RightBigFireBall,
@@ -210,62 +467,113 @@ namespace MobaVR
                         ThrowBigFireBall(m_RightBigFireBall);
 
                         m_UseRightShield = true;
-                        ShowShield(m_RightShield, true);
+                        if (!m_UseFireBreath)
+                        {
+                            ShowShield(m_RightShield, true);
+                        }
+                        else
+                        {
+                            m_RightFireBreath.gameObject.SetActive(true);
+                        }
                     }
+                    */
                 }
             };
-            m_LeftActivateInput.action.performed += context =>
+
+            m_LeftActivateInput.action.canceled += context =>
             {
-                Debug.Log($"{TAG}: LeftActivate: performed");
-                if (IsLife)
+                Debug.Log($"{TAG}: LeftActivate: canceled");
+
+                /*
+                if (m_UseLeftShield)
                 {
-                    if (m_IsAttackLeftHand)
+                    m_UseLeftShield = false;
+                    if (!m_UseFireBreath)
                     {
-                        if (m_IsAttackLeftHand)
-                        {
-                            ShootFireBall(m_LeftBigFireBall,
-                                          out m_LeftSmallFireBall,
-                                          m_LeftGrabber,
-                                          m_LeftBigFireballPoint,
-                                          m_LeftSmallFireballPoint,
-                                          m_LeftGrabber.transform.right);
-                        }
+                        ShowShield(m_LeftShield, false);
                     }
                     else
                     {
-                        ThrowBigFireBall(m_LeftBigFireBall);
-
-                        m_UseLeftShield = true;
-                        ShowShield(m_LeftShield, true);
+                        m_LeftFireBreath.gameObject.SetActive(false);
                     }
                 }
+                */
             };
+
 
             m_RightActivateInput.action.canceled += context =>
             {
                 Debug.Log($"{TAG}: RightActivate: canceled");
 
+                /*
                 if (m_UseRightShield)
                 {
                     m_UseRightShield = false;
-                    ShowShield(m_RightShield, false);
+                    if (!m_UseFireBreath)
+                    {
+                        ShowShield(m_RightShield, false);
+                    }
+                    else
+                    {
+                        m_RightFireBreath.gameObject.SetActive(false);
+                    }
                 }
+                */
             };
-            m_LeftActivateInput.action.canceled += context =>
-            {
-                Debug.Log($"{TAG}: LeftActivate: canceled");
 
-                if (m_UseLeftShield)
+            #endregion
+
+            #region Combo
+
+            m_LeftGrabActivateInput.action.started += context =>
+            {
+                if (!m_State.StateSo.CanCast)
                 {
-                    m_UseLeftShield = false;
-                    ShowShield(m_LeftShield, false);
+                    return;
                 }
+
+                m_UseLeftShield = true;
+                ShowShield(m_LeftShield, true);
+
+                m_UseLeftFireBreath = false;
+                m_LeftFireBreath.gameObject.SetActive(false);
+
+                ThrowBigFireBall(m_LeftBigFireBall);
+            };
+
+            m_RightGrabActivateInput.action.started += context =>
+            {
+                if (!m_State.StateSo.CanCast)
+                {
+                    return;
+                }
+
+                m_UseRightShield = true;
+                ShowShield(m_RightShield, true);
+
+                m_UseRightFireBreath = false;
+                m_RightFireBreath.gameObject.SetActive(false);
+
+                ThrowBigFireBall(m_RightBigFireBall);
+            };
+
+            m_LeftGrabActivateInput.action.canceled += context =>
+            {
+                m_UseLeftShield = false;
+                ShowShield(m_LeftShield, false);
+            };
+
+            m_RightGrabActivateInput.action.canceled += context =>
+            {
+                m_UseRightShield = false;
+                ShowShield(m_RightShield, false);
             };
 
             #endregion
 
             #region Other Inputs
 
+            //TODO
             m_HealthInput.action.performed += context =>
             {
                 Debug.Log($"{TAG}: HealthButton: performed");
@@ -275,6 +583,8 @@ namespace MobaVR
             };
 
             #endregion
+
+            OnInit?.Invoke();
         }
 
         private void Update()
@@ -284,11 +594,38 @@ namespace MobaVR
                 return;
             }
 
-            if (Input.GetKeyDown(KeyCode.H))
+            if (m_State.StateSo.CanCast && IsLife)
             {
-                RestoreHp();
+                CastSpells();
             }
 
+            if (Input.GetKeyDown(KeyCode.H))
+            {
+                Reborn();
+                //RestoreHp();
+            }
+        }
+
+        private void ResetSpells()
+        {
+            ThrowBigFireBall(m_LeftBigFireBall);
+            ThrowBigFireBall(m_RightBigFireBall);
+
+            m_UseLeftShield = false;
+            ShowShield(m_LeftShield, false);
+
+            m_UseRightShield = false;
+            ShowShield(m_RightShield, false);
+
+            m_UseRightFireBreath = false;
+            m_RightFireBreath.gameObject.SetActive(false);
+
+            m_UseLeftFireBreath = false;
+            m_LeftFireBreath.gameObject.SetActive(false);
+        }
+
+        private void CastSpells()
+        {
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
                 CreateBigFireBall(out m_LeftBigFireBall, m_LeftGrabber);
@@ -466,13 +803,13 @@ namespace MobaVR
                                                                    point.transform.rotation);
             if (networkFireball.TryGetComponent(out fireBall))
             {
-                fireBall.Init(m_TeamType);
+                fireBall.Init(this, m_TeamType);
 
                 Transform fireBallTransform = fireBall.transform;
                 fireBallTransform.parent = point.transform;
                 fireBallTransform.localPosition = Vector3.zero;
                 fireBallTransform.localRotation = Quaternion.identity;
-                fireBall.Owner = this;
+                //fireBall.Owner = this;
             }
         }
 
@@ -492,13 +829,13 @@ namespace MobaVR
                                                                    point.transform.rotation);
             if (networkFireball.TryGetComponent(out fireBall))
             {
-                fireBall.Init(m_TeamType);
+                fireBall.Init(this, m_TeamType);
 
                 Transform fireBallTransform = fireBall.transform;
                 fireBallTransform.parent = null;
                 fireBallTransform.position = point.transform.position;
                 fireBallTransform.rotation = Quaternion.identity;
-                fireBall.Owner = this;
+                //fireBall.Owner = this;
             }
         }
 
@@ -506,13 +843,40 @@ namespace MobaVR
 
         #region HP
 
-        private void RestoreHp()
+        public void Reborn()
         {
+            photonView.RPC(nameof(RpcReborn), RpcTarget.AllBuffered);
+        }
+
+        [PunRPC]
+        private void RpcReborn()
+        {
+            m_CurrentHealth = m_Health;
+            m_PlayerView.SetHealth(m_CurrentHealth);
+            m_Collider.enabled = true;
+
+            OnReborn?.Invoke();
+        }
+
+        public void RestoreHp()
+        {
+            photonView.RPC(nameof(RpcRestoreHp), RpcTarget.AllBuffered);
+        }
+
+        [PunRPC]
+        private void RpcRestoreHp()
+        {
+            m_CurrentHealth = m_Health;
+
             if (photonView.IsMine)
             {
-                m_CurrentHealth = m_Health;
                 m_PlayerView.RpcSetHealth(m_CurrentHealth);
             }
+        }
+
+        public void Hit(float damage)
+        {
+            photonView.RPC(nameof(RpcHit), RpcTarget.All, damage);
         }
 
         public void Hit(Fireball fireball, float damage)
@@ -529,16 +893,40 @@ namespace MobaVR
         [PunRPC]
         public void RpcHit(float damage)
         {
+            if (!m_State.StateSo.CanGetDamage)
+            {
+                return;
+            }
+
+            if (!IsLife)
+            {
+                return;
+            }
+
+            OnHit?.Invoke(damage);
+            m_CurrentHealth -= damage;
+            if (m_CurrentHealth <= 0)
+            {
+                m_Collider.enabled = false;
+                ResetSpells();
+                OnDie?.Invoke();
+            }
+
             if (photonView.IsMine)
             {
-                m_CurrentHealth -= damage;
+                //m_CurrentHealth -= damage;
                 m_PlayerView.RpcSetHealth(m_CurrentHealth);
+                m_DamageIndicator.Show();
             }
         }
 
         #endregion
 
         #region Init Transforms
+
+        public void Init(PlayerVR playerVR)
+        {
+        }
 
         public void SetLeftGrabber(Grabber grabber, Transform smallFireballPoint, Transform bigFireballPoint)
         {

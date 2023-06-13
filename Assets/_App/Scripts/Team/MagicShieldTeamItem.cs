@@ -24,12 +24,14 @@ namespace MobaVR
                     break;
             }
 
-            m_AuraRenderer.material.color = fireballTheme.MainColor;
-            m_AuraRenderer.material.SetColor("_EmissionColor", fireballTheme.MainColor);
+            Color color = fireballTheme.SubColor;
 
-            Color transparentColor = new Color(fireballTheme.MainColor.r,
-                                               fireballTheme.MainColor.g,
-                                               fireballTheme.MainColor.b,
+            m_AuraRenderer.material.color = color;
+            m_AuraRenderer.material.SetColor("_EmissionColor", color);
+
+            Color transparentColor = new Color(color.r,
+                                               color.g,
+                                               color.b,
                                                m_BackgroundRenderer.material.color.a);
             m_BackgroundRenderer.material.color = transparentColor;
             

@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System;
+using BNG;
 using UnityEngine.Serialization;
 
 namespace CloudFine.ThrowLab
 {
     public class ThrowHandle : MonoBehaviour
     {
-
         public Action onDetachFromHand;
         public Action<GameObject, GameObject> onPickUp;
         public Action<Vector3> onFinalTrajectory;
@@ -35,18 +35,18 @@ namespace CloudFine.ThrowLab
 
         //ThrowConfigurations are no longer stored like this. Data will be migrated into ThrowConfigurationSet
         [SerializeField, HideInInspector, FormerlySerializedAs("_controllerConfigurations")]
-        private ThrowConfiguration[] _deviceConfigurations;
+        protected ThrowConfiguration[] _deviceConfigurations;
         ///////////////
 
-        [SerializeField] private ThrowConfigurationSet _throwConfigurationSet;
+        [SerializeField] protected ThrowConfigurationSet _throwConfigurationSet;
 
-        private Device _attachedDevice = Device.UNSPECIFIED;
+        protected Device _attachedDevice = Device.UNSPECIFIED;
 
-        private Transform _velocitySensor;
-        private Rigidbody _rigidbody;
-        private GameObject _handCollisionRoot;
+        protected Transform _velocitySensor;
+        protected Rigidbody _rigidbody;
+        protected GameObject _handCollisionRoot;
 
-        private ThrowTarget currentTarget;
+        protected ThrowTarget currentTarget;
 
         public Action<ThrowTarget> OnTargetedThrow;
 
@@ -68,18 +68,18 @@ namespace CloudFine.ThrowLab
             public float time;
         }
 
-        private List<VelocitySample> _velocityHistory = new List<VelocitySample>();
-        Vector3 _sampledPreviousPosition;
-        Quaternion _sampledPreviousRotation;
+        protected List<VelocitySample> _velocityHistory = new List<VelocitySample>();
+        protected Vector3 _sampledPreviousPosition;
+        protected Quaternion _sampledPreviousRotation;
 
         //Track root motion to prevent it from being included with velocity scaling
-        private Transform _rootMotionTransform;
-        private Vector3 _rootVelocity;
-        private Vector3 _previousRootPosition;
+        protected Transform _rootMotionTransform;
+        protected Vector3 _rootVelocity;
+        protected Vector3 _previousRootPosition;
         //
         #region Lifecycle
 
-        private void Awake()
+        protected virtual void Awake()
         {
             _rigidbody = GetComponent<Rigidbody>();
             _velocitySensor = new GameObject().transform;
@@ -92,7 +92,7 @@ namespace CloudFine.ThrowLab
             MigrateData();
         }
 
-        private void OnValidate()
+        protected virtual void OnValidate()
         {
             MigrateData();
         }
@@ -106,7 +106,7 @@ namespace CloudFine.ThrowLab
             }
         }
 
-        private void Update()
+        protected virtual void Update()
         {
             if (_attached || _applyingInfluence)
             {
@@ -164,7 +164,7 @@ namespace CloudFine.ThrowLab
             }
         }
 
-        private void FixedUpdate()
+        protected virtual void FixedUpdate()
         {
             if (_attached || _applyingInfluence)
             {
@@ -180,7 +180,7 @@ namespace CloudFine.ThrowLab
             }
         }
 
-        private void LateUpdate()
+        protected virtual void LateUpdate()
         {
             if (_rootMotionTransform != null)
             {
@@ -189,7 +189,7 @@ namespace CloudFine.ThrowLab
             }
         }
 
-        private void OnDestroy()
+        protected virtual void OnDestroy()
         {
             if (_velocitySensor)
             {
@@ -224,31 +224,41 @@ namespace CloudFine.ThrowLab
 
         #region SampleRecording
 
-        private void RecordVelocitySample(float deltaTime, float time)
+        protected virtual void RecordVelocitySample(float deltaTime, float time)
         {
             Transform anchor = GetSampleSource();
-            Vector3 positionDelta = anchor.position - _sampledPreviousPosition;
-            Quaternion deltaRotation = anchor.rotation * Quaternion.Inverse(_sampledPreviousRotation);
+
+            Vector3 currentPosition = anchor.position;
+            Quaternion currentRotation = anchor.rotation;
+            
+            Vector3 positionDelta = currentPosition - _sampledPreviousPosition;
+            Quaternion deltaRotation = currentRotation * Quaternion.Inverse(_sampledPreviousRotation);
             Vector3 angularDelta = new Vector3(deltaRotation.x, deltaRotation.y, deltaRotation.z);
 
-            VelocitySample newSample = new VelocitySample(anchor.position, positionDelta / deltaTime, anchor.rotation, angularDelta / deltaTime, time);
+            Vector3 velocity = positionDelta / deltaTime;
+            Vector3 angularVelocity = angularDelta / deltaTime;
+            VelocitySample newSample = new VelocitySample(currentPosition, velocity, currentRotation, angularVelocity, time);
             _velocityHistory.Add(newSample);
-            _sampledPreviousPosition = anchor.position;
-            _sampledPreviousRotation = anchor.rotation;
+            _sampledPreviousPosition = currentPosition;
+            _sampledPreviousRotation = currentRotation;
 
+            Debug.Log($"ThrowHandler Sample: {newSample}");
+            Debug.Log($"ThrowHandler: positionDelta: {positionDelta}; deltaRotation: {deltaRotation}; angularDelta: {angularDelta}");
+            Debug.Log($"ThrowHandler: currentPosition: {currentPosition}; currentRotation: {currentRotation}; euler: {currentRotation.eulerAngles}\n" +
+                      $"velocity: {velocity}; angularVelocity: {angularVelocity}");
+            
             ClearOldSamples();
             if (OnSampleRecorded != null) OnSampleRecorded.Invoke(newSample);
         }
 
-        public Transform GetSampleSource()
+        public virtual Transform GetSampleSource()
         {
             if (_velocitySensor) return _velocitySensor;
             return transform;
         }
 
-        private void ClearOldSamples()
+        protected void ClearOldSamples()
         {
-
             switch (Settings.samplePeriodMeasurement)
             {
                 case ThrowConfiguration.PeriodMeasurement.FRAMES:
@@ -275,7 +285,7 @@ namespace CloudFine.ThrowLab
 
         #region Events
 
-        public void OnAttach(GameObject hand, GameObject collisionRoot)
+        public virtual void OnAttach(GameObject hand, GameObject collisionRoot)
         {
             _attached = true;
             _applyingInfluence = true;
@@ -323,7 +333,7 @@ namespace CloudFine.ThrowLab
             if (onPickUp != null) onPickUp.Invoke(hand, collisionRoot);
         }
 
-        public void OnDetach()
+        public virtual void OnDetach()
         {
             SetPhysicsEnabled(true);
 

@@ -2,12 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using CloudFine.ThrowLab.Oculus;
 using UnityEditor;
 using UnityEngine;
 
 namespace BNG {
 
-    [CustomEditor(typeof(Grabbable))]
+    [CustomEditor(typeof(Grabbable), true)]
     [CanEditMultipleObjects]
     public class GrabbableEditor : Editor {
 

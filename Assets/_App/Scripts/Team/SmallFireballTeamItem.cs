@@ -13,6 +13,7 @@ namespace MobaVR
         [SerializeField] private ParticleSystem m_ProjectileParticle;
         [SerializeField] private ParticleSystem m_TrailParticle;
         [SerializeField] private ParticleSystem m_ExplosionParticle;
+        [SerializeField] private TrailRenderer m_TrailRenderer;
 
         private void Awake()
         {
@@ -40,6 +41,12 @@ namespace MobaVR
             
             m_TrailParticle.SetColorOverLifeTime(fireballTheme.Gradient);
             m_ExplosionParticle.SetColorOverLifeTime(fireballTheme.Gradient);
+
+            if (m_TrailRenderer != null)
+            {
+                m_TrailRenderer.startColor = fireballTheme.MainColor;
+                m_TrailRenderer.endColor = fireballTheme.MainColor;
+            }
         }
     }
 }

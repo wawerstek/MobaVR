@@ -8,7 +8,9 @@ namespace CloudFine.ThrowLab
     public class ThrowTarget : MonoBehaviour {
 
         public bool _showReticle = true;
-
+        public bool _useCustomReticle = true;
+        public GameObject m_CustomReticle;
+        
         private GameObject reticle;
         private List<ThrowHandle> targettingHandles = new List<ThrowHandle>();
         public static List<ThrowTarget> AllTargets
@@ -27,11 +29,20 @@ namespace CloudFine.ThrowLab
 
         private void Awake()
         {
-            reticle = GameObject.CreatePrimitive(PrimitiveType.Quad);
-            reticle.GetComponent<Collider>().enabled = false;
-            reticle.GetComponent<Renderer>().material = Resources.Load<Material>("TargetReticle");
-            reticle.transform.localPosition = Vector3.zero;
+            if (!m_CustomReticle)
+            {
+                reticle = GameObject.CreatePrimitive(PrimitiveType.Quad);
+                reticle.GetComponent<Collider>().enabled = false;
+                reticle.GetComponent<Renderer>().material = Resources.Load<Material>("TargetReticle");
+                reticle.transform.localPosition = Vector3.zero;
+            }
+            else
+            {
+                reticle = m_CustomReticle;
+            }
+
             reticle.name = "Reticle";
+            
             ShowHideReticle(false);
         }
 

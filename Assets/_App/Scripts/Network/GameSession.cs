@@ -14,6 +14,7 @@ namespace MobaVR
         [Space]
         [Header("Players")]
         [SerializeField] private bool m_IsRedFirst = true;
+        [SerializeField] private bool m_UseDifferentTeam = true;
         [SerializeField] private PlayerVR m_PlayerPrefab;
         [SerializeField] private Transform m_Position1;
         [SerializeField] private Transform m_Position2;
@@ -25,7 +26,7 @@ namespace MobaVR
 
         private void Awake()
         {
-            Application.targetFrameRate = 60;
+            //Application.targetFrameRate = 60;
         }
 
         private void Start()
@@ -57,11 +58,17 @@ namespace MobaVR
 
             string prefabName = $"Players/{m_PlayerPrefab.name}";
             Vector3 position;
-            int remainder = m_IsRedFirst ? 0 : 1;
-            TeamType teamType = PhotonNetwork.CurrentRoom.PlayerCount % 2 == remainder ? TeamType.RED : TeamType.BLUE;
-
-            //GameObject localPlayer = PhotonNetwork.Instantiate(prefabName, position, Quaternion.identity);
+            TeamType teamType = TeamType.RED;
+            if (m_UseDifferentTeam)
+            {
+                int remainder = m_IsRedFirst ? 0 : 1;
+                teamType = PhotonNetwork.CurrentRoom.PlayerCount % 2 == remainder
+                    ? TeamType.RED
+                    : TeamType.BLUE;
+            }
             
+            //GameObject localPlayer = PhotonNetwork.Instantiate(prefabName, position, Quaternion.identity);
+
             GameObject localPlayer = PhotonNetwork.Instantiate(prefabName, Vector3.zero, Quaternion.identity);
             localPlayer.name += "_" + Random.Range(1, 1000);
             if (localPlayer.TryGetComponent(out PlayerVR playerVR))

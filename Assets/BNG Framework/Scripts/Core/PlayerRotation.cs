@@ -134,7 +134,7 @@ namespace BNG {
             if(Math.Abs(rotationAmount) > 0) {
 
                 // Call any Before Rotation Events
-                OnBeforeRotate?.Invoke();
+                //OnBeforeRotate?.Invoke();
 
                 // Apply rotation
                 transform.rotation = Quaternion.Euler(new Vector3(transform.eulerAngles.x, transform.eulerAngles.y + rotationAmount, transform.eulerAngles.z));
@@ -142,7 +142,7 @@ namespace BNG {
                 recentSnapTurnTime = Time.time;
 
                 // Call any After Rotation Events
-                OnAfterRotate?.Invoke();
+                //OnAfterRotate?.Invoke();
             }
         }
 

@@ -1,8 +1,11 @@
 using BNG;
+using Sirenix.OdinInspector;
+using Sirenix.Serialization;
 using UnityEngine;
 
 namespace MobaVR
 {
+    [ShowOdinSerializedPropertiesInInspector]
     public class InputVR : MonoBehaviour
     {
         [Header("Base")]
@@ -10,6 +13,9 @@ namespace MobaVR
         public BNGPlayerController BngPlayerController;
         public CharacterController CharacterController;
 
+        [Header("Screen")]
+        public BaseDamageIndicator DamageIndicator;
+        
         [Header("PlayerController")]
         public Transform TrackingSpace;
         public Transform CameraRig;
