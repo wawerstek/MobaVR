@@ -380,31 +380,31 @@ namespace BNG {
         }
 
         public virtual void ResetHands() {
-            leftControllerTranform.transform.localPosition = Vector3.zero;
-            leftControllerTranform.transform.localEulerAngles = Vector3.zero;
+            //leftControllerTranform.transform.localPosition = Vector3.zero;
+            //leftControllerTranform.transform.localEulerAngles = Vector3.zero;
 
-            rightControllerTranform.transform.localPosition = Vector3.zero;
-            rightControllerTranform.transform.localEulerAngles = Vector3.zero;
+            //rightControllerTranform.transform.localPosition = Vector3.zero;
+            //rightControllerTranform.transform.localEulerAngles = Vector3.zero;
         }
 
         public virtual void ResetAll() {
 
-            ResetHands();
+            //ResetHands();
 
-            // Reset Camera
-            mainCameraTransform.localEulerAngles = Vector3.zero;
+            //// Reset Camera
+            //mainCameraTransform.localEulerAngles = Vector3.zero;
 
-            // Reset Player
-            if (player) {
-                player.ElevateCameraHeight = _originalPlayerYOffset;
-            }
+            //// Reset Player
+            //if (player) {
+            //    player.ElevateCameraHeight = _originalPlayerYOffset;
+            //}
 
-            // Reset Teleport Status
-            if(ForceStraightTeleportRotation && playerTeleport) {
-                playerTeleport.ForceStraightArrow = priorStraightSetting;
-            }
+            //// Reset Teleport Status
+            //if(ForceStraightTeleportRotation && playerTeleport) {
+            //    playerTeleport.ForceStraightArrow = priorStraightSetting;
+            //}
 
-            didFirstActivate = false;
+            //didFirstActivate = false;
         }
 
         void OnEnable() {

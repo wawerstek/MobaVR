@@ -1,19 +1,16 @@
-﻿#if PUN_2_OR_NEWER
-using Photon.Pun;
+﻿using Photon.Pun;
 using Photon.Realtime;
-#endif
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace BNG {
-    public class NetworkPlayer :
-#if PUN_2_OR_NEWER
-MonoBehaviourPunCallbacks, IPunObservable, IPunOwnershipCallbacks 
-#else
-        MonoBehaviour
-#endif
-        {
+    public class NetworkPlayer : MonoBehaviourPunCallbacks, IPunObservable, IPunOwnershipCallbacks {
+
+        public GameObject player;
+        public GameObject RemoteSkins;
+        public GameObject LocalPlayer;
+
 
         [Tooltip("Transform of the local player's head to track. This will be applied to the Remote Player's Head Transform")]
         public Transform PlayerHeadTransform;
@@ -93,10 +90,8 @@ MonoBehaviourPunCallbacks, IPunObservable, IPunOwnershipCallbacks
 
         bool disabledObjects = false;
 
-        private bool _syncLeftHoldingItem;
-        private bool _syncRightHoldingItem;
-
-#if PUN_2_OR_NEWER
+        [SerializeField] private bool _syncLeftHoldingItem;
+        [SerializeField] private bool _syncRightHoldingItem;
 
         void Start() {
             LeftGrabber = GameObject.Find("LeftController").GetComponentInChildren<Grabber>();
@@ -106,6 +101,19 @@ MonoBehaviourPunCallbacks, IPunObservable, IPunOwnershipCallbacks
             gitRight = RightGrabber.GetComponent<GrabbablesInTrigger>();
 
             requestedGrabbables = new Dictionary<int, double>();
+
+            AssignPlayerObjects();
+
+            // если это я, локаьный игрок
+            if (photonView.IsMine)
+            {
+                RemoteSkins.SetActive(false);
+            }
+            else
+            {
+               // LocalPlayer.SetActive(false);
+            }
+
         }
 
         void Update() {
@@ -113,7 +121,7 @@ MonoBehaviourPunCallbacks, IPunObservable, IPunOwnershipCallbacks
             // Check for request to grab object
             checkGrabbablesTransfer();
 
-            // Remote Player
+            // если это сетевой плеер
             if (!photonView.IsMine) {
 
                 if(disabledObjects) {
@@ -129,7 +137,7 @@ MonoBehaviourPunCallbacks, IPunObservable, IPunOwnershipCallbacks
                 updateRemotePositionRotation(RemoteLeftHandTransform, _syncLHandStartPosition, _syncLHandEndPosition, _syncLHandStartRotation, _syncLHandEndRotation, synchValue);
                 updateRemotePositionRotation(RemoteRightHandTransform, _syncRHandStartPosition, _syncRHandEndPosition, _syncRHandStartRotation, _syncRHandEndRotation, synchValue);
 
-                // Update animation info
+                // Обновить информацию об анимации
                 if (RemoteLeftHandAnimator) {
                     _syncLeftGripStart = Mathf.Lerp(_syncLeftGripStart, _syncLeftGripEnd, Time.deltaTime * HandAnimationSpeed);
                     RemoteLeftHandAnimator.SetFloat("Flex", _syncLeftGripStart);
@@ -141,12 +149,13 @@ MonoBehaviourPunCallbacks, IPunObservable, IPunOwnershipCallbacks
                     _syncLeftThumbStart = Mathf.Lerp(_syncLeftThumbStart, _syncLeftThumbEnd, Time.deltaTime * HandAnimationSpeed);
                     RemoteLeftHandAnimator.SetLayerWeight(1, _syncLeftThumbStart);
 
-                    // Default to grip if holding an item
-                    if(_syncLeftHoldingItem) {
-                        RemoteLeftHandAnimator.SetLayerWeight(0, 0);
-                        RemoteLeftHandAnimator.SetFloat("Flex", 1);
-                        RemoteLeftHandAnimator.SetFloat(1, 0);
-                        RemoteLeftHandAnimator.SetFloat(2, 0);
+                    //По умолчанию используется захват при удержании предмета
+                    if (_syncLeftHoldingItem) {
+                        //RemoteLeftHandAnimator.SetLayerWeight(0, 0);
+                        //RemoteLeftHandAnimator.SetFloat("Flex", 4);
+                        //RemoteLeftHandAnimator.SetFloat(1, 0);
+                        //RemoteLeftHandAnimator.SetFloat(2, 0);
+                        RemoteLeftHandAnimator.SetInteger("Pose", 1);
                     }
                     else {
                         RemoteLeftHandAnimator.SetInteger("Pose", 0);
@@ -162,12 +171,13 @@ MonoBehaviourPunCallbacks, IPunObservable, IPunOwnershipCallbacks
                     _syncRightThumbStart = Mathf.Lerp(_syncRightThumbStart, _syncRightThumbEnd, Time.deltaTime * HandAnimationSpeed);
                     RemoteRightHandAnimator.SetLayerWeight(1, _syncRightThumbStart);
 
-                    // Default to grip if holding an item
+                    // По умолчанию используется захват при удержании предмета
                     if (_syncRightHoldingItem) {
-                        RemoteRightHandAnimator.SetLayerWeight(0, 0);
-                        RemoteRightHandAnimator.SetFloat("Flex", 1);
-                        RemoteRightHandAnimator.SetLayerWeight(1, 0);
-                        RemoteRightHandAnimator.SetLayerWeight(2, 0);
+                        //RemoteRightHandAnimator.SetLayerWeight(0, 0);
+                        //RemoteRightHandAnimator.SetFloat("Flex", 1);
+                        //RemoteRightHandAnimator.SetLayerWeight(1, 0);
+                        //RemoteRightHandAnimator.SetLayerWeight(2, 0);
+                        RemoteRightHandAnimator.SetInteger("Pose", 1);
                     }
                     else {
                         RemoteRightHandAnimator.SetInteger("Pose", 0);
@@ -183,6 +193,7 @@ MonoBehaviourPunCallbacks, IPunObservable, IPunOwnershipCallbacks
 
         public void AssignPlayerObjects() {
             GameObject player = GameObject.FindGameObjectWithTag("Player");
+            player = GameObject.Find("PlayerController");
 
             PlayerHeadTransform = getChildTransformByName(player.transform, "CenterEyeAnchor");
 
@@ -207,9 +218,9 @@ MonoBehaviourPunCallbacks, IPunObservable, IPunOwnershipCallbacks
         }
 
         void toggleObjects(bool enableObjects) {
-            RemoteHeadTransform.gameObject.SetActive(enableObjects);
-            RemoteLeftHandTransform.gameObject.SetActive(enableObjects);
-            RemoteRightHandTransform.gameObject.SetActive(enableObjects);
+            RemoteHeadTransform.gameObject.SetActive(enableObjects);    
+           //RemoteLeftHandTransform.gameObject.SetActive(enableObjects);
+            //RemoteRightHandTransform.gameObject.SetActive(enableObjects);
             disabledObjects = !enableObjects;
         }
         
@@ -220,34 +231,34 @@ MonoBehaviourPunCallbacks, IPunObservable, IPunOwnershipCallbacks
                 return;
             }           
            
-            requestOwnerShipForNearbyGrabbables(gitLeft);
-            requestOwnerShipForNearbyGrabbables(gitRight);
+            //requestOwnerShipForNearbyGrabbables(gitLeft);
+            //requestOwnerShipForNearbyGrabbables(gitRight);
         }
 
-        void requestOwnerShipForNearbyGrabbables(GrabbablesInTrigger grabbables) {
+        //void requestOwnerShipForNearbyGrabbables(GrabbablesInTrigger grabbables) {
 
-            if(grabbables == null) {
-                return;
-            }
+        //    if(grabbables == null) {
+        //        return;
+        //    }
 
-            // In Hand
-            foreach (var grab in grabbables.NearbyGrabbables) {
-                PhotonView view = grab.Value.GetComponent<PhotonView>();
+        //    // In Hand
+        //    foreach (var grab in grabbables.NearbyGrabbables) {
+        //        PhotonView view = grab.Value.GetComponent<PhotonView>();
 
-                if (view != null && RecentlyRequested(view) == false && !view.AmOwner) {
-                    RequestGrabbableOwnership(view);
-                }
-            }
+        //        if (view != null && RecentlyRequested(view) == false && !view.AmOwner) {
+        //            RequestGrabbableOwnership(view);
+        //        }
+        //    }
 
-            // Remote Grabbables
-            foreach (var grab in grabbables.ValidRemoteGrabbables) {
-                PhotonView view = grab.Value.GetComponent<PhotonView>();
+        //    // Remote Grabbables
+        //    foreach (var grab in grabbables.ValidRemoteGrabbables) {
+        //        PhotonView view = grab.Value.GetComponent<PhotonView>();
 
-                if (view != null && RecentlyRequested(view) == false && !view.AmOwner) {
-                    RequestGrabbableOwnership(view);
-                }
-            }
-        }
+        //        if (view != null && RecentlyRequested(view) == false && !view.AmOwner) {
+        //            RequestGrabbableOwnership(view);
+        //        }
+        //    }
+        //}
 
         public virtual bool RecentlyRequested(PhotonView view) {
             // Previously requested if in list and requested less than 3 seconds ago
@@ -283,7 +294,7 @@ MonoBehaviourPunCallbacks, IPunObservable, IPunOwnershipCallbacks
         }
 
         public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
-            // This is our player, send our positions to the other players
+            // Это наш игрок, отправьте наши позиции другим игрокам
             if (stream.IsWriting) {
 
                 // Player Head / Hand Information
@@ -381,7 +392,5 @@ MonoBehaviourPunCallbacks, IPunObservable, IPunOwnershipCallbacks
         public void OnOwnershipTransferFailed(PhotonView targetView, Player requestingPlayer) {
             // Debug.Log("OnOwnershipTransferFailed for Player " + requestingPlayer);
         }
-
-#endif
     }
 }
