@@ -63,7 +63,7 @@ namespace MobaVR
         private SmallFireBall m_LeftSmallFireBall;
 
         private TeamType m_TeamType = TeamType.RED;
-        private float m_Health = 100f;
+        public float m_Health = 100f;
         private float m_CurrentHealth = 100f;
 
         /// <summary>
@@ -270,7 +270,7 @@ namespace MobaVR
 
             m_HealthInput.action.performed += context =>
             {
-               // Debug.Log($"{TAG}: HealthButton: performed");
+                // Debug.Log($"{TAG}: HealthButton: performed");
                 RestoreHp();
                 transform.position = Vector3.zero;
                 transform.rotation = Quaternion.identity;
@@ -286,10 +286,10 @@ namespace MobaVR
                 return;
             }
 
-            if (Input.GetKeyDown(KeyCode.H))
-            {
-                RestoreHp();
-            }
+            //if (Input.GetKeyDown(KeyCode.H))
+            //{
+            //    RestoreHp();
+            //}
 
 
             if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -475,13 +475,13 @@ namespace MobaVR
                                                                    point.transform.rotation);
             if (networkFireball.TryGetComponent(out fireBall))
             {
-                fireBall.Init(m_TeamType);
+               fireBall.Init(m_TeamType);
 
                 Transform fireBallTransform = fireBall.transform;
                 fireBallTransform.parent = point.transform;
                 fireBallTransform.localPosition = Vector3.zero;
                 fireBallTransform.localRotation = Quaternion.identity;
-                fireBall.Owner = this;
+               fireBall.Owner = this;
             }
         }
 
@@ -525,7 +525,7 @@ namespace MobaVR
             }
         }
 
-       //вызвалась функция и получила значение файрбола и damage
+        //вызвалась функция и получила значение файрбола и damage
         public void Hit(Fireball fireball, float damage)
         {
             //тут как раз проверка на командность, если файир бол прилетел из команды той же команды, что и игрок, то выходим
@@ -549,6 +549,34 @@ namespace MobaVR
                 m_PlayerView.RpcSetHealth(m_CurrentHealth);
             }
         }
+
+
+
+        
+        public void Respown()
+        {
+            m_Health = 100f;
+            if (photonView.IsMine)
+            {
+                m_CurrentHealth = m_Health;
+                m_PlayerView.RpcSetHealth(m_CurrentHealth);
+            }
+
+            //  photonView.RPC(nameof(RpcRespown), RpcTarget.AllBuffered, damage);
+        }
+
+        //[PunRPC]
+        //public void RpcRespown(float damage)
+        //{
+        //    //если это я
+        //    if (photonView.IsMine)
+        //    {
+        //        m_CurrentHealth = damage;
+        //        m_PlayerView.RpcSetHealth(m_CurrentHealth);
+        //    }
+        //}
+
+
 
         #endregion
 

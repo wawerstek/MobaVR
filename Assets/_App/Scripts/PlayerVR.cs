@@ -268,12 +268,12 @@ namespace MobaVR
             }
 
             //нужно отключить возможность стрельбы и коллайдер
-            m_WizardPlayer.enabled = false;
+           m_WizardPlayer.enabled = false;
 
-            foreach (Collider collider in colliders)
-            {
-                collider.enabled = false; // Отключаем коллайдеры
-            }
+            //foreach (Collider collider in colliders)
+            //{
+            //    collider.enabled = false; // Отключаем коллайдеры
+            //}
 
 
             //нужно занести инфу о смерти игрока, а тому от кого прилетел последний шар внести инфу о убийстве
@@ -282,6 +282,9 @@ namespace MobaVR
 
         public void Respawn()
         {
+            //будет возможность стрелять
+            m_WizardPlayer.enabled = true;
+
             //Возвращаться видимость скина
 
             // Выполняем функцию Respawn() на каждом объекте в массиве
@@ -308,14 +311,19 @@ namespace MobaVR
 
 
             //жизни 100 
-            if (playerView != null)
-            {
-                // Вызываем функцию RpcSetHealth со значением 100
-                playerView.RpcSetHealth(100);
-            }
+            m_WizardPlayer.Respown();
 
-            //будет возможность стрелять
-            m_WizardPlayer.enabled = true;
+
+            //if (playerView != null)
+            //{
+
+
+            //    // Вызываем функцию RpcSetHealth со значением 100
+            //    playerView.RpcSetHealth(100f);
+                
+            //}
+
+            
         }
 
 

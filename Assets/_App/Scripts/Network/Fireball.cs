@@ -29,6 +29,13 @@ namespace MobaVR
             set => m_Owner = value;
         }
 
+
+
+
+
+
+
+
         protected virtual void OnValidate()
         {
             if (m_TeamItem == null)
@@ -92,16 +99,23 @@ namespace MobaVR
                 }
             }
             
+            //если шар выброшен
             if (m_IsThrown)
             {
+
+
+
+
+
                 if (other.CompareTag("RemotePlayer") && other.transform.TryGetComponent(out WizardPlayer wizardPlayer))
                 {
                     if (wizardPlayer == Owner)
                     {
                         return;
                     }
-                    
+
                     wizardPlayer.Hit(this, CalculateDamage());
+
                 }
 
                 if (other.CompareTag("Item"))

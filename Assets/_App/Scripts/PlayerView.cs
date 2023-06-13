@@ -10,7 +10,10 @@ namespace MobaVR
         [SerializeField] private Transform m_PointPlayer;
 
         [SerializeField] private PlayerVR playerVR;
-       
+
+        [SerializeField] private float Life;
+
+
         private bool _Die;
 
         private void Awake()
@@ -46,13 +49,13 @@ namespace MobaVR
 
         public void RpcSetHealth(float value)
         {
+            Life = value;
 
-
-            if (value < 0)
+            if (value <= 0)
             {
-                _Die = true;
+
                 value = 0f;
-                if (_Die == true)
+                if (_Die == false)
                 {
                     GameObject inputVRObject = GameObject.Find("InputVR");
 
@@ -69,8 +72,13 @@ namespace MobaVR
 
                     //делаем прозрачный скин в сетевой версии
                     photonView.RPC(nameof(SetDie), RpcTarget.AllBuffered);
+                    _Die = true;
 
                 }
+            }
+            else
+                {
+                _Die = false;
             }
 
             //меняем шкалу урона
