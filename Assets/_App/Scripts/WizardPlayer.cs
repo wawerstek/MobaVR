@@ -23,6 +23,7 @@ namespace MobaVR
         [Header("Player")]
         [SerializeField] private Teammate m_Teammate;
         [SerializeField] private PlayerView m_PlayerView;
+        [SerializeField] private InputBridge inputBridge;
 
         /// <summary>
         /// TODO: input for Oculus and Pico
@@ -86,11 +87,12 @@ namespace MobaVR
         {
             if (!photonView.IsMine)
             {
+                enabled = false;
                 return;
             }
 
             InputActionSO inputActionSO = m_ActiveInput;
-            InputBridge inputBridge = FindObjectOfType<InputBridge>();
+           InputBridge inputBridge = FindObjectOfType<InputBridge>();
             if (inputBridge != null && m_IsAutoDetect)
             {
                 inputActionSO = inputBridge.InputSource == XRInputSource.Pico ? m_PicoInput : m_OculusInput;
@@ -193,7 +195,7 @@ namespace MobaVR
 
             m_RightActivateInput.action.performed += context =>
             {
-                Debug.Log($"{TAG}: RightActivate: performed");
+               // Debug.Log($"{TAG}: RightActivate: performed");
                 if (IsLife)
                 {
                     if (m_IsAttackRightHand)
@@ -216,7 +218,7 @@ namespace MobaVR
             };
             m_LeftActivateInput.action.performed += context =>
             {
-                Debug.Log($"{TAG}: LeftActivate: performed");
+               // Debug.Log($"{TAG}: LeftActivate: performed");
                 if (IsLife)
                 {
                     if (m_IsAttackLeftHand)
@@ -243,7 +245,7 @@ namespace MobaVR
 
             m_RightActivateInput.action.canceled += context =>
             {
-                Debug.Log($"{TAG}: RightActivate: canceled");
+               // Debug.Log($"{TAG}: RightActivate: canceled");
 
                 if (m_UseRightShield)
                 {
@@ -253,7 +255,7 @@ namespace MobaVR
             };
             m_LeftActivateInput.action.canceled += context =>
             {
-                Debug.Log($"{TAG}: LeftActivate: canceled");
+               // Debug.Log($"{TAG}: LeftActivate: canceled");
 
                 if (m_UseLeftShield)
                 {
@@ -268,7 +270,7 @@ namespace MobaVR
 
             m_HealthInput.action.performed += context =>
             {
-                Debug.Log($"{TAG}: HealthButton: performed");
+               // Debug.Log($"{TAG}: HealthButton: performed");
                 RestoreHp();
                 transform.position = Vector3.zero;
                 transform.rotation = Quaternion.identity;
@@ -289,8 +291,10 @@ namespace MobaVR
                 RestoreHp();
             }
 
+
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
+               
                 CreateBigFireBall(out m_LeftBigFireBall, m_LeftGrabber);
                 if (m_LeftBigFireBall != null)
                 {
@@ -299,8 +303,10 @@ namespace MobaVR
                 }
             }
 
+           
             if (Input.GetKeyDown(KeyCode.Alpha2))
             {
+                
                 CreateBigFireBall(out m_RightBigFireBall, m_RightGrabber);
                 if (m_RightBigFireBall != null)
                 {
@@ -311,6 +317,7 @@ namespace MobaVR
 
             if (Input.GetKeyDown(KeyCode.Alpha3))
             {
+                
                 CreateSmallFireBall(out m_LeftSmallFireBall, m_LeftGrabber);
                 if (m_LeftSmallFireBall != null)
                 {
@@ -321,6 +328,7 @@ namespace MobaVR
 
             if (Input.GetKeyDown(KeyCode.Alpha4))
             {
+               
                 CreateSmallFireBall(out m_RightSmallFireBall, m_RightGrabber);
                 if (m_RightSmallFireBall != null)
                 {
@@ -329,6 +337,7 @@ namespace MobaVR
                 }
             }
 
+            //это со щитами
             if (Input.GetKeyDown(KeyCode.Alpha5))
             {
                 ShowShield(m_LeftShield, true);
@@ -504,6 +513,7 @@ namespace MobaVR
 
         #endregion
 
+        //урон скорее всего одна из функций вызывается при ранении, скорее всего это Hit
         #region HP
 
         private void RestoreHp()
@@ -515,20 +525,24 @@ namespace MobaVR
             }
         }
 
+       //вызвалась функция и получила значение файрбола и damage
         public void Hit(Fireball fireball, float damage)
         {
+            //тут как раз проверка на командность, если файир бол прилетел из команды той же команды, что и игрок, то выходим
             if ((fireball.Team.IsRed && m_Teammate.IsRed)
                 || (!fireball.Team.IsRed && !m_Teammate.IsRed))
             {
                 return;
             }
 
+            //если прилетел из другой команды, то запускаем у всех функцию
             photonView.RPC(nameof(RpcHit), RpcTarget.All, damage);
         }
 
         [PunRPC]
         public void RpcHit(float damage)
         {
+            //если это я
             if (photonView.IsMine)
             {
                 m_CurrentHealth -= damage;

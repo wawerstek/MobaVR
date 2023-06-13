@@ -3,6 +3,7 @@ using BNG;
 using Photon.Pun;
 using UnityEngine;
 
+
 namespace MobaVR
 {
     /// <summary>
@@ -12,8 +13,17 @@ namespace MobaVR
     /// </summary>
     public class PlayerVR : MonoBehaviourPunCallbacks
     {
+        [SerializeField] private TeamType m_CurrentTeam = TeamType.RED;
+
+
+        
+        private GameObject _InputVR;
+        private ChangeTeam _ChangeTeam;
+
         [SerializeField] private WizardPlayer m_WizardPlayer;
         [SerializeField] private Teammate m_Teammate;
+
+
         [SerializeField] private CharacterIK m_CharacterIK;
 
         [Header("Hands")]
@@ -23,15 +33,22 @@ namespace MobaVR
         [Header("Renderers")]
         [SerializeField] private bool m_IsRender = false;
         [SerializeField] private List<Renderer> m_Renderers;
-        
+
+        [Header("DieSkin")]
+        public SkinDieRespawn[] skinDieRespawnObjects;
+        public Collider[] colliders; // Массив объектов с коллайдерами персонажа
+        public PlayerView playerView;  // Переменная для хранения объекта с компонентом PlayerView
+
+
         private InputVR m_InputVR;
         private bool m_IsLocalPlayer = false;
         private bool m_IsInit = false;
-        private TeamType m_TeamType;
+        [SerializeField] private TeamType m_TeamType;
 
         public bool IsLocalPlayer => m_IsLocalPlayer;
         public bool IsInit => m_IsInit;
         public TeamType TeamType => m_TeamType;
+
 
         private void OnValidate()
         {
@@ -49,7 +66,29 @@ namespace MobaVR
             {
                 TryGetComponent(out m_Teammate);
             }
+
+
         }
+
+
+        private void Start()
+        {
+            // Находим объект InputVR
+            _InputVR = GameObject.Find("InputVR");
+
+
+
+            if (_InputVR != null)
+            {
+                // Получаем компонент ChangeTeam для смены цвета скина
+                _ChangeTeam = _InputVR.GetComponent<ChangeTeam>();
+            }
+
+        }
+
+
+
+
 
         private void Update()
         {
@@ -71,11 +110,56 @@ namespace MobaVR
             photonView.RPC(nameof(SetLocalPlayer),RpcTarget.All);
         }
 
+
+
+
+
+        //смена команды
+        public void ChangeTeamOnClick()
+        {
+            // Переключаем команду на противоположную
+            m_CurrentTeam = (m_CurrentTeam == TeamType.RED) ? TeamType.BLUE : TeamType.RED;
+
+            // Применяем новую команду для всех объектов
+            //эта функция меняет у игрока команду в WizardPlayer м Teammate
+            SetTeam(m_CurrentTeam);
+
+        }
+
+
+        
+
+
+
+
+
+
+
         public void SetTeam(TeamType teamType)
         {
             m_TeamType = teamType;
             photonView.RPC(nameof(SetTeamRpc), RpcTarget.AllBuffered, teamType);
+            //меняем цвет локального игрока
+
+            // Находим объект InputVR
+            _InputVR = GameObject.Find("InputVR");
+            if (_InputVR != null)
+            {
+                // Получаем компонент ChangeTeam для смены цвета скина
+                _ChangeTeam = _InputVR.GetComponent<ChangeTeam>();
+
+                if (_ChangeTeam != null)
+                {
+                    // Выполняем функцию ChangeAllTeams
+                    _ChangeTeam.ChangeAllTeams(teamType);
+                }
+
+            }
+            
         }
+
+
+
 
         [PunRPC]
         public void SetTeamRpc(TeamType teamType)
@@ -86,12 +170,14 @@ namespace MobaVR
             {
                 m_WizardPlayer.TeamType = m_TeamType;
             }
-            
+
             if (m_Teammate != null)
             {
                 m_Teammate.SetTeam(m_TeamType);
             }
         }
+
+
 
         public void SetLocalPlayer(InputVR inputVR)
         {
@@ -155,6 +241,9 @@ namespace MobaVR
                 }
             }
 
+            
+
+
             if (!m_IsRender)
             {
                 foreach (Renderer meshRenderer in m_Renderers)
@@ -165,5 +254,80 @@ namespace MobaVR
 
             m_IsInit = true;
         }
+
+
+        //все игроки видят, как выполнилась эта функция
+        public void DieRemote()
+        {
+
+            // Выполняем функцию Die() на каждом объекте в массиве
+            foreach (SkinDieRespawn obj in skinDieRespawnObjects)
+            {
+                //заменяем материало на прозрачный
+                obj.Die();
+            }
+
+            //нужно отключить возможность стрельбы и коллайдер
+            m_WizardPlayer.enabled = false;
+
+            foreach (Collider collider in colliders)
+            {
+                collider.enabled = false; // Отключаем коллайдеры
+            }
+
+
+            //нужно занести инфу о смерти игрока, а тому от кого прилетел последний шар внести инфу о убийстве
+
+        }
+
+        public void Respawn()
+        {
+            //Возвращаться видимость скина
+
+            // Выполняем функцию Respawn() на каждом объекте в массиве
+            foreach (SkinDieRespawn obj in skinDieRespawnObjects)
+            {
+                //заменяем материало на прозрачный
+                obj.Respawn();
+            }
+
+            //восстанавливаем цвет скин на локальной версии
+            GameObject inputVRObject = GameObject.Find("InputVR");
+
+            if (inputVRObject != null)
+            {
+                LocalVR localVR = inputVRObject.GetComponent<LocalVR>();
+
+                if (localVR != null)
+                {
+                    //делаем прозрачный скин в локальной версии
+                    localVR.RespawnLocal();
+                }
+            }
+
+
+
+            //жизни 100 
+            if (playerView != null)
+            {
+                // Вызываем функцию RpcSetHealth со значением 100
+                playerView.RpcSetHealth(100);
+            }
+
+            //будет возможность стрелять
+            m_WizardPlayer.enabled = true;
+        }
+
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("ZonaRespown"))
+            {
+                Respawn(); // Вызываем функцию Respawn
+            }
+        }
+
+
+
     }
 }
