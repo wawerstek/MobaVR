@@ -13,6 +13,14 @@ namespace BNG
         public GameObject ChageSkinUI;
         private bool ChageSkinBool = false; // Флаг, указывающий, включено ли меню выбора скина
 
+
+        //переменная скрипта калибровки
+        public GameObject _CALIBR;
+        //переменная надписи Калибровка
+        public GameObject CalibrovkaText;
+        //переменная надписи Калибровка
+        public GameObject SkinText;
+
         // Start is called before the first frame update
         void Start()
         {
@@ -73,6 +81,16 @@ namespace BNG
                     meshRenderer.enabled = true; // Выключаем компонент MeshRenderer
                 }
             }
+        }
+
+
+        //функция включения калибровки
+        public void RunCalibr()
+        {
+            SkinText.SetActive(false);
+            CalibrovkaText.SetActive(true);
+            //функция включения калибровки
+            _CALIBR.GetComponent<Calibr>().calibr = false;
         }
 
 
