@@ -5,12 +5,11 @@ using UnityEngine;
 
 namespace MobaVR
 {
-    public class GameSession : MonoBehaviourPunCallbacks
+    public class GameSession : BaseGameSession
     {
         [Header("Network")]
         [SerializeField] private NetworkSession m_NetworkSession;
         [SerializeField] private InputVR m_InputVR;
-        public GameObject localPlayer;
 
         [Space]
         [Header("Players")]
@@ -23,7 +22,6 @@ namespace MobaVR
         private Player m_LocalPlayer;
 
         //public Player LocalPlayer => m_LocalPlayer;
-        public Player LocalPlayer => photonView.Owner;
 
         private void Awake()
         {
@@ -64,12 +62,15 @@ namespace MobaVR
 
            
 
-           localPlayer = PhotonNetwork.Instantiate(prefabName, Vector3.zero, Quaternion.identity);
-            localPlayer.name += "_" + Random.Range(1, 1000);
-            if (localPlayer.TryGetComponent(out PlayerVR playerVR))
+            m_Player = PhotonNetwork.Instantiate(prefabName, Vector3.zero, Quaternion.identity);
+            m_Player.name += "_" + Random.Range(1, 1000);
+            if (m_Player.TryGetComponent(out PlayerVR playerVR))
             {
-                playerVR.SetTeam(teamType);
                 playerVR.SetLocalPlayer(m_InputVR);
+                //playerVR.SetTeam(team);
+                
+                playerVR.SetTeam(teamType);
+                //playerVR.SetLocalPlayer(m_InputVR);
             }
         }
     }

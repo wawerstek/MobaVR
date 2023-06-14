@@ -325,9 +325,14 @@ namespace MobaVR
             m_IsInit = true;
         }
 
-
-        //все игроки видят, как выполнилась эта функция
         public void DieRemote()
+        {
+            photonView.RPC(nameof(RpcDieRemote), RpcTarget.All);
+        }
+
+        [PunRPC]
+        //все игроки видят, как выполнилась эта функция
+        public void RpcDieRemote()
         {
 
             // Выполняем функцию Die() на каждом объекте в массиве
@@ -337,6 +342,7 @@ namespace MobaVR
                 obj.Die();
             }
 
+            /*
             //нужно отключить возможность стрельбы и коллайдер
             m_WizardPlayer.enabled = false;
 
@@ -344,13 +350,19 @@ namespace MobaVR
             {
                 collider.enabled = false; // Отключаем коллайдеры
             }
-
+            */
 
             //нужно занести инфу о смерти игрока, а тому от кого прилетел последний шар внести инфу о убийстве
 
         }
+        
+        public void RespawnRemote()
+        {
+            photonView.RPC(nameof(RpcRespawn), RpcTarget.All);
+        }
 
-        public void Respawn()
+        [PunRPC]
+        public void RpcRespawn()
         {
             //Возвращаться видимость скина
 
@@ -375,17 +387,17 @@ namespace MobaVR
                 }
             }
 
-
-
-            //жизни 100 
-            if (playerView != null)
-            {
-                // Вызываем функцию RpcSetHealth со значением 100
-                playerView.RpcSetHealth(100);
-            }
-
-            //будет возможность стрелять
-            m_WizardPlayer.enabled = true;
+            /*
+                        //жизни 100 
+                        if (playerView != null)
+                        {
+                            // Вызываем функцию RpcSetHealth со значением 100
+                            playerView.RpcSetHealth(100);
+                        }
+            
+                        //будет возможность стрелять
+                        m_WizardPlayer.enabled = true;
+                        */
         }
 
 
@@ -393,11 +405,8 @@ namespace MobaVR
         {
             if (other.CompareTag("ZonaRespown"))
             {
-                Respawn(); // Вызываем функцию Respawn
+                //Respawn(); // Вызываем функцию Respawn
             }
         }
-
-
-
     }
 }

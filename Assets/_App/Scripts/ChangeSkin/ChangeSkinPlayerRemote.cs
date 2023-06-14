@@ -6,31 +6,31 @@ using Photon.Pun;
 public class ChangeSkinPlayerRemote : MonoBehaviourPun
 {
 
-    [Header("Номер скина")]
+    [Header("ГЌГ®Г¬ГҐГ° Г±ГЄГЁГ­Г ")]
     public int NomerSkins;
     public int OldNomerSkins;
     PhotonView PV;
 
 
-    [Header("Части головы")]
-    [Tooltip("Хвост")]
+    [Header("Г—Г Г±ГІГЁ ГЈГ®Г«Г®ГўГ»")]
+    [Tooltip("Г•ГўГ®Г±ГІ")]
     public GameObject TopKnot;
 
-    [Tooltip("Бородка")]
+    [Tooltip("ГЃГ®Г°Г®Г¤ГЄГ ")]
     public GameObject Beard;
 
-    [Tooltip("Бакенбарды")]
+    [Tooltip("ГЃГ ГЄГҐГ­ГЎГ Г°Г¤Г»")]
     public GameObject Sideburns;
 
-    [Tooltip("Шея")]
+    [Tooltip("ГГҐГї")]
     public GameObject Neck;
 
-    [Tooltip("Причёска")]
+    [Tooltip("ГЏГ°ГЁГ·ВёГ±ГЄГ ")]
     public GameObject Hair;
 
 
-    [Header("Скины")]
-    [Tooltip("Добавить нужное количество скинов")]
+    [Header("Г‘ГЄГЁГ­Г»")]
+    [Tooltip("Г„Г®ГЎГ ГўГЁГІГј Г­ГіГ¦Г­Г®ГҐ ГЄГ®Г«ГЁГ·ГҐГ±ГІГўГ® Г±ГЄГЁГ­Г®Гў")]
     public GameObject[] Skins;
 
 
@@ -68,34 +68,34 @@ public class ChangeSkinPlayerRemote : MonoBehaviourPun
     [PunRPC]
     public void RPC_ChangeSkin(int value)
     {
-        Debug.Log("Скин сменился на " + NomerSkins);
-        // Отключаем текущий скин
+        Debug.Log("Г‘ГЄГЁГ­ Г±Г¬ГҐГ­ГЁГ«Г±Гї Г­Г  " + NomerSkins);
+        // ГЋГІГЄГ«ГѕГ·Г ГҐГ¬ ГІГҐГЄГіГ№ГЁГ© Г±ГЄГЁГ­
         Skins[NomerSkins].SetActive(false);
 
         NomerSkins = value;
-        // Включаем новый скин локально
+        // Г‚ГЄГ«ГѕГ·Г ГҐГ¬ Г­Г®ГўГ»Г© Г±ГЄГЁГ­ Г«Г®ГЄГ Г«ГјГ­Г®
         Skins[NomerSkins].SetActive(true);
         ActiveFase();
     }
 
-    //активируем растительность на лице, в зависимости от скина
+    //Г ГЄГІГЁГўГЁГ°ГіГҐГ¬ Г°Г Г±ГІГЁГІГҐГ«ГјГ­Г®Г±ГІГј Г­Г  Г«ГЁГ¶ГҐ, Гў Г§Г ГўГЁГ±ГЁГ¬Г®Г±ГІГЁ Г®ГІ Г±ГЄГЁГ­Г 
     public void ActiveFase()
     {
-        Debug.Log("Включилась борода ");
+        Debug.Log("Г‚ГЄГ«ГѕГ·ГЁГ«Г Г±Гј ГЎГ®Г°Г®Г¤Г  ");
 
-        //Хвост активен только на этих скинах.
+        //Г•ГўГ®Г±ГІ Г ГЄГІГЁГўГҐГ­ ГІГ®Г«ГјГЄГ® Г­Г  ГЅГІГЁГµ Г±ГЄГЁГ­Г Гµ.
         TopKnot.SetActive(NomerSkins == 0);
 
-        //Борода активна только на этих скинах.
+        //ГЃГ®Г°Г®Г¤Г  Г ГЄГІГЁГўГ­Г  ГІГ®Г«ГјГЄГ® Г­Г  ГЅГІГЁГµ Г±ГЄГЁГ­Г Гµ.
         //Beard.SetActive();
 
-        //Бакенбарды активны только на этих скинах.
+        //ГЃГ ГЄГҐГ­ГЎГ Г°Г¤Г» Г ГЄГІГЁГўГ­Г» ГІГ®Г«ГјГЄГ® Г­Г  ГЅГІГЁГµ Г±ГЄГЁГ­Г Гµ.
         Sideburns.SetActive(NomerSkins == 1);
 
-        //Шея активна только на этих скинах.
+        //ГГҐГї Г ГЄГІГЁГўГ­Г  ГІГ®Г«ГјГЄГ® Г­Г  ГЅГІГЁГµ Г±ГЄГЁГ­Г Гµ.
         Neck.SetActive(NomerSkins == 1 || NomerSkins == 2 || NomerSkins == 4 || NomerSkins == 5);
 
-        //Причёска активна только на этих скинах.
+        //ГЏГ°ГЁГ·ВёГ±ГЄГ  Г ГЄГІГЁГўГ­Г  ГІГ®Г«ГјГЄГ® Г­Г  ГЅГІГЁГµ Г±ГЄГЁГ­Г Гµ.
         Hair.SetActive(NomerSkins == 0 || NomerSkins == 3);
     }
 

@@ -4,28 +4,40 @@ using UnityEngine;
 
 public class SkinDieRespawn : MonoBehaviour
 {
-    [SerializeField] private Material[] initialMaterials;  // Изначальные материалы объекта
-    [SerializeField] private Material[] replacementMaterials;  // Материалы для замены
+    [SerializeField] private Material[] initialMaterials;  // Г€Г§Г­Г Г·Г Г«ГјГ­Г»ГҐ Г¬Г ГІГҐГ°ГЁГ Г«Г» Г®ГЎГєГҐГЄГІГ 
+    [SerializeField] private Material[] replacementMaterials;  // ГЊГ ГІГҐГ°ГЁГ Г«Г» Г¤Г«Гї Г§Г Г¬ГҐГ­Г»
 
-    private SkinnedMeshRenderer skinnedMeshRenderer;  // Компонент SkinnedMeshRenderer
-
+    private SkinnedMeshRenderer skinnedMeshRenderer;  // ГЉГ®Г¬ГЇГ®Г­ГҐГ­ГІ SkinnedMeshRenderer
+    private bool isDie = false;
+    
     private void Awake()
     {
         skinnedMeshRenderer = GetComponent<SkinnedMeshRenderer>();
+        initialMaterials = skinnedMeshRenderer.materials;
     }
 
+    [ContextMenu("Die")]
     public void Die()
     {
-        initialMaterials = skinnedMeshRenderer.materials;
+        if (isDie)
+        {
+            return;
+        }
+        
+        isDie = true;
 
+        initialMaterials = skinnedMeshRenderer.materials;
         if (replacementMaterials.Length > 0)
         {
             skinnedMeshRenderer.materials = replacementMaterials;
         }
     }
 
+    [ContextMenu("Respawn")]
     public void Respawn()
     {
+        isDie = false;
+        
         if (initialMaterials.Length > 0)
         {
             skinnedMeshRenderer.materials = initialMaterials;

@@ -7,16 +7,17 @@ namespace MobaVR
     public class GameSettings : MonoBehaviour
     {
         [SerializeField] private GameObject m_View;
+        [SerializeField] private Canvas m_Canvas;
         [SerializeField] private bool m_UseVRUISystem = false;
         [SerializeField] private ClassicGameSession m_GameSession;
 
+        
         private VRUISystem m_VRUISystem;
 
-        private void Start()
+        private void Awake()
         {
             m_VRUISystem = FindObjectOfType<VRUISystem>();
-
-            /*
+/*
             if (Application.isEditor || Application.platform == RuntimePlatform.WindowsPlayer)
             {
                 m_VRUISystem.enabled = false;
@@ -25,15 +26,21 @@ namespace MobaVR
             {
                 m_VRUISystem.enabled = true;
             }
-            */
-            
+*/
             //m_VRUISystem.enabled = m_UseVRUISystem;
         }
 
         private void OnEnable()
         {
-            //m_VRUISystem = FindObjectOfType<VRUISystem>();
-            //m_VRUISystem.enabled = m_UseVRUISystem;
+            /*
+            if (Application.platform == RuntimePlatform.WindowsPlayer)
+            {
+                m_VRUISystem = FindObjectOfType<VRUISystem>();
+                m_VRUISystem.enabled = m_UseVRUISystem;
+            }
+            */
+
+            //LocomotionVREmulator l;
         }
 
         private void Update()
@@ -45,9 +52,18 @@ namespace MobaVR
 
             if (Input.GetKeyDown(KeyCode.U))
             {
+                m_VRUISystem = FindObjectOfType<VRUISystem>();
                 if (m_VRUISystem != null)
                 {
                     m_VRUISystem.enabled = !m_VRUISystem.enabled;
+                }
+            }
+            
+            if (Input.GetKeyDown(KeyCode.O))
+            {
+                if (m_Canvas != null)
+                {
+                    m_Canvas.renderMode = RenderMode.ScreenSpaceOverlay;
                 }
             }
         }

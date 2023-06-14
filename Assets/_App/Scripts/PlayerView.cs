@@ -54,6 +54,7 @@ namespace MobaVR
                 value = 0f;
                 if (_Die == true)
                 {
+                    /*
                     GameObject inputVRObject = GameObject.Find("InputVR");
 
                     if (inputVRObject != null)
@@ -62,18 +63,21 @@ namespace MobaVR
 
                         if (localVR != null)
                         {
-                            //делаем прозрачный скин в локальной версии
+                            //пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
                             localVR.DieLocal();
                         }
                     }
+                    */
 
-                    //делаем прозрачный скин в сетевой версии
-                    photonView.RPC(nameof(SetDie), RpcTarget.AllBuffered);
-
+                    //пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+                    if (playerVR != null)
+                    {
+                        photonView.RPC(nameof(SetDie), RpcTarget.AllBuffered);
+                    }
                 }
             }
 
-            //меняем шкалу урона
+            //пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
             photonView.RPC(nameof(SetHealth), RpcTarget.AllBuffered, value);
         }
 

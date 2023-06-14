@@ -16,6 +16,12 @@ namespace MobaVR
     
     public class LichGame : MonoBehaviourPunCallbacks
     {
+        [Header("Classic Mode")]
+        [SerializeField] private ClassicMode m_GameSession;
+        [SerializeField] private PlayerStateSO m_PlayState;
+        [SerializeField] private PlayerStateSO m_ReadyState;
+        
+        [Header("Lich")]
         [SerializeField] private List<MonsterPointSpawner> m_Spawners = new List<MonsterPointSpawner>();
         [SerializeField] private Lich m_Lich;
         [SerializeField] private LichGameState m_State = LichGameState.NONE;
@@ -72,6 +78,15 @@ namespace MobaVR
                     pointSpawner.GenerateMonsters();
                 }
             }
+            
+            if (PhotonNetwork.IsMasterClient && m_GameSession != null)
+            {
+                foreach (PlayerVR player in m_GameSession.Players)
+                {
+                    player.SetState(m_PlayState);
+                    player.WizardPlayer.Reborn();
+                }
+            }
 
             if (!m_Lich.IsLife)
             {
@@ -97,6 +112,15 @@ namespace MobaVR
             {
                 pointSpawner.ClearMonsters();
             }
+            
+            if (PhotonNetwork.IsMasterClient && m_GameSession != null)
+            {
+                foreach (PlayerVR player in m_GameSession.Players)
+                {
+                    player.SetState(m_ReadyState);
+                    player.WizardPlayer.Reborn();
+                }
+            }
         }
 
         [ContextMenu("SetGameOver")]
@@ -112,6 +136,15 @@ namespace MobaVR
             foreach (MonsterPointSpawner pointSpawner in m_Spawners)
             {
                 pointSpawner.ClearMonsters();
+            }
+            
+            if (PhotonNetwork.IsMasterClient && m_GameSession != null)
+            {
+                foreach (PlayerVR player in m_GameSession.Players)
+                {
+                    player.SetState(m_ReadyState);
+                    player.WizardPlayer.Reborn();
+                }
             }
         }
     }

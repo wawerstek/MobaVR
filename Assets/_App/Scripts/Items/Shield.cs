@@ -86,7 +86,8 @@ namespace MobaVR
 
             if (fireball is SmallFireBall)
             {
-                return;
+                //TODO: shield bug
+                //return;
             }
 
             photonView.RPC(nameof(RpcHit), RpcTarget.All, damage);

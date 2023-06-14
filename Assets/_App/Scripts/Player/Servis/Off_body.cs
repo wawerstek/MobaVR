@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-//скрипт получает команду по потключению отображения тела локального игрока. Получает команду из главного меню админа
+//Г±ГЄГ°ГЁГЇГІ ГЇГ®Г«ГіГ·Г ГҐГІ ГЄГ®Г¬Г Г­Г¤Гі ГЇГ® ГЇГ®ГІГЄГ«ГѕГ·ГҐГ­ГЁГѕ Г®ГІГ®ГЎГ°Г Г¦ГҐГ­ГЁГї ГІГҐГ«Г  Г«Г®ГЄГ Г«ГјГ­Г®ГЈГ® ГЁГЈГ°Г®ГЄГ . ГЏГ®Г«ГіГ·Г ГҐГІ ГЄГ®Г¬Г Г­Г¤Гі ГЁГ§ ГЈГ«Г ГўГ­Г®ГЈГ® Г¬ГҐГ­Гѕ Г Г¤Г¬ГЁГ­Г 
 public class Off_body : MonoBehaviour
 {
 
-    public ChangeSkinPlayer _ChangeSkinPlayer; // Ссылка на скрипт, содержащий функцию SkinON
+    public ChangeSkinPlayer _ChangeSkinPlayer; // Г‘Г±Г»Г«ГЄГ  Г­Г  Г±ГЄГ°ГЁГЇГІ, Г±Г®Г¤ГҐГ°Г¦Г Г№ГЁГ© ГґГіГ­ГЄГ¶ГЁГѕ SkinON
 
     public GameObject[] objectsToDisable;
     // Start is called before the first frame update
@@ -27,7 +27,7 @@ public class Off_body : MonoBehaviour
     //{
     //    foreach (GameObject obj in objectsToDisable)
     //    {
-    //        obj.SetActive(isActive); // Выключаем или включаем объект 
+    //        obj.SetActive(isActive); // Г‚Г»ГЄГ«ГѕГ·Г ГҐГ¬ ГЁГ«ГЁ ГўГЄГ«ГѕГ·Г ГҐГ¬ Г®ГЎГєГҐГЄГІ 
     //    }
     //}
 
@@ -41,13 +41,13 @@ public class Off_body : MonoBehaviour
             {
                 if (i<2)
                 {
-                    obj.SetActive(true); // Включаем первые 2 объекта
+                    obj.SetActive(true); // Г‚ГЄГ«ГѕГ·Г ГҐГ¬ ГЇГҐГ°ГўГ»ГҐ 2 Г®ГЎГєГҐГЄГІГ 
                 }
                 _ChangeSkinPlayer.SkinON();
             }
             else
             {
-                obj.SetActive(false); // Выключаем все объекты
+                obj.SetActive(false); // Г‚Г»ГЄГ«ГѕГ·Г ГҐГ¬ ГўГ±ГҐ Г®ГЎГєГҐГЄГІГ»
             }
         }
     }

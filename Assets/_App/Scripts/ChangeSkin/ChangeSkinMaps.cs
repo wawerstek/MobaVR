@@ -5,25 +5,27 @@ using UnityEngine;
 public class ChangeSkinMaps : MonoBehaviour
 {
 
-    //если нажали на кнопку назад, то мы говорим скрипту ChangeSkinPlayer сделать скин -1
+    //пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ ChangeSkinPlayer пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ -1
+    [ContextMenu("Down")]
     public void Down()
     {
-        // Находим объект с компонентом ChangeSkinPlayer
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ ChangeSkinPlayer
         GameObject player = GameObject.Find("ChangeSkinPlayer");
         ChangeSkinPlayer script = player.GetComponent<ChangeSkinPlayer>();
 
-        //функция смены скина
+        //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
         script.ChangeSkinDown();
     }
 
-    //если нажали на кнопку вперёд, то мы говорим скрипту ChangeSkinPlayer сделать скин +1
+    [ContextMenu("Next")]
+    //пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ ChangeSkinPlayer пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ +1
     public void Next()
     {
-        // Находим объект с компонентом ChangeSkinPlayer
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ ChangeSkinPlayer
         GameObject player = GameObject.Find("ChangeSkinPlayer");
         ChangeSkinPlayer script = player.GetComponent<ChangeSkinPlayer>();
 
-        //функция смены скина
+        //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
         script.ChangeSkinNext();
     }
 

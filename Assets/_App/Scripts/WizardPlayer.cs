@@ -858,6 +858,10 @@ namespace MobaVR
             m_Collider.enabled = true;
 
             OnReborn?.Invoke();
+            
+            
+            //TODO: MERGE
+            m_PlayerVR.RespawnRemote();
         }
 
         public void RestoreHp()
@@ -912,6 +916,10 @@ namespace MobaVR
                 m_Collider.enabled = false;
                 ResetSpells();
                 OnDie?.Invoke();
+                
+                
+                //TODO: MERGE
+                m_PlayerVR.DieRemote();
             }
 
             if (photonView.IsMine)

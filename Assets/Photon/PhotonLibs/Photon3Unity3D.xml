@@ -1478,7 +1478,7 @@
         </member>
         <member name="P:ExitGames.Client.Photon.PhotonPeer.ServerTimeInMilliSeconds">
              <summary>
-             Approximated Environment.TickCount value of server (while connected).
+             Approximated SkyLandEnvironment.TickCount value of server (while connected).
              </summary>
              <remarks>
              UDP: The server's timestamp is automatically fetched after connecting (once). This is done
@@ -1493,7 +1493,7 @@
              The approximation adds RoundtripTime / 2 and uses this.LocalTimeInMilliSeconds to calculate
              in-between values (this property returns a new value per tick).
             
-             The value sent by Photon equals Environment.TickCount in the logic layer.
+             The value sent by Photon equals SkyLandEnvironment.TickCount in the logic layer.
              </remarks>
              <value>
              0 until connected.
@@ -1502,7 +1502,7 @@
         </member>
         <member name="P:ExitGames.Client.Photon.PhotonPeer.LocalMsTimestampDelegate">
             <summary>
-            This setter for the (local-) timestamp delegate replaces the default Environment.TickCount with any equal function.
+            This setter for the (local-) timestamp delegate replaces the default SkyLandEnvironment.TickCount with any equal function.
             </summary>
         </member>
         <member name="P:ExitGames.Client.Photon.PhotonPeer.ConnectionTime">
@@ -2535,7 +2535,7 @@
             Gets the local machine's "milliseconds since start" value (precision is described in remarks).
             </summary>
             <remarks>
-            This method uses Environment.TickCount (cheap but with only 16ms precision).
+            This method uses SkyLandEnvironment.TickCount (cheap but with only 16ms precision).
             PhotonPeer.LocalMsTimestampDelegate is available to set the delegate (unless already connected).
             </remarks>
             <returns>Fraction of the current time in Milliseconds (this is not a proper datetime timestamp).</returns>

@@ -8,75 +8,115 @@ using MobaVR;
 
 public class ServisUI : MonoBehaviourPunCallbacks
 {
-    public Text statusLegs; // Ссылка на текстовый компонент для отображения статуса ног
-    private bool legsEnabled = true; // Флаг, указывающий, включены ли ноги
+    public Text statusLegs; // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ
+    private bool legsEnabled = true; // пїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ
 
-    public Text statusBody; // Ссылка на текстовый компонент для отображения статуса тела локального
-    private bool bodyEnabled = true; // Флаг, указывающий, включено ли тело
+    public Text statusBody; // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    private bool bodyEnabled = true; // пїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ
 
 
-    public GameSession _GameSession;
+    public BaseGameSession _GameSession;
     [SerializeField] private GameObject _PlayerVR;
 
     [SerializeField] private Off_legs[] offLegsArray;
 
 
-    // Если нажали на кнопку "ноги"
+    // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ "пїЅпїЅпїЅпїЅ"
     public void Off_Legs()
     {
-        // Отправляем сетевое событие для отключения ног всем игрокам
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         photonView.RPC("DisableLegs", RpcTarget.All);
+        //photonView.RPC(nameof(SetVisibleLegs), RpcTarget.All, false);
+    }
 
+    public void ShowLegs()
+    {
+        photonView.RPC(nameof(SetVisibleLegs), RpcTarget.All, true);
+    }
+    
+    public void HideLegs()
+    {
+        photonView.RPC(nameof(SetVisibleLegs), RpcTarget.All, false);
+    }
+    
+    public void On_Legs()
+    {
+        photonView.RPC(nameof(SetVisibleLegs), RpcTarget.All, true);
+    }
+
+    [PunRPC]
+    private void SetVisibleLegs(bool isVisible)
+    {
+        offLegsArray = FindObjectsOfType<Off_legs>();
+
+        foreach (Off_legs offLegs in offLegsArray)
+        {
+            offLegs.ToggleObjects(isVisible);
+        }
     }
 
     [PunRPC]
     private void DisableLegs()
     {
-        // Находим все объекты с компонентом Off_legs
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ Off_legs
         offLegsArray = FindObjectsOfType<Off_legs>();
 
         foreach (Off_legs offLegs in offLegsArray)
         {
-            offLegs.ToggleObjects(legsEnabled); // Включаем или выключаем ноги
+            offLegs.ToggleObjects(legsEnabled); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
         }
 
-        // Изменяем состояние флага и текста статуса
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         legsEnabled = !legsEnabled;
-        statusLegs.text = legsEnabled ? "Выключены" : "Включены";
+        statusLegs.text = legsEnabled ? "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ" : "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ";
     }
 
-    // Если нажали на кнопку "ТЕЛО"
+    // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ "пїЅпїЅпїЅпїЅ"
     public void Off_Body()
     {
-        // Отправляем сетевое событие для отключения ног всем игрокам
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         photonView.RPC("DisableBody", RpcTarget.All);
-
+    }
+    
+    public void ShowBody()
+    {
+        photonView.RPC(nameof(SetVisibleBody), RpcTarget.All, true);
+    }
+    
+    public void HideBody()
+    {
+        photonView.RPC(nameof(SetVisibleBody), RpcTarget.All, false);
     }
 
     [PunRPC]
+    private void SetVisibleBody(bool isVisible)
+    {
+        Off_body[] offBodies = FindObjectsOfType<Off_body>();
+
+        foreach (Off_body offLegs in offBodies)
+        {
+            offLegs.DisableAllObjects(isVisible);
+        }
+    }
+    
+    [PunRPC]
     private void DisableBody()
     {
-        // Находим объект с компонентом Off_body
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ Off_body
         Off_body offBodies = FindObjectOfType<Off_body>();
 
-        offBodies.DisableAllObjects(bodyEnabled); // Включаем или выключаем тело
+        offBodies.DisableAllObjects(bodyEnabled); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 
-        // Изменяем состояние флага и текста статуса
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         bodyEnabled = !bodyEnabled;
-        statusBody.text = bodyEnabled? "Выключено" : "Включено";
+        statusBody.text = bodyEnabled ? "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ" : "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ";
     }
 
-    // Если нажали на кнопку "Смена команды"
+    // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ "пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ"
     public void ChangeTeam()
     {
-        //нужно найти скрипт Teammate и выполнить функцию в нём
-        _PlayerVR = _GameSession.localPlayer;
+        //пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ Teammate пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅ
+        _PlayerVR = _GameSession.Player;
         _PlayerVR.GetComponent<PlayerVR>().ChangeTeamOnClick();
-
     }
-
-
-
-
-
 }
