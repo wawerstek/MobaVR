@@ -11,6 +11,7 @@ namespace MobaVR
         [SerializeField] private bool m_UseVRUISystem = false;
         [SerializeField] private ClassicGameSession m_GameSession;
 
+        public GameObject _Call;
         
         private VRUISystem m_VRUISystem;
 
@@ -72,6 +73,11 @@ namespace MobaVR
         public void SwitchTeam()
         {
             m_GameSession.SwitchTeam();
+        }
+        
+        public void ClearCal()
+        {
+            _Call.GetComponent<Calibr>().calibr = false;
         }
     }
 }

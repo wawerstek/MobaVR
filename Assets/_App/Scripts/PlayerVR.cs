@@ -113,6 +113,10 @@ namespace MobaVR
             if (m_IsLocalPlayer && m_IsInit)
             {
                 transform.position = m_InputVR.BngPlayerController.transform.position;
+                //Vector3 customPosition =  m_InputVR.BngPlayerController.transform.position;
+                //customPosition.y = 0;
+                //transform.position = customPosition;
+                
                 transform.rotation = m_InputVR.BngPlayerController.transform.rotation;
 
                 m_LeftHand.transform.position = m_InputVR.IKLeftHand.transform.position;

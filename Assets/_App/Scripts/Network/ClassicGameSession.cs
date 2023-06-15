@@ -164,5 +164,10 @@ namespace MobaVR
         {
             m_LichMode.StopGame();
         }
+
+        public void SetMaster()
+        {
+            PhotonNetwork.SetMasterClient(PhotonNetwork.LocalPlayer);
+        }
     }
 }
