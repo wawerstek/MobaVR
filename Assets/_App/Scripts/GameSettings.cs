@@ -12,22 +12,22 @@ namespace MobaVR
         [SerializeField] private ClassicGameSession m_GameSession;
 
         public GameObject _Call;
-        
+
         private VRUISystem m_VRUISystem;
 
         private void Awake()
         {
             m_VRUISystem = FindObjectOfType<VRUISystem>();
-/*
-            if (Application.isEditor || Application.platform == RuntimePlatform.WindowsPlayer)
-            {
-                m_VRUISystem.enabled = false;
-            }
-            else
-            {
-                m_VRUISystem.enabled = true;
-            }
-*/
+            /*
+                        if (Application.isEditor || Application.platform == RuntimePlatform.WindowsPlayer)
+                        {
+                            m_VRUISystem.enabled = false;
+                        }
+                        else
+                        {
+                            m_VRUISystem.enabled = true;
+                        }
+            */
             //m_VRUISystem.enabled = m_UseVRUISystem;
         }
 
@@ -59,12 +59,29 @@ namespace MobaVR
                     m_VRUISystem.enabled = !m_VRUISystem.enabled;
                 }
             }
-            
+
             if (Input.GetKeyDown(KeyCode.O))
             {
                 if (m_Canvas != null)
                 {
                     m_Canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+                }
+            }
+
+            if (Input.GetKeyDown(KeyCode.M))
+            {
+                m_View.SetActive(!m_View.activeSelf);
+
+                if (m_Canvas != null)
+                {
+                    m_Canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+                }
+
+                m_VRUISystem = FindObjectOfType<VRUISystem>();
+                if (m_VRUISystem != null)
+                {
+                    //m_VRUISystem.enabled = !m_View.activeSelf;
+                    m_VRUISystem.enabled = !m_View.activeSelf;
                 }
             }
         }
@@ -74,7 +91,7 @@ namespace MobaVR
         {
             m_GameSession.SwitchTeam();
         }
-        
+
         public void ClearCal()
         {
             _Call.GetComponent<Calibr>().calibr = false;
