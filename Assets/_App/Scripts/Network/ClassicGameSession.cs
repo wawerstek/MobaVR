@@ -22,10 +22,10 @@ namespace MobaVR
         [SerializeField] private Team m_RedTeam;
         [SerializeField] private Team m_BlueTeam;
 
-        
+
         private bool m_IsPvPMode = true;
         //private PlayerVR m_LocalPlayer;
-        
+
         //public PlayerVR LocalPlayer => m_LocalPlayer;
         public Team RedTeam => m_RedTeam;
         public Team BlueTeam => m_BlueTeam;
@@ -33,8 +33,10 @@ namespace MobaVR
 
         private void Start()
         {
-            InitPlayer();
-            InitMode();
+            //InitPlayer();
+            //InitMode();
+            Invoke(nameof(InitPlayer), 2f);
+            //Invoke(nameof(InitMode), 3f);
         }
 
         #region Player and Team
@@ -74,7 +76,7 @@ namespace MobaVR
 
                 m_LocalPlayer.SetTeam(m_RedTeam);
             }
-            
+
             //m_LocalPlayer.ChangeTeamOnClick();
         }
 
@@ -113,7 +115,7 @@ namespace MobaVR
 
         #endregion
 
-        #region Region Mode
+        #region Base Mode
 
         private void InitMode()
         {
@@ -128,46 +130,153 @@ namespace MobaVR
 
         #endregion
 
+        #region PvP Mode
+
         public void StartPvPMode()
         {
+            if (!PhotonNetwork.IsMasterClient)
+            {
+                return;
+            }
+            
             if (!m_IsPvPMode)
             {
                 m_LichMode.StopGame();
                 m_Environment.ShowDefaultPvPMap();
             }
+
             m_IsPvPMode = true;
             m_ClassicMode.StartMode();
         }
 
         public void CompletePvPMode()
         {
+            if (!PhotonNetwork.IsMasterClient)
+            {
+                return;
+            }
+            
             m_ClassicMode.CompleteMode();
         }
 
         public void DeactivatePvPMode()
         {
+            if (!PhotonNetwork.IsMasterClient)
+            {
+                return;
+            }
+            
             m_ClassicMode.DeactivateMode();
         }
 
+        #endregion
+
+        #region PvE Mode
+
         public void StartPvEMode()
         {
+            if (!PhotonNetwork.IsMasterClient)
+            {
+                return;
+            }
+            
             if (m_IsPvPMode)
             {
                 m_ClassicMode.DeactivateMode();
                 m_Environment.ShowDefaultPvEMap();
             }
+
             m_IsPvPMode = false;
             m_LichMode.StartGame();
         }
 
         public void CompletePvEMode()
         {
+            if (!PhotonNetwork.IsMasterClient)
+            {
+                return;
+            }
+            
             m_LichMode.StopGame();
         }
 
+        private void ResetModes()
+        {
+            m_LichMode.StopGame();
+            m_ClassicMode.DeactivateMode();
+            m_Environment.ShowDefaultPvPMap();
+            m_IsPvPMode = true;
+        }
+
+        #endregion
+
+        #region Photon
+
         public void SetMaster()
         {
+            //ResetModes();
             PhotonNetwork.SetMasterClient(PhotonNetwork.LocalPlayer);
         }
+
+        public override void OnDisconnected(DisconnectCause cause)
+        {
+            base.OnDisconnected(cause);
+        }
+
+        public override void OnLeftRoom()
+        {
+            base.OnLeftRoom();
+            if (PhotonNetwork.IsMasterClient)
+            {
+                ResetModes();
+            }
+
+            if (m_LocalPlayer.Team.TeamType == TeamType.RED)
+            {
+                m_RedTeam.RemovePlayer(m_LocalPlayer);
+            }
+            else
+            {
+                m_BlueTeam.RemovePlayer(m_LocalPlayer);
+            }
+        }
+
+        public override void OnPlayerLeftRoom(Player otherPlayer)
+        {
+            base.OnPlayerLeftRoom(otherPlayer);
+            if (otherPlayer.IsMasterClient)
+            {
+                //ResetModes();
+            }
+        }
+
+        public override void OnMasterClientSwitched(Player newMasterClient)
+        {
+            base.OnMasterClientSwitched(newMasterClient);
+            ResetModes();
+        }
+
+        public override void OnConnectedToMaster()
+        {
+            base.OnConnectedToMaster();
+        }
+
+        public override void OnJoinedRoom()
+        {
+            base.OnJoinedRoom();
+            
+            //InitPlayer();
+            //InitMode();
+        }
+
+
+        public override void OnConnected()
+        {
+            base.OnConnected();
+        }
+        
+        
+
+        #endregion
     }
 }

@@ -30,6 +30,7 @@ namespace MobaVR.ClassicModeStateMachine
                 return;
             }
             
+            //TODO: checkPlayer is null
             int redLifeCount = m_Mode.RedTeam.Players.Count(player => player.WizardPlayer.IsLife);
             if (redLifeCount == 0)
             {

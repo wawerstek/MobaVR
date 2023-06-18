@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using BNG;
 using Photon.Pun;
@@ -64,7 +65,9 @@ namespace MobaVR
         public PlayerMode PlayerMode => m_PlayerMode;
         public WizardPlayer WizardPlayer => m_WizardPlayer;
 
-
+        public Action<PlayerVR> OnDestroyPlayer; 
+        public Action<PlayerVR> OnInitPlayer; 
+        
         private void OnValidate()
         {
             if (m_WizardPlayer == null)
@@ -86,6 +89,12 @@ namespace MobaVR
             {
                 TryGetComponent(out m_PlayerMode);
             }
+        }
+
+        public override void OnDisable()
+        {
+            base.OnDisable();
+            OnDestroyPlayer?.Invoke(this);
         }
 
 

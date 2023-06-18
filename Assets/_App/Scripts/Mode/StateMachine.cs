@@ -18,6 +18,7 @@ namespace MobaVR
         [SerializeField] private ModeState m_CompleteModeState;
 
         [Header("Current State")]
+        [SerializeField] private bool m_IsInitOnAwake = true;
         [SerializeField] private ClassicModeState m_ModeState = ClassicModeState.MODE_INACTIVE;
         [SerializeField] private ModeState m_CurrentState;
 
@@ -60,6 +61,11 @@ namespace MobaVR
             m_PlayRoundState.Init(mode, this);
             m_CompleteRoundState.Init(mode, this);
             m_CompleteModeState.Init(mode, this);
+
+            if (m_IsInitOnAwake)
+            {
+                RpcDeactivateMode();
+            }
         }
 
         public void SetState(ModeState nextState)

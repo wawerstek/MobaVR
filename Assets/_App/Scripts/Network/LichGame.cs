@@ -46,13 +46,14 @@ namespace MobaVR
 
         private IEnumerator CheckPlayers()
         {
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(1f);
             
             WizardPlayer[] players = FindObjectsOfType<WizardPlayer>();
             WizardPlayer[] lifePlayers = players.Where(player => player.IsLife).ToArray();
             if (lifePlayers.Length == 0)
             {
-                SetGameOver();
+                //SetGameOver();
+                StopGame();
             }
             
             StartCoroutine(CheckPlayers());
@@ -67,15 +68,25 @@ namespace MobaVR
         [ContextMenu("StartGame")]
         public void StartGame()
         {
-            StartCoroutine(CheckPlayers());
-            
             m_State = LichGameState.ACTIVE;
             
             //if (PhotonNetwork.IsMasterClient)
+            if (PhotonNetwork.IsMasterClient)
             {
+                StartCoroutine(CheckPlayers());
+                
                 foreach (MonsterPointSpawner pointSpawner in m_Spawners)
                 {
                     pointSpawner.GenerateMonsters();
+                }
+                
+                if (!m_Lich.IsLife)
+                {
+                    m_Lich.Init();
+                }
+                else
+                {
+                    m_Lich.Activate();
                 }
             }
             
@@ -87,15 +98,6 @@ namespace MobaVR
                     player.WizardPlayer.Reborn();
                 }
             }
-
-            if (!m_Lich.IsLife)
-            {
-                m_Lich.Init();
-            }
-            else
-            {
-                m_Lich.Activate();
-            }
         }
         
         [ContextMenu("StopGame")]
@@ -103,16 +105,26 @@ namespace MobaVR
         {
             m_State = LichGameState.STOP;
 
+            /*
             if (m_Lich.IsLife)
             {
                 m_Lich.Deactivate();
             }
+            */
 
-            foreach (MonsterPointSpawner pointSpawner in m_Spawners)
+            if (PhotonNetwork.IsMasterClient)
             {
-                pointSpawner.ClearMonsters();
+                if (m_Lich.IsLife)
+                {
+                    m_Lich.Deactivate();
+                }
+                
+                foreach (MonsterPointSpawner pointSpawner in m_Spawners)
+                {
+                    pointSpawner.ClearMonsters();
+                }
             }
-            
+
             if (PhotonNetwork.IsMasterClient && m_GameSession != null)
             {
                 foreach (PlayerVR player in m_GameSession.Players)
@@ -126,6 +138,8 @@ namespace MobaVR
         [ContextMenu("SetGameOver")]
         public void SetGameOver()
         {
+            StopGame();
+            /*
             m_State = LichGameState.GAME_OVER;
             
             if (m_Lich.IsLife)
@@ -146,6 +160,7 @@ namespace MobaVR
                     player.WizardPlayer.Reborn();
                 }
             }
+            */
         }
     }
 }

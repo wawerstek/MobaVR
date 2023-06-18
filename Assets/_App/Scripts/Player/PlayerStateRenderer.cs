@@ -9,7 +9,8 @@ namespace MobaVR
     {
         [SerializeField] private WizardPlayer m_Player;
         [SerializeField] private List<Renderer> m_Renderers = new();
-        
+
+        private bool m_IsFindInChild = false;
         private List<Color> m_InitColors = new();
 
         private void OnEnable()
@@ -29,6 +30,11 @@ namespace MobaVR
             foreach (Renderer playerRenderer in m_Renderers)
             {
                 m_InitColors.Add(playerRenderer.material.color);
+            }
+
+            if (!m_IsFindInChild)
+            {
+                return;
             }
             
             //Дикий костыль

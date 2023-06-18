@@ -31,6 +31,7 @@ namespace MobaVR
         {
             if (PhotonViewExtension.TryGetComponent(idPlayer, out PlayerVR player))
             {
+                player.OnDestroyPlayer -= OnDestroyPlayer;
                 m_Players.Remove(player);
             }
         }
@@ -47,9 +48,24 @@ namespace MobaVR
             {
                 if (!m_Players.Contains(player))
                 {
+                    player.OnDestroyPlayer += OnDestroyPlayer;
                     m_Players.Add(player);
                 }
             }
+        }
+
+        private void OnDestroyPlayer(PlayerVR playerVR)
+        {
+            if (playerVR != null)
+            {
+                playerVR.OnDestroyPlayer -= OnDestroyPlayer;
+                m_Players.Remove(playerVR);
+            }
+        }
+
+        private void OnDestroyPlayer()
+        {
+            
         }
     }
 }
