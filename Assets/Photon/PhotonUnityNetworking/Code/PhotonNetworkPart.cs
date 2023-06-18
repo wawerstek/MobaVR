@@ -295,8 +295,32 @@ namespace Photon.Pun
             {
                 // Fill list with Instantiated objects
                 HashSet<GameObject> instantiatedGos = new HashSet<GameObject>();
+                /*
                 foreach (PhotonView view in photonViewList.Values)
                 {
+                    if (view.isRuntimeInstantiated)
+                    {
+                        instantiatedGos.Add(view.gameObject); // HashSet keeps each object only once
+                    }
+                    // For non-instantiated objects (scene objects) - reset the view
+                    else
+                    {
+                        view.ResetPhotonView(true);
+                    }
+                }
+                */
+
+                Dictionary<int, PhotonView> emptyViews = new();
+                foreach (KeyValuePair<int, PhotonView> keyValuePair in photonViewList)
+                {
+                    int key = keyValuePair.Key;
+                    PhotonView view = keyValuePair.Value;
+                    if (view == null || view.gameObject == null)
+                    {
+                        emptyViews.Add(key, view);
+                        continue;
+                    }
+
                     if (view.isRuntimeInstantiated)
                     {
                         instantiatedGos.Add(view.gameObject); // HashSet keeps each object only once
@@ -311,6 +335,11 @@ namespace Photon.Pun
                 foreach (GameObject go in instantiatedGos)
                 {
                     RemoveInstantiatedGO(go, true);
+                }
+
+                foreach (KeyValuePair<int,PhotonView> keyValuePair in emptyViews)
+                {
+                    photonViewList.Remove(keyValuePair);
                 }
             }
 
@@ -1017,6 +1046,15 @@ namespace Photon.Pun
 
             // Debug.Log("adding view to known list: " + netView);
             photonViewList.Add(netView.ViewID, netView);
+
+            /*Debug.Log("-----------------------");
+            Debug.Log("-----------------------");
+            Debug.Log("-----------------------");
+            foreach (KeyValuePair<int, PhotonView> valuePair in photonViewList)
+            {
+                Debug.Log($"{valuePair.Value.gameObject.name}: {valuePair.Value.ViewID}");
+            }*/
+            
             netView.removedFromLocalViewList = false;
 
             //Debug.LogError("view being added. " + netView);	// Exit Games internal log
