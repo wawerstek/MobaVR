@@ -255,7 +255,7 @@ namespace MobaVR
             }
             else
             {
-                Destroy(gameObject);
+                //Destroy(gameObject);
             }
         }
 
@@ -273,7 +273,7 @@ namespace MobaVR
             }
             else
             {
-                Destroy(gameObject);
+                //Destroy(gameObject);
             }
 
             //PhotonNetwork.Destroy(gameObject);

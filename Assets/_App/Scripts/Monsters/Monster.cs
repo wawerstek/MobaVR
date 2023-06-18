@@ -717,7 +717,10 @@ namespace MobaVR
                     if (photonView != null && gameObject != null)
                     {
                         //Destroy(gameObject, 2f);
-                        PhotonNetwork.Destroy(gameObject);
+                        if (PhotonNetwork.IsMasterClient)
+                        {
+                            PhotonNetwork.Destroy(gameObject);
+                        }
                     }
                 });
         }

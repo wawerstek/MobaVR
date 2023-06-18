@@ -53,7 +53,8 @@ namespace MobaVR
 
         protected virtual void OnEnable()
         {
-            Destroy(gameObject, m_DestroyLifeTime);
+            //Use RpcDestroy for Network
+            //Destroy(gameObject, m_DestroyLifeTime);
         }
 
         private void OnDestroy()

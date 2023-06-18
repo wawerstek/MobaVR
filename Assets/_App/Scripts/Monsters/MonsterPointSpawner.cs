@@ -81,7 +81,8 @@ namespace MobaVR
                 }
                 else
                 {
-                    Destroy(monster.gameObject);
+                    //Destroy(monster.gameObject);
+                    PhotonNetwork.Destroy(monster.gameObject);
                 }
                 
                 if (monster != null)
@@ -150,6 +151,8 @@ namespace MobaVR
         [PunRPC]
         private void RpcSpawnMonster()
         {
+            m_CreatedEffect.Play();//TODO
+            
             if (!CanSpawn)
             {
                 return;
@@ -202,7 +205,6 @@ namespace MobaVR
             };
 
             MonsterControllers.Add(monster);
-            m_CreatedEffect.Play();
         }
     }
 }

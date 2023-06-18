@@ -85,7 +85,7 @@ namespace MobaVR
             }
             else
             {
-                Destroy(gameObject);
+                //Destroy(gameObject);
             }
 
             
