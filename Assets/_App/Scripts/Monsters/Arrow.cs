@@ -46,6 +46,11 @@ namespace MobaVR
         {
             if (m_IsActive)
             {
+                if (other.transform == transform)
+                {
+                    return;
+                }
+                
                 if ((other.CompareTag("Player")||other.CompareTag("RemotePlayer"))
                     && other.transform.TryGetComponent(out WizardPlayer wizardPlayer))
                 {
