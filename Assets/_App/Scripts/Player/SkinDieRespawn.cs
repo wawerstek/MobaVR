@@ -36,11 +36,11 @@ public class SkinDieRespawn : MonoBehaviour
     [ContextMenu("Respawn")]
     public void Respawn()
     {
-        isDie = false;
-        
-        if (initialMaterials.Length > 0)
+        if (isDie && initialMaterials.Length > 0)
         {
             skinnedMeshRenderer.materials = initialMaterials;
         }
+        
+        isDie = false;
     }
 }

@@ -10,6 +10,7 @@ namespace MobaVR
         [SerializeField] private PlayerStateSO m_ReadyState;
         [SerializeField] private PlayerStateSO m_GodState;
         [SerializeField] private PlayerStateSO m_PlayState;
+        [SerializeField] private PlayerStateSO m_PlayPveState;
         [SerializeField] private PlayerStateSO m_DieState;
 
         [Header("Current State")]
@@ -33,8 +34,11 @@ namespace MobaVR
                 case PlayerState.GOD:
                     SetState(m_GodState);
                     break;
-                case PlayerState.PLAY:
+                case PlayerState.PLAY_PVP:
                     SetState(m_PlayState);
+                    break;
+                case PlayerState.PLAY_PVE:
+                    SetState(m_PlayPveState);
                     break;
                 case PlayerState.DIE:
                     SetState(m_DieState);

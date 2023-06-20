@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using BNG;
 using Photon.Pun;
 using UnityEngine;
@@ -12,7 +13,7 @@ namespace MobaVR
     public class WizardPlayer : MonoBehaviourPunCallbacks
     {
         protected const string TAG = nameof(WizardPlayer);
-        
+
         [Header("Big Fireball")]
         [SerializeField] private BigFireBall m_BigFireballPrefab;
         [SerializeField] private BigFireballType m_BigFireballGravityType = BigFireballType.REAL_GRAVITY;
@@ -36,6 +37,8 @@ namespace MobaVR
         [SerializeField] private InputBridge inputBridge;
         [SerializeField] private PlayerMode m_State;
         [SerializeField] private Collider m_Collider;
+        [SerializeField] private List<DamagePlayer> m_Colliders = new();
+        [SerializeField] private Transform m_PlayerPoint;
 
         /// <summary>
         /// TODO: input for Oculus and Pico
@@ -128,21 +131,36 @@ namespace MobaVR
             get => m_DamageIndicator;
             set => m_DamageIndicator = value;
         }
+        public Transform PointPlayer
+        {
+            get
+            {
+                if (m_PlayerPoint != null)
+                {
+                    return m_PlayerPoint;
+                }
 
-        public Action OnInit;
+                return transform;
+            }
+        }
+
+
+    public Action OnInit;
         public Action<float> OnHit;
         public Action OnDie;
         public Action OnReborn;
 
         private void Start()
         {
+            m_Colliders.AddRange(GetComponentsInChildren<DamagePlayer>());
+            
             if (!photonView.IsMine)
             {
                 enabled = false; //TODO: merge
                 return;
             }
 
-            m_Collider.enabled = true;
+            //m_Collider.enabled = true;
 
             InputActionSO inputActionSO = m_ActiveInput;
             InputBridge inputBridge = FindObjectOfType<InputBridge>();
@@ -529,7 +547,7 @@ namespace MobaVR
 
             m_LeftGrabActivateInput.action.started += context =>
             {
-                if (!m_State.StateSo.CanCast)
+                if (!m_State.StateSo.CanCast || !IsLife)
                 {
                     return;
                 }
@@ -545,7 +563,7 @@ namespace MobaVR
 
             m_RightGrabActivateInput.action.started += context =>
             {
-                if (!m_State.StateSo.CanCast)
+                if (!m_State.StateSo.CanCast || !IsLife)
                 {
                     return;
                 }
@@ -855,8 +873,13 @@ namespace MobaVR
         {
             m_CurrentHealth = m_Health;
             m_PlayerView.SetHealth(m_CurrentHealth);
-            m_Collider.enabled = true;
+            //m_Collider.enabled = true;
 
+            foreach (DamagePlayer damagePlayer in m_Colliders)
+            {
+                damagePlayer.GetComponent<Collider>().enabled = true;
+            }
+            
             OnReborn?.Invoke();
             
             
@@ -893,6 +916,11 @@ namespace MobaVR
                 return;
             }
 
+            if (!m_State.StateSo.CanGetDamageFromEnemyPlayers)
+            {
+                return;
+            }
+
             photonView.RPC(nameof(RpcHit), RpcTarget.All, damage);
         }
 
@@ -913,7 +941,13 @@ namespace MobaVR
             m_CurrentHealth -= damage;
             if (m_CurrentHealth <= 0)
             {
-                m_Collider.enabled = false;
+                //m_Collider.enabled = false;
+                
+                foreach (DamagePlayer damagePlayer in m_Colliders)
+                {
+                    damagePlayer.GetComponent<Collider>().enabled = false;
+                }
+                
                 ResetSpells();
                 OnDie?.Invoke();
                 

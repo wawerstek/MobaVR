@@ -231,6 +231,7 @@ namespace MobaVR
                 ResetModes();
             }
 
+            /*
             if (m_LocalPlayer.Team.TeamType == TeamType.RED)
             {
                 m_RedTeam.RemovePlayer(m_LocalPlayer);
@@ -239,6 +240,7 @@ namespace MobaVR
             {
                 m_BlueTeam.RemovePlayer(m_LocalPlayer);
             }
+            */
         }
 
         public override void OnPlayerLeftRoom(Player otherPlayer)

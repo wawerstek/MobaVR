@@ -5,7 +5,7 @@ using Photon.Pun;
 
 public class TransformShitLocal : MonoBehaviourPun
 {
-    //перенос щитов в родительские объекты локального игрока. в сетевом они остаются там, где были.
+    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ. пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ, пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ.
 
     public GameObject LeftShit;
     public GameObject RightShit;
@@ -19,7 +19,7 @@ public class TransformShitLocal : MonoBehaviourPun
 
     private void FindAndTransferObjects()
     {
-        //ищем объект рук, они  в локальном игроке должны быть
+        //пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ, пїЅпїЅпїЅ  пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
         GameObject leftShitLocalObj = GameObject.Find("LeftShitLocal");
         GameObject rightShitLocalObj = GameObject.Find("RightShitLocal");
 
@@ -34,10 +34,12 @@ public class TransformShitLocal : MonoBehaviourPun
         }
     }
 
-    //перемещаем туда щиты, чтобы они привязывались к руке
+    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ
     private void TransferObject(GameObject obj, GameObject parentObj)
     {
         obj.transform.parent = parentObj.transform;
         obj.transform.localPosition = Vector3.zero;
+        obj.transform.localRotation = Quaternion.identity;
+        obj.transform.localScale = Vector3.one;
     }
 }

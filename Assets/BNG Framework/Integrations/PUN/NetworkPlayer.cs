@@ -122,7 +122,9 @@ namespace BNG {
             checkGrabbablesTransfer();
 
             // если это сетевой плеер
-            if (!photonView.IsMine) {
+            //TODO: uncomment isMine
+            //if (!photonView.IsMine) 
+            {
 
                 if(disabledObjects) {
                     toggleObjects(true);
@@ -184,11 +186,13 @@ namespace BNG {
                     }
                 }
             }
+            /*
             else {
                 if(!disabledObjects) {
                     toggleObjects(false);
                 }
             }
+            */
         }
 
         public void AssignPlayerObjects() {
@@ -218,7 +222,7 @@ namespace BNG {
         }
 
         void toggleObjects(bool enableObjects) {
-            RemoteHeadTransform.gameObject.SetActive(enableObjects);    
+            //RemoteHeadTransform.gameObject.SetActive(enableObjects);    
            //RemoteLeftHandTransform.gameObject.SetActive(enableObjects);
             //RemoteRightHandTransform.gameObject.SetActive(enableObjects);
             disabledObjects = !enableObjects;

@@ -1,29 +1,66 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using BNG;
+using RootMotion.FinalIK;
 
-namespace BNG
+
+
+namespace MobaVR
 {
 
     public class Calibr : MonoBehaviour
     {
+        public ClassicGameSession _GameSession;
+        [SerializeField] private GameObject _PlayerVR;
+
+
+        [Header("Calibr traking")]
+        //РєР°Р»РёСЂРѕРІРєР° РјРµСЃС‚СЂРѕРїРѕР»РѕР¶РµРЅРёСЏ
         public GameObject Left_Calibr;
         public GameObject Right_Calibr;
         public GameObject CalibrovkaText;
 
         public Transform pointA;
         public Transform pointB;
-        public Transform pointC;//левая рука
-        public Transform pointD;//правая рука
+        public Transform pointC;//Р»РµРІР°СЏ СЂСѓРєР°
+        public Transform pointD;//РїСЂР°РІР°СЏ СЂСѓРєР°
 
         public bool calibr;
+        //----
 
-        public ControllerBinding Button_Calibr = ControllerBinding.AButton; //нажатие
+        [Header("Calibr rost")]
+        //РљР°Р»РёР±СЂРѕРІРєР° СЂРѕСЃС‚Р°
+        public VRIK[] local_Skins;//С‚РµР»Рѕ РёРіСЂРѕРєР°, РєРѕС‚РѕСЂРѕРµ РЅСѓР¶РЅРѕ СѓРІРµР»РёС‡РёС‚
+        //public GameObject _Left_ruka;
+        //public GameObject _Right_ruka;
+        public rost _rost;//СЃРєСЂРёРїС‚ СЃРјРµРЅС‹ СЂРѕСЃС‚Р° Сѓ СЃРµС‚РµРІРѕР№ РјРѕРґРµР»СЊРєРё
+        public bool _kalibr_ruka;
+        public float scaleMlp = 1f;
+
+        public float x;
+        public float y;
+        public float z;
+
+        public float _rostPlayer;
+        public GameObject _CenterEyeAnchor;
+        //РїРµСЂРµРјРµРЅРЅР°СЏ СЃРєСЂРёРїС‚Р° РєР°Р»РёР±СЂРѕРІРєРё
+       // public GameObject _CALIBR;
+        //РїРµСЂРµРјРµРЅРЅР°СЏ РЅР°РґРїРёСЃРё РљР°Р»РёР±СЂРѕРІРєР°
+       // public GameObject CalibrovkaText;
+        public bool runRost;
+
+
+        public ControllerBinding Button_Calibr = ControllerBinding.AButton; //РЅР°Р¶Р°С‚РёРµ
 
         void Start()
         {
             calibr = false;
-            CalibrovkaText.SetActive(true);
+           // CalibrovkaText.SetActive(true);
+
+
+            runRost = false;
+            _kalibr_ruka = false;
         }
 
 
@@ -46,6 +83,8 @@ namespace BNG
                     RotateAroundPointC();
                     CalibrovkaText.SetActive(false);
                     calibr = true;
+
+                    kalibr_rost();
                 }
             }
 
@@ -55,35 +94,78 @@ namespace BNG
 
         void MoveToPointA()
         {
-            // вычисляем вектор разницы между текущей позицией точки С и точкой А
+            // РІС‹С‡РёСЃР»СЏРµРј РІРµРєС‚РѕСЂ СЂР°Р·РЅРёС†С‹ РјРµР¶РґСѓ С‚РµРєСѓС‰РµР№ РїРѕР·РёС†РёРµР№ С‚РѕС‡РєРё РЎ Рё С‚РѕС‡РєРѕР№ Рђ
             Vector3 deltaPosition = pointA.position - pointC.position;
 
-            // перемещаем родительский объект на вектор deltaPosition
+            // РїРµСЂРµРјРµС‰Р°РµРј СЂРѕРґРёС‚РµР»СЊСЃРєРёР№ РѕР±СЉРµРєС‚ РЅР° РІРµРєС‚РѕСЂ deltaPosition
             transform.position += deltaPosition;
         }
 
         void RotateAroundPointC()
         {
-            // вычисляем вектор поворота для поворота родительского объекта вокруг точки С
+            // РІС‹С‡РёСЃР»СЏРµРј РІРµРєС‚РѕСЂ РїРѕРІРѕСЂРѕС‚Р° РґР»СЏ РїРѕРІРѕСЂРѕС‚Р° СЂРѕРґРёС‚РµР»СЊСЃРєРѕРіРѕ РѕР±СЉРµРєС‚Р° РІРѕРєСЂСѓРі С‚РѕС‡РєРё РЎ
             Vector3 rotationVector = pointB.position - pointA.position;
             Quaternion rotation = Quaternion.FromToRotation(pointD.position - pointC.position, rotationVector);
 
-            // сохраняем текущее расстояние между родителем и точками С и Д
+            // СЃРѕС…СЂР°РЅСЏРµРј С‚РµРєСѓС‰РµРµ СЂР°СЃСЃС‚РѕСЏРЅРёРµ РјРµР¶РґСѓ СЂРѕРґРёС‚РµР»РµРј Рё С‚РѕС‡РєР°РјРё РЎ Рё Р”
             float distance = Vector3.Distance(transform.position, pointC.position);
 
-            // поворачиваем родительский объект вокруг точки С
+            // РїРѕРІРѕСЂР°С‡РёРІР°РµРј СЂРѕРґРёС‚РµР»СЊСЃРєРёР№ РѕР±СЉРµРєС‚ РІРѕРєСЂСѓРі С‚РѕС‡РєРё РЎ
             transform.rotation = rotation * transform.rotation;
 
-            //возвращаем наклон к 0, чтобы вращался только по оси У
+            //РІРѕР·РІСЂР°С‰Р°РµРј РЅР°РєР»РѕРЅ Рє 0, С‡С‚РѕР±С‹ РІСЂР°С‰Р°Р»СЃСЏ С‚РѕР»СЊРєРѕ РїРѕ РѕСЃРё РЈ
             transform.rotation = Quaternion.Euler(0f, transform.rotation.eulerAngles.y, 0f);
 
-            // вычисляем вектор разницы между текущей позицией точки С и точкой А
+            // РІС‹С‡РёСЃР»СЏРµРј РІРµРєС‚РѕСЂ СЂР°Р·РЅРёС†С‹ РјРµР¶РґСѓ С‚РµРєСѓС‰РµР№ РїРѕР·РёС†РёРµР№ С‚РѕС‡РєРё РЎ Рё С‚РѕС‡РєРѕР№ Рђ
             Vector3 deltaPosition2 = pointB.position - pointD.position;
 
-            // перемещаем родительский объект на вектор deltaPosition
+            // РїРµСЂРµРјРµС‰Р°РµРј СЂРѕРґРёС‚РµР»СЊСЃРєРёР№ РѕР±СЉРµРєС‚ РЅР° РІРµРєС‚РѕСЂ deltaPosition
             transform.position += deltaPosition2;
 
         }
+
+
+        public void kalibr_rost()
+        {
+            //С‚РµРїРµСЂСЊ РїРµСЂРµРјРµРЅРЅР°СЏ _PlayerVR СЃРѕРґРµСЂР¶РёС‚ РІ СЃРµР±Рµ СЃРµС‚РµРІСѓСЋ РІРµСЂСЃРёСЋ РёРіСЂРѕРєР°
+            _PlayerVR = _GameSession.Player;
+
+            
+
+
+            _rostPlayer = _CenterEyeAnchor.transform.position.y;
+
+            _rostPlayer = _rostPlayer + 0.1f;
+            
+
+            //ExitGames.Client.Photon.Hashtable h = new ExitGames.Client.Photon.Hashtable();
+            //h.Add("Rost", PhotonNetwork.LocalPlayer.CustomProperties["Rost"] = _rostPlayer);
+            //PhotonNetwork.LocalPlayer.SetCustomProperties(h);
+
+
+            //_Left_ruka.transform.localScale = new Vector3(_rostPlayer / 2f, _rostPlayer / 2f, _rostPlayer / 2f);
+            //_Right_ruka.transform.localScale = new Vector3(_rostPlayer / 2f, _rostPlayer / 2f, _rostPlayer / 2f);
+            //_rost.Rost_PUN();
+
+            //РњРѕР¶РЅРѕ РѕР±СЂР°С‚РёС‚СЊСЃСЏ Рє Р»СЋР±РѕРјСѓ СЃРєСЂРёРїС‚Сѓ РЅР° remoteplayer
+            _PlayerVR.GetComponent<rost>().Rost_PUN(_rostPlayer);
+
+
+            for (int i = 0; i < local_Skins.Length;)
+            {
+                // Compare the height of the head target to the height of the head bone, multiply scale by that value.
+                float sizeF = (local_Skins[i].solver.spine.headTarget.position.y - local_Skins[i].references.root.position.y) / (local_Skins[i].references.head.position.y - local_Skins[i].references.root.position.y);
+                local_Skins[i].references.root.localScale *= sizeF * scaleMlp;
+
+                local_Skins[i].references.root.localScale = new Vector3(_rostPlayer, _rostPlayer, _rostPlayer);
+                i++;
+            }
+
+            //Debug.Log("РѕС‚РєР°Р»РёР±СЂРѕРІР°Р»Рё СЂРѕСЃС‚");
+        
+        }
+
+
 
 
     }

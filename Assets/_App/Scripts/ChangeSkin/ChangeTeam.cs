@@ -14,7 +14,7 @@ namespace MobaVR
         {
   
 
-            // Проходимся по всем объектам и меняем команду
+            // ГЏГ°Г®ГµГ®Г¤ГЁГ¬Г±Гї ГЇГ® ГўГ±ГҐГ¬ Г®ГЎГєГҐГЄГІГ Г¬ ГЁ Г¬ГҐГ­ГїГҐГ¬ ГЄГ®Г¬Г Г­Г¤Гі
             foreach (TeamItem teamItem in teamItems)
             {
                 teamItem.SetTeam(teamType);

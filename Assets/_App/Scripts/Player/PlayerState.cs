@@ -5,7 +5,8 @@
         INACTIVE,
         READY,
         GOD,
-        PLAY,
+        PLAY_PVP,
+        PLAY_PVE,
         DIE
     }
 }

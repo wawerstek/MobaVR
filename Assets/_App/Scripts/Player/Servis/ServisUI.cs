@@ -20,6 +20,14 @@ public class ServisUI : MonoBehaviourPunCallbacks
 
     [SerializeField] private Off_legs[] offLegsArray;
 
+    private void Start()
+    {
+        if (photonView.IsMine)
+        {
+            HideLegs();
+        }
+    }
+
 
     // ���� ������ �� ������ "����"
     public void Off_Legs()
@@ -33,12 +41,12 @@ public class ServisUI : MonoBehaviourPunCallbacks
     {
         photonView.RPC(nameof(SetVisibleLegs), RpcTarget.All, true);
     }
-    
+
     public void HideLegs()
     {
         photonView.RPC(nameof(SetVisibleLegs), RpcTarget.All, false);
     }
-    
+
     public void On_Legs()
     {
         photonView.RPC(nameof(SetVisibleLegs), RpcTarget.All, true);
@@ -77,12 +85,12 @@ public class ServisUI : MonoBehaviourPunCallbacks
         // ���������� ������� ������� ��� ���������� ��� ���� �������
         photonView.RPC("DisableBody", RpcTarget.All);
     }
-    
+
     public void ShowBody()
     {
         photonView.RPC(nameof(SetVisibleBody), RpcTarget.All, true);
     }
-    
+
     public void HideBody()
     {
         photonView.RPC(nameof(SetVisibleBody), RpcTarget.All, false);
@@ -98,7 +106,7 @@ public class ServisUI : MonoBehaviourPunCallbacks
             offLegs.DisableAllObjects(isVisible);
         }
     }
-    
+
     [PunRPC]
     private void DisableBody()
     {

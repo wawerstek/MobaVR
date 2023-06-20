@@ -24,6 +24,20 @@ namespace MobaVR
         {
             if (photonView.IsMine)
             {
+                if (m_PointPlayer == null)
+                {
+                    GameObject pointPlayer = GameObject.Find("PlayerViewPoint");
+                    if (pointPlayer != null)
+                    {
+                        m_PointPlayer = pointPlayer.transform;
+                    }
+                }
+
+                if (m_PointPlayer == null)
+                {
+                    return;
+                }
+                
                 Vector3 scale = transform.localScale;
                 transform.parent = m_PointPlayer;
                 transform.localPosition = Vector3.zero;

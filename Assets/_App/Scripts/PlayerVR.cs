@@ -16,7 +16,6 @@ namespace MobaVR
         [SerializeField] private TeamType m_CurrentTeam = TeamType.RED;
 
 
-        
         private GameObject _InputVR;
         private ChangeTeam _ChangeTeam;
 
@@ -37,7 +36,7 @@ namespace MobaVR
         [Header("DieSkin")]
         public SkinDieRespawn[] skinDieRespawnObjects;
         public Collider[] colliders; // Массив объектов с коллайдерами персонажа
-        public PlayerView playerView;  // Переменная для хранения объекта с компонентом PlayerView
+        public PlayerView playerView; // Переменная для хранения объекта с компонентом PlayerView
 
 
         private InputVR m_InputVR;
@@ -65,9 +64,9 @@ namespace MobaVR
         public PlayerMode PlayerMode => m_PlayerMode;
         public WizardPlayer WizardPlayer => m_WizardPlayer;
 
-        public Action<PlayerVR> OnDestroyPlayer; 
-        public Action<PlayerVR> OnInitPlayer; 
-        
+        public Action<PlayerVR> OnDestroyPlayer;
+        public Action<PlayerVR> OnInitPlayer;
+
         private void OnValidate()
         {
             if (m_WizardPlayer == null)
@@ -104,71 +103,69 @@ namespace MobaVR
             _InputVR = GameObject.Find("InputVR");
 
 
-
             if (_InputVR != null)
             {
                 // Получаем компонент ChangeTeam для смены цвета скина
                 _ChangeTeam = _InputVR.GetComponent<ChangeTeam>();
             }
-
         }
-
-
-
 
 
         private void Update()
         {
             if (m_IsLocalPlayer && m_IsInit)
             {
-                transform.position = m_InputVR.BngPlayerController.transform.position;
                 //Vector3 customPosition =  m_InputVR.BngPlayerController.transform.position;
                 //customPosition.y = 0;
                 //transform.position = customPosition;
-                
+
+                transform.position = m_InputVR.BngPlayerController.transform.position;
                 transform.rotation = m_InputVR.BngPlayerController.transform.rotation;
 
-                m_LeftHand.transform.position = m_InputVR.IKLeftHand.transform.position;
-                m_LeftHand.transform.rotation = m_InputVR.IKLeftHand.transform.rotation;
+                if (m_LeftHand != null)
+                {
+                    m_LeftHand.transform.position = m_InputVR.IKLeftHand.transform.position;
+                    m_LeftHand.transform.rotation = m_InputVR.IKLeftHand.transform.rotation;
+                }
 
-                m_RightHand.transform.position = m_InputVR.IKRightHand.transform.position;
-                m_RightHand.transform.rotation = m_InputVR.IKRightHand.transform.rotation;
+                if (m_RightHand != null)
+                {
+                    m_RightHand.transform.position = m_InputVR.IKRightHand.transform.position;
+                    m_RightHand.transform.rotation = m_InputVR.IKRightHand.transform.rotation;
+                }
             }
         }
 
         public void SetLocalPlayer()
         {
-            photonView.RPC(nameof(SetLocalPlayer),RpcTarget.All);
+            photonView.RPC(nameof(SetLocalPlayer), RpcTarget.All);
         }
 
         public void SetState(PlayerState playerState)
         {
             photonView.RPC(nameof(RpcSetState), RpcTarget.AllBuffered, playerState);
         }
-        
+
         public void SetState(PlayerStateSO playerStateSo)
         {
             //m_PlayerMode.SetState(playerStateSo);
             //photonView.RPC(nameof(RpcSetStateSo), RpcTarget.AllBuffered, playerStateSo);
-            
+
             //photonView.RPC(nameof(RpcSetState), RpcTarget.AllBuffered, playerStateSo.State);
             photonView.RPC(nameof(RpcSetState), RpcTarget.AllBuffered, playerStateSo.State);
         }
-        
+
         [PunRPC]
         public void RpcSetState(PlayerState playerState)
         {
             m_PlayerMode.SetState(playerState);
         }
-        
+
         [PunRPC]
         public void RpcSetStateSo(PlayerStateSO playerStateSo)
         {
             m_PlayerMode.SetState(playerStateSo);
         }
-        
-
-
 
 
         //смена команды
@@ -180,13 +177,7 @@ namespace MobaVR
             // Применяем новую команду для всех объектов
             //эта функция меняет у игрока команду в WizardPlayer м Teammate
             SetTeam(m_CurrentTeam);
-
         }
-
-
-
-
-
 
 
         private void ChangeTeamColor(TeamType teamType)
@@ -203,7 +194,6 @@ namespace MobaVR
                     // Выполняем функцию ChangeAllTeams
                     _ChangeTeam.ChangeAllTeams(teamType);
                 }
-
             }
         }
 
@@ -232,7 +222,7 @@ namespace MobaVR
             {
                 m_WizardPlayer.TeamType = m_TeamType;
             }
-            
+
             if (m_Teammate != null)
             {
                 m_Teammate.SetTeam(m_TeamType);
@@ -255,12 +245,11 @@ namespace MobaVR
         }
 
 
-
         public void SetLocalPlayer(InputVR inputVR)
         {
             m_IsLocalPlayer = true;
             m_InputVR = inputVR;
-            
+
             if (m_InputVR == null)
             {
                 m_InputVR = FindObjectOfType<InputVR>();
@@ -307,7 +296,7 @@ namespace MobaVR
                 m_RightHand.grabber = m_InputVR.RightController.grabber;
             }
 
-            
+
             //TODO: ??
             if (m_Teammate != null)
             {
@@ -316,15 +305,13 @@ namespace MobaVR
                 {
                     leftHandTheme.SetTeam(m_TeamType);
                 }
-                
+
                 TeamItem rightHandTheme = m_InputVR.RightController.GetComponentInChildren<TeamItem>();
                 if (rightHandTheme != null)
                 {
                     rightHandTheme.SetTeam(m_TeamType);
                 }
             }
-
-            
 
 
             if (!m_IsRender)
@@ -347,7 +334,6 @@ namespace MobaVR
         //все игроки видят, как выполнилась эта функция
         public void RpcDieRemote()
         {
-
             // Выполняем функцию Die() на каждом объекте в массиве
             foreach (SkinDieRespawn obj in skinDieRespawnObjects)
             {
@@ -366,9 +352,8 @@ namespace MobaVR
             */
 
             //нужно занести инфу о смерти игрока, а тому от кого прилетел последний шар внести инфу о убийстве
-
         }
-        
+
         public void RespawnRemote()
         {
             photonView.RPC(nameof(RpcRespawn), RpcTarget.All);

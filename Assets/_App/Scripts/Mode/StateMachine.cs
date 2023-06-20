@@ -64,7 +64,8 @@ namespace MobaVR
 
             if (m_IsInitOnAwake)
             {
-                RpcDeactivateMode();
+                //RpcDeactivateMode();
+                DeactivateMode();
             }
         }
 

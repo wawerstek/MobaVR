@@ -232,7 +232,8 @@ namespace MobaVR
                 && CurrentState != MonsterState.NOT_ACTIVE
                 && CurrentState != MonsterState.DEATH)
             {
-                float distance = Vector3.Distance(m_Wizard.transform.position, transform.position);
+                //float distance = Vector3.Distance(m_Wizard.transform.position, transform.position);
+                float distance = Vector3.Distance(m_Wizard.PointPlayer.position, transform.position);
                 if (distance < m_AttackRange)
                 {
                     if (m_CanAttack)
@@ -294,6 +295,12 @@ namespace MobaVR
                 if (other.TryGetComponent(out WizardPlayer wizardPlayer))
                 {
                     wizardPlayer.Hit(Damage);
+                    m_Weapon.SetEnabled(false);
+                }
+
+                if (other.TryGetComponent(out DamagePlayer damagePlayer))
+                {
+                    damagePlayer.wizardPlayer.Hit(Damage);
                     m_Weapon.SetEnabled(false);
                 }
             }
@@ -358,12 +365,20 @@ namespace MobaVR
             {
                 m_NavMeshAgent.updateRotation = true;
                 m_NavMeshAgent.stoppingDistance = m_AttackRange;
-                m_NavMeshAgent.destination = m_Wizard.transform.position;
+                //m_NavMeshAgent.destination = m_Wizard.transform.position;
+                m_NavMeshAgent.destination = m_Wizard.PointPlayer.transform.position;
 
+                /*
                 Vector3 targetPosition = new Vector3(
                     m_Wizard.transform.position.x,
                     transform.position.y,
                     m_Wizard.transform.position.z);
+                */
+                
+                Vector3 targetPosition = new Vector3(
+                    m_Wizard.PointPlayer.transform.position.x,
+                    transform.position.y,
+                    m_Wizard.PointPlayer.transform.position.z);
 
                 transform.LookAt(targetPosition);
             }
@@ -488,7 +503,8 @@ namespace MobaVR
             }
 
             m_NavMeshAgent.isStopped = false;
-            m_NavMeshAgent.destination = m_Wizard.transform.position;
+            //m_NavMeshAgent.destination = m_Wizard.transform.position;
+            m_NavMeshAgent.destination = m_Wizard.PointPlayer.transform.position;
             //m_CurrentForwardSpeed = m_NavMeshAgent.velocity.magnitude / m_NavMeshAgent.speed;
             m_CurrentForwardSpeed = m_NavMeshAgent.velocity.magnitude;
             m_Animator.SetFloat(m_HashForwardSpeed, m_CurrentForwardSpeed);
@@ -496,7 +512,8 @@ namespace MobaVR
 
         private void Rotate()
         {
-            Vector3 targetPosition = m_Wizard.transform.position;
+            //Vector3 targetPosition = m_Wizard.transform.position;
+            Vector3 targetPosition = m_Wizard.PointPlayer.transform.position;
             targetPosition.y = 0f;
 
             Vector3 currentPosition = transform.position;

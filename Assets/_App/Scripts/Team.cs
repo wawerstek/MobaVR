@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using MobaVR.Utils;
 using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
 
 namespace MobaVR
 {
-    public class Team : MonoBehaviourPun, ITeam
+    public class Team : MonoBehaviourPunCallbacks, ITeam
     {
         [SerializeField] private string m_TeamName = "Team";
         [SerializeField] private TeamType m_TeamType = TeamType.RED;
@@ -66,6 +67,12 @@ namespace MobaVR
         private void OnDestroyPlayer()
         {
             
+        }
+
+        public override void OnPlayerLeftRoom(Player otherPlayer)
+        {
+            base.OnPlayerLeftRoom(otherPlayer);
+            m_Players.RemoveAll(player => player == null);
         }
     }
 }
