@@ -31,6 +31,7 @@ public class ChangeSkinPlayer : MonoBehaviourPun
     [Header("�����")]
     [Tooltip("�������� ������ ���������� ������")]
     public GameObject[] Skins;
+    public GameObject[] OldSkin;
 
     //public GameSession _GameSession;
     //public ClassicGameSession _ClassicGameSession;
@@ -121,6 +122,14 @@ public class ChangeSkinPlayer : MonoBehaviourPun
 
         //�������� ������� ������ �� ���� ������.
         Hair.SetActive(NomerSkins == 0 || NomerSkins == 3);
+
+        if (NomerSkins > 5)
+        {
+            for (int i = 1; i < OldSkin.Length; i++)
+            {
+                OldSkin[i].SetActive(false);
+            }
+        }
     }
 
     ////������� ���� ������� �����, ����� ���� ���������

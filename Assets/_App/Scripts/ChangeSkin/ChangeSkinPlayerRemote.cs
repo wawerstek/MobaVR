@@ -32,6 +32,7 @@ public class ChangeSkinPlayerRemote : MonoBehaviourPun
     [Header("Ñêèíû")]
     [Tooltip("Äîáàâèòü íóæíîå êîëè÷åñòâî ñêèíîâ")]
     public GameObject[] Skins;
+    public GameObject[] OldSkin;
 
 
 
@@ -97,6 +98,15 @@ public class ChangeSkinPlayerRemote : MonoBehaviourPun
 
         //Ïðè÷¸ñêà àêòèâíà òîëüêî íà ýòèõ ñêèíàõ.
         Hair.SetActive(NomerSkins == 0 || NomerSkins == 3);
+
+
+        if (NomerSkins > 5)
+        {
+            for (int i = 1; i < OldSkin.Length; i++)
+            {
+                OldSkin[i].SetActive(false);
+            }
+        }
     }
 
 
