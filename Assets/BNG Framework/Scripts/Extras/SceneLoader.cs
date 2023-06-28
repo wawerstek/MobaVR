@@ -15,9 +15,28 @@ namespace BNG {
         [Tooltip("Wait this long in seconds before attempting to load the scene. Useful if you need to fade the screen out before attempting to load the level.")]
         public float ScreenFadeTime = 0.5f;
 
+        private LocalRepository localRepository;
+
+        private void Awake()
+        {
+            localRepository = new LocalRepository();
+        }
+        
         ScreenFader sf;
 
         private string _loadSceneName = string.Empty;
+
+        public void LoadLocalServerScene(string SceneName)
+        {
+            localRepository.SetLocalServer(true);
+            LoadScene(SceneName);
+        }
+
+        public void LoadRemoteServerScene(string SceneName)
+        {
+            localRepository.SetLocalServer(false);
+            LoadScene(SceneName);
+        }
 
         public void LoadScene(string SceneName) {
 
