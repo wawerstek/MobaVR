@@ -298,9 +298,9 @@ namespace MobaVR
                     m_Weapon.SetEnabled(false);
                 }
 
-                if (other.TryGetComponent(out DamagePlayer damagePlayer))
+                if (other.TryGetComponent(out HitCollider damagePlayer))
                 {
-                    damagePlayer.wizardPlayer.Hit(Damage);
+                    damagePlayer.WizardPlayer.Hit(Damage);
                     m_Weapon.SetEnabled(false);
                 }
             }

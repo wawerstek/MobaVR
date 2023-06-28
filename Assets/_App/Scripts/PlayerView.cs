@@ -46,7 +46,10 @@ namespace MobaVR
             }
             else
             {
-                transform.LookAt(Camera.main.transform);
+                if (Camera.main != null)
+                {
+                    transform.LookAt(Camera.main.transform);
+                }
             }
         }
 

@@ -1,34 +1,49 @@
+using System;
 using UnityEngine;
 
 namespace MobaVR
 {
-    public class ItemSkinTeam : TeamItem
+    public class SkinItem : TeamItem
     {
         [Header("Theme")]
         [SerializeField] private Material[] m_RedMaterial;
         [SerializeField] private Material[] m_BlueMaterial;
 
         [Header("Renderer")]
-        private SkinnedMeshRenderer m_Renderer;
+        [SerializeField] private Renderer m_Renderer;
 
-        private void Awake()
+        public Renderer Renderer => m_Renderer;
+
+        private void OnValidate()
         {
-            m_Renderer = GetComponent<SkinnedMeshRenderer>();
+            if (m_Renderer == null)
+            {
+                m_Renderer = GetComponent<Renderer>();
+            }
         }
 
         public override void SetTeam(TeamType teamType)
         {
             base.SetTeam(teamType);
-
+            Material[] materials = m_RedMaterial;
             switch (teamType)
             {
                 case TeamType.RED:
-                    m_Renderer.materials = m_RedMaterial;
+                    materials = m_RedMaterial;
                     break;
 
                 case TeamType.BLUE:
-                    m_Renderer.materials = m_BlueMaterial;
+                    materials = m_BlueMaterial;
                     break;
+            }
+
+            if (m_Renderer.materials is { Length: > 1 })
+            {
+                m_Renderer.materials = materials;
+            }
+            else
+            {
+                m_Renderer.material = materials[0];
             }
         }
     }

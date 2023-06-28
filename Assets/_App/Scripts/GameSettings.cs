@@ -94,7 +94,7 @@ namespace MobaVR
 
         public void ClearCal()
         {
-            _Call.GetComponent<Calibr>().calibr = false;
+            _Call.GetComponent<Calibration>().calibr = false;
         }
     }
 }

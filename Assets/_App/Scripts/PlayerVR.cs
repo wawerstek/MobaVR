@@ -15,7 +15,6 @@ namespace MobaVR
     {
         [SerializeField] private TeamType m_CurrentTeam = TeamType.RED;
 
-
         private GameObject _InputVR;
         private ChangeTeam _ChangeTeam;
 
@@ -24,6 +23,12 @@ namespace MobaVR
         [SerializeField] private Teammate m_Teammate;
         [SerializeField] private CharacterIK m_CharacterIK;
 
+        [Header("IK")]
+        [SerializeField] private Transform m_BodyTarget;
+        [SerializeField] private Transform m_HeadTarget;
+        [SerializeField] private Transform m_LeftHandTarget;
+        [SerializeField] private Transform m_RightHandTarget;
+        
         [Header("Hands")]
         [SerializeField] private HandController m_LeftHand;
         [SerializeField] private HandController m_RightHand;
@@ -39,7 +44,7 @@ namespace MobaVR
         public PlayerView playerView; // Переменная для хранения объекта с компонентом PlayerView
 
 
-        private InputVR m_InputVR;
+        [SerializeField] private InputVR m_InputVR;
         private bool m_IsLocalPlayer = false;
         private bool m_IsInit = false;
         [SerializeField] private TeamType m_TeamType = TeamType.RED;
@@ -96,6 +101,20 @@ namespace MobaVR
             OnDestroyPlayer?.Invoke(this);
         }
 
+        private void Awake()
+        {
+            if (m_InputVR != null)
+            {
+                if (photonView.IsMine)
+                {
+                    m_InputVR.gameObject.SetActive(true);
+                }
+                else
+                {
+                    m_InputVR.gameObject.SetActive(false);
+                }
+            }
+        }
 
         private void Start()
         {
@@ -119,6 +138,7 @@ namespace MobaVR
                 //customPosition.y = 0;
                 //transform.position = customPosition;
 
+                /*
                 transform.position = m_InputVR.BngPlayerController.transform.position;
                 transform.rotation = m_InputVR.BngPlayerController.transform.rotation;
 
@@ -133,13 +153,40 @@ namespace MobaVR
                     m_RightHand.transform.position = m_InputVR.IKRightHand.transform.position;
                     m_RightHand.transform.rotation = m_InputVR.IKRightHand.transform.rotation;
                 }
+                */
+
+                if (m_BodyTarget != null)
+                {
+                    m_BodyTarget.position = m_InputVR.BngPlayerController.transform.position;
+                    m_BodyTarget.rotation = m_InputVR.BngPlayerController.transform.rotation;
+                }
+
+                if (m_HeadTarget != null)
+                {
+                    m_HeadTarget.position = m_InputVR.HeadTarget.transform.position;
+                    m_HeadTarget.rotation = m_InputVR.HeadTarget.transform.rotation;
+                }
+
+                if (m_LeftHandTarget != null)
+                {
+                    m_LeftHandTarget.position = m_InputVR.LeftHandTarget.transform.position;
+                    m_LeftHandTarget.rotation = m_InputVR.LeftHandTarget.transform.rotation;
+                }
+                
+                if (m_RightHandTarget != null)
+                {
+                    m_RightHandTarget.position = m_InputVR.RightHandTarget.transform.position;
+                    m_RightHandTarget.rotation = m_InputVR.RightHandTarget.transform.rotation;
+                }
             }
         }
 
+        /*
         public void SetLocalPlayer()
         {
             photonView.RPC(nameof(SetLocalPlayer), RpcTarget.All);
         }
+        */
 
         public void SetState(PlayerState playerState)
         {
@@ -183,11 +230,11 @@ namespace MobaVR
         private void ChangeTeamColor(TeamType teamType)
         {
             // Находим объект InputVR
-            _InputVR = GameObject.Find("InputVR");
-            if (_InputVR != null)
+            //_InputVR = GameObject.Find("InputVR");
+            if (m_InputVR != null)
             {
                 // Получаем компонент ChangeTeam для смены цвета скина
-                _ChangeTeam = _InputVR.GetComponent<ChangeTeam>();
+                _ChangeTeam = m_InputVR.GetComponent<ChangeTeam>();
 
                 if (_ChangeTeam != null)
                 {
@@ -244,11 +291,20 @@ namespace MobaVR
             }
         }
 
+        public void SetLocalPlayer()
+        {
+            if (m_InputVR != null)
+            {
+                SetLocalPlayer(m_InputVR);
+            }
+        }
 
         public void SetLocalPlayer(InputVR inputVR)
         {
-            m_IsLocalPlayer = true;
-            m_InputVR = inputVR;
+            if (inputVR != null)
+            {
+                m_InputVR = inputVR;
+            }
 
             if (m_InputVR == null)
             {
@@ -259,6 +315,10 @@ namespace MobaVR
             {
                 return;
             }
+            
+            m_InputVR.gameObject.SetActive(true);
+            
+            m_IsLocalPlayer = true;
 
             if (m_CharacterIK != null)
             {

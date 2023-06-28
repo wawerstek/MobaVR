@@ -16,16 +16,22 @@ namespace MobaVR
         [Header("Screen")]
         public BaseDamageIndicator DamageIndicator;
         
-        [Header("PlayerController")]
-        public Transform TrackingSpace;
-        public Transform CameraRig;
-        public Transform CenterEyeAnchor;
+        [Header("Tracked Devices")]
+        public Transform HeadDevice;
+        public Transform LeftHandDevice;
+        public Transform RightHandDevice;
         
         [Space]
-        [Header("IK")]
+        [Header("IK v1")]
         public Transform IKHead;
         public Transform IKLeftHand;
         public Transform IKRightHand;
+        
+        [Space]
+        [Header("IK v2")]
+        public Transform HeadTarget;
+        public Transform LeftHandTarget;
+        public Transform RightHandTarget;
 
         [Space]
         [Header("Hand Controllers")]

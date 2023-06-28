@@ -1,80 +1,59 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using RootMotion.FinalIK;
-using System.Linq;
-using Photon.Realtime;
+using Sirenix.OdinInspector;
+using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 namespace BNG
 {
     public class rost : MonoBehaviourPun
     {
-
-        public VRIK[] ik_PUN;//òåëî èãðîêà, êîòîðîå íóæíî óâåëè÷èòü
-        //public float _rost_PUN;
-        PhotonView PV;
-        //êàê òîëüêî ñêðèïò îáó÷åíèå âûêëþ÷èòñÿ, ìû àêòèâèðóåì íàøå îðóæèå
-
+        [FormerlySerializedAs("ik_PUN")] [SerializeField] private VRIK[] m_IkElements;
+        [SerializeField] private Transform m_LeftHand;
+        [SerializeField] private Transform m_RightHand;
         
-        //public GameObject _Left_ruka;
-        //public GameObject _Right_ruka;
+        [SerializeField] [ReadOnly] private float m_Height;
 
-        public float sizeF;
-
-
-
-        public float _rost;
-       
+        public UnityEvent<float> OnCalibrated;
         
-       // public GameObject _CenterEyeAnchor;
-        public bool runRost;
-
-
-
-        void Start()
+        public bool IsCalibrated { get; set; }
+        
+        private void Start()
         {
-            PV = GetComponent<PhotonView>();
-            runRost = false;
-
-            //_Left_ruka.transform.localScale = new Vector3(-0.9f, 0.9f, 0.9f);
-           // _Right_ruka.transform.localScale = new Vector3(0.9f, 0.9f, 0.9f);
-
-
-
+            IsCalibrated = false;
         }
 
-
-        // Update is called once per frame
-        void FixedUpdate()
+        public void SetHeight(float height)
         {
-
+            photonView.RPC(nameof(RpcSetHeight), RpcTarget.AllBuffered, height);
         }
-
-
-
-
-
-        public void Rost_PUN(float rostValue)
-        {
-            //_Rost = ik_PUN[1].solver.spine.headTarget.position.y;
-
-
-            //ExitGames.Client.Photon.Hashtable h = new ExitGames.Client.Photon.Hashtable();
-            //h.Add("Rost", PhotonNetwork.LocalPlayer.CustomProperties["Rost"] = _rost);
-            //PhotonNetwork.LocalPlayer.SetCustomProperties(h);
-
-
-
-            PV.RPC(nameof(RPC_ik_PUN), RpcTarget.AllBuffered, rostValue);
-
-        }
-
-
 
         [PunRPC]
-        public void RPC_ik_PUN(float rostValue)
-        { //ôóíêöèÿ 
+        public void RpcSetHeight(float height)
+        {
+            m_Height = height;
+            if (m_Height > 0)
+            {
+                float fixHeight = m_Height + 0.08f;
+                
+                for (int i = 0; i < m_IkElements.Length; i++)
+                {
+                    m_IkElements[i].references.root.localScale = new Vector3(fixHeight, fixHeight, fixHeight);
+                }
+
+                float handScale = m_Height / 2f;
+                m_LeftHand.transform.localScale = new Vector3(handScale, handScale, handScale);
+                m_RightHand.transform.localScale = new Vector3(handScale, handScale, handScale);
+            }
+            
+            OnCalibrated?.Invoke(height);
+        }
+
+        [PunRPC]
+        public void RpcSetHeight_Deprecated(float rostValue)
+        {
+            //ôóíêöèÿ 
 
             //sizeF = (ik_PUN[1].solver.spine.headTarget.position.y - ik_PUN[1].references.root.position.y) / (ik_PUN[1].references.head.position.y - ik_PUN[1].references.root.position.y);
 
@@ -85,14 +64,12 @@ namespace BNG
             //_Right_ruka.transform.localScale *= sizeF * 1f;
 
 
-
             //string My_Nick;
             //My_Nick = GetComponent<PhotonView>().Owner.NickName;
 
 
             //    var ldp = PhotonNetwork.PlayerList.ToList().Find(x => x.NickName == My_Nick);
 
-           
 
             //if (ldp != null)//åñëè òàêîé îáúåêò ñóùåñòâóåò
             //    {
@@ -101,40 +78,30 @@ namespace BNG
             //        ldp.SetCustomProperties(h);
             //    }
 
-            _rost = rostValue;
-            if (_rost > 0)
+            m_Height = rostValue;
+            if (m_Height > 0)
             {
                 //_Left_ruka.transform.localScale = new Vector3(-(_rost / 2f), _rost / 2f, _rost / 2f);
                 //_Right_ruka.transform.localScale = new Vector3(_rost / 2f, _rost / 2f, _rost / 2f);
 
                 //äåëàåì âñåì íàøèì ñêèíàì ðàçìåð
-                for (int i = 0; i < ik_PUN.Length;)
+                for (int i = 0; i < m_IkElements.Length;)
                 {
                     //Ñðàâíèòå âûñîòó ãîëîâû ìèøåíè ñ âûñîòîé êîñòè ãîëîâû, óìíîæüòå ìàñøòàá íà ýòî çíà÷åíèå.
 
                     //ik_PUN[i].references.root.localScale *= sizeF * 1; 
 
                     //ik_PUN[i].references.root.localScale *= _rost;
-                    ik_PUN[i].references.root.localScale = new Vector3(_rost+0.08f, _rost+0.08f, _rost+0.08f);
+                    m_IkElements[i].references.root.localScale =
+                        new Vector3(m_Height + 0.08f, m_Height + 0.08f, m_Height + 0.08f);
                     //ik_PUN[i].references.root.localScale = new Vector3(_rost, _rost, _rost);   - â äàííîì ñëó÷àå ðîñò íåìíîãî ìåíüøå ðåàëüíîãî, ïîýòîìó ïðèõîäèòñÿ äîáàâëÿòü 0.8
 
                     i++;
                 }
-
             }
 
 
             return;
-
         }
-
-
-
-
-
-
-
-
-
     }
 }

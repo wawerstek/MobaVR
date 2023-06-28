@@ -13,7 +13,7 @@ namespace MobaVR
             string prefabName = $"Players/{m_PlayerPrefab.name}";
             GameObject localPlayer = PhotonNetwork.Instantiate(prefabName, Vector3.zero, Quaternion.identity);
             localPlayer.name += "_" + Random.Range(1, 1000);
-            
+
             if (localPlayer.TryGetComponent(out PlayerVR playerVR))
             {
                 playerVR.SetLocalPlayer(m_InputVR);

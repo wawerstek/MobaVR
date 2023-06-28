@@ -37,7 +37,7 @@ namespace MobaVR
         [SerializeField] private InputBridge inputBridge;
         [SerializeField] private PlayerMode m_State;
         [SerializeField] private Collider m_Collider;
-        [SerializeField] private List<DamagePlayer> m_Colliders = new();
+        [SerializeField] private List<HitCollider> m_Colliders = new();
         [SerializeField] private Transform m_PlayerPoint;
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace MobaVR
 
         private void Start()
         {
-            m_Colliders.AddRange(GetComponentsInChildren<DamagePlayer>());
+            m_Colliders.AddRange(GetComponentsInChildren<HitCollider>());
             
             if (!photonView.IsMine)
             {
@@ -875,7 +875,7 @@ namespace MobaVR
             m_PlayerView.SetHealth(m_CurrentHealth);
             //m_Collider.enabled = true;
 
-            foreach (DamagePlayer damagePlayer in m_Colliders)
+            foreach (HitCollider damagePlayer in m_Colliders)
             {
                 damagePlayer.GetComponent<Collider>().enabled = true;
             }
@@ -943,7 +943,7 @@ namespace MobaVR
             {
                 //m_Collider.enabled = false;
                 
-                foreach (DamagePlayer damagePlayer in m_Colliders)
+                foreach (HitCollider damagePlayer in m_Colliders)
                 {
                     damagePlayer.GetComponent<Collider>().enabled = false;
                 }

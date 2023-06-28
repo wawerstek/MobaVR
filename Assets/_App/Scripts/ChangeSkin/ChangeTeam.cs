@@ -8,21 +8,20 @@ namespace MobaVR
     public class ChangeTeam : MonoBehaviour
     {
         [SerializeField] private List<TeamItem> teamItems = new List<TeamItem>();
-        [SerializeField] private TeamType teamType;
 
+        [SerializeField] private SkinCollection m_SkinCollection;
+        
         public void ChangeAllTeams(TeamType teamType)
         {
-  
-
-            // Ïðîõîäèìñÿ ïî âñåì îáúåêòàì è ìåíÿåì êîìàíäó
             foreach (TeamItem teamItem in teamItems)
             {
                 teamItem.SetTeam(teamType);
             }
 
-           
+            foreach (Skin skin in m_SkinCollection.Skins)
+            {
+                skin.SetTeam(teamType);
+            }
         }
-
-
     }
 }

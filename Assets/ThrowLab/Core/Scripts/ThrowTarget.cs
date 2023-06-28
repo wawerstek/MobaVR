@@ -84,6 +84,10 @@ namespace CloudFine.ThrowLab
         private void MaintainReticleSize()
         {
             Camera cam = Camera.main;
+            if (cam == null)
+            {
+                return;
+            }
             reticle.transform.position = this.transform.position;
             reticle.transform.LookAt(cam.transform, cam.transform.up);
             reticle.transform.localScale = (Vector3.one * Vector3.Distance(cam.transform.position, this.transform.position) * .1f);

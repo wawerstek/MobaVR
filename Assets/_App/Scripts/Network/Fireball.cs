@@ -112,14 +112,14 @@ namespace MobaVR
                     InteractBall(other.transform);
                 }
                 
-                if (other.CompareTag("LifeCollider") && other.transform.TryGetComponent(out DamagePlayer damagePlayer))
+                if (other.CompareTag("LifeCollider") && other.transform.TryGetComponent(out HitCollider damagePlayer))
                 {
-                    if (damagePlayer.wizardPlayer == Owner)
+                    if (damagePlayer.WizardPlayer == Owner)
                     {
                         return;
                     }
 
-                    damagePlayer.wizardPlayer.Hit(this, CalculateDamage());
+                    damagePlayer.WizardPlayer.Hit(this, CalculateDamage());
                     InteractBall(other.transform);
                 }
 

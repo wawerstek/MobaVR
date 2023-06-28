@@ -1,15 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using BNG;
 using RootMotion.FinalIK;
-
-
+using UnityEngine;
 
 namespace MobaVR
 {
-
-    public class Calibr : MonoBehaviour
+    public class Calibration : MonoBehaviour
     {
         public BaseGameSession _GameSession;
         [SerializeField] private GameObject _PlayerVR;
@@ -23,18 +18,18 @@ namespace MobaVR
 
         public Transform pointA;
         public Transform pointB;
-        public Transform pointC;//левая рука
-        public Transform pointD;//правая рука
+        public Transform pointC; //левая рука
+        public Transform pointD; //правая рука
 
         public bool calibr;
         //----
 
         [Header("Calibr rost")]
         //Калибровка роста
-        public VRIK[] local_Skins;//тело игрока, которое нужно увеличит
+        public VRIK[] local_Skins; //тело игрока, которое нужно увеличит
         //public GameObject _Left_ruka;
         //public GameObject _Right_ruka;
-        public rost _rost;//скрипт смены роста у сетевой модельки
+        public rost _rost; //скрипт смены роста у сетевой модельки
         public bool _kalibr_ruka;
         public float scaleMlp = 1f;
 
@@ -45,22 +40,23 @@ namespace MobaVR
         public float _rostPlayer;
         public GameObject _CenterEyeAnchor;
         //переменная скрипта калибровки
-       // public GameObject _CALIBR;
+        // public GameObject _CALIBR;
         //переменная надписи Калибровка
-       // public GameObject CalibrovkaText;
+        // public GameObject CalibrovkaText;
         public bool runRost;
 
 
         public ControllerBinding Button_Calibr = ControllerBinding.AButton; //нажатие
 
-        void Start()
+        private void Start()
         {
             if (_GameSession == null)
             {
                 _GameSession = FindObjectOfType<BaseGameSession>();
             }
+
             calibr = false;
-           // CalibrovkaText.SetActive(true);
+            // CalibrovkaText.SetActive(true);
 
 
             runRost = false;
@@ -68,13 +64,10 @@ namespace MobaVR
         }
 
 
-
-        void Update()
+        private void Update()
         {
-
             if (calibr == false)
             {
-
                 if (InputBridge.Instance.GetControllerBindingValue(Button_Calibr))
                 {
                     Left_Calibr = GameObject.Find("Left_Calibr");
@@ -87,19 +80,18 @@ namespace MobaVR
                     RotateAroundPointC();
                     if (CalibrovkaText != null)
                     {
-                    CalibrovkaText.SetActive(false);
+                        CalibrovkaText.SetActive(false);
                     }
+
                     calibr = true;
 
                     kalibr_rost();
                 }
             }
-
         }
 
 
-
-        void MoveToPointA()
+        private void MoveToPointA()
         {
             // вычисляем вектор разницы между текущей позицией точки С и точкой А
             Vector3 deltaPosition = pointA.position - pointC.position;
@@ -108,7 +100,7 @@ namespace MobaVR
             transform.position += deltaPosition;
         }
 
-        void RotateAroundPointC()
+        private void RotateAroundPointC()
         {
             // вычисляем вектор поворота для поворота родительского объекта вокруг точки С
             Vector3 rotationVector = pointB.position - pointA.position;
@@ -128,53 +120,20 @@ namespace MobaVR
 
             // перемещаем родительский объект на вектор deltaPosition
             transform.position += deltaPosition2;
-
         }
 
 
         public void kalibr_rost()
         {
-            //теперь переменная _PlayerVR содержит в себе сетевую версию игрока
             _PlayerVR = _GameSession.Player;
 
-            
-
-
             _rostPlayer = _CenterEyeAnchor.transform.position.y;
+            _rostPlayer += 0.1f;
 
-            _rostPlayer = _rostPlayer + 0.1f;
-            
-
-            //ExitGames.Client.Photon.Hashtable h = new ExitGames.Client.Photon.Hashtable();
-            //h.Add("Rost", PhotonNetwork.LocalPlayer.CustomProperties["Rost"] = _rostPlayer);
-            //PhotonNetwork.LocalPlayer.SetCustomProperties(h);
-
-
-            //_Left_ruka.transform.localScale = new Vector3(_rostPlayer / 2f, _rostPlayer / 2f, _rostPlayer / 2f);
-            //_Right_ruka.transform.localScale = new Vector3(_rostPlayer / 2f, _rostPlayer / 2f, _rostPlayer / 2f);
-            //_rost.Rost_PUN();
-
-            //Можно обратиться к любому скрипту на remoteplayer
-            _PlayerVR.GetComponent<rost>().SetHeight(_rostPlayer);
-
-
-            for (int i = 0; i < local_Skins.Length;)
+            if (_PlayerVR.TryGetComponent(out rost rost))
             {
-                // Compare the height of the head target to the height of the head bone, multiply scale by that value.
-                float sizeF = (local_Skins[i].solver.spine.headTarget.position.y - local_Skins[i].references.root.position.y) / (local_Skins[i].references.head.position.y - local_Skins[i].references.root.position.y);
-                local_Skins[i].references.root.localScale *= sizeF * scaleMlp;
-
-                local_Skins[i].references.root.localScale = new Vector3(_rostPlayer, _rostPlayer, _rostPlayer);
-                i++;
+                rost.SetHeight(_rostPlayer);
             }
-
-            //Debug.Log("откалибровали рост");
-        
         }
-
-
-
-
     }
-
 }
