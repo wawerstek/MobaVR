@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using BNG;
 using Photon.Pun;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -37,7 +38,7 @@ namespace MobaVR
         [SerializeField] private InputBridge inputBridge;
         [SerializeField] private PlayerMode m_State;
         [SerializeField] private Collider m_Collider;
-        [SerializeField] private List<HitCollider> m_Colliders = new();
+        [SerializeField] [ReadOnly] private List<HitCollider> m_Colliders = new();
         [SerializeField] private Transform m_PlayerPoint;
 
         /// <summary>

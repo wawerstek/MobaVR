@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Photon.Pun;
 using UnityEngine;
 
 namespace MobaVR
@@ -10,6 +11,7 @@ namespace MobaVR
     {
         [Header("Wizard")]
         [SerializeField] private PlayerVR m_PlayerVR;
+        [SerializeField] private PhotonView m_PhotonView;
         
         [Header("Face")]
         [SerializeField] private GameObject m_TopKnot;
@@ -37,12 +39,18 @@ namespace MobaVR
             {
                 m_Skins.AddRange(GetComponentsInChildren<Skin>(true));
             }
+
+            if (m_PhotonView == null)
+            {
+                m_PhotonView = GetComponent<PhotonView>();
+            }
         }
 
         private void Awake()
         {
             Clear();
-            SetSkin(0);
+            //SetSkin(0);
+            RpcSetSkin(0);
         }
 
         private void Clear()
@@ -61,6 +69,7 @@ namespace MobaVR
             m_Hair.SetActive(m_SkinPosition == 0 || m_SkinPosition == 3);
         }
 
+        [ContextMenu("SetNextSkin")]
         public void SetNextSkin()
         {
             m_SkinPosition++;
@@ -68,6 +77,7 @@ namespace MobaVR
             SetSkin(m_SkinPosition);
         }
 
+        [ContextMenu("SetPrevSkin")]
         public void SetPrevSkin()
         {
             m_SkinPosition--;
@@ -76,6 +86,15 @@ namespace MobaVR
         }
 
         public void SetSkin(int position)
+        {
+            if (m_PhotonView != null)
+            {
+                m_PhotonView.RPC(nameof(RpcSetSkin), RpcTarget.AllBuffered, position);
+            }
+        }
+
+        [PunRPC]
+        private void RpcSetSkin(int position)
         {
             if (m_ActiveSkin != null)
             {

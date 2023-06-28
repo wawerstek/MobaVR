@@ -15,13 +15,13 @@ namespace MobaVR
     {
         [SerializeField] private TeamType m_CurrentTeam = TeamType.RED;
 
-        private GameObject _InputVR;
-        private ChangeTeam _ChangeTeam;
+        private ChangeTeam m_ChangeTeam;
 
         [SerializeField] private WizardPlayer m_WizardPlayer;
         [SerializeField] private PlayerMode m_PlayerMode;
         [SerializeField] private Teammate m_Teammate;
         [SerializeField] private CharacterIK m_CharacterIK;
+        [SerializeField] private SkinCollection m_SkinCollection;
 
         [Header("IK")]
         [SerializeField] private Transform m_BodyTarget;
@@ -118,15 +118,6 @@ namespace MobaVR
 
         private void Start()
         {
-            // Находим объект InputVR
-            _InputVR = GameObject.Find("InputVR");
-
-
-            if (_InputVR != null)
-            {
-                // Получаем компонент ChangeTeam для смены цвета скина
-                _ChangeTeam = _InputVR.GetComponent<ChangeTeam>();
-            }
         }
 
 
@@ -234,29 +225,41 @@ namespace MobaVR
             if (m_InputVR != null)
             {
                 // Получаем компонент ChangeTeam для смены цвета скина
-                _ChangeTeam = m_InputVR.GetComponent<ChangeTeam>();
+                m_ChangeTeam = m_InputVR.GetComponent<ChangeTeam>();
+                //m_SkinCollection.SetTeam(teamType);
 
-                if (_ChangeTeam != null)
+                if (m_ChangeTeam != null)
                 {
                     // Выполняем функцию ChangeAllTeams
-                    _ChangeTeam.ChangeAllTeams(teamType);
+                    m_ChangeTeam.ChangeAllTeams(teamType);
                 }
             }
         }
 
+        public void SetRedTeam()
+        {
+            SetTeam(TeamType.RED);
+        }
+
+        public void SetBlueTeam()
+        {
+            SetTeam(TeamType.BLUE);
+        }
 
         public void SetTeam(TeamType teamType)
         {
+            //ChangeTeamColor(teamType);
+            
             m_TeamType = teamType;
-            ChangeTeamColor(teamType);
             photonView.RPC(nameof(SetTeamRpc), RpcTarget.AllBuffered, teamType);
         }
 
         public void SetTeam(Team team)
         {
+            ChangeTeamColor(m_TeamType);
+            
             m_Team = team;
             m_TeamType = m_Team.TeamType;
-            ChangeTeamColor(m_TeamType);
             photonView.RPC(nameof(SetTeamRpc), RpcTarget.AllBuffered, m_TeamType);
         }
 
@@ -264,6 +267,7 @@ namespace MobaVR
         public void SetTeamRpc(TeamType teamType)
         {
             m_TeamType = teamType;
+            m_SkinCollection.SetTeam(m_TeamType);
 
             if (m_WizardPlayer != null)
             {

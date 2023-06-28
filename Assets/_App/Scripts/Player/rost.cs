@@ -42,7 +42,7 @@ namespace BNG
                     m_IkElements[i].references.root.localScale = new Vector3(fixHeight, fixHeight, fixHeight);
                 }
 
-                float handScale = m_Height / 2f;
+                float handScale = m_Height / 1f;
                 m_LeftHand.transform.localScale = new Vector3(handScale, handScale, handScale);
                 m_RightHand.transform.localScale = new Vector3(handScale, handScale, handScale);
             }
