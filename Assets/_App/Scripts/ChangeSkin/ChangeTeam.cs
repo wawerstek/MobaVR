@@ -18,7 +18,7 @@ namespace MobaVR
                 teamItem.SetTeam(teamType);
             }
 
-            foreach (Skin skin in m_SkinCollection.Skins)
+            foreach (Skin skin in m_SkinCollection.AliveSkins)
             {
                 skin.SetTeam(teamType);
             }

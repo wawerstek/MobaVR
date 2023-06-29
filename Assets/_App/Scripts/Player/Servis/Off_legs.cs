@@ -17,7 +17,7 @@ public class Off_legs : MonoBehaviour
             obj.SetActive(isActive);
         }
         
-        foreach (Skin skin in m_SkinCollection.Skins)
+        foreach (Skin skin in m_SkinCollection.AliveSkins)
         {
             skin.SetVisibilityLegs(isActive);
         }

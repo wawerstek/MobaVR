@@ -111,7 +111,7 @@ namespace MobaVR
         public void SetDie()
         {
 
-            playerVR.DieRemote();
+            playerVR.PlayerDie();
         }
 
 

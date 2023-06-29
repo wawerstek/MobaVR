@@ -146,7 +146,7 @@ namespace MobaVR
         }
 
 
-    public Action OnInit;
+        public Action OnInit;
         public Action<float> OnHit;
         public Action OnDie;
         public Action OnReborn;
@@ -154,7 +154,7 @@ namespace MobaVR
         private void Start()
         {
             m_Colliders.AddRange(GetComponentsInChildren<HitCollider>());
-            
+
             if (!photonView.IsMine)
             {
                 enabled = false; //TODO: merge
@@ -864,6 +864,7 @@ namespace MobaVR
 
         #region HP
 
+        [ContextMenu("Reborn")]
         public void Reborn()
         {
             photonView.RPC(nameof(RpcReborn), RpcTarget.AllBuffered);
@@ -880,12 +881,12 @@ namespace MobaVR
             {
                 damagePlayer.GetComponent<Collider>().enabled = true;
             }
-            
+
             OnReborn?.Invoke();
-            
-            
+
+
             //TODO: MERGE
-            m_PlayerVR.RespawnRemote();
+            m_PlayerVR.PlayerReborn();
         }
 
         public void RestoreHp()
@@ -904,6 +905,12 @@ namespace MobaVR
             }
         }
 
+        [ContextMenu("Hit")]
+        private void Hit_Debug()
+        {
+            Hit(25f);
+        }
+        
         public void Hit(float damage)
         {
             photonView.RPC(nameof(RpcHit), RpcTarget.All, damage);
@@ -943,18 +950,18 @@ namespace MobaVR
             if (m_CurrentHealth <= 0)
             {
                 //m_Collider.enabled = false;
-                
+
                 foreach (HitCollider damagePlayer in m_Colliders)
                 {
                     damagePlayer.GetComponent<Collider>().enabled = false;
                 }
-                
+
                 ResetSpells();
                 OnDie?.Invoke();
-                
-                
+
+
                 //TODO: MERGE
-                m_PlayerVR.DieRemote();
+                m_PlayerVR.PlayerDie();
             }
 
             if (photonView.IsMine)

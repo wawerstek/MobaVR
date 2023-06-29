@@ -1,9 +1,8 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using Photon.Pun;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace MobaVR
 {
@@ -12,21 +11,21 @@ namespace MobaVR
         [Header("Wizard")]
         [SerializeField] private PlayerVR m_PlayerVR;
         [SerializeField] private PhotonView m_PhotonView;
-        
-        [Header("Face")]
-        [SerializeField] private GameObject m_TopKnot;
-        [SerializeField] private GameObject m_Beard;
-        [SerializeField] private GameObject m_Sideburns;
-        [SerializeField] private GameObject m_Neck;
-        [SerializeField] private GameObject m_Hair;
-        
+
+        [FormerlySerializedAs("m_Skins")]
         [Header("Skins")]
-        [SerializeField] private List<Skin> m_Skins = new();
+        [SerializeField] private List<Skin> m_AliveSkins = new();
+        [SerializeField] private List<Skin> m_DeadSkins = new();
 
-        private Skin m_ActiveSkin = null;
-        private int m_SkinPosition = 0;
+        private Skin m_AliveActiveSkin = null;
+        private int m_AliveSkinPosition = 0;
 
-        public List<Skin> Skins => m_Skins;
+        private Skin m_DeadActiveSkin = null;
+        private int m_DeadSkinPosition = 0;
+
+        public List<Skin> AliveSkins => m_AliveSkins;
+
+        #region MonoBehaviour
 
         private void OnValidate()
         {
@@ -34,10 +33,10 @@ namespace MobaVR
             {
                 m_PlayerVR = GetComponentInParent<PlayerVR>();
             }
-            
-            if (m_Skins.Count == 0)
+
+            if (m_AliveSkins.Count == 0)
             {
-                m_Skins.AddRange(GetComponentsInChildren<Skin>(true));
+                m_AliveSkins.AddRange(GetComponentsInChildren<Skin>(true));
             }
 
             if (m_PhotonView == null)
@@ -50,73 +49,207 @@ namespace MobaVR
         {
             Clear();
             //SetSkin(0);
-            RpcSetSkin(0);
+            RpcSetAliveSkin(0);
         }
+
+        #endregion
+
+        #region Visibility
 
         private void Clear()
         {
-            foreach (Skin skin in m_Skins)
+            foreach (Skin skin in m_AliveSkins)
+            {
+                skin.DeactivateSkin();
+            }
+
+            foreach (Skin skin in m_DeadSkins)
             {
                 skin.DeactivateSkin();
             }
         }
-        
-        public void SetFace()
+
+        [ContextMenu("SetVisibilityLegs")]
+        public void SetVisibilityLegs(bool isVisible = false)
         {
-            m_TopKnot.SetActive(m_SkinPosition == 0);
-            m_Sideburns.SetActive(m_SkinPosition == 1);
-            m_Neck.SetActive(m_SkinPosition == 1 || m_SkinPosition == 2 || m_SkinPosition == 4 || m_SkinPosition == 5);
-            m_Hair.SetActive(m_SkinPosition == 0 || m_SkinPosition == 3);
+            foreach (Skin skin in m_AliveSkins)
+            {
+                skin.SetVisibilityLegs(isVisible);
+            }
+            
+            foreach (Skin skin in m_DeadSkins)
+            {
+                skin.SetVisibilityLegs(isVisible);
+            }
         }
+
+        [ContextMenu("SetVisibilityFace")]
+        public void SetVisibilityFace(bool isVisible = false)
+        {
+            foreach (Skin skin in m_AliveSkins)
+            {
+                skin.SetVisibilityFace(isVisible);
+            }
+            
+            foreach (Skin skin in m_DeadSkins)
+            {
+                skin.SetVisibilityFace(isVisible);
+            }
+        }
+
+        [ContextMenu("SetVisibility")]
+        public void SetVisibilityVR(bool isVisible = false)
+        {
+            foreach (Skin skin in m_AliveSkins)
+            {
+                skin.SetVisibilityVR(isVisible);
+            }
+            
+            foreach (Skin skin in m_DeadSkins)
+            {
+                skin.SetVisibilityVR(isVisible);
+            }
+        }
+
+        [ContextMenu("SetVisibilityBody")]
+        public void SetVisibilityBody(bool isVisible = false)
+        {
+            foreach (Skin skin in m_AliveSkins)
+            {
+                skin.SetVisibilityBody(isVisible);
+            }
+            
+            foreach (Skin skin in m_DeadSkins)
+            {
+                skin.SetVisibilityBody(isVisible);
+            }
+        }
+
+        #endregion
+
+        #region Set Skin
 
         [ContextMenu("SetNextSkin")]
         public void SetNextSkin()
         {
-            m_SkinPosition++;
-            m_SkinPosition %= m_Skins.Count;
-            SetSkin(m_SkinPosition);
+            m_AliveSkinPosition++;
+            m_AliveSkinPosition %= m_AliveSkins.Count;
+            SetAliveSkin(m_AliveSkinPosition);
         }
 
         [ContextMenu("SetPrevSkin")]
         public void SetPrevSkin()
         {
-            m_SkinPosition--;
-            m_SkinPosition %= m_Skins.Count;
-            SetSkin(m_SkinPosition);
+            m_AliveSkinPosition--;
+            m_AliveSkinPosition %= m_AliveSkins.Count;
+            SetAliveSkin(m_AliveSkinPosition);
         }
 
-        public void SetSkin(int position)
+        [ContextMenu("SetAliveDefaultSkin")]
+        public void SetAliveDefaultSkin()
+        {
+            SetAliveSkin(0);
+        }
+
+        [ContextMenu("SetAliveSkin")]
+        public void SetAliveSkin(int position = 0)
         {
             if (m_PhotonView != null)
             {
-                m_PhotonView.RPC(nameof(RpcSetSkin), RpcTarget.AllBuffered, position);
+                m_PhotonView.RPC(nameof(RpcSetAliveSkin), RpcTarget.AllBuffered, position);
             }
         }
 
         [PunRPC]
-        private void RpcSetSkin(int position)
+        private void RpcSetAliveSkin(int position)
         {
-            if (m_ActiveSkin != null)
+            if (m_DeadActiveSkin != null)
             {
-                m_ActiveSkin.DeactivateSkin();
+                m_DeadActiveSkin.DeactivateSkin();
             }
-            
-            m_SkinPosition = Math.Clamp(position, 0, m_Skins.Count - 1);
-            m_ActiveSkin = m_Skins[m_SkinPosition];
-            
+
+            if (m_AliveActiveSkin != null)
+            {
+                m_AliveActiveSkin.DeactivateSkin();
+            }
+
+            m_AliveSkinPosition = Math.Clamp(position, 0, m_AliveSkins.Count - 1);
+            m_AliveActiveSkin = m_AliveSkins[m_AliveSkinPosition];
+
             TeamType teamType = m_PlayerVR != null ? m_PlayerVR.TeamType : TeamType.RED;
-            m_ActiveSkin.ActivateSkin(teamType);
-            
-            SetFace();
+            m_AliveActiveSkin.ActivateSkin(teamType);
+        }
+
+        [ContextMenu("SetDeadDefaultSkin")]
+        public void SetDeadDefaultSkin()
+        {
+            SetDeadSkin(0);
+        }
+
+        [ContextMenu("SetDeadSkin")]
+        public void SetDeadSkin(int position = 0)
+        {
+            if (m_PhotonView != null)
+            {
+                m_PhotonView.RPC(nameof(RpcSetDeadSkin), RpcTarget.AllBuffered, position);
+            }
+        }
+
+        [PunRPC]
+        private void RpcSetDeadSkin(int position = 0)
+        {
+            if (m_AliveActiveSkin != null)
+            {
+                m_AliveActiveSkin.DeactivateSkin();
+            }
+
+            if (m_DeadActiveSkin != null)
+            {
+                m_DeadActiveSkin.DeactivateSkin();
+            }
+
+            m_DeadSkinPosition = Math.Clamp(position, 0, m_DeadSkins.Count - 1);
+            m_DeadActiveSkin = m_DeadSkins[m_DeadSkinPosition];
+
+            TeamType teamType = m_PlayerVR != null ? m_PlayerVR.TeamType : TeamType.RED;
+            m_DeadActiveSkin.ActivateSkin(teamType);
+        }
+
+        [ContextMenu("RestoreSkin")]
+        public void RestoreSkin()
+        {
+            if (m_PhotonView != null)
+            {
+                m_PhotonView.RPC(nameof(RpcRestoreSkin), RpcTarget.AllBuffered);
+            }
+        }
+
+        [PunRPC]
+        private void RpcRestoreSkin()
+        {
+            if (m_AliveActiveSkin == null)
+            {
+                return;
+            }
+
+            if (m_DeadActiveSkin != null)
+            {
+                m_DeadActiveSkin.DeactivateSkin();
+            }
+
+            TeamType teamType = m_PlayerVR != null ? m_PlayerVR.TeamType : TeamType.RED;
+            m_AliveActiveSkin.ActivateSkin(teamType);
         }
 
         public override void SetTeam(TeamType teamType)
         {
             base.SetTeam(teamType);
-            if (m_ActiveSkin != null)
+            if (m_AliveActiveSkin != null)
             {
-                m_ActiveSkin.SetTeam(teamType);
+                m_AliveActiveSkin.SetTeam(teamType);
             }
         }
+
+        #endregion
     }
 }

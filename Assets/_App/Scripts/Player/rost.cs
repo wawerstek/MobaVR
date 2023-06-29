@@ -1,7 +1,9 @@
+using System;
 using UnityEngine;
 using Photon.Pun;
 using RootMotion.FinalIK;
 using Sirenix.OdinInspector;
+using Sirenix.Utilities;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
 
@@ -18,7 +20,15 @@ namespace BNG
         public UnityEvent<float> OnCalibrated;
         
         public bool IsCalibrated { get; set; }
-        
+
+        private void OnValidate()
+        {
+            if (m_IkElements != null && m_IkElements.Length == 0)
+            {
+                m_IkElements.AddRange(GetComponentsInChildren<VRIK>());
+            }
+        }
+
         private void Start()
         {
             IsCalibrated = false;
