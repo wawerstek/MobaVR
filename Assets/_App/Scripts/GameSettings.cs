@@ -1,4 +1,5 @@
 using System;
+using System.Windows.Forms;
 using BNG;
 using UnityEngine;
 
@@ -9,7 +10,9 @@ namespace MobaVR
         [SerializeField] private GameObject m_View;
         [SerializeField] private Canvas m_Canvas;
         [SerializeField] private bool m_UseVRUISystem = false;
+        
         [SerializeField] private ClassicGameSession m_GameSession;
+        [SerializeField] private Environment m_Environment;
 
         public GameObject _Call;
 
@@ -17,6 +20,16 @@ namespace MobaVR
 
         private void Awake()
         {
+            if (m_GameSession == null)
+            {
+                m_GameSession = FindObjectOfType<ClassicGameSession>();
+            }
+            
+            if (m_Environment == null)
+            {
+                m_Environment = FindObjectOfType<Environment>();
+            }
+            
             m_VRUISystem = FindObjectOfType<VRUISystem>();
             /*
                         if (Application.isEditor || Application.platform == RuntimePlatform.WindowsPlayer)
@@ -86,15 +99,129 @@ namespace MobaVR
             }
         }
 
-        [ContextMenu("SwitchTeam")]
+        [UnityEngine.ContextMenu("SwitchTeam")]
         public void SwitchTeam()
         {
-            m_GameSession.SwitchTeam();
+            if (m_GameSession != null)
+            {
+                m_GameSession.SwitchTeam();
+            }
+        }
+
+        public void SetRedTeam()
+        {
+            if (m_GameSession != null)
+            {
+                m_GameSession.SetRedTeam();
+            }
+        }
+
+        public void SetBlueTeam()
+        {
+            if (m_GameSession != null)
+            {
+                m_GameSession.SetBlueTeam();
+            }
         }
 
         public void ClearCal()
         {
             _Call.GetComponent<Calibration>().calibr = false;
+        }
+        
+        #region PvP Mode
+
+        public void StartPvPMode()
+        {
+            if (m_GameSession != null)
+            {
+                m_GameSession.StartPvPMode();
+            }
+        }
+
+        public void CompletePvPMode()
+        {
+            if (m_GameSession != null)
+            {
+                m_GameSession.CompletePvPMode();
+            }
+        }
+
+        public void DeactivatePvPMode()
+        {
+            if (m_GameSession != null)
+            {
+                m_GameSession.DeactivatePvPMode();
+            }
+        }
+
+        #endregion
+
+        #region PvE Mode
+
+        public void StartPvEMode()
+        {
+            if (m_GameSession != null)
+            {
+                m_GameSession.StartPvEMode();
+            }
+        }
+
+        public void CompletePvEMode()
+        {
+            if (m_GameSession != null)
+            {
+                m_GameSession.CompletePvEMode();
+            }
+        }
+        
+        public void SetMasterClient()
+        {
+            if (m_GameSession != null)
+            {
+                m_GameSession.SetMaster();
+            }
+        }
+
+        #endregion
+        
+        
+        ////
+        ///
+        ///
+        public void ShowTavernMap()
+        {
+            m_Environment.ShowTavernMap();
+        }
+        
+        public void ShowSkyLandMap()
+        {
+            m_Environment.ShowSkyLandMap();
+        }
+        
+        public void ShowSkyLandWithPropMap()
+        {
+            m_Environment.ShowSkyLandWithPropMap();
+        }
+        
+        public void ShowMobaMap()
+        {
+            m_Environment.ShowMobaMap();
+        }
+        
+        public void ShowLichMap()
+        {
+            m_Environment.ShowLichMap();
+        }
+        
+        public void ShowDefaultPvPMap()
+        {
+            m_Environment.ShowSkyLandMap();
+        }
+        
+        public void ShowDefaultPvEMap()
+        {
+            m_Environment.ShowLichMap();
         }
     }
 }

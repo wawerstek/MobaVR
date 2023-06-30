@@ -1,10 +1,19 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace MobaVR
 {
     public class GravitySelector : MonoBehaviour
     {
         [SerializeField] private ClassicGameSession m_GameSession;
+
+        private void Awake()
+        {
+            if (m_GameSession == null)
+            {
+                m_GameSession = FindObjectOfType<ClassicGameSession>();
+            }
+        }
 
         public void SetAim(bool useAim)
         {
