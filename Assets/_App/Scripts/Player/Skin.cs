@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Serialization;
 
 namespace MobaVR
@@ -24,6 +25,11 @@ namespace MobaVR
         [SerializeField] private List<Renderer> m_BodyRenderers = new();
         [SerializeField] private List<Renderer> m_HiddenVrRenderers = new();
 
+        [Space]
+        [Header("Events")]
+        public UnityEvent OnActivated;
+        public UnityEvent OnDeactivated;
+        
         private string[] m_LegNames = new[]
         {
             "leg",
@@ -187,11 +193,15 @@ namespace MobaVR
         {
             gameObject.SetActive(true);
             SetTeam(teamType);
+            
+            OnActivated?.Invoke();
         }
 
         public void DeactivateSkin()
         {
             gameObject.SetActive(false);
+            
+            OnDeactivated?.Invoke();
         }
 
         #endregion

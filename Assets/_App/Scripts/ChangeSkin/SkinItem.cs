@@ -1,4 +1,5 @@
 using System;
+using UnityEditor;
 using UnityEngine;
 
 namespace MobaVR
@@ -21,6 +22,52 @@ namespace MobaVR
                 m_Renderer = GetComponent<Renderer>();
             }
         }
+
+        [ContextMenu("Convert Blue to Red: NHance")]
+        private void SwitchBlueToRedMaterials_NHance()
+        {
+            for (var i = 0; i < m_BlueMaterial.Length; i++)
+            {
+                Material material = m_BlueMaterial[i];
+                string path = AssetDatabase.GetAssetPath(material);
+                if (path.Contains("_Bl"))
+                {
+                    string newPath = path.Replace("_Bl", "_Rd");
+                    Material redMaterial = AssetDatabase.LoadAssetAtPath<Material>(newPath);
+                    if (redMaterial != null)
+                    {
+                        m_RedMaterial[i] = redMaterial;
+                    }
+                }
+            }
+        }
+
+        [ContextMenu("FindMaterials")]
+        private void FindMaterials()
+        {
+            FindBlueMaterials();
+            FindRedMaterials();
+        }
+
+        [ContextMenu("FindBlueMaterials")]
+        private void FindBlueMaterials()
+        {
+            if (m_Renderer != null)
+            {
+                m_BlueMaterial = m_Renderer.sharedMaterials;
+            }
+        }
+
+
+        [ContextMenu("FindRedMaterials")]
+        private void FindRedMaterials()
+        {
+            if (m_Renderer != null)
+            {
+                m_RedMaterial = m_Renderer.sharedMaterials;
+            }
+        }
+
 
         public override void SetTeam(TeamType teamType)
         {

@@ -103,11 +103,14 @@ namespace MobaVR
             }
         }
 
+        [ContextMenu("Set Red Team")]
         public void SetRedTeam()
         {
             SetTeam(TeamType.RED);
         }
-
+        
+        
+        [ContextMenu("Set Blue Team")]
         public void SetBlueTeam()
         {
             SetTeam(TeamType.BLUE);
