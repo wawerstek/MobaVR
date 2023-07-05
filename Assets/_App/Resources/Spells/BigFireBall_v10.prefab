@@ -48900,6 +48900,7 @@ GameObject:
   - component: {fileID: 6947949317090603735}
   - component: {fileID: 8464461316636251568}
   - component: {fileID: 9188032268869581275}
+  - component: {fileID: 8421295284990062917}
   m_Layer: 10
   m_Name: BigFireBall_v10
   m_TagString: Untagged
@@ -49381,6 +49382,19 @@ MonoBehaviour:
   m_ThrowHandle: {fileID: -1146988265662389042}
   m_ThrowLabOvrGrabbable: {fileID: 6947949317090603735}
   m_GravityFireball: {fileID: 8464461316636251568}
+--- !u!114 &8421295284990062917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3318618810848601306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b05c15732aeb2db4b860eb9964bf3bc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Damage: 20
 --- !u!1 &3318618811458133669
 GameObject:
   m_ObjectHideFlags: 0
