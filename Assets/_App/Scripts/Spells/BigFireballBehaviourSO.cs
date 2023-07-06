@@ -1,9 +1,12 @@
-﻿using Photon.Pun;
+﻿using System;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace MobaVR
 {
+    [Serializable]
+    //[CreateAssetMenu(fileName = "BigFireball", menuName = "MobaVR API/Spells/Create big fireball")]
     public class BigFireballBehaviourSO : SpellBehaviourSO
     {
         [SerializeField] private BigFireBall m_BigFireballPrefab;

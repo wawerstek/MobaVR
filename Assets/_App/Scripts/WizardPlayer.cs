@@ -85,6 +85,9 @@ namespace MobaVR
         private IDamageIndicator m_DamageIndicator;
         private TeamType m_TeamType = TeamType.RED;
         private float m_Health = 100f;
+
+        [SerializeField] private bool m_CanInit = true;
+        
         [SerializeField] private float m_ThrowForce = 10f;
         [SerializeField] private bool m_UseAim = false;
         [SerializeField] private float m_CurrentHealth = 100f;
@@ -161,6 +164,11 @@ namespace MobaVR
                 return;
             }
 
+            if (!m_CanInit)
+            {
+                return;
+            }
+            
             //m_Collider.enabled = true;
 
             InputActionSO inputActionSO = m_ActiveInput;

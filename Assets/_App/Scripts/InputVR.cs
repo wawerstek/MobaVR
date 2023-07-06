@@ -1,6 +1,5 @@
 using BNG;
 using Sirenix.OdinInspector;
-using Sirenix.Serialization;
 using UnityEngine;
 
 namespace MobaVR
@@ -49,5 +48,9 @@ namespace MobaVR
         public Grabber RightGrabber;
         public Transform RightBigFireballPoint;
         public Transform RightSmallFireballPoint;
+
+        [Header("Hand InputVR")]
+        public HandInputVR LefHandInputVR;
+        public HandInputVR RightHandInputVR;
     }
 }
