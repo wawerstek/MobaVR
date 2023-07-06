@@ -5,10 +5,10 @@ using UnityEngine.InputSystem;
 
 namespace MobaVR
 {
-    [CreateAssetMenu(fileName = "BigFireball", menuName = "MobaVR API/Spells/Create big fireball")]
-    public class BigFireballSpell : SpellStateSO
+    //[CreateAssetMenu(fileName = "BigFireball", menuName = "MobaVR API/Spells/Create big fireball")]
+    public class BigFireballSpellBehaviour : SpellBehaviour
     {
-        private const string TAG = nameof(BigFireballSpell);
+        private const string TAG = nameof(BigFireballSpellBehaviour);
 
         [SerializeField] private BigFireBall m_BigFireballPrefab;
 
@@ -56,7 +56,7 @@ namespace MobaVR
         {
             Debug.Log($"{TAG}: {nameof(OnPerformedCast)}: performed");
 
-            if (!CanCast)
+            if (!CanCast() && HasBlockingSpells())
             {
                 return;
             }
@@ -70,7 +70,7 @@ namespace MobaVR
         {
             Debug.Log($"{TAG}: {nameof(OnCanceledCast)}: canceled");
 
-            if (!CanCast)
+            if (!CanCast())
             {
                 return;
             }
@@ -87,7 +87,7 @@ namespace MobaVR
         {
             Debug.Log($"{TAG}: {nameof(OnPerformedRedirect)}: performed");
 
-            if (!CanCast)
+            if (!CanCast() && HasBlockingSpells())
             {
                 return;
             }

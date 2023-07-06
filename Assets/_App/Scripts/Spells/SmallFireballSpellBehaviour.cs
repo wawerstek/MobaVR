@@ -6,10 +6,10 @@ using UnityEngine.InputSystem;
 
 namespace MobaVR
 {
-    [CreateAssetMenu(fileName = "SmallFireball", menuName = "MobaVR API/Spells/Create small fireball")]
-    public class SmallFireballSpell : SpellStateSO
+    //[CreateAssetMenu(fileName = "SmallFireball", menuName = "MobaVR API/Spells/Create small fireball")]
+    public class SmallFireballSpellBehaviour : SpellBehaviour
     {
-        private const string TAG = nameof(SmallFireballSpell);
+        private const string TAG = nameof(SmallFireballSpellBehaviour);
         [SerializeField] private SmallFireBall m_SmallFireballPrefab;
 
         [SerializeField] private SpellHandType m_SpellHandType = SpellHandType.RIGHT_HAND;
@@ -47,7 +47,7 @@ namespace MobaVR
         {
             Debug.Log($"{TAG}: {nameof(OnPerformedCast)}: performed");
 
-            if (!CanCast)
+            if (!CanCast() && HasBlockingSpells())
             {
                 return;
             }

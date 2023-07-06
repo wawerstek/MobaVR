@@ -4,12 +4,12 @@ using UnityEngine;
 
 namespace MobaVR
 {
-    public abstract class SpellStateSO : ScriptableObject, ISpellState
+    public abstract class SpellBehaviour : MonoBehaviour, ISpellState
     {
-        [SerializeField] protected int m_Priority = 0;
-
-        [SerializeField] private List<SpellStateSO> m_BlockingSpells = new ();
-
+        [Header("Blocking spells")]
+        [Tooltip("If blocking spell is performed, then player can't use it spell.")]
+        [SerializeField] private List<SpellBehaviour> m_BlockingSpells = new ();
+        
         protected SpellHandler m_SpellsHandler;
         protected PlayerVR m_PlayerVR;
         
@@ -20,7 +20,6 @@ namespace MobaVR
         public bool IsPerformed => m_IsPerformed;
         public bool IsValidInput => m_IsValidInput;
         public bool IsLiving => m_IsLiving;
-        public int Priority => m_Priority;
 
         public Action OnStarted;
         public Action OnPerformed;
@@ -39,9 +38,25 @@ namespace MobaVR
             m_SpellsHandler = spellHandler;
             m_PlayerVR = playerVR;
         }
-        
-        protected bool CanCast => m_PlayerVR.WizardPlayer.PlayerState.StateSo.CanCast && m_PlayerVR.WizardPlayer.IsLife;
-        
+
+        public bool CanCast()
+        {
+            return m_PlayerVR.WizardPlayer.PlayerState.StateSo.CanCast && m_PlayerVR.WizardPlayer.IsLife;
+        }
+
+        public bool HasBlockingSpells()
+        {
+            foreach (SpellBehaviour spellBehaviour in m_BlockingSpells)
+            {
+                if (spellBehaviour.IsPerformed)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         #region Input
 
         public abstract void CheckInput();
