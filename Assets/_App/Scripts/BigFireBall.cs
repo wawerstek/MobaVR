@@ -267,6 +267,8 @@ namespace MobaVR
             Destroy(m_ExplosionFx, m_DestroyExplosion);
             //Destroy(gameObject);
 
+            OnDestroySpell?.Invoke();
+            
             if (photonView.IsMine)
             {
                 PhotonNetwork.Destroy(gameObject);
@@ -360,6 +362,8 @@ namespace MobaVR
             //photonView.RPC(nameof(RpcSwitchGravity), RpcTarget.All, wizardPlayer.GravityFireballType);
             photonView.RPC(nameof(RpcSetPhysics), RpcTarget.All, wizardPlayer.GravityFireballType, wizardPlayer.ThrowForce, wizardPlayer.UseAim);
         }
+        
+        //TODO: add destroy public method
 
         [PunRPC]
         private void RpcSwitchGravity(BigFireballType gravityType)

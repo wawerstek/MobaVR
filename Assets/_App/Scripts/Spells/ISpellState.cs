@@ -2,8 +2,8 @@
 {
     public interface ISpellState
     {
-        public void Enter();
-        public void Update();
-        public void Exit();
+        public void SpellEnter();
+        public void SpellUpdate();
+        public void SpellExit();
     }
 }
