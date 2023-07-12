@@ -8,6 +8,12 @@ namespace MobaVR
     {
         [SerializeField] private Shield m_Shield;
 
+        protected override void OnStartCast(InputAction.CallbackContext context)
+        {
+            base.OnStartCast(context);
+            OnStarted?.Invoke();
+        }
+
         protected override void OnPerformedCast(InputAction.CallbackContext context)
         {
             base.OnPerformedCast(context);
@@ -16,8 +22,7 @@ namespace MobaVR
                 return;
             }
             
-            m_SpellsHandler.SetCurrentSpell(this);
-            
+            OnPerformed?.Invoke();
             m_IsPerformed = true;
             m_Shield.Show(true);
         }
@@ -25,28 +30,14 @@ namespace MobaVR
         protected override void OnCanceledCast(InputAction.CallbackContext context)
         {
             base.OnCanceledCast(context);
-
-            m_IsPerformed = false;
-            m_Shield.Show(false);
-
-            //m_SpellsHandler.DeactivateCurrentSpell(this);
+            Interrupt();
         }
 
-        private void Update()
+        protected override void Interrupt()
         {
-            Debug.Log($"Shield: phase = {m_CastInput.action.phase}");
-        }
-
-        public override void SpellEnter()
-        {
-        }
-
-        public override void SpellUpdate()
-        {
-        }
-
-        public override void SpellExit()
-        {
+            base.Interrupt();
+            
+            OnCompleted?.Invoke();
             m_IsPerformed = false;
             m_Shield.Show(false);
         }

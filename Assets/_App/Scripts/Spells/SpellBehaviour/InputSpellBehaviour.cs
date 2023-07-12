@@ -3,11 +3,13 @@ using UnityEngine.InputSystem;
 
 namespace MobaVR
 {
-    public abstract class InputSpellBehaviour : SpellBehaviour
+    public abstract class InputSpellBehaviour : SpellBehaviour, ISpellInput
     {
         [SerializeField] protected SpellHandType m_SpellHandType = SpellHandType.RIGHT_HAND;
         [SerializeField] protected InputActionReference m_CastInput;
 
+        protected HandInputVR m_LeftHand;
+        protected HandInputVR m_RightHand;
         protected HandInputVR m_MainHandInputVR;
 
         #region MonoBehaviour
@@ -33,15 +35,19 @@ namespace MobaVR
         public override void Init(SpellHandler spellHandler, PlayerVR playerVR)
         {
             base.Init(spellHandler, playerVR);
+            m_LeftHand = playerVR.InputVR.LefHandInputVR;
+            m_RightHand = playerVR.InputVR.RightHandInputVR;
+
             switch (m_SpellHandType)
             {
                 case SpellHandType.LEFT_HAND:
-                    m_MainHandInputVR = playerVR.InputVR.LefHandInputVR;
+                    m_MainHandInputVR = m_PlayerVR.InputVR.LefHandInputVR;
                     break;
                 case SpellHandType.RIGHT_HAND:
-                    m_MainHandInputVR = playerVR.InputVR.RightHandInputVR;
+                    m_MainHandInputVR = m_PlayerVR.InputVR.RightHandInputVR;
                     break;
                 case SpellHandType.BOTH:
+                    m_MainHandInputVR = m_PlayerVR.InputVR.RightHandInputVR;
                     break;
             }
         }
@@ -52,24 +58,24 @@ namespace MobaVR
 
         protected virtual void OnStartCast(InputAction.CallbackContext context)
         {
-            Debug.Log($"{TAG}: {nameof(OnStartCast)}: started");
+            Debug.Log($"{SpellName}: {nameof(OnStartCast)}: started");
         }
 
         protected virtual void OnPerformedCast(InputAction.CallbackContext context)
         {
-            Debug.Log($"{TAG}: {nameof(OnPerformedCast)}: performed");
+            Debug.Log($"{SpellName}: {nameof(OnPerformedCast)}: performed");
         }
 
         protected virtual void OnCanceledCast(InputAction.CallbackContext context)
         {
-            Debug.Log($"{TAG}: {nameof(OnCanceledCast)}: canceled");
+            Debug.Log($"{SpellName}: {nameof(OnCanceledCast)}: canceled");
         }
 
         #endregion
 
         #region Input
 
-        public override bool IsInProgress()
+        public virtual bool IsInProgress()
         {
             return m_CastInput.action.inProgress;
         }

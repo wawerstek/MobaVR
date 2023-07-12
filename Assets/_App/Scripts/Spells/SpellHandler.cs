@@ -7,17 +7,18 @@ namespace MobaVR
 {
     public class SpellHandler : MonoBehaviour
     {
+        private const string TAG = nameof(SpellHandler);
+        
         [SerializeField] private PlayerVR m_PlayerVR;
         [SerializeField] private List<SpellMap> m_Spells;
-        
-        [SerializeField] [ReadOnly] private SpellBehaviour m_ActiveSpell;
-        [SerializeField] [ReadOnly] private SpellBehaviour m_LastSpell;
+
+        [SerializeField] [ReadOnly] private List<SpellBehaviour> m_ActiveSpells = new();
 
         public List<SpellMap> Spells => m_Spells;
         public List<SpellBehaviour> SpellBehaviours => m_Spells.Select(map => map.SpellBehaviour).Distinct().ToList();
-        public SpellBehaviour ActiveSpell => m_ActiveSpell;
-        public SpellBehaviour LastSpell => m_LastSpell;
-        public bool HasActiveSpell => m_ActiveSpell != null;
+        public List<SpellBehaviour> ActiveSpells => m_ActiveSpells;
+        public bool HasActiveSpell => m_ActiveSpells.Count > 0;
+        public SpellBehaviour ActiveSpell => m_ActiveSpells.Count > 0 ? m_ActiveSpells[0] : null;
 
         private void OnValidate()
         {
@@ -36,7 +37,40 @@ namespace MobaVR
         {
             foreach (SpellMap spellMap in m_Spells)
             {
-                spellMap.SpellBehaviour.Init(this, m_PlayerVR);
+                SpellBehaviour spellBehaviour = spellMap.SpellBehaviour;
+                spellBehaviour.Init(this, m_PlayerVR);
+
+                spellBehaviour.OnStarted += () => { OnSpellStarted(spellBehaviour); };
+                spellBehaviour.OnPerformed += () => { OnSpellPerformed(spellBehaviour); };
+                spellBehaviour.OnCompleted += () => { OnSpellCompleted(spellBehaviour); };
+            }
+        }
+
+        private void OnSpellStarted(SpellBehaviour spellBehaviour)
+        {
+            Debug.Log($"{TAG}: OnSpellStarted: {spellBehaviour.SpellName}");
+        }
+
+        private void OnSpellPerformed(SpellBehaviour spellBehaviour)
+        {
+            Debug.Log($"{TAG}: OnSpellPerformed: {spellBehaviour.SpellName}");
+
+            foreach (SpellBehaviour activeSpell in m_ActiveSpells)
+            {
+                activeSpell.TryInterrupt();
+            }
+            
+            m_ActiveSpells.Add(spellBehaviour);
+        }
+
+        private void OnSpellCompleted(SpellBehaviour spellBehaviour)
+        {
+            Debug.Log($"{TAG}: OnSpellCompleted: {spellBehaviour.SpellName}");
+
+            int position = m_ActiveSpells.IndexOf(spellBehaviour);
+            if (position > 0)
+            {
+                m_ActiveSpells.RemoveAt(position);
             }
         }
 
@@ -44,35 +78,10 @@ namespace MobaVR
         {
             foreach (SpellMap spellMap in m_Spells)
             {
-                Debug.Log($"{spellMap.SpellBehaviour.name}: isPerformed: {spellMap.SpellBehaviour.IsPerformed}, " +
-                          //$"isPressed: {spellMap.SpellBehaviour.IsPressed()}, " +
-                          $"inProcess: {spellMap.SpellBehaviour.IsInProgress()}");                
+                Debug.Log($"{spellMap.SpellBehaviour.name}: isPerformed: {spellMap.SpellBehaviour.IsPerformed()}");
+                //$"isPressed: {spellMap.SpellBehaviour.IsPressed()}, " +
+                //$"inProcess: {spellMap.SpellBehaviour.IsInProgress()}"
             }
         }
-
-        public void SetCurrentSpell(SpellBehaviour spellBehaviour)
-        {
-            if (m_ActiveSpell != null)
-            {
-                m_ActiveSpell.SpellExit();
-            }
-
-            m_LastSpell = spellBehaviour;
-            m_ActiveSpell = spellBehaviour;
-
-            m_ActiveSpell.SpellEnter();
-        }
-        
-        /*
-        public void DeactivateCurrentSpell(SpellBehaviour spellBehaviour)
-        {
-            if (m_ActiveSpell != null && m_ActiveSpell == spellBehaviour)
-            {
-                m_ActiveSpell.SpellExit();
-            }
-
-            m_ActiveSpell = null;
-        }
-        */
     }
 }

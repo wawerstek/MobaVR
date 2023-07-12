@@ -2,8 +2,7 @@
 {
     public interface ISpellState
     {
-        public void SpellEnter();
-        public void SpellUpdate();
-        public void SpellExit();
+        public bool IsPerformed();
+        public bool TryInterrupt();
     }
 }

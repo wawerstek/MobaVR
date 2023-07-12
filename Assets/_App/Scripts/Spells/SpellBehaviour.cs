@@ -11,13 +11,17 @@ namespace MobaVR
 
         [Header("Blocking spells")]
         [Tooltip("If blocking spell is performed, player can't use this spell.")]
-        [SerializeField] private List<SpellBehaviour> m_BlockingSpells = new();
+        [SerializeField] protected List<SpellBehaviour> m_BlockingSpells = new();
+
+        [Header("Spell Info")]
+        [SerializeField] protected string m_SpellName;
+        [SerializeField] protected bool m_CanInterrupted = true;
         [SerializeField] [ReadOnly] protected bool m_IsPerformed = false;
 
         protected SpellHandler m_SpellsHandler;
         protected PlayerVR m_PlayerVR;
 
-        public bool IsPerformed => m_IsPerformed;
+        public string SpellName => m_SpellName;
 
         public Action OnStarted;
         public Action OnPerformed;
@@ -31,16 +35,16 @@ namespace MobaVR
             m_PlayerVR = playerVR;
         }
 
-        public virtual bool CanCast()
+        protected virtual bool CanCast()
         {
             return m_PlayerVR.WizardPlayer.PlayerState.StateSo.CanCast && m_PlayerVR.WizardPlayer.IsLife;
         }
 
-        public virtual bool HasBlockingSpells()
+        protected virtual bool HasBlockingSpells()
         {
             foreach (SpellBehaviour spellBehaviour in m_BlockingSpells)
             {
-                if (spellBehaviour.IsPerformed)
+                if (spellBehaviour.IsPerformed())
                 {
                     return true;
                 }
@@ -54,11 +58,22 @@ namespace MobaVR
 
         #region Spell States
 
-        public abstract bool IsInProgress();
+        public virtual bool IsPerformed() => m_IsPerformed;
 
-        public abstract void SpellEnter();
-        public abstract void SpellUpdate();
-        public abstract void SpellExit();
+        public virtual bool TryInterrupt()
+        {
+            if (m_CanInterrupted)
+            {
+                Interrupt();
+            }
+
+            return m_CanInterrupted;
+        }
+
+        protected virtual void Interrupt()
+        {
+            Debug.Log($"{SpellName}: Interrupt");
+        }
 
         #endregion
     }

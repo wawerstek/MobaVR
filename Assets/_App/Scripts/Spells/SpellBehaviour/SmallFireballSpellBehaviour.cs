@@ -4,7 +4,6 @@ using UnityEngine.InputSystem;
 
 namespace MobaVR
 {
-    //[CreateAssetMenu(fileName = "SmallFireball", menuName = "MobaVR API/Spells/Create small fireball")]
     public class SmallFireballSpellBehaviour : InputSpellBehaviour
     {
         [SerializeField] private SmallFireBall m_SmallFireballPrefab;
@@ -20,54 +19,33 @@ namespace MobaVR
                 return;
             }
 
-            m_SpellsHandler.SetCurrentSpell(this);
-            CreateSmallFireBall(m_MainHandInputVR.FingerPoint);
-            ThrowSmallFireBall(m_SmallFireBall, m_MainHandInputVR.Grabber.transform.forward);
+            Shoot(m_MainHandInputVR.FingerPoint, m_MainHandInputVR.Grabber.transform.forward);
         }
 
-        protected override void OnCanceledCast(InputAction.CallbackContext context)
-        {
-            base.OnCanceledCast(context);
-            
-            //m_SpellsHandler.DeactivateCurrentSpell(this);
-        }
-
-        private void CreateSmallFireBall(Transform point)
+        private void Shoot(Transform point, Vector3 direction)
         {
             GameObject networkFireball = PhotonNetwork.Instantiate($"Spells/{m_SmallFireballPrefab.name}",
-                                                                   point.transform.position,
-                                                                   point.transform.rotation);
-            
+                                                                   point.position,
+                                                                   point.rotation);
+
             if (networkFireball.TryGetComponent(out m_SmallFireBall))
             {
-                m_SmallFireBall.Init(m_PlayerVR.WizardPlayer, m_PlayerVR.TeamType);
-
                 Transform fireBallTransform = m_SmallFireBall.transform;
                 fireBallTransform.parent = null;
                 fireBallTransform.position = point.transform.position;
                 fireBallTransform.rotation = Quaternion.identity;
+
+                m_SmallFireBall.Init(m_PlayerVR.WizardPlayer, m_PlayerVR.TeamType);
+                m_SmallFireBall.OnInitSpell = () => { m_IsPerformed = true; };
+                m_SmallFireBall.OnDestroySpell = () =>
+                {
+                    m_IsPerformed = false;
+                    m_SmallFireBall = null;
+                    OnCompleted?.Invoke();
+                };
+                
+                m_SmallFireBall.ThrowByDirection(direction);
             }
-        }
-
-        private void ThrowSmallFireBall(SmallFireBall fireBall, Vector3 direction)
-        {
-            if (fireBall != null)
-            {
-                fireBall.ThrowByDirection(direction);
-                fireBall = null;
-            }
-        }
-
-        public override void SpellEnter()
-        {
-        }
-
-        public override void SpellUpdate()
-        {
-        }
-
-        public override void SpellExit()
-        {
         }
     }
 }

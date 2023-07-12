@@ -37,27 +37,25 @@ namespace MobaVR
 
         #region Input Callbacks
 
+        protected override void OnStartCast(InputAction.CallbackContext context)
+        {
+            base.OnStartCast(context);
+            OnStarted?.Invoke();
+        }
+
         protected override void OnPerformedCast(InputAction.CallbackContext context)
         {
             base.OnPerformedCast(context);
-            Debug.Log($"Spell: BigFireballSpellBehaviour: CanCast: {CanCast()}, Block: {HasBlockingSpells()}");
-
-
             if (!CanCast() || HasBlockingSpells())
             {
                 return;
             }
 
-            Debug.Log($"Spell: BigFireballSpellBehaviour: OnPerformedCast start");
-
+            OnPerformed?.Invoke();
 
             m_IsPerformed = true;
-            m_SpellsHandler.SetCurrentSpell(this);
-
             m_IsThrown = false;
             CreateFireball(m_MainHandInputVR.Grabber.transform);
-            
-            Debug.Log($"Spell: BigFireballSpellBehaviour: OnPerformedCast end");
         }
 
         protected override void OnCanceledCast(InputAction.CallbackContext context)
@@ -81,7 +79,6 @@ namespace MobaVR
         {
             Debug.Log($"{TAG}: {nameof(OnPerformedRedirect)}: performed");
 
-
             if (!CanCast() || HasBlockingSpells() || !m_IsThrown)
             {
                 return;
@@ -103,6 +100,18 @@ namespace MobaVR
             Debug.Log($"{TAG}: {nameof(OnCanceledRedirect)}: canceled");
         }
 
+        protected override void Interrupt()
+        {
+            if (!m_IsThrown && m_FireBall != null)
+            {
+                m_FireBall.Throw();
+            }
+
+            m_FireBall = null;
+            m_IsPerformed = false;
+            OnCompleted?.Invoke();
+        }
+
         #endregion
 
         /*
@@ -118,20 +127,19 @@ namespace MobaVR
         private void CreateFireball(Transform point)
         {
             GameObject networkFireball = PhotonNetwork.Instantiate($"Spells/{m_BigFireballPrefab.name}",
-                                                                   point.transform.position,
-                                                                   point.transform.rotation);
+                                                                   point.position,
+                                                                   point.rotation);
 
             if (networkFireball.TryGetComponent(out m_FireBall))
             {
-                m_FireBall.Init(m_PlayerVR.WizardPlayer, m_PlayerVR.TeamType);
-
                 Transform fireBallTransform = m_FireBall.transform;
                 fireBallTransform.parent = point.transform;
                 fireBallTransform.localPosition = Vector3.zero;
                 fireBallTransform.localRotation = Quaternion.identity;
 
                 m_IsThrown = false;
-                
+
+                m_FireBall.Init(m_PlayerVR.WizardPlayer, m_PlayerVR.TeamType);
                 m_FireBall.OnInitSpell += OnInitSpell;
                 m_FireBall.OnDestroySpell += OnDestroySpell;
             }
@@ -146,31 +154,28 @@ namespace MobaVR
             }
         }
 
+        private void OnInitSpell()
+        {
+            m_IsThrown = false;
+            m_IsPerformed = true;
+        }
+
         private void OnDestroySpell()
         {
             if (m_FireBall != null)
             {
                 m_FireBall.OnInitSpell -= OnInitSpell;
                 m_FireBall.OnDestroySpell -= OnDestroySpell;
-
-                m_FireBall = null;
             }
 
+            m_FireBall = null;
             m_IsPerformed = false;
-
-            //m_SpellsHandler.DeactivateCurrentSpell(this);
-        }
-
-        private void OnInitSpell()
-        {
+            OnCompleted?.Invoke();
         }
 
         #endregion
 
-        public void Update()
-        {
-            Debug.Log($"BigFireball: phase = {m_CastInput.action.phase}");
-        }
+        #region Input
 
         public override bool IsInProgress()
         {
@@ -182,25 +187,6 @@ namespace MobaVR
             return m_CastInput.action.IsPressed() || m_RedirectInput.action.IsPressed();
         }
 
-        public override void SpellEnter()
-        {
-        }
-
-        public override void SpellUpdate()
-        {
-        }
-
-        public override void SpellExit()
-        {
-            Debug.Log($"Spell: BigFireballSpellBehaviour: SpellExit: {m_FireBall}: isTrhown: {m_IsThrown}");
-            
-            if (!m_IsThrown && m_FireBall != null)
-            {
-                //TODO
-                Debug.Log($"Spell: BigFireballSpellBehaviour: SpellExit != null: {m_FireBall}");
-                
-                m_FireBall.Throw();
-            }
-        }
+        #endregion
     }
 }

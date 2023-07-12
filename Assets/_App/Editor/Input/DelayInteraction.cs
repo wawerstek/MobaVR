@@ -36,7 +36,7 @@ namespace MobaVR.Input
                     {
                         context.Started();
                         context.SetTimeout(Delay);
-                        
+
                         m_IsStartPerformed = true;
                     }
 
@@ -54,18 +54,19 @@ namespace MobaVR.Input
                     }
 
                     break;
-                
+                /*
                 case InputActionPhase.Canceled:
                     if (m_IsStartPerformed)
                     {
-                        
+                        context.Waiting();
                     }
                     else
                     {
-                        
+                        context.Waiting();
                     }
                     
                     break;
+                */
             }
         }
 
