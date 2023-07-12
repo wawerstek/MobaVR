@@ -29,7 +29,11 @@ public class FourButtons : InputBindingComposite<float>
         float valueButton3 = context.ReadValue<float>(buttonThree);
         float valueButton4 = context.ReadValue<float>(buttonFour);
 
-        return (valueButton1 + valueButton2 + valueButton3 + buttonFour) / 4f;
+        var value = (valueButton1 + valueButton2 + valueButton3 + valueButton4) / 4f;
+        Debug.Log("FourButtons: " + value);
+        Debug.Log($"FourButtons Values: {valueButton1}, {valueButton2}, {valueButton3}, {valueButton4}");
+        
+        return value;
     }
     
     public override float EvaluateMagnitude(ref InputBindingCompositeContext context)

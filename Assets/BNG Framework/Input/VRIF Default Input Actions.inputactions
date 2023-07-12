@@ -1569,9 +1569,590 @@
             ]
         },
         {
-            "name": "Spells LeftHand",
+            "name": "Spells Test",
+            "id": "c861046c-73bf-425a-805f-a87b05754a83",
+            "actions": [
+                {
+                    "name": "TriggerGrip",
+                    "type": "Button",
+                    "id": "c907e119-61b2-4e0c-af37-82fac9661ac2",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "TriggerGrip_Analog",
+                    "type": "Value",
+                    "id": "5d8951fe-eb1f-4894-95a8-812e3d4db6d9",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Trigger",
+                    "type": "Button",
+                    "id": "b5e50ad1-d0be-4d88-b721-8a68532908cd",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Trigger_Press",
+                    "type": "Button",
+                    "id": "866784d9-a627-4c97-9189-d351ba660f6f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Trigger_Value",
+                    "type": "Value",
+                    "id": "a943cf4b-f61b-45d9-b170-c42a3a96ce56",
+                    "expectedControlType": "Analog",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Trigger_Delay",
+                    "type": "Button",
+                    "id": "a4c97243-4668-4ef1-87b5-507d18d44531",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Delay(Delay=0.14)",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Trigger_Delay_Uniq",
+                    "type": "Button",
+                    "id": "9736e6f4-5ab4-4319-a3f1-9e36d2e4a5db",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Delay(Delay=0.1)",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Grip",
+                    "type": "Button",
+                    "id": "96e15f28-e60c-4840-a364-fbcc4d725289",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Grip_DoubleTap",
+                    "type": "Button",
+                    "id": "79d5ed12-b95b-4ddd-92f1-2e6e3385cb55",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "MultiTap(tapDelay=0.4)",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Grip_Hold",
+                    "type": "Button",
+                    "id": "d3c62cff-2a10-449a-9239-aeeae5e4bad8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Hold",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Grip_Hold_Uniq",
+                    "type": "Button",
+                    "id": "a5aaee6f-7ed8-48e3-a16c-8cf6e70eedaa",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Grip_Delay",
+                    "type": "Button",
+                    "id": "6cc84064-762c-4abe-ba98-b3857138db48",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Delay(Delay=0.14)",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Grip_Delay_Unig",
+                    "type": "Button",
+                    "id": "6cea9898-935c-4351-bf1c-80fd6881a1f4",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Delay(Delay=0.1)",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "PC Two Buttons",
+                    "id": "489807a5-1044-4f0d-8800-d22f10ff033b",
+                    "path": "TwoButtons",
+                    "interactions": "SyncPress",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TriggerGrip",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "buttonOne",
+                    "id": "2102b4fc-38fa-42d8-a163-e269a68a4dbc",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TriggerGrip",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "buttonTwo",
+                    "id": "7d4ad212-33b5-4f04-80ce-2d370ca9c1e4",
+                    "path": "<Keyboard>/v",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TriggerGrip",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "VR Two Buttons",
+                    "id": "bb265a81-395d-4934-ab6d-46ffb9c0030f",
+                    "path": "TwoButtons",
+                    "interactions": "SyncPress(Duration=0.08,Timeout=0.4)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TriggerGrip",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "buttonOne",
+                    "id": "3d252dcd-b64e-45cb-a3ab-2057f51f587b",
+                    "path": "<XRController>{LeftHand}/triggerPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TriggerGrip",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "buttonTwo",
+                    "id": "dfc92103-fd57-45f4-b773-c7b5ba0db042",
+                    "path": "<XRController>{LeftHand}/gripPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TriggerGrip",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "06aa3acb-983f-445e-a098-5d03caf55817",
+                    "path": "<XRController>{LeftHand}/gripPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "Grip_Hold",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "79b62a61-7b17-4fee-9e52-85c5ae445075",
+                    "path": "<Keyboard>/v",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Grip_Hold",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fd2d87f9-9c16-4626-b344-de7745d3b669",
+                    "path": "<XRController>{LeftHand}/gripPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "Grip_DoubleTap",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bc0704b8-a941-4d7d-8c7f-aa1bbf800cc4",
+                    "path": "<Keyboard>/v",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Grip_DoubleTap",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3965635b-7b47-4e5c-82e8-11cf0f0fa4c1",
+                    "path": "<XRController>{LeftHand}/triggerPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "Trigger",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4e686037-2528-4bea-af5f-f1819923eee0",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Trigger",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f6356e29-5c28-4c06-b7f5-70c3da857a19",
+                    "path": "<XRController>{LeftHand}/gripPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "Grip",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f53a10a8-6085-4735-a093-73a33404debe",
+                    "path": "<Keyboard>/v",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Grip",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ac88eedc-e56b-41dd-bb44-efba2117949f",
+                    "path": "<XRController>{LeftHand}/gripPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "Grip_Delay",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "74c5d898-5dd4-406e-962c-9173387f57e3",
+                    "path": "<Keyboard>/v",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Grip_Delay",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4e9867bd-6268-424d-9916-ebcf39c91b60",
+                    "path": "<XRController>{LeftHand}/triggerPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "Trigger_Delay",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "37070fdb-7608-4fbb-a34f-d65af33ad454",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Trigger_Delay",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f2fff783-e7a5-4b56-830e-1224c51effbd",
+                    "path": "<XRController>{LeftHand}/triggerPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "Trigger_Press",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4d2c02d4-0e46-456b-90d7-5769da4b122f",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Trigger_Press",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e447ea9e-f916-40b4-9e31-2f7ce225adb0",
+                    "path": "<XRController>{LeftHand}/trigger",
+                    "interactions": "Press(pressPoint=0.2)",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "Trigger_Value",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "dcf26d0c-7c3c-40f8-9090-795545a9e0e1",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Trigger_Value",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "PC Two Buttons",
+                    "id": "49fc6aa8-7b6f-4648-a24b-fe096ecf33be",
+                    "path": "TwoButtons",
+                    "interactions": "SyncPress",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TriggerGrip_Analog",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "buttonOne",
+                    "id": "11626a7a-8adb-4038-af74-90ff3ade28d0",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TriggerGrip_Analog",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "buttonTwo",
+                    "id": "ac52091e-e9eb-419c-94fa-1dc73ce050c4",
+                    "path": "<Keyboard>/v",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TriggerGrip_Analog",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "VR Two Buttons",
+                    "id": "7c240269-58a2-49fa-b1ae-1a571c18e582",
+                    "path": "TwoAnalogButtons(pressPoint=0.3)",
+                    "interactions": "SyncAnalog(Duration=0.12,Timeout=0.25)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TriggerGrip_Analog",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "analogTwo",
+                    "id": "311339ea-53fb-4757-9d5e-c663b5e6cae7",
+                    "path": "<XRController>{LeftHand}/trigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TriggerGrip_Analog",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "analogOne",
+                    "id": "e9005527-5bfb-4078-84a4-67a94c04251c",
+                    "path": "<XRController>{LeftHand}/grip",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TriggerGrip_Analog",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "46d3c736-fc55-4383-967f-b955a339a846",
+                    "path": "<XRController>{LeftHand}/gripPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "Grip_Hold_Uniq",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Unique Button",
+                    "id": "bbad2fca-ee30-4823-8ece-d3b9c00dedf3",
+                    "path": "UniqueButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Grip_Hold_Uniq",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "button",
+                    "id": "c302c39d-3c05-4cdd-a6b7-e637d4cec3f9",
+                    "path": "<Keyboard>/v",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Grip_Hold_Uniq",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "cb6e0388-d10e-4e03-aaab-c9818a0bd43d",
+                    "path": "<XRController>{LeftHand}/triggerPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "Trigger_Delay_Uniq",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Correct And Wrong Buttons",
+                    "id": "b7548c0c-9393-4f19-9ce5-9e430791781b",
+                    "path": "CorrectAndWrongButtons",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Trigger_Delay_Uniq",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "correctButton",
+                    "id": "f1d49bff-a756-4c2c-8194-efd5f0152f8a",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Trigger_Delay_Uniq",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "wrongButton",
+                    "id": "678ac05b-5a3c-4e12-a1d1-dcc6a52120cf",
+                    "path": "<Keyboard>/v",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Trigger_Delay_Uniq",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "5b4ddf48-b7a5-42ac-8290-95b927f29b58",
+                    "path": "<XRController>{LeftHand}/gripPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "Grip_Delay_Unig",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Correct And Wrong Buttons",
+                    "id": "c01e2fec-6ea9-447a-8e44-1ed818fec733",
+                    "path": "CorrectAndWrongButtons",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Grip_Delay_Unig",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "wrongButton",
+                    "id": "ec1c5462-9c38-4e54-bf0b-7f931306050c",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Grip_Delay_Unig",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "correctButton",
+                    "id": "b8ccbb18-e30e-46d0-b0ba-fad2571157dc",
+                    "path": "<Keyboard>/v",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Grip_Delay_Unig",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                }
+            ]
+        },
+        {
+            "name": "Spells Left Hand",
             "id": "2f25ddec-afe5-494f-9ce8-7adbc4697f11",
             "actions": [
+                {
+                    "name": "TriggerGrip_Analog",
+                    "type": "Value",
+                    "id": "1bde73ba-7a3b-4c64-afa8-d04e7178ecce",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Grip_Delay_Press",
+                    "type": "Value",
+                    "id": "a3613e0c-3448-469f-b8b1-403b4d37f6a6",
+                    "expectedControlType": "Analog",
+                    "processors": "",
+                    "interactions": "Delay(Delay=0.12),Press(pressPoint=0.8)",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Trigger_Delay_Press",
+                    "type": "Value",
+                    "id": "9e9afe92-6dc5-4cda-ba46-2d99b71d7375",
+                    "expectedControlType": "Analog",
+                    "processors": "",
+                    "interactions": "Delay(Delay=0.12),Press(pressPoint=0.8)",
+                    "initialStateCheck": true
+                },
                 {
                     "name": "TriggerGrip",
                     "type": "Button",
@@ -1614,6 +2195,15 @@
                     "id": "a73d1af6-e3fb-4ef7-822b-449039b2a2f5",
                     "expectedControlType": "Button",
                     "processors": "",
+                    "interactions": "Delay(Delay=0.12)",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Trigger_Delay_Uniq",
+                    "type": "Button",
+                    "id": "022b4d7e-7ea7-45a6-bd40-ceea77fbd101",
+                    "expectedControlType": "Button",
+                    "processors": "",
                     "interactions": "Delay(Delay=0.1)",
                     "initialStateCheck": false
                 },
@@ -1645,9 +2235,27 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Grip_Hold_Uniq",
+                    "type": "Button",
+                    "id": "559381cf-0ba5-40f0-82cd-0eb2a3f16d93",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Grip_Delay",
                     "type": "Button",
                     "id": "e565591c-b6c1-4cc0-9d1a-240d5b236e02",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Delay(Delay=0.12)",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Grip_Delay_Unig",
+                    "type": "Button",
+                    "id": "0dccfdef-4fc4-4605-a78f-119fa460421a",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "Delay(Delay=0.1)",
@@ -1896,6 +2504,951 @@
                     "action": "Trigger_Value",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "86da9c1a-b8df-4a15-9056-28a41543782d",
+                    "path": "<XRController>{LeftHand}/gripPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "Grip_Hold_Uniq",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Unique Button",
+                    "id": "9fd87db6-014d-4717-8adc-22e4051bd70f",
+                    "path": "UniqueButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Grip_Hold_Uniq",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "button",
+                    "id": "e168a3b4-25fe-4c4b-9b43-7021ee3fff7e",
+                    "path": "<Keyboard>/v",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Grip_Hold_Uniq",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "c9db255c-7c26-425a-a0c3-56179415cbe9",
+                    "path": "<XRController>{LeftHand}/triggerPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "Trigger_Delay_Uniq",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Correct And Wrong Buttons",
+                    "id": "017242ee-361f-45e8-ba89-58bd71b6417b",
+                    "path": "CorrectAndWrongButtons",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Trigger_Delay_Uniq",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "correctButton",
+                    "id": "457d7d68-75bb-4a08-892d-95b7ae5d3d05",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Trigger_Delay_Uniq",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "wrongButton",
+                    "id": "dc72c082-16df-4cc6-9b79-1cff710a5829",
+                    "path": "<Keyboard>/v",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Trigger_Delay_Uniq",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "d8b69dc6-9627-4cba-b757-e57c45c77b85",
+                    "path": "<XRController>{LeftHand}/gripPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "Grip_Delay_Unig",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Correct And Wrong Buttons",
+                    "id": "a5483cb0-2e6f-4911-b423-f685a406c351",
+                    "path": "CorrectAndWrongButtons",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Grip_Delay_Unig",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "wrongButton",
+                    "id": "ee75c1e0-1046-48ae-bbd6-4a5ba9883a09",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Grip_Delay_Unig",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "correctButton",
+                    "id": "972eddaa-277a-41cd-84e1-b161f8578b62",
+                    "path": "<Keyboard>/v",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Grip_Delay_Unig",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "PC Two Buttons",
+                    "id": "9464dbf9-144d-4391-9093-168cea226adb",
+                    "path": "TwoButtons",
+                    "interactions": "SyncPress",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TriggerGrip_Analog",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "buttonOne",
+                    "id": "3fa1925e-43d5-4ebe-a3f6-167979ec87c9",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TriggerGrip_Analog",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "buttonTwo",
+                    "id": "37587233-23d4-46d3-a50a-30f36601b262",
+                    "path": "<Keyboard>/v",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TriggerGrip_Analog",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "VR Two Buttons",
+                    "id": "5da5dedc-0a9e-4f6e-a2a8-93da15b75aa4",
+                    "path": "TwoAnalogButtons(pressPoint=0.4)",
+                    "interactions": "SyncAnalog(Duration=0.12,Timeout=0.25)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TriggerGrip_Analog",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "analogTwo",
+                    "id": "1d573ba3-e978-4743-be7e-d3d996b2fa4e",
+                    "path": "<XRController>{LeftHand}/trigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TriggerGrip_Analog",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "analogOne",
+                    "id": "b0f5d4ad-c8f0-4149-936e-213286c6c262",
+                    "path": "<XRController>{LeftHand}/grip",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TriggerGrip_Analog",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "ebf3cfcd-f13a-433a-8457-e58f91965f00",
+                    "path": "<XRController>{LeftHand}/gripPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "Grip_Delay_Press",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "41bcc1cb-0aef-43a8-bbd2-0f9e0713166f",
+                    "path": "<Keyboard>/v",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Grip_Delay_Press",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3cd00bb0-5e02-40d1-a984-c4d5188e394d",
+                    "path": "<XRController>{LeftHand}/triggerPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "Trigger_Delay_Press",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "78da7d6d-d53d-4853-8c29-66cb2285e812",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Trigger_Delay_Press",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Spells Right Hand",
+            "id": "57d8902c-ff8d-498d-8262-5d6d636d6693",
+            "actions": [
+                {
+                    "name": "TriggerGrip_Analog",
+                    "type": "Value",
+                    "id": "9a481717-2c45-4f1c-a984-6c40b30abf80",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Grip_Delay_Press",
+                    "type": "Value",
+                    "id": "ab5bb3cf-8493-4479-8eaa-b79ebbf83f55",
+                    "expectedControlType": "Analog",
+                    "processors": "",
+                    "interactions": "Delay(Delay=0.12),Press(pressPoint=0.8)",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Trigger_Delay_Press",
+                    "type": "Value",
+                    "id": "4d96deff-bbdd-4c28-b181-fc06598bd980",
+                    "expectedControlType": "Analog",
+                    "processors": "",
+                    "interactions": "Delay(Delay=0.12),Press(pressPoint=0.8)",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "TriggerGrip",
+                    "type": "Button",
+                    "id": "5cdd88fc-2479-45f1-8aac-805ba042a834",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Trigger",
+                    "type": "Button",
+                    "id": "10ff8729-c52a-49f1-8a78-6a63d7229a4e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Trigger_Value",
+                    "type": "Value",
+                    "id": "f71c14bd-4f3e-48aa-aa1c-b6b521217686",
+                    "expectedControlType": "Analog",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Trigger_Delay",
+                    "type": "Button",
+                    "id": "06f12a07-5ec6-4eda-9211-5b75203ef272",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Delay(Delay=0.12)",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Trigger_Delay_Unique",
+                    "type": "Button",
+                    "id": "ceb64eab-88be-409c-a7bc-dd43abbb0b05",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Delay(Delay=0.1)",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Grip",
+                    "type": "Button",
+                    "id": "2bd78fd6-7462-4a00-aea3-3f668fd34e0d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Grip_Hold",
+                    "type": "Button",
+                    "id": "eb117ee4-cdbd-4b9d-9468-71e26380ec73",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Hold",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Grip_Delay",
+                    "type": "Button",
+                    "id": "eab36c66-fbef-4fe7-ac93-c2252728aae5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Delay(Delay=0.12)",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Grip_Delay_Unique",
+                    "type": "Button",
+                    "id": "480f0ff0-2937-4cf9-b9ac-494d8f276243",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Delay(Delay=0.1)",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "PC Two Buttons",
+                    "id": "be9498d5-56f1-48d6-b946-93188b06d3f1",
+                    "path": "TwoButtons",
+                    "interactions": "SyncPress",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TriggerGrip",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "buttonOne",
+                    "id": "1297d711-53d9-414d-a106-c831997d0acd",
+                    "path": "<Keyboard>/b",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TriggerGrip",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "buttonTwo",
+                    "id": "841a69c1-f808-4c8b-a40c-a1372306c202",
+                    "path": "<Keyboard>/n",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TriggerGrip",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "VR Two Buttons",
+                    "id": "2308feed-528b-47af-8580-b7fad22ea993",
+                    "path": "TwoButtons",
+                    "interactions": "SyncPress(Duration=0.08,Timeout=0.4)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TriggerGrip",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "buttonOne",
+                    "id": "36f4ce4b-34c2-481c-9d5c-b704a52843ea",
+                    "path": "<XRController>{RightHand}/gripPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TriggerGrip",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "buttonTwo",
+                    "id": "45ca4e39-e173-4fbe-a8ee-534624af6ff4",
+                    "path": "<XRController>{RightHand}/triggerPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TriggerGrip",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "69cb4782-35e3-4f9c-899f-cb01a1b72fbf",
+                    "path": "<XRController>{RightHand}/gripPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "Grip_Hold",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9fb64b66-104c-478d-a74a-43d2814e0275",
+                    "path": "<Keyboard>/n",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Grip_Hold",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "14b64648-bf24-4714-98ef-d2fd35973804",
+                    "path": "<XRController>{RightHand}/triggerPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "Trigger",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cafb18f4-692b-4c49-a8b0-f5cb2838de56",
+                    "path": "<Keyboard>/b",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Trigger",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ef9d109c-bb58-45d5-9a2f-8364185bac4a",
+                    "path": "<XRController>{RightHand}/gripPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "Grip",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "38cd4e56-6e9a-498f-9123-f9b8f2296c19",
+                    "path": "<Keyboard>/n",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Grip",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "dd2cd93b-b574-41eb-b237-935474bfcb13",
+                    "path": "<XRController>{RightHand}/gripPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "Grip_Delay",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b83a5ecc-7faf-407e-9ea1-f60e6019db3e",
+                    "path": "<Keyboard>/n",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Grip_Delay",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7eb75571-174e-436c-be05-e4a09ed9646f",
+                    "path": "<XRController>{RightHand}/triggerPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "Trigger_Delay",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9da4fe86-ba8d-40ce-99b2-7093710c1a61",
+                    "path": "<Keyboard>/b",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Trigger_Delay",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7184eb0b-61a5-4c09-8cbe-5d149f390aa3",
+                    "path": "<XRController>{RightHand}/trigger",
+                    "interactions": "Press(pressPoint=0.2)",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "Trigger_Value",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Correct And Wrong Buttons",
+                    "id": "ecc0a1ed-341d-478b-aa67-45c5b905eb5f",
+                    "path": "CorrectAndWrongButtons",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Trigger_Delay_Unique",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "correctButton",
+                    "id": "75e42802-3bc3-4858-ae7a-34096bcfc34c",
+                    "path": "<Keyboard>/b",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Trigger_Delay_Unique",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "wrongButton",
+                    "id": "39b6ef14-186e-4516-bc5d-68436a5b6009",
+                    "path": "<Keyboard>/n",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Trigger_Delay_Unique",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "30ec3bb4-e7be-44f5-95dd-7e040d307403",
+                    "path": "<XRController>{RightHand}/gripPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "Grip_Delay_Unique",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Correct And Wrong Buttons",
+                    "id": "b3dfff8e-9739-4524-ae06-6545e8eb6265",
+                    "path": "CorrectAndWrongButtons",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Grip_Delay_Unique",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "wrongButton",
+                    "id": "c13bddfb-1c4a-44cd-bef5-5c153a941ca3",
+                    "path": "<Keyboard>/b",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Grip_Delay_Unique",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "correctButton",
+                    "id": "fe8b1d75-0de5-4306-a5c7-0c56b680d04c",
+                    "path": "<Keyboard>/n",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Grip_Delay_Unique",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "PC Two Buttons",
+                    "id": "432990a2-917f-4c4e-b3bb-8de592a2ec8a",
+                    "path": "TwoButtons",
+                    "interactions": "SyncPress",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TriggerGrip_Analog",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "buttonOne",
+                    "id": "f9fa2087-da20-44ac-a0a0-1ac9173e7f47",
+                    "path": "<Keyboard>/b",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TriggerGrip_Analog",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "buttonTwo",
+                    "id": "014262b7-3e65-403a-9599-6146a62cf84d",
+                    "path": "<Keyboard>/n",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TriggerGrip_Analog",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "VR Two Buttons",
+                    "id": "841db862-f839-46af-99ce-e1feb98ae847",
+                    "path": "TwoAnalogButtons(pressPoint=0.4)",
+                    "interactions": "SyncAnalog(Duration=0.12,Timeout=0.25)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TriggerGrip_Analog",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "analogTwo",
+                    "id": "4f1331f4-1e39-40c6-99e9-e25adebc85b4",
+                    "path": "<XRController>{RightHand}/trigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TriggerGrip_Analog",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "analogOne",
+                    "id": "8a653e90-572f-4c81-844d-932d2027d2a0",
+                    "path": "<XRController>{RightHand}/grip",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TriggerGrip_Analog",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "e27f9c73-d571-49f4-aa3c-dcb77b6d2bfb",
+                    "path": "<XRController>{RightHand}/grip",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "Grip_Delay_Press",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "36093161-a543-47b8-9606-e9680dd5498a",
+                    "path": "<Keyboard>/n",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Grip_Delay_Press",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7e7b0996-b0aa-4c9e-84ed-da8981c4fb46",
+                    "path": "<XRController>{RightHand}/trigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "Trigger_Delay_Press",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ef0dfb0a-c92d-4d46-b4fd-366079ca38df",
+                    "path": "<Keyboard>/b",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Trigger_Delay_Press",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Spells Both Hands",
+            "id": "a2235230-0c65-4f6a-86a0-c8df3ef55ed7",
+            "actions": [
+                {
+                    "name": "TriggerGrip",
+                    "type": "Button",
+                    "id": "e4ff47c4-3b99-4a7d-ad15-8573eeaa0ff3",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "TriggerGrip_Analog",
+                    "type": "Value",
+                    "id": "175426a2-500e-48a3-93d7-427913cd7250",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "Four Buttons",
+                    "id": "dceab414-003f-4b12-8270-379dee789a90",
+                    "path": "FourButtons",
+                    "interactions": "SyncPress(Duration=5,Timeout=10)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TriggerGrip",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "buttonOne",
+                    "id": "c755b850-795f-4ba7-9dbe-3e2317502ea8",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TriggerGrip",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "buttonTwo",
+                    "id": "986118d9-b3af-45bd-ab4b-ebd9e85be7b1",
+                    "path": "<Keyboard>/v",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TriggerGrip",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "buttonThree",
+                    "id": "7917432f-dec2-419c-b9f2-6aee8d00cc09",
+                    "path": "<Keyboard>/b",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TriggerGrip",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "buttonFour",
+                    "id": "95d4e47d-be54-421c-a738-006456fde498",
+                    "path": "<Keyboard>/n",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TriggerGrip",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Four Buttons",
+                    "id": "8c11bd98-8e9d-406a-891b-ddb95bf4dadc",
+                    "path": "FourButtons",
+                    "interactions": "SyncPress(Duration=0.4,Timeout=0.6)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TriggerGrip",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "buttonOne",
+                    "id": "bfee3562-60ff-4c66-8b4a-078968906c49",
+                    "path": "<XRController>{LeftHand}/gripPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TriggerGrip",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "buttonTwo",
+                    "id": "ab22a3f2-2479-4595-bb9c-b7a84092cd03",
+                    "path": "<XRController>{LeftHand}/triggerPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TriggerGrip",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "buttonThree",
+                    "id": "259458ab-846d-4340-b29b-647aa21da881",
+                    "path": "<XRController>{RightHand}/gripPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TriggerGrip",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "buttonFour",
+                    "id": "a3541da7-5d3e-4457-a7eb-83cd6c27eaad",
+                    "path": "<XRController>{RightHand}/triggerPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TriggerGrip",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "PC Two Buttons",
+                    "id": "070ce1c6-481c-4030-b897-9c442cf44454",
+                    "path": "TwoButtons",
+                    "interactions": "SyncPress",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TriggerGrip_Analog",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "buttonOne",
+                    "id": "76152e1a-7341-4044-8c89-f95175bb8d94",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TriggerGrip_Analog",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "buttonTwo",
+                    "id": "64884ead-9b16-4d96-9e8b-24daf23d949f",
+                    "path": "<Keyboard>/v",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TriggerGrip_Analog",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "VR Two Buttons",
+                    "id": "a792dbc7-9fe9-4cae-b8ba-924d21c528cf",
+                    "path": "FourAnalogButtons(pressPoint=0.2)",
+                    "interactions": "SyncAnalog(Duration=0.1,Timeout=0.25)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TriggerGrip_Analog",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "analogTwo",
+                    "id": "87fab967-9caf-41f0-98cf-4c37483adf54",
+                    "path": "<XRController>{LeftHand}/trigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TriggerGrip_Analog",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "analogThree",
+                    "id": "77dc2ca3-6cf7-4184-a687-0745bc6e0c41",
+                    "path": "<XRController>{LeftHand}/grip",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TriggerGrip_Analog",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "analogFour",
+                    "id": "b9eb460e-216e-45ae-a90f-60935c29c308",
+                    "path": "<XRController>{RightHand}/grip",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TriggerGrip_Analog",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "analogOne",
+                    "id": "4d6db687-80d0-48ed-b2cf-2550d39150c3",
+                    "path": "<XRController>{RightHand}/trigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TriggerGrip_Analog",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         }

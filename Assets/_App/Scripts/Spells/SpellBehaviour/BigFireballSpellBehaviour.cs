@@ -27,7 +27,7 @@ namespace MobaVR
         protected override void OnDisable()
         {
             base.OnDisable();
-            
+
             m_RedirectInput.action.started -= OnStartRedirect;
             m_RedirectInput.action.performed -= OnPerformedRedirect;
             m_RedirectInput.action.canceled -= OnCanceledRedirect;
@@ -40,15 +40,24 @@ namespace MobaVR
         protected override void OnPerformedCast(InputAction.CallbackContext context)
         {
             base.OnPerformedCast(context);
-            
+            Debug.Log($"Spell: BigFireballSpellBehaviour: CanCast: {CanCast()}, Block: {HasBlockingSpells()}");
+
+
             if (!CanCast() || HasBlockingSpells())
             {
                 return;
             }
 
+            Debug.Log($"Spell: BigFireballSpellBehaviour: OnPerformedCast start");
+
+
             m_IsPerformed = true;
             m_SpellsHandler.SetCurrentSpell(this);
+
+            m_IsThrown = false;
             CreateFireball(m_MainHandInputVR.Grabber.transform);
+            
+            Debug.Log($"Spell: BigFireballSpellBehaviour: OnPerformedCast end");
         }
 
         protected override void OnCanceledCast(InputAction.CallbackContext context)
@@ -71,6 +80,7 @@ namespace MobaVR
         protected void OnPerformedRedirect(InputAction.CallbackContext context)
         {
             Debug.Log($"{TAG}: {nameof(OnPerformedRedirect)}: performed");
+
 
             if (!CanCast() || HasBlockingSpells() || !m_IsThrown)
             {
@@ -95,13 +105,14 @@ namespace MobaVR
 
         #endregion
 
-/*
-        public override bool CanCast()
-        {
-            bool canCast = base.CanCast();
-            //return canCast && m_MainHandInputVR.GrabbableTrigger.
-        }
-*/
+        /*
+                public override bool CanCast()
+                {
+                    bool canCast = base.CanCast();
+                    //return canCast && m_MainHandInputVR.GrabbableTrigger.
+                }
+        */
+
         #region Fireball
 
         private void CreateFireball(Transform point)
@@ -119,6 +130,8 @@ namespace MobaVR
                 fireBallTransform.localPosition = Vector3.zero;
                 fireBallTransform.localRotation = Quaternion.identity;
 
+                m_IsThrown = false;
+                
                 m_FireBall.OnInitSpell += OnInitSpell;
                 m_FireBall.OnDestroySpell += OnDestroySpell;
             }
@@ -144,7 +157,7 @@ namespace MobaVR
             }
 
             m_IsPerformed = false;
-            
+
             //m_SpellsHandler.DeactivateCurrentSpell(this);
         }
 
@@ -153,6 +166,11 @@ namespace MobaVR
         }
 
         #endregion
+
+        public void Update()
+        {
+            Debug.Log($"BigFireball: phase = {m_CastInput.action.phase}");
+        }
 
         public override bool IsInProgress()
         {
@@ -174,9 +192,13 @@ namespace MobaVR
 
         public override void SpellExit()
         {
+            Debug.Log($"Spell: BigFireballSpellBehaviour: SpellExit: {m_FireBall}: isTrhown: {m_IsThrown}");
+            
             if (!m_IsThrown && m_FireBall != null)
             {
                 //TODO
+                Debug.Log($"Spell: BigFireballSpellBehaviour: SpellExit != null: {m_FireBall}");
+                
                 m_FireBall.Throw();
             }
         }

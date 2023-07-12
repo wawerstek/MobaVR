@@ -11,24 +11,24 @@ namespace MobaVR
         protected override void OnPerformedCast(InputAction.CallbackContext context)
         {
             base.OnPerformedCast(context);
-
             if (!CanCast() || HasBlockingSpells())
             {
                 return;
             }
-
-            m_IsPerformed = true;
+            
             m_SpellsHandler.SetCurrentSpell(this);
+            
+            m_IsPerformed = true;
             m_Shield.Show(true);
         }
 
         protected override void OnCanceledCast(InputAction.CallbackContext context)
         {
             base.OnCanceledCast(context);
-            
+
             m_IsPerformed = false;
             m_Shield.Show(false);
-            
+
             //m_SpellsHandler.DeactivateCurrentSpell(this);
         }
 
@@ -47,6 +47,8 @@ namespace MobaVR
 
         public override void SpellExit()
         {
+            m_IsPerformed = false;
+            m_Shield.Show(false);
         }
     }
 }

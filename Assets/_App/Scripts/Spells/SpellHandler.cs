@@ -44,7 +44,9 @@ namespace MobaVR
         {
             foreach (SpellMap spellMap in m_Spells)
             {
-                Debug.Log($"{spellMap.SpellBehaviour.name}: isPerformed: {spellMap.SpellBehaviour.IsPerformed}, isPressed: {spellMap.SpellBehaviour.IsPressed()}, inProcess: {spellMap.SpellBehaviour.IsInProgress()}");                
+                Debug.Log($"{spellMap.SpellBehaviour.name}: isPerformed: {spellMap.SpellBehaviour.IsPerformed}, " +
+                          //$"isPressed: {spellMap.SpellBehaviour.IsPressed()}, " +
+                          $"inProcess: {spellMap.SpellBehaviour.IsInProgress()}");                
             }
         }
 

@@ -10,7 +10,7 @@ namespace MobaVR
 
         protected HandInputVR m_MainHandInputVR;
 
-        #region Unity
+        #region MonoBehaviour
 
         protected virtual void OnEnable()
         {
@@ -28,6 +28,25 @@ namespace MobaVR
 
         #endregion
 
+        #region Spell
+
+        public override void Init(SpellHandler spellHandler, PlayerVR playerVR)
+        {
+            base.Init(spellHandler, playerVR);
+            switch (m_SpellHandType)
+            {
+                case SpellHandType.LEFT_HAND:
+                    m_MainHandInputVR = playerVR.InputVR.LefHandInputVR;
+                    break;
+                case SpellHandType.RIGHT_HAND:
+                    m_MainHandInputVR = playerVR.InputVR.RightHandInputVR;
+                    break;
+                case SpellHandType.BOTH:
+                    break;
+            }
+        }
+
+        #endregion
 
         #region Input Callbacks
 
@@ -55,31 +74,11 @@ namespace MobaVR
             return m_CastInput.action.inProgress;
         }
 
-        public override bool IsPressed()
+        public virtual bool IsPressed()
         {
             return m_CastInput.action.IsPressed();
         }
 
-        public virtual void CheckInput()
-        {
-        }
-
         #endregion
-
-        public override void Init(SpellHandler spellHandler, PlayerVR playerVR)
-        {
-            base.Init(spellHandler, playerVR);
-            switch (m_SpellHandType)
-            {
-                case SpellHandType.LEFT_HAND:
-                    m_MainHandInputVR = playerVR.InputVR.LefHandInputVR;
-                    break;
-                case SpellHandType.RIGHT_HAND:
-                    m_MainHandInputVR = playerVR.InputVR.RightHandInputVR;
-                    break;
-                case SpellHandType.BOTH:
-                    break;
-            }
-        }
     }
 }

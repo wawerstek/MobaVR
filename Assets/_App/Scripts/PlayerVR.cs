@@ -65,6 +65,11 @@ namespace MobaVR
         public Action<PlayerVR> OnDestroyPlayer;
         public Action<PlayerVR> OnInitPlayer;
 
+        public Transform BodyTarget => m_BodyTarget;
+        public Transform HeadTarget => m_HeadTarget;
+        public Transform LeftHandTarget => m_LeftHandTarget;
+        public Transform RightHandTarget => m_RightHandTarget;
+
         private void OnValidate()
         {
             if (m_WizardPlayer == null)

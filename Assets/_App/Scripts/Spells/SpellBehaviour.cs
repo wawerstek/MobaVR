@@ -10,23 +10,20 @@ namespace MobaVR
         protected const string TAG = nameof(SpellBehaviour);
 
         [Header("Blocking spells")]
-        [Tooltip("If blocking spell is performed, then player can't use it spell.")]
+        [Tooltip("If blocking spell is performed, player can't use this spell.")]
         [SerializeField] private List<SpellBehaviour> m_BlockingSpells = new();
+        [SerializeField] [ReadOnly] protected bool m_IsPerformed = false;
 
         protected SpellHandler m_SpellsHandler;
         protected PlayerVR m_PlayerVR;
 
-        [SerializeField] [ReadOnly] protected bool m_IsPerformed = false;
-        [SerializeField] [ReadOnly] protected bool m_IsValidInput = false;
-        [SerializeField] [ReadOnly] protected bool m_IsLiving = false;
-
         public bool IsPerformed => m_IsPerformed;
-        public bool IsValidInput => m_IsValidInput;
-        public bool IsLiving => m_IsLiving;
 
         public Action OnStarted;
         public Action OnPerformed;
         public Action OnCompleted;
+
+        #region Spell
 
         public virtual void Init(SpellHandler spellHandler, PlayerVR playerVR)
         {
@@ -39,7 +36,7 @@ namespace MobaVR
             return m_PlayerVR.WizardPlayer.PlayerState.StateSo.CanCast && m_PlayerVR.WizardPlayer.IsLife;
         }
 
-        public bool HasBlockingSpells()
+        public virtual bool HasBlockingSpells()
         {
             foreach (SpellBehaviour spellBehaviour in m_BlockingSpells)
             {
@@ -52,11 +49,12 @@ namespace MobaVR
             return false;
         }
 
+        #endregion
 
-        #region Spell State
+
+        #region Spell States
 
         public abstract bool IsInProgress();
-        public abstract bool IsPressed();
 
         public abstract void SpellEnter();
         public abstract void SpellUpdate();
