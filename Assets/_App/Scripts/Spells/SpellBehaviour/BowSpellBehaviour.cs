@@ -6,7 +6,7 @@ namespace MobaVR
 {
     public class BowSpellBehaviour : InputSpellBehaviour
     {
-        [SerializeField] private GameObject m_Bow;
+        [SerializeField] private BowSpell m_Bow;
 
         protected override void OnStartCast(InputAction.CallbackContext context)
         {
@@ -24,7 +24,7 @@ namespace MobaVR
             
             OnPerformed?.Invoke();
             m_IsPerformed = true;
-            m_Bow.SetActive(true);
+            m_Bow.Show(true);
         }
 
         protected override void OnCanceledCast(InputAction.CallbackContext context)
@@ -39,7 +39,7 @@ namespace MobaVR
             
             OnCompleted?.Invoke();
             m_IsPerformed = false;
-            m_Bow.SetActive(false);
+            m_Bow.Show(false);
         }
     }
 }

@@ -7,7 +7,7 @@ namespace MobaVR
 {
     public class ArrowSpellBehaviour : InputSpellBehaviour
     {
-        [SerializeField] private GameObject m_ArrowPrefab;
+        [SerializeField] private ArrowSpell m_ArrowPrefab;
 
         private GameObject m_CurrentArrow;
         private bool m_IsThrown = false;
