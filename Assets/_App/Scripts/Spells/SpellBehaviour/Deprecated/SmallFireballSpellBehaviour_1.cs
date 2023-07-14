@@ -19,7 +19,7 @@ namespace MobaVR
                 return;
             }
 
-            m_SpellsHandler.SetCurrentSpell(this);
+           // m_SpellsHandler.SetCurrentSpell(this);
             
             CreateSmallFireBall(m_MainHandInputVR.FingerPoint);
             ThrowSmallFireBall(m_SmallFireBall, m_MainHandInputVR.Grabber.transform.forward);
@@ -51,16 +51,6 @@ namespace MobaVR
             }
         }
 
-        public override void SpellEnter()
-        {
-        }
-
-        public override void SpellUpdate()
-        {
-        }
-
-        public override void SpellExit()
-        {
-        }
+     
     }
 }

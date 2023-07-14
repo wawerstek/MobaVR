@@ -10,7 +10,7 @@ namespace MobaVR.Input
         public float Duration = 0.5f;
         public float Timeout = 1.0f;
 
-        private bool m_IsFirstPress = false;
+        private bool m_IsReleased = false;
         private float m_LastValue = 0f;
         private double m_TimePressed = 0f;
 
@@ -26,11 +26,17 @@ namespace MobaVR.Input
             {
                 case InputActionPhase.Waiting:
                     float waitingValue = context.ComputeMagnitude();
-                    if (waitingValue > 0f)
+                    if (waitingValue > 0f && m_IsReleased)
                     {
+                        m_IsReleased = false;
                         m_TimePressed = context.time;
                         context.Started();
                         context.SetTimeout(Timeout);
+                    }
+
+                    if (waitingValue == 0f)
+                    {
+                        m_IsReleased = true;
                     }
 
                     break;
@@ -39,7 +45,7 @@ namespace MobaVR.Input
                     float startedValue = context.ComputeMagnitude();
                     double deltaTime = context.time - m_TimePressed;
 
-                    if (deltaTime <= Duration)
+                    if (deltaTime > Duration)
                     {
                         context.Canceled();
                     }
@@ -47,11 +53,6 @@ namespace MobaVR.Input
                     if (startedValue == 1f && deltaTime <= Duration)
                     {
                         context.PerformedAndStayPerformed();
-                    }
-
-                    if (startedValue == 0f)
-                    {
-                        context.Canceled();
                     }
 
                     break;

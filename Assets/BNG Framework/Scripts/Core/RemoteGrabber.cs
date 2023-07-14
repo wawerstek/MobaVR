@@ -32,6 +32,9 @@ namespace BNG {
 
         private Collider _lastColliderHit = null;
 
+        public GrabbableEvent OnEnterGrabbableEvent; 
+        public GrabbableEvent OnExitGrabbableEvent; 
+
         void Start() {
             if(PhysicsCheckType == RemoteGrabType.Trigger && GetComponent<Collider>() == null) {
                 Debug.LogWarning("Remote Grabber set to 'Trigger', but no Trigger Collider was found. You may need to add a collider, or switch to a different physics check type.");
@@ -123,6 +126,7 @@ namespace BNG {
             Grabbable grabObject = other.GetComponent<Grabbable>();
             if(grabObject != null && ParentGrabber != null) {
                 ParentGrabber.AddValidRemoteGrabbable(other, grabObject);
+                OnEnterGrabbableEvent?.Invoke(grabObject);
                 return;
             }
 
@@ -130,6 +134,7 @@ namespace BNG {
             GrabbableChild gc = other.GetComponent<GrabbableChild>();
             if (gc != null && ParentGrabber != null) {
                 ParentGrabber.AddValidRemoteGrabbable(other, gc.ParentGrabbable);
+                OnEnterGrabbableEvent?.Invoke(gc.ParentGrabbable);
                 return;
             }
         }
@@ -144,6 +149,7 @@ namespace BNG {
             Grabbable grabObject = other.GetComponent<Grabbable>();
             if (grabObject != null && ParentGrabber != null) {
                 ParentGrabber.RemoveValidRemoteGrabbable(other, grabObject);
+                OnExitGrabbableEvent?.Invoke(grabObject);
                 return;
             }
 
@@ -151,6 +157,7 @@ namespace BNG {
             GrabbableChild gc = other.GetComponent<GrabbableChild>();
             if (gc != null && ParentGrabber != null) {
                 ParentGrabber.RemoveValidRemoteGrabbable(other, gc.ParentGrabbable);
+                OnExitGrabbableEvent?.Invoke(gc.ParentGrabbable);
                 return;
             }
         }

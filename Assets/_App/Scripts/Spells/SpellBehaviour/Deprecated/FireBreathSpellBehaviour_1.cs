@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 namespace MobaVR
 {
-    public class FireBreathSpellBehaviour : InputSpellBehaviour
+    public class FireBreathSpellBehaviour_1 : InputSpellBehaviour
     {
         [SerializeField] private FireBreath m_FireBreath;
 

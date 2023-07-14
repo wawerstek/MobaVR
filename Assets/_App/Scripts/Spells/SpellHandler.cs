@@ -8,7 +8,7 @@ namespace MobaVR
     public class SpellHandler : MonoBehaviour
     {
         private const string TAG = nameof(SpellHandler);
-        
+
         [SerializeField] private PlayerVR m_PlayerVR;
         [SerializeField] private List<SpellMap> m_Spells;
 
@@ -55,11 +55,20 @@ namespace MobaVR
         {
             Debug.Log($"{TAG}: OnSpellPerformed: {spellBehaviour.SpellName}");
 
+            /*
             foreach (SpellBehaviour activeSpell in m_ActiveSpells)
             {
                 activeSpell.TryInterrupt();
             }
+            */
+
+            for (var i = m_ActiveSpells.Count - 1; i >= 0; i--)
+            {
+                SpellBehaviour activeSpell = m_ActiveSpells[i];
+                activeSpell.TryInterrupt();
+            }
             
+
             m_ActiveSpells.Add(spellBehaviour);
         }
 
@@ -67,8 +76,9 @@ namespace MobaVR
         {
             Debug.Log($"{TAG}: OnSpellCompleted: {spellBehaviour.SpellName}");
 
+            //int position = m_ActiveSpells.FindIndex(behaviour => spellBehaviour.SpellName.Equals(behaviour.SpellName));
             int position = m_ActiveSpells.IndexOf(spellBehaviour);
-            if (position > 0)
+            if (position >= 0)
             {
                 m_ActiveSpells.RemoveAt(position);
             }

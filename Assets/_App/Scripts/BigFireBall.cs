@@ -108,6 +108,9 @@ namespace MobaVR
                 m_Rigidbody.useGravity = true;
                 m_Grabbable.enabled = true;
                 m_Grabbable.CanBeDropped = true;
+
+                m_Rigidbody.WakeUp();
+                m_Rigidbody.sleepThreshold = 0.0f;
             }
         }
 
@@ -268,7 +271,7 @@ namespace MobaVR
             //Destroy(gameObject);
 
             OnDestroySpell?.Invoke();
-            
+
             if (photonView.IsMine)
             {
                 PhotonNetwork.Destroy(gameObject);
@@ -283,6 +286,9 @@ namespace MobaVR
 
         private IEnumerator CheckThrow()
         {
+            m_Grabbable.enabled = false;
+            m_Rigidbody.WakeUp();
+
             Vector3 startPosition = transform.position;
             yield return new WaitForSeconds(m_ThrowCheckDelay);
             Vector3 endPosition = transform.position;
@@ -360,9 +366,10 @@ namespace MobaVR
         {
             base.Init(wizardPlayer, teamType);
             //photonView.RPC(nameof(RpcSwitchGravity), RpcTarget.All, wizardPlayer.GravityFireballType);
-            photonView.RPC(nameof(RpcSetPhysics), RpcTarget.All, wizardPlayer.GravityFireballType, wizardPlayer.ThrowForce, wizardPlayer.UseAim);
+            photonView.RPC(nameof(RpcSetPhysics), RpcTarget.All, wizardPlayer.GravityFireballType,
+                           wizardPlayer.ThrowForce, wizardPlayer.UseAim);
         }
-        
+
         //TODO: add destroy public method
 
         [PunRPC]
@@ -373,7 +380,7 @@ namespace MobaVR
                 m_GravitySwitcher.GravityType = gravityType;
             }
         }
-        
+
         [PunRPC]
         private void RpcSetPhysics(BigFireballType gravityType, float force, bool useAim)
         {
@@ -405,6 +412,8 @@ namespace MobaVR
                 m_ScaleFactor = 2.5f;
             }
 
+            m_Grabbable.enabled = false;
+            m_Rigidbody.WakeUp();
             photonView.RPC(nameof(RpcThrow), RpcTarget.All);
         }
 

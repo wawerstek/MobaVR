@@ -10,8 +10,9 @@ namespace MobaVR
         [SerializeField] private InputActionReference m_RedirectInput;
         [SerializeField] private BigFireBall m_BigFireballPrefab;
 
-        private BigFireBall m_FireBall;
+        private BigFireBall m_CurrentFireBall;
         private bool m_IsThrown = false;
+        private int m_Number = 0;
 
         #region Unity
 
@@ -51,10 +52,14 @@ namespace MobaVR
                 return;
             }
 
-            OnPerformed?.Invoke();
 
+            //TODO
+            Debug.Log("FIREBALL PERFORMED = 1");
+            OnPerformed?.Invoke();
+            Debug.Log("FIREBALL PERFORMED = 2");
             m_IsPerformed = true;
             m_IsThrown = false;
+
             CreateFireball(m_MainHandInputVR.Grabber.transform);
         }
 
@@ -89,9 +94,9 @@ namespace MobaVR
             int kInvert = m_SpellHandType == SpellHandType.RIGHT_HAND ? -1 : 1;
             Vector3 direction = m_MainHandInputVR.Grabber.transform.right * kInvert;
 
-            if (m_FireBall != null)
+            if (m_CurrentFireBall != null)
             {
-                m_FireBall.ThrowByDirection(direction);
+                m_CurrentFireBall.ThrowByDirection(direction);
             }
         }
 
@@ -102,14 +107,19 @@ namespace MobaVR
 
         protected override void Interrupt()
         {
-            if (!m_IsThrown && m_FireBall != null)
+            if (!m_IsThrown && m_CurrentFireBall != null)
             {
-                m_FireBall.Throw();
+                m_CurrentFireBall.Throw();
+
+                m_CurrentFireBall = null;
+                m_IsPerformed = false;
             }
 
-            m_FireBall = null;
-            m_IsPerformed = false;
             OnCompleted?.Invoke();
+
+            //m_CurrentFireBall = null;
+            //m_IsPerformed = false;
+            //OnCompleted?.Invoke();
         }
 
         #endregion
@@ -130,47 +140,70 @@ namespace MobaVR
                                                                    point.position,
                                                                    point.rotation);
 
-            if (networkFireball.TryGetComponent(out m_FireBall))
+            if (networkFireball.TryGetComponent(out BigFireBall fireBall))
             {
-                Transform fireBallTransform = m_FireBall.transform;
+                m_Number++;
+                string handName = m_SpellHandType == SpellHandType.RIGHT_HAND ? "Right" : "Left";
+                string fireballName = $"{m_BigFireballPrefab.name}_{handName}_{m_Number}";
+                networkFireball.name = fireballName;
+
+                Transform fireBallTransform = fireBall.transform;
                 fireBallTransform.parent = point.transform;
                 fireBallTransform.localPosition = Vector3.zero;
                 fireBallTransform.localRotation = Quaternion.identity;
 
-                m_IsThrown = false;
+                fireBall.Init(m_PlayerVR.WizardPlayer, m_PlayerVR.TeamType);
+                fireBall.OnInitSpell += () => OnInitSpell(fireBall);
+                fireBall.OnDestroySpell += () => OnDestroySpell(fireBall);
 
-                m_FireBall.Init(m_PlayerVR.WizardPlayer, m_PlayerVR.TeamType);
-                m_FireBall.OnInitSpell += OnInitSpell;
-                m_FireBall.OnDestroySpell += OnDestroySpell;
+                m_IsThrown = false;
+                m_CurrentFireBall = fireBall;
             }
         }
 
         private void ThrowFireball()
         {
-            if (m_FireBall != null)
+            Debug.Log("1 ThrowFireball: fb: " + m_CurrentFireBall);
+
+            if (m_CurrentFireBall != null)
             {
                 m_IsThrown = true;
-                m_FireBall.Throw();
+                m_CurrentFireBall.Throw();
             }
         }
 
-        private void OnInitSpell()
+        private void OnInitSpell(BigFireBall fireBall)
         {
             m_IsThrown = false;
             m_IsPerformed = true;
         }
 
-        private void OnDestroySpell()
+        private void OnDestroySpell(BigFireBall fireBall)
         {
-            if (m_FireBall != null)
+            if (fireBall != null)
             {
-                m_FireBall.OnInitSpell -= OnInitSpell;
-                m_FireBall.OnDestroySpell -= OnDestroySpell;
+                fireBall.OnInitSpell -= () => OnInitSpell(fireBall);
+                fireBall.OnDestroySpell -= () => OnDestroySpell(fireBall);
             }
 
-            m_FireBall = null;
-            m_IsPerformed = false;
-            OnCompleted?.Invoke();
+            if (m_CurrentFireBall == fireBall)
+            {
+                //m_CurrentFireBall = null;
+                Debug.Log($"CurrentFireball == fireball OK; {m_CurrentFireBall.name}; {fireBall.name}");
+                m_IsPerformed = false;
+                OnCompleted?.Invoke();
+            }
+            else
+            {
+                if (m_CurrentFireBall != null)
+                {
+                    Debug.Log($"CurrentFireball == fireball FALSE; {m_CurrentFireBall.name}; {fireBall.name}");
+                }
+                else
+                {
+                    Debug.Log($"CurrentFireball == fireball FALSE; NULL; {fireBall.name}");
+                }
+            }
         }
 
         #endregion
