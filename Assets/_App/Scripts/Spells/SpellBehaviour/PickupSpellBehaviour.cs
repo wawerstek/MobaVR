@@ -11,12 +11,13 @@ namespace MobaVR
     {
         [SerializeField] private HandType m_HandType;
         [SerializeField] [ReadOnly] private bool m_IsTriggered = false;
+        [SerializeField] [ReadOnly] private bool m_IsPickuped = false;
         
         private HandInputVR m_HandInputVR;
         private Grabbable m_Grabbable;
+        private Grabbable m_TriggeredGrabbable;
         private Grabber m_Grabber;
         private RemoteGrabber m_RemoteGrabber;
-        private bool m_IsPickuped = false;
 
         #region Spells
 
@@ -84,6 +85,12 @@ namespace MobaVR
         private void OnStartCast(InputAction.CallbackContext context)
         {
             Debug.Log($"{SpellName}: {nameof(OnStartCast)}: started");
+            
+            if (!CanCast() || HasBlockingSpells())
+            {
+                return;
+            }
+            
             if (m_IsTriggered)
             {
                 m_IsPerformed = true;
@@ -128,19 +135,38 @@ namespace MobaVR
             {
                 return;
             }
-            
+
+            m_TriggeredGrabbable = grabbable;
             m_IsTriggered = true;
         }
 
         private void OnRemoteExit(Grabbable grabbable)
         {
             Debug.Log($"{SpellName}: {nameof(OnRemoteExit)}: {grabbable}");
-            m_IsTriggered = false;
+            
+            if (grabbable.TryGetComponent(out BaseSpell baseSpell))
+            {
+                return;
+            }
+            
+            if (m_TriggeredGrabbable != null && m_TriggeredGrabbable == grabbable)
+            {
+                m_IsTriggered = false;
+                m_TriggeredGrabbable = null;
+            }
         }
 
         private void OnGrab(Grabbable grabbable)
         {
             Debug.Log($"{SpellName}: {nameof(OnGrab)}: {grabbable}");
+            
+            ///
+            /// TODO: Костыль
+            /// У игрока не всегда сбрасывается исТриггер
+            if (grabbable.TryGetComponent(out BaseSpell baseSpell))
+            {
+                return;
+            }
             
             m_Grabbable = grabbable;
             m_IsPerformed = true;

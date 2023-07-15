@@ -1,4 +1,6 @@
-﻿using Photon.Pun;
+﻿using System;
+using BNG;
+using Photon.Pun;
 using UnityEngine;
 
 namespace MobaVR
@@ -7,6 +9,13 @@ namespace MobaVR
     {
         [SerializeField] private float m_Damage = 10f;
         private bool m_IsDamaged = false;
+        private Grabbable m_Grabbable;
+
+
+        private void Awake()
+        {
+            TryGetComponent(out m_Grabbable);
+        }
 
         public void Throw()
         {
@@ -16,9 +25,9 @@ namespace MobaVR
         [PunRPC]
         private void RpcThrow()
         {
+            m_Grabbable.enabled = false;
             transform.parent = null;
         }
-        
         
         public void Show(bool isShow)
         {
@@ -65,7 +74,7 @@ namespace MobaVR
             }
             
             //TODO: refactoring
-            Hide();
+            //Hide();
         }
 
         private void Hide()

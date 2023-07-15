@@ -26,20 +26,22 @@ namespace MobaVR
         [ContextMenu("Convert Blue to Red: NHance")]
         private void SwitchBlueToRedMaterials_NHance()
         {
+            #if UNITY_EDITOR
             for (var i = 0; i < m_BlueMaterial.Length; i++)
             {
                 Material material = m_BlueMaterial[i];
-                //string path = AssetDatabase.GetAssetPath(material);
-                //if (path.Contains("_Bl"))
-                //{
-                //    string newPath = path.Replace("_Bl", "_Rd");
-                //    Material redMaterial = AssetDatabase.LoadAssetAtPath<Material>(newPath);
-                //    if (redMaterial != null)
-                //    {
-                //        m_RedMaterial[i] = redMaterial;
-                //    }
-                //}
+                string path = AssetDatabase.GetAssetPath(material);
+                if (path.Contains("_Bl"))
+                {
+                    string newPath = path.Replace("_Bl", "_Rd");
+                    Material redMaterial = AssetDatabase.LoadAssetAtPath<Material>(newPath);
+                    if (redMaterial != null)
+                    {
+                        m_RedMaterial[i] = redMaterial;
+                    }
+                }
             }
+            #endif
         }
 
         [ContextMenu("FindMaterials")]

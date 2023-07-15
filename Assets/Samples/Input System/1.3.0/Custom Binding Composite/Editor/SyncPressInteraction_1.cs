@@ -1,6 +1,6 @@
 using UnityEngine.InputSystem;
 
-namespace MobaVR.Input
+namespace MobaVR.Inputs
 {
     /// <summary>
     /// Одновременное нажатие клавиш

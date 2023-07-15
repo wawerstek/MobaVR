@@ -1,3 +1,4 @@
+using System;
 using MetaConference;
 using Photon.Pun;
 using Photon.Realtime;
@@ -30,6 +31,13 @@ namespace MobaVR
         public Team RedTeam => m_RedTeam;
         public Team BlueTeam => m_BlueTeam;
         public bool IsPvPMode => m_IsPvPMode;
+
+        private void Awake()
+        {
+            #if !UNITY_EDITOR
+                        CustomComposites.Init();
+            #endif
+        }
 
         private void Start()
         {
@@ -108,8 +116,8 @@ namespace MobaVR
         {
             SetTeam(TeamType.RED);
         }
-        
-        
+
+
         [ContextMenu("Set Blue Team")]
         public void SetBlueTeam()
         {
@@ -141,7 +149,7 @@ namespace MobaVR
             {
                 return;
             }
-            
+
             if (!m_IsPvPMode)
             {
                 m_LichMode.StopGame();
@@ -158,7 +166,7 @@ namespace MobaVR
             {
                 return;
             }
-            
+
             m_ClassicMode.CompleteMode();
         }
 
@@ -168,7 +176,7 @@ namespace MobaVR
             {
                 return;
             }
-            
+
             m_ClassicMode.DeactivateMode();
         }
 
@@ -182,7 +190,7 @@ namespace MobaVR
             {
                 return;
             }
-            
+
             if (m_IsPvPMode)
             {
                 m_ClassicMode.DeactivateMode();
@@ -199,7 +207,7 @@ namespace MobaVR
             {
                 return;
             }
-            
+
             m_LichMode.StopGame();
         }
 
@@ -269,7 +277,7 @@ namespace MobaVR
         public override void OnJoinedRoom()
         {
             base.OnJoinedRoom();
-            
+
             //InitPlayer();
             //InitMode();
         }
@@ -279,8 +287,6 @@ namespace MobaVR
         {
             base.OnConnected();
         }
-        
-        
 
         #endregion
     }

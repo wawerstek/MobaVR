@@ -1,5 +1,8 @@
 ﻿using System;
+using MobaVR.Inputs;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Interactions;
 
 namespace MobaVR
 {
@@ -12,6 +15,8 @@ namespace MobaVR
             if (m_GameSession == null)
             {
                 m_GameSession = FindObjectOfType<ClassicGameSession>();
+                
+                   
             }
         }
 
