@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.17034933, g: 0.20283434, b: 0.23896092, a: 1}
+  m_IndirectSpecularColor: {r: 0.17648488, g: 0.22089711, b: 0.30321106, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1400,6 +1400,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Hu_M_Helm_Peasant_Rd
+      objectReference: {fileID: 0}
+    - target: {fileID: 8032165800127184195, guid: 0bf1267561cd43d1b3c184b79e024235,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0bf1267561cd43d1b3c184b79e024235, type: 3}
@@ -3842,6 +3847,11 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: f5f110ba97f04b9681e180518c7f9b6c, type: 2}
+    - target: {fileID: 5866666021909216657, guid: b8e1729aa66c4542b0dfb77c151371ff,
+        type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6419957201962381813, guid: b8e1729aa66c4542b0dfb77c151371ff,
         type: 3}
       propertyPath: m_Materials.Array.size
