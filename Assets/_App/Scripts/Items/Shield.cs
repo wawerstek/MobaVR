@@ -76,7 +76,7 @@ namespace MobaVR
             photonView.RPC(nameof(RpcHit), RpcTarget.All, damage);
         }
 
-        public virtual void Hit(Fireball fireball, float damage)
+        public virtual void Hit(ThrowableSpell fireball, float damage)
         {
             if ((fireball.Team.IsRed && m_TeamItem.IsRed)
                 || (!fireball.Team.IsRed && !m_TeamItem.IsRed))

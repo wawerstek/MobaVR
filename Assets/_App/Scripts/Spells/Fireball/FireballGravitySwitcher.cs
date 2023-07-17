@@ -13,6 +13,7 @@ namespace MobaVR
         
         [Header("Components")]
         [SerializeField] private BigFireBall m_FireBall;
+        [SerializeField] private Throwable m_Throwable;
         [SerializeField] private ThrowHandle m_ThrowHandle;
         [SerializeField] private ThrowLabOVRGrabbable m_ThrowLabOvrGrabbable;
         [SerializeField] private GravityFireball m_GravityFireball;
@@ -28,25 +29,74 @@ namespace MobaVR
                     case BigFireballType.NO_GRAVITY:
                         m_ThrowHandle.enabled = false;
                         m_GravityFireball.enabled = false;
-                        m_FireBall.UseCustomGravity = false;
-                        m_FireBall.GravityDelay = 1.2f;
+                        if (m_FireBall != null)
+                        {
+                            m_FireBall.UseCustomGravity = false;
+                            m_FireBall.GravityDelay = 1.2f;
+                        }
+
+                        else
+                        {
+                            if (m_Throwable != null)
+                            {
+                                m_Throwable.UseCustomGravity = false;
+                                m_Throwable.GravityDelay = 1.2f;
+                            }
+                        }
+
                         break;
                     case BigFireballType.REAL_GRAVITY:
                         m_ThrowHandle.enabled = false;
                         m_GravityFireball.enabled = false;
-                        m_FireBall.UseCustomGravity = false;
-                        m_FireBall.GravityDelay = 0f;
+                        if (m_FireBall != null)
+                        {
+                            m_FireBall.UseCustomGravity = false;
+                            m_FireBall.GravityDelay = 0f;
+                        }
+                        else
+                        {
+                            if (m_Throwable != null)
+                            {
+                                m_Throwable.UseCustomGravity = false;
+                                m_Throwable.GravityDelay = 0f;
+                            }
+                        }
+
+
                         break;
                     case BigFireballType.CUSTOM_GRAVITY:
                         m_ThrowHandle.enabled = false;
                         m_GravityFireball.enabled = true;
-                        m_FireBall.UseCustomGravity = true;
+                        if (m_FireBall != null)
+                        {
+                            m_FireBall.UseCustomGravity = true;
+                        }
+                        else
+                        {
+                            if (m_Throwable != null)
+                            {
+                                m_Throwable.UseCustomGravity = true;
+                            }
+                        }
+
                         break;
                     case BigFireballType.CUSTOM_THROW:
                         m_ThrowHandle.enabled = true;
                         m_GravityFireball.enabled = false;
-                        m_FireBall.UseCustomGravity = false;
-                        m_FireBall.GravityDelay = 0f;
+                        if (m_FireBall != null)
+                        {
+                            m_FireBall.UseCustomGravity = false;
+                            m_FireBall.GravityDelay = 0f;
+                        }
+                        else
+                        {
+                            if (m_Throwable != null)
+                            {
+                                m_Throwable.UseCustomGravity = false;
+                                m_Throwable.GravityDelay = 0f;
+                            }
+                        }
+
                         break;
                 }
             }

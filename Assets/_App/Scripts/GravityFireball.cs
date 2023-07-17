@@ -8,7 +8,7 @@ namespace MobaVR
         private const string TAG = nameof(GravityFireball);
 
         [SerializeField] private Rigidbody m_Rigidbody;
-        [SerializeField] private Fireball m_Fireball;
+        [SerializeField] private ThrowableSpell m_Fireball;
 
         [SerializeField] private bool m_UseCustomCurve = true;
         [SerializeField] private AnimationCurve m_AnimationCurve;
