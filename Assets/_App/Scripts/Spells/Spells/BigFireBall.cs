@@ -11,7 +11,7 @@ namespace MobaVR
 {
     public class BigFireBall : ThrowableSpell
     {
-        [SerializeField] private FireballGravitySwitcher m_GravitySwitcher;
+        [SerializeField] private PhysicsHandler m_GravitySwitcher;
 
         [Space]
         [Header("Magic")]
@@ -109,8 +109,8 @@ namespace MobaVR
                 m_Grabbable.enabled = true;
                 m_Grabbable.CanBeDropped = true;
 
-                m_Rigidbody.WakeUp();
-                m_Rigidbody.sleepThreshold = 0.0f;
+                //m_Rigidbody.WakeUp();
+                //m_Rigidbody.sleepThreshold = 0.0f;
             }
         }
 
@@ -373,7 +373,7 @@ namespace MobaVR
         //TODO: add destroy public method
 
         [PunRPC]
-        private void RpcSwitchGravity(BigFireballType gravityType)
+        private void RpcSwitchGravity(GravityType gravityType)
         {
             if (m_GravitySwitcher != null)
             {
@@ -382,11 +382,11 @@ namespace MobaVR
         }
 
         [PunRPC]
-        private void RpcSetPhysics(BigFireballType gravityType, float force, bool useAim)
+        private void RpcSetPhysics(GravityType gravityType, float force, bool useAim)
         {
             if (m_GravitySwitcher != null)
             {
-                m_GravitySwitcher.SetPhysics(gravityType, force, useAim);
+                m_GravitySwitcher.InitPhysics(gravityType, force, useAim);
             }
         }
 

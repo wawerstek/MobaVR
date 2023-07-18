@@ -1,6 +1,6 @@
 ﻿namespace MobaVR
 {
-    public enum BigFireballType
+    public enum GravityType
     {
         NO_GRAVITY,
         REAL_GRAVITY,

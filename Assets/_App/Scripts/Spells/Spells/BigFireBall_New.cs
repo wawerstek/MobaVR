@@ -221,28 +221,32 @@ namespace MobaVR
         public override void Init(WizardPlayer wizardPlayer, TeamType teamType)
         {
             base.Init(wizardPlayer, teamType);
+
             //photonView.RPC(nameof(RpcSwitchGravity), RpcTarget.All, wizardPlayer.GravityFireballType);
-            photonView.RPC(nameof(RpcSetPhysics), RpcTarget.All, wizardPlayer.GravityFireballType,
-                           wizardPlayer.ThrowForce, wizardPlayer.UseAim);
+            photonView.RPC(nameof(RpcSetPhysics), 
+                           RpcTarget.All,
+                           wizardPlayer.GravityFireballType,
+                           wizardPlayer.ThrowForce, 
+                           wizardPlayer.UseAim);
         }
 
         //TODO: add destroy public method
 
         //[PunRPC]
-        private void RpcSwitchGravity(BigFireballType gravityType)
+        private void RpcSwitchGravity(GravityType gravityType)
         {
             if (m_Throwable != null)
             {
-                m_Throwable.GravitySwitcher.GravityType = gravityType;
+                m_Throwable.PhysicsHandler.GravityType = gravityType;
             }
         }
 
         //[PunRPC]
-        private void RpcSetPhysics(BigFireballType gravityType, float force, bool useAim)
+        private void RpcSetPhysics(GravityType gravityType, float force, bool useAim)
         {
             if (m_Throwable != null)
             {
-                m_Throwable.GravitySwitcher.SetPhysics(gravityType, force, useAim);
+                m_Throwable.PhysicsHandler.InitPhysics(gravityType, force, useAim);
             }
         }
 

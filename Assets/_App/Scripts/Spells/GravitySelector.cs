@@ -30,38 +30,38 @@ namespace MobaVR
             m_GameSession.LocalPlayer.WizardPlayer.ThrowForce = force;
         }
         
-        public void SetGravityType(BigFireballType gravityType)
+        public void SetGravityType(GravityType gravityType)
         {
             m_GameSession.LocalPlayer.WizardPlayer.GravityFireballType = gravityType;
         }
 
         public void SetNoGravity()
         {
-            SetGravityType(BigFireballType.NO_GRAVITY);
+            SetGravityType(GravityType.NO_GRAVITY);
             SetAim(false);
         }
 
         public void SetRealGravity()
         {
-            SetGravityType(BigFireballType.REAL_GRAVITY);
+            SetGravityType(GravityType.REAL_GRAVITY);
             SetAim(false);
         }
 
         public void SetCustomGravity()
         {
-            SetGravityType(BigFireballType.CUSTOM_GRAVITY);
+            SetGravityType(GravityType.CUSTOM_GRAVITY);
             SetAim(false);
         }
         
         public void SetCustomThrow()
         {
-            SetGravityType(BigFireballType.CUSTOM_THROW);
+            SetGravityType(GravityType.CUSTOM_THROW);
             SetAim(false);
         }
         
         public void SetCustomThrowAim()
         {
-            SetGravityType(BigFireballType.CUSTOM_THROW);
+            SetGravityType(GravityType.CUSTOM_THROW);
             SetAim(true);
         }
     }

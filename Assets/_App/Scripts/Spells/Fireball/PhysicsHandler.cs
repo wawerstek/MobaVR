@@ -6,19 +6,51 @@ using UnityEngine;
 
 namespace MobaVR
 {
-    public class FireballGravitySwitcher : MonoBehaviourPun
+    public class PhysicsHandler : MonoBehaviourPun
     {
-        [SerializeField] private BigFireballType m_GravityType;
+        [SerializeField] private GravityType m_GravityType;
         [SerializeField] private ThrowConfiguration m_CustomThrowSettings;
-        
+
         [Header("Components")]
         [SerializeField] private BigFireBall m_FireBall;
         [SerializeField] private Throwable m_Throwable;
         [SerializeField] private ThrowHandle m_ThrowHandle;
         [SerializeField] private ThrowLabOVRGrabbable m_ThrowLabOvrGrabbable;
         [SerializeField] private GravityFireball m_GravityFireball;
+        [SerializeField] private Rigidbody m_Rigidbody;
+        
+        [Header("Gravity")]
+        [SerializeField] private float m_GravityDelay = 1.2f;
 
-        public BigFireballType GravityType
+        private void OnValidate()
+        {
+            if (m_FireBall == null)
+            {
+                TryGetComponent(out m_FireBall);
+            }
+
+            if (m_ThrowHandle == null)
+            {
+                TryGetComponent(out m_ThrowHandle);
+            }
+
+            if (m_ThrowLabOvrGrabbable == null)
+            {
+                TryGetComponent(out m_ThrowLabOvrGrabbable);
+            }
+
+            if (m_GravityFireball == null)
+            {
+                TryGetComponent(out m_GravityFireball);
+            }
+
+            if (m_Rigidbody == null)
+            {
+                TryGetComponent(out m_Rigidbody);
+            }
+        }
+
+        public GravityType GravityType
         {
             get => m_GravityType;
             set
@@ -26,7 +58,7 @@ namespace MobaVR
                 m_GravityType = value;
                 switch (m_GravityType)
                 {
-                    case BigFireballType.NO_GRAVITY:
+                    case GravityType.NO_GRAVITY:
                         m_ThrowHandle.enabled = false;
                         m_GravityFireball.enabled = false;
                         if (m_FireBall != null)
@@ -45,7 +77,7 @@ namespace MobaVR
                         }
 
                         break;
-                    case BigFireballType.REAL_GRAVITY:
+                    case GravityType.REAL_GRAVITY:
                         m_ThrowHandle.enabled = false;
                         m_GravityFireball.enabled = false;
                         if (m_FireBall != null)
@@ -64,7 +96,7 @@ namespace MobaVR
 
 
                         break;
-                    case BigFireballType.CUSTOM_GRAVITY:
+                    case GravityType.CUSTOM_GRAVITY:
                         m_ThrowHandle.enabled = false;
                         m_GravityFireball.enabled = true;
                         if (m_FireBall != null)
@@ -80,7 +112,7 @@ namespace MobaVR
                         }
 
                         break;
-                    case BigFireballType.CUSTOM_THROW:
+                    case GravityType.CUSTOM_THROW:
                         m_ThrowHandle.enabled = true;
                         m_GravityFireball.enabled = false;
                         if (m_FireBall != null)
@@ -101,8 +133,40 @@ namespace MobaVR
                 }
             }
         }
+        
+        private void ActivateGravity()
+        {
+            m_Rigidbody.useGravity = true;
+        }
 
-        public void SetPhysics(BigFireballType gravityType, float force, bool useAim)
+        public void ApplyPhysics()
+        {
+            switch (m_GravityType)
+            {
+                case GravityType.NO_GRAVITY:
+                    m_Rigidbody.useGravity = false;
+                    Invoke(nameof(ActivateGravity), m_GravityDelay);
+                    break;
+                case GravityType.REAL_GRAVITY:
+                    m_Rigidbody.useGravity = true;
+                    break;
+                case GravityType.CUSTOM_GRAVITY:
+                    m_Rigidbody.useGravity = false;
+                    break;
+                case GravityType.CUSTOM_THROW:
+                    m_Rigidbody.useGravity = true;
+                    break;
+            }
+
+            m_Rigidbody.isKinematic = false;
+        }
+
+        public void InitPhysics(GravityType gravityType)
+        {
+            GravityType = gravityType;
+        }
+
+        public void InitPhysics(GravityType gravityType, float force, bool useAim)
         {
             GravityType = gravityType;
             m_ThrowLabOvrGrabbable.ThrowForceMultiplier = force;
@@ -110,29 +174,6 @@ namespace MobaVR
             {
                 m_CustomThrowSettings.scaleMultiplier = force;
                 m_CustomThrowSettings.assistEnabled = useAim;
-            }
-        }
-
-        private void OnValidate()
-        {
-            if (m_FireBall == null)
-            {
-                TryGetComponent(out m_FireBall);
-            }
-
-            if (m_ThrowHandle == null)
-            {
-                TryGetComponent(out m_ThrowHandle);
-            }
-            
-            if (m_ThrowLabOvrGrabbable == null)
-            {
-                TryGetComponent(out m_ThrowLabOvrGrabbable);
-            }
-            
-            if (m_GravityFireball == null)
-            {
-                TryGetComponent(out m_GravityFireball);
             }
         }
     }

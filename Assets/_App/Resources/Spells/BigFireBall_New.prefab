@@ -48950,7 +48950,7 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
@@ -49332,10 +49332,12 @@ MonoBehaviour:
   m_CustomThrowSettings: {fileID: 11400000, guid: 0037eda154e12644b86f703bdfd278a2,
     type: 2}
   m_FireBall: {fileID: 0}
-  m_Throwable: {fileID: 0}
+  m_Throwable: {fileID: 5316470898255099611}
   m_ThrowHandle: {fileID: -1146988265662389042}
   m_ThrowLabOvrGrabbable: {fileID: 6947949317090603735}
   m_GravityFireball: {fileID: 8464461316636251568}
+  m_Rigidbody: {fileID: 3318618810848601280}
+  m_GravityDelay: 1.2
 --- !u!114 &129987473065859420
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49385,7 +49387,7 @@ MonoBehaviour:
   m_ProjectileFx: {fileID: 1250473880576695341}
   m_ExplosionFx: {fileID: 2446939674638437698}
   m_FailFx: {fileID: 7980578886725150696}
-  m_IsRisingOnStart: 1
+  m_IsRisingOnStart: 0
   m_DurationRisingOnStart: 2
   m_MaxScaleOnStart: 0.2
   m_DurationRisingOnThrow: 1.5
@@ -49422,7 +49424,7 @@ MonoBehaviour:
   m_IsCheckBadThrow: 1
   m_ThrowCheckDelay: 0.05
   m_ThrowMinDistance: 0.2
-  m_GravitySwitcher: {fileID: 9188032268869581275}
+  m_PhysicsHandler: {fileID: 9188032268869581275}
   m_UseCustomGravity: 0
   m_GravityDelay: 0
   m_Rigidbody: {fileID: 3318618810848601280}

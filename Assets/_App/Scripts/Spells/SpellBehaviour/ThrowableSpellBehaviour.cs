@@ -62,7 +62,8 @@ namespace MobaVR
             m_IsPerformed = true;
             m_IsThrown = false;
 
-            CreateFireball(m_MainHandInputVR.Grabber.transform);
+            //CreateFireball(m_MainHandInputVR.Grabber.transform);
+            CreateFireball(m_MainHandInputVR.InsideHandPoint);
         }
 
         protected override void OnCanceledCast(InputAction.CallbackContext context)

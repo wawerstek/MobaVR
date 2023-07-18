@@ -21,8 +21,8 @@ namespace MobaVR
         [SerializeField] private float m_ThrowMinDistance = 1.0f;
 
         [Space]
-        [Header("Gravity")]
-        [SerializeField] private FireballGravitySwitcher m_GravitySwitcher;
+        [Header("Physics")]
+        [SerializeField] private PhysicsHandler m_PhysicsHandler;
         [SerializeField] private bool m_UseCustomGravity = false;
         [SerializeField] private float m_GravityDelay = 0.5f;
 
@@ -39,7 +39,7 @@ namespace MobaVR
 
         public bool IsThrown => m_IsThrown;
         public Grabbable Grabbable => m_Grabbable;
-        public FireballGravitySwitcher GravitySwitcher => m_GravitySwitcher;
+        public PhysicsHandler PhysicsHandler => m_PhysicsHandler;
         public bool UseCustomGravity
         {
             get => m_UseCustomGravity;
@@ -62,28 +62,36 @@ namespace MobaVR
             {
                 TryGetComponent(out m_Grabbable);
             }
+
+            if (m_PhysicsHandler == null)
+            {
+                TryGetComponent(out m_PhysicsHandler);
+            }
         }
 
         private void OnEnable()
         {
-            m_Rigidbody.WakeUp();
-            m_Rigidbody.sleepThreshold = 0.0f;
+            //m_Rigidbody.WakeUp();
+            //m_Rigidbody.sleepThreshold = 0.0f;
+            if (m_Grabbable != null)
+            {
+            }
         }
 
         private void Start()
         {
             if (photonView.IsMine)
             {
-                m_Rigidbody.useGravity = true;
+                //m_Rigidbody.useGravity = true;
                 m_Grabbable.enabled = true;
                 m_Grabbable.CanBeDropped = true;
 
-                m_Rigidbody.WakeUp();
-                m_Rigidbody.sleepThreshold = 0.0f;
+                //m_Rigidbody.WakeUp();
+                //m_Rigidbody.sleepThreshold = 0.0f;
             }
         }
 
-        private IEnumerator CheckThrow()
+        private IEnumerator Release()
         {
             m_Grabbable.enabled = false;
 
@@ -107,29 +115,8 @@ namespace MobaVR
             OnThrowChecked?.Invoke(true);
             OnThrown?.Invoke();
 
-            if (m_UseCustomGravity)
-            {
-                m_Rigidbody.useGravity = false;
-            }
-            else
-            {
-                if (m_GravityDelay > 0f)
-                {
-                    m_Rigidbody.useGravity = false;
-                    Invoke(nameof(ActivateGravity), m_GravityDelay);
-                }
-                else
-                {
-                    m_Rigidbody.useGravity = true;
-                }
-            }
-
+            m_PhysicsHandler.ApplyPhysics();
             m_Rigidbody.isKinematic = false;
-        }
-
-        private void ActivateGravity()
-        {
-            m_Rigidbody.useGravity = true;
         }
 
         public void Init(WizardPlayer wizardPlayer, TeamType teamType)
@@ -142,20 +129,20 @@ namespace MobaVR
         }
 
         [PunRPC]
-        private void RpcSwitchGravity(BigFireballType gravityType)
+        private void RpcSwitchGravity(GravityType gravityType)
         {
-            if (m_GravitySwitcher != null)
+            if (m_PhysicsHandler != null)
             {
-                m_GravitySwitcher.GravityType = gravityType;
+                m_PhysicsHandler.GravityType = gravityType;
             }
         }
 
         [PunRPC]
-        private void RpcSetPhysics(BigFireballType gravityType, float force, bool useAim)
+        private void RpcSetPhysics(GravityType gravityType, float force, bool useAim)
         {
-            if (m_GravitySwitcher != null)
+            if (m_PhysicsHandler != null)
             {
-                m_GravitySwitcher.SetPhysics(gravityType, force, useAim);
+                m_PhysicsHandler.InitPhysics(gravityType, force, useAim);
             }
         }
 
@@ -178,7 +165,7 @@ namespace MobaVR
             m_Rigidbody.WakeUp();
             m_IsThrown = true;
             m_IsFirstThrown = false;
-            StartCoroutine(CheckThrow());
+            StartCoroutine(Release());
         }
 
         [PunRPC]

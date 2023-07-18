@@ -17,7 +17,7 @@ namespace MobaVR
 
         [Header("Big Fireball")]
         [SerializeField] private BigFireBall m_BigFireballPrefab;
-        [SerializeField] private BigFireballType m_BigFireballGravityType = BigFireballType.REAL_GRAVITY;
+        [SerializeField] private GravityType m_BigFireballGravityType = GravityType.REAL_GRAVITY;
 
         [Header("Small Fireball")]
         [SerializeField] private SmallFireBall m_SmallFireballPrefab;
@@ -106,7 +106,7 @@ namespace MobaVR
         private bool m_UseRightFireBreath = false;
 
         public float CurrentHealth => m_CurrentHealth;
-        public BigFireballType GravityFireballType
+        public GravityType GravityFireballType
         {
             get => m_BigFireballGravityType;
             set => m_BigFireballGravityType = value;
