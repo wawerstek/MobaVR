@@ -30,15 +30,20 @@ namespace MobaVR
         [SerializeField] private Rigidbody m_Rigidbody;
         [SerializeField] private Grabbable m_Grabbable;
 
+        private Grabber m_Grabber;
         private bool m_IsThrown = false;
         private bool m_IsFirstThrown = true;
 
         public UnityEvent<bool> OnThrowChecked;
         public UnityEvent OnThrown;
         public UnityEvent<Vector3> OnRedirected;
+        public UnityEvent<Grabber> OnGrabbed;
+        public UnityEvent<Grabber> OnReleased;
 
         public bool IsThrown => m_IsThrown;
+        public bool IsGrabbable => m_Grabbable != null && m_Grabbable.IsGrabbable();
         public Grabbable Grabbable => m_Grabbable;
+        public Grabber Grabber => m_Grabber;
         public PhysicsHandler PhysicsHandler => m_PhysicsHandler;
         public bool UseCustomGravity
         {
@@ -75,6 +80,7 @@ namespace MobaVR
             //m_Rigidbody.sleepThreshold = 0.0f;
             if (m_Grabbable != null)
             {
+                //m_Grabbable.GetPrimaryGrabber();
             }
         }
 
@@ -144,6 +150,18 @@ namespace MobaVR
             {
                 m_PhysicsHandler.InitPhysics(gravityType, force, useAim);
             }
+        }
+
+        public void Grab(Grabber grabber)
+        {
+            m_Grabber = grabber;
+            OnGrabbed?.Invoke(grabber);
+        }
+
+        public void Release(Grabber grabber)
+        {
+            m_Grabber = null;
+            OnReleased.Invoke(grabber);
         }
 
         public void Throw()

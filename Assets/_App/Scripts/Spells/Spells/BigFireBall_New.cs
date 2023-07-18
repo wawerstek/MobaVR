@@ -75,6 +75,7 @@ namespace MobaVR
             m_ExplosionFx.SetActive(false);
             m_FailFx.SetActive(false);
 
+            //TODO: Check??
             if (!m_IsRisingOnStart)
             {
                 m_Ball.transform.localScale = Vector3.zero;

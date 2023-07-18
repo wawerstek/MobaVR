@@ -49381,13 +49381,13 @@ MonoBehaviour:
   m_DestroyLifeTime: 20
   m_Throwable: {fileID: 5316470898255099611}
   m_VfxParent: {fileID: 5871259036390363530}
-  m_Ball: {fileID: 7416436455311176421}
+  m_Ball: {fileID: 275312536090764041}
   m_Trail: {fileID: 4623802477879460878}
   m_CreateFx: {fileID: 3530244402891697310}
   m_ProjectileFx: {fileID: 1250473880576695341}
   m_ExplosionFx: {fileID: 2446939674638437698}
   m_FailFx: {fileID: 7980578886725150696}
-  m_IsRisingOnStart: 0
+  m_IsRisingOnStart: 1
   m_DurationRisingOnStart: 2
   m_MaxScaleOnStart: 0.2
   m_DurationRisingOnThrow: 1.5
@@ -49436,6 +49436,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   OnRedirected:
+    m_PersistentCalls:
+      m_Calls: []
+  OnGrabbed:
+    m_PersistentCalls:
+      m_Calls: []
+  OnReleased:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &3318618811458133669
