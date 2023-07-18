@@ -121,7 +121,11 @@ namespace MobaVR
             OnThrowChecked?.Invoke(true);
             OnThrown?.Invoke();
 
-            m_PhysicsHandler.ApplyPhysics();
+            if (m_PhysicsHandler != null)
+            {
+                m_PhysicsHandler.ApplyPhysics();
+            }
+
             m_Rigidbody.isKinematic = false;
         }
 

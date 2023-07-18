@@ -777,7 +777,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd85b3d6f12247a0be6732ed5f5480cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Damage: 30
+  m_TeamItem: {fileID: 0}
+  m_DefaultDamage: 1
+  m_Force: 4000
+  m_DestroyLifeTime: 20
+  m_Hammer: {fileID: 0}
+  m_Trail: {fileID: 0}
+  m_DestroyExplosion: 4
+  m_DestroyChildren: 2
+  m_ThrowCheckDelay: 0.2
+  m_SecondForce: 400
+  m_ThrowMinDistance: 1
+  m_ExplosionLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExplosionCollisionRadius: 10
+  m_ExplosionForce: 400
+  m_ExplosionForceRadius: 4
+  m_ExplosionModifier: 2
+  m_Rigidbody: {fileID: 5735091862285679307}
+  m_Grabbable: {fileID: 5735091862285679308}
+  m_CollisionCollider: {fileID: 0}
+  m_TriggerCollider: {fileID: 0}
 --- !u!114 &4914264213434692326
 MonoBehaviour:
   m_ObjectHideFlags: 0

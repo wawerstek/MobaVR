@@ -8,9 +8,9 @@ namespace MobaVR
     public class HammerSpellBehaviour : InputSpellBehaviour
     {
         [SerializeField] private InputActionReference m_RedirectInput;
-        [SerializeField] private HammerSpell m_HammerPrefab;
+        [SerializeField] private HammerSpell_Okd m_HammerPrefab;
 
-        private HammerSpell m_CurrentHammer;
+        private HammerSpell_Okd m_CurrentHammer;
         private bool m_IsThrown = false;
         private int m_Number = 0;
 
@@ -139,7 +139,7 @@ namespace MobaVR
                                                                    point.position,
                                                                    point.rotation);
 
-            if (networkHammer.TryGetComponent(out HammerSpell hammerSpell))
+            if (networkHammer.TryGetComponent(out HammerSpell_Okd hammerSpell))
             {
                 m_Number++;
                 string handName = m_SpellHandType == SpellHandType.RIGHT_HAND ? "Right" : "Left";

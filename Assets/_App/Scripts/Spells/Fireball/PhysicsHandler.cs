@@ -13,9 +13,10 @@ namespace MobaVR
 
         [Header("Components")]
         [SerializeField] private BigFireBall m_FireBall;
-        [SerializeField] private Throwable m_Throwable;
-        [SerializeField] private ThrowHandle m_ThrowHandle;
         [SerializeField] private ThrowLabOVRGrabbable m_ThrowLabOvrGrabbable;
+        [SerializeField] private Throwable m_Throwable;
+        
+        [SerializeField] private ThrowHandle m_ThrowHandle;
         [SerializeField] private GravityFireball m_GravityFireball;
         [SerializeField] private Rigidbody m_Rigidbody;
         
