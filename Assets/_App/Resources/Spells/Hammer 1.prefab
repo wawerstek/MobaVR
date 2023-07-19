@@ -912,6 +912,7 @@ MonoBehaviour:
   m_PhysicsHandler: {fileID: 8221984669141871371}
   m_UseCustomGravity: 0
   m_GravityDelay: 0.5
+  m_PhotonView: {fileID: 4914264213434692326}
   m_Rigidbody: {fileID: 5735091862285679307}
   m_Grabbable: {fileID: 5735091862285679308}
   OnThrowChecked:
@@ -976,13 +977,8 @@ MonoBehaviour:
   m_GravityType: 1
   m_CustomThrowSettings: {fileID: 11400000, guid: 0037eda154e12644b86f703bdfd278a2,
     type: 2}
-  m_FireBall: {fileID: 0}
-  m_ThrowLabOvrGrabbable: {fileID: 7635386114212053537}
-  m_Throwable: {fileID: 868586108129769326}
-  m_ThrowHandle: {fileID: 5121421634804506068}
-  m_GravityFireball: {fileID: 428420643781378975}
-  m_Rigidbody: {fileID: 5735091862285679307}
-  m_GravityDelay: 1.2
+  m_Grabbable: {fileID: 5735091862285679308}
+  m_IsAutoInit: 1
 --- !u!114 &5121421634804506068
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1003,7 +999,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 0037eda154e12644b86f703bdfd278a2, type: 2}
     - {fileID: 11400000, guid: 0037eda154e12644b86f703bdfd278a2, type: 2}
     - {fileID: 11400000, guid: 0037eda154e12644b86f703bdfd278a2, type: 2}
-  m_Grabbable: {fileID: 5735091862285679308}
+  m_ThrowConfigurationSetSO: {fileID: 0}
   m_UseGrabberToRecording: 1
 --- !u!114 &428420643781378975
 MonoBehaviour:

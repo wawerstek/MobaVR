@@ -48890,19 +48890,17 @@ GameObject:
   - component: {fileID: 1759997014084853414}
   - component: {fileID: 3318618810848601281}
   - component: {fileID: 3318618810848601287}
-  - component: {fileID: 3318618810848601284}
-  - component: {fileID: 3318618810848601285}
-  - component: {fileID: 8088482697493106695}
   - component: {fileID: 232510063208312151}
-  - component: {fileID: 2864111511535391836}
-  - component: {fileID: -1146988265662389042}
-  - component: {fileID: 6947949317090603735}
-  - component: {fileID: 8464461316636251568}
+  - component: {fileID: 8088482697493106695}
+  - component: {fileID: 3318618810848601285}
+  - component: {fileID: 597119050514032706}
+  - component: {fileID: 3318618810848601284}
+  - component: {fileID: 5316470898255099611}
   - component: {fileID: 9188032268869581275}
   - component: {fileID: 129987473065859420}
-  - component: {fileID: 6762492436249963837}
   - component: {fileID: 5539838930902219004}
-  - component: {fileID: 5316470898255099611}
+  - component: {fileID: 2864111511535391836}
+  - component: {fileID: 6762492436249963837}
   m_Layer: 10
   m_Name: BigFireBall_New
   m_TagString: Untagged
@@ -49077,58 +49075,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &3318618810848601284
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3318618810848601306}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b90ed01ac5d94e9468b242b4c38496a8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  HapticsOnValidPickup: 1
-  HapticsOnValidRemotePickup: 1
-  HapticsOnCollision: 1
-  HapticsOnGrab: 1
-  VibrateFrequency: 0.3
-  VibrateAmplitude: 0.1
-  VibrateDuration: 0.1
---- !u!114 &3318618810848601285
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3318618810848601306}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c575c9380b9d239499fadf100ef2800b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CollisionAudio: {fileID: 8300000, guid: d7aef00ca89522f4ab3de348747d62d0, type: 3}
-  MinimumVolume: 0.25
-  MaximumVolume: 1
-  RecentlyPlayedSound: 0
-  LastRelativeVelocity: 0
---- !u!114 &8088482697493106695
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3318618810848601306}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 1
-  m_UseLocal: 0
 --- !u!114 &232510063208312151
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49152,7 +49098,7 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &2864111511535391836
+--- !u!114 &8088482697493106695
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -49161,27 +49107,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 3318618810848601306}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0aba91e4e1464b658eba147b8469a4a2, type: 3}
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TeamType: 0
-  m_RedTeamThemeSo: {fileID: 11400000, guid: d9a75f2ca82451b4ab0684d0945f04a2, type: 2}
-  m_BlueTeamThemeSo: {fileID: 11400000, guid: f0548a8be222d024394f7595294ade09, type: 2}
-  m_BallRenderer: {fileID: 9135974938625563889}
-  m_BallParticle: {fileID: 4632176845182868986}
-  m_GlowBallParticle: {fileID: 158996864518495018}
-  m_CastingParticle: {fileID: 3530244402891697308}
-  m_TrailParticle: {fileID: 1250473880187535938}
-  m_ExplosionParticle: {fileID: 3523364632151682933}
-  m_GlowExplosionParticle: {fileID: 1422085685340683904}
-  m_TrailRenderer: {fileID: 7195458261312377681}
-  m_MainParticles:
-  - {fileID: 4801817439022388565}
-  m_AdditiveParticles: []
-  m_TransparentParticles:
-  - {fileID: 6873500430425502465}
-  m_GradientParticles: []
---- !u!114 &-1146988265662389042
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 1
+  m_UseLocal: 0
+--- !u!114 &3318618810848601285
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -49190,20 +49123,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 3318618810848601306}
   m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31e3885626a34d0e8ae14df0f2336091, type: 3}
+  m_Script: {fileID: 11500000, guid: c575c9380b9d239499fadf100ef2800b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _deviceConfigurations: []
-  _throwConfigurationSet:
-    _deviceConfigurations:
-    - {fileID: 11400000, guid: 0037eda154e12644b86f703bdfd278a2, type: 2}
-    - {fileID: 11400000, guid: 0037eda154e12644b86f703bdfd278a2, type: 2}
-    - {fileID: 11400000, guid: 0037eda154e12644b86f703bdfd278a2, type: 2}
-    - {fileID: 11400000, guid: 0037eda154e12644b86f703bdfd278a2, type: 2}
-    - {fileID: 11400000, guid: 0037eda154e12644b86f703bdfd278a2, type: 2}
-  m_Grabbable: {fileID: 6947949317090603735}
-  m_UseGrabberToRecording: 1
---- !u!114 &6947949317090603735
+  CollisionAudio: {fileID: 8300000, guid: d7aef00ca89522f4ab3de348747d62d0, type: 3}
+  MinimumVolume: 0.25
+  MaximumVolume: 1
+  RecentlyPlayedSound: 0
+  LastRelativeVelocity: 0
+--- !u!114 &597119050514032706
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -49212,7 +49140,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3318618810848601306}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f920d46bb8ab6d479f39afb3b2fec1a, type: 3}
+  m_Script: {fileID: 11500000, guid: 5cdea428d48e2bb488d33d5f75c39bb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   BeingHeld: 0
@@ -49274,48 +49202,63 @@ MonoBehaviour:
   UseCustomInspector: 1
   lastFlickTime: 0
   FlickForce: 1
-  m_UseThrowHandle: 1
---- !u!114 &8464461316636251568
+--- !u!114 &3318618810848601284
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3318618810848601306}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43d30603c7f04956a93b91197a34081d, type: 3}
+  m_Script: {fileID: 11500000, guid: b90ed01ac5d94e9468b242b4c38496a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HapticsOnValidPickup: 1
+  HapticsOnValidRemotePickup: 1
+  HapticsOnCollision: 1
+  HapticsOnGrab: 1
+  VibrateFrequency: 0.3
+  VibrateAmplitude: 0.1
+  VibrateDuration: 0.1
+--- !u!114 &5316470898255099611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3318618810848601306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c0052302f484c8897055db7af4455ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PrimaryForce: 4000
+  m_SecondForce: 4000
+  m_IsCheckBadThrow: 1
+  m_ThrowCheckDelay: 0.05
+  m_ThrowMinDistance: 0.2
+  m_PhysicsHandler: {fileID: 9188032268869581275}
+  m_UseCustomGravity: 0
+  m_GravityDelay: 0
+  m_PhotonView: {fileID: 232510063208312151}
   m_Rigidbody: {fileID: 3318618810848601280}
-  m_Fireball: {fileID: 5539838930902219004}
-  m_UseCustomCurve: 0
-  m_AnimationCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0.02004242
-      value: 0
-      inSlope: -0.0405055
-      outSlope: -0.0405055
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.18749999
-    - serializedVersion: 3
-      time: 2.8638077
-      value: -0.513443
-      inSlope: -0.54736423
-      outSlope: -0.54736423
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.07284676
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  m_Gravity: -5
-  m_TerminalVelocity: -20
+  m_Grabbable: {fileID: 597119050514032706}
+  OnThrowChecked:
+    m_PersistentCalls:
+      m_Calls: []
+  OnThrown:
+    m_PersistentCalls:
+      m_Calls: []
+  OnRedirected:
+    m_PersistentCalls:
+      m_Calls: []
+  OnGrabbed:
+    m_PersistentCalls:
+      m_Calls: []
+  OnReleased:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &9188032268869581275
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49328,16 +49271,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9f80a6b419e4ff09262d1166f6e1010, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_GravityType: 1
-  m_CustomThrowSettings: {fileID: 11400000, guid: 0037eda154e12644b86f703bdfd278a2,
+  m_GravityType: 2
+  m_CustomThrowSettings: {fileID: 11400000, guid: 10c7fa5a6238f5546bfe36351916e15e,
     type: 2}
-  m_FireBall: {fileID: 0}
-  m_Throwable: {fileID: 5316470898255099611}
-  m_ThrowHandle: {fileID: -1146988265662389042}
-  m_ThrowLabOvrGrabbable: {fileID: 6947949317090603735}
-  m_GravityFireball: {fileID: 8464461316636251568}
-  m_Rigidbody: {fileID: 3318618810848601280}
-  m_GravityDelay: 1.2
+  m_Grabbable: {fileID: 597119050514032706}
+  m_IsAutoInit: 1
 --- !u!114 &129987473065859420
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49350,19 +49288,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 665812d907fb45b8b52d1017f358ebd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6762492436249963837
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3318618810848601306}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b05c15732aeb2db4b860eb9964bf3bc0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Damage: 25
 --- !u!114 &5539838930902219004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49404,10 +49329,10 @@ MonoBehaviour:
   m_ExplosionForce: 300
   m_ExplosionForceRadius: 2
   m_ExplosionModifier: 1
-  m_Grabbable: {fileID: 6947949317090603735}
+  m_Grabbable: {fileID: 597119050514032706}
   m_CollisionCollider: {fileID: 1759997014084853414}
   m_TriggerCollider: {fileID: 3318618810848601281}
---- !u!114 &5316470898255099611
+--- !u!114 &2864111511535391836
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -49416,34 +49341,39 @@ MonoBehaviour:
   m_GameObject: {fileID: 3318618810848601306}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c0052302f484c8897055db7af4455ee, type: 3}
+  m_Script: {fileID: 11500000, guid: 0aba91e4e1464b658eba147b8469a4a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_PrimaryForce: 4000
-  m_SecondForce: 4000
-  m_IsCheckBadThrow: 1
-  m_ThrowCheckDelay: 0.05
-  m_ThrowMinDistance: 0.2
-  m_PhysicsHandler: {fileID: 9188032268869581275}
-  m_UseCustomGravity: 0
-  m_GravityDelay: 0
-  m_Rigidbody: {fileID: 3318618810848601280}
-  m_Grabbable: {fileID: 6947949317090603735}
-  OnThrowChecked:
-    m_PersistentCalls:
-      m_Calls: []
-  OnThrown:
-    m_PersistentCalls:
-      m_Calls: []
-  OnRedirected:
-    m_PersistentCalls:
-      m_Calls: []
-  OnGrabbed:
-    m_PersistentCalls:
-      m_Calls: []
-  OnReleased:
-    m_PersistentCalls:
-      m_Calls: []
+  m_TeamType: 0
+  m_RedTeamThemeSo: {fileID: 11400000, guid: d9a75f2ca82451b4ab0684d0945f04a2, type: 2}
+  m_BlueTeamThemeSo: {fileID: 11400000, guid: f0548a8be222d024394f7595294ade09, type: 2}
+  m_BallRenderer: {fileID: 9135974938625563889}
+  m_BallParticle: {fileID: 4632176845182868986}
+  m_GlowBallParticle: {fileID: 158996864518495018}
+  m_CastingParticle: {fileID: 3530244402891697308}
+  m_TrailParticle: {fileID: 1250473880187535938}
+  m_ExplosionParticle: {fileID: 3523364632151682933}
+  m_GlowExplosionParticle: {fileID: 1422085685340683904}
+  m_TrailRenderer: {fileID: 7195458261312377681}
+  m_MainParticles:
+  - {fileID: 4801817439022388565}
+  m_AdditiveParticles: []
+  m_TransparentParticles:
+  - {fileID: 6873500430425502465}
+  m_GradientParticles: []
+--- !u!114 &6762492436249963837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3318618810848601306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b05c15732aeb2db4b860eb9964bf3bc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Damage: 25
 --- !u!1 &3318618811458133669
 GameObject:
   m_ObjectHideFlags: 0

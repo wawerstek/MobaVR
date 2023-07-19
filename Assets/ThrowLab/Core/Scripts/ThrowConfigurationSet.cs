@@ -9,19 +9,22 @@ namespace CloudFine.ThrowLab
     public class ThrowConfigurationSet
     {
         [SerializeField] private ThrowConfiguration[] _deviceConfigurations;
+        
+        public ThrowConfiguration[] DeviceConfigurations => _deviceConfigurations;
+
         public ThrowConfiguration GetConfigForDevice(Device device)
         {
-            if (_deviceConfigurations[(int)device] == null)
+            if (DeviceConfigurations[(int)device] == null)
             {
                 Debug.LogWarning("No ThrowConfiguration set for " + device.ToString());
-                _deviceConfigurations[(int)device] = new ThrowConfiguration();
+                DeviceConfigurations[(int)device] = new ThrowConfiguration();
             }
-            return _deviceConfigurations[(int)device];
+            return DeviceConfigurations[(int)device];
         }
 
         public void SetConfigForDevice(Device device, ThrowConfiguration config)
         {
-            _deviceConfigurations[(int)device] = config;
+            DeviceConfigurations[(int)device] = config;
         }
 
         public void SetConfigs(ThrowConfiguration[] set)

@@ -4,11 +4,13 @@ using UnityEngine;
 using System.Linq;
 using System;
 using BNG;
+using MobaVR;
 using UnityEngine.Serialization;
 
 namespace CloudFine.ThrowLab
 {
-    public class ThrowHandle : MonoBehaviour
+    //public class ThrowHandle : MonoBehaviour
+    public class ThrowHandle : BasePhysics
     {
         public Action onDetachFromHand;
         public Action<GameObject, GameObject> onPickUp;
@@ -24,7 +26,8 @@ namespace CloudFine.ThrowLab
         {
             get
             {
-                return !_attached && (_timeOfRelease > 0) && ((Time.time - _timeOfRelease) < Settings.frictionFalloffSeconds);
+                return !_attached && (_timeOfRelease > 0) &&
+                       ((Time.time - _timeOfRelease) < Settings.frictionFalloffSeconds);
             }
         }
 
@@ -61,6 +64,7 @@ namespace CloudFine.ThrowLab
                 this.angularVelocity = angular;
                 this.time = time;
             }
+
             public Vector3 position;
             public Vector3 velocity;
             public Quaternion rotation;
@@ -77,6 +81,7 @@ namespace CloudFine.ThrowLab
         protected Vector3 _rootVelocity;
         protected Vector3 _previousRootPosition;
         //
+
         #region Lifecycle
 
         protected virtual void Awake()
@@ -105,8 +110,8 @@ namespace CloudFine.ThrowLab
                 _deviceConfigurations = new ThrowConfiguration[0];
             }
         }
-
-        protected virtual void Update()
+        
+        public override void UpdatePhysics()
         {
             if (_attached || _applyingInfluence)
             {
@@ -145,6 +150,7 @@ namespace CloudFine.ThrowLab
                                 currentTarget = best;
                                 currentTarget.AddTargettingHandle(this);
                             }
+
                             break;
                         case ThrowConfiguration.AssistTargetMethod.NEAREST:
                             if (currentTarget)
@@ -152,6 +158,7 @@ namespace CloudFine.ThrowLab
                                 currentTarget.RemoveTargettingHandle(this);
                                 currentTarget = null;
                             }
+
                             break;
                     }
                 }
@@ -162,6 +169,11 @@ namespace CloudFine.ThrowLab
                 _applyingInfluence = false;
                 if (onFinalTrajectory != null) onFinalTrajectory.Invoke(_rigidbody.velocity);
             }
+        }
+
+        protected virtual void Update()
+        {
+            UpdatePhysics();
         }
 
         protected virtual void FixedUpdate()
@@ -195,6 +207,7 @@ namespace CloudFine.ThrowLab
             {
                 GameObject.Destroy(_velocitySensor.gameObject);
             }
+
             if (OnDestroyHandle != null) OnDestroyHandle.Invoke(this);
         }
 
@@ -206,10 +219,12 @@ namespace CloudFine.ThrowLab
         {
             return _throwConfigurationSet;
         }
+
         public void SetConfigSet(ThrowConfigurationSet set)
         {
             _throwConfigurationSet = set;
         }
+
         public ThrowConfiguration GetConfigForDevice(Device device)
         {
             return _throwConfigurationSet.GetConfigForDevice(device);
@@ -230,23 +245,26 @@ namespace CloudFine.ThrowLab
 
             Vector3 currentPosition = anchor.position;
             Quaternion currentRotation = anchor.rotation;
-            
+
             Vector3 positionDelta = currentPosition - _sampledPreviousPosition;
             Quaternion deltaRotation = currentRotation * Quaternion.Inverse(_sampledPreviousRotation);
             Vector3 angularDelta = new Vector3(deltaRotation.x, deltaRotation.y, deltaRotation.z);
 
             Vector3 velocity = positionDelta / deltaTime;
             Vector3 angularVelocity = angularDelta / deltaTime;
-            VelocitySample newSample = new VelocitySample(currentPosition, velocity, currentRotation, angularVelocity, time);
+            VelocitySample newSample =
+                new VelocitySample(currentPosition, velocity, currentRotation, angularVelocity, time);
             _velocityHistory.Add(newSample);
             _sampledPreviousPosition = currentPosition;
             _sampledPreviousRotation = currentRotation;
 
             Debug.Log($"ThrowHandler Sample: {newSample}");
-            Debug.Log($"ThrowHandler: positionDelta: {positionDelta}; deltaRotation: {deltaRotation}; angularDelta: {angularDelta}");
-            Debug.Log($"ThrowHandler: currentPosition: {currentPosition}; currentRotation: {currentRotation}; euler: {currentRotation.eulerAngles}\n" +
-                      $"velocity: {velocity}; angularVelocity: {angularVelocity}");
-            
+            Debug.Log(
+                $"ThrowHandler: positionDelta: {positionDelta}; deltaRotation: {deltaRotation}; angularDelta: {angularDelta}");
+            Debug.Log(
+                $"ThrowHandler: currentPosition: {currentPosition}; currentRotation: {currentRotation}; euler: {currentRotation.eulerAngles}\n" +
+                $"velocity: {velocity}; angularVelocity: {angularVelocity}");
+
             ClearOldSamples();
             if (OnSampleRecorded != null) OnSampleRecorded.Invoke(newSample);
         }
@@ -266,9 +284,13 @@ namespace CloudFine.ThrowLab
                     {
                         _velocityHistory.RemoveAt(0);
                     }
+
                     break;
                 case ThrowConfiguration.PeriodMeasurement.TIME:
-                    float cutoffTime = (Settings.sampleTime == ThrowConfiguration.SampleTime.UNSCALED ? Time.unscaledTime : Time.time) - Settings.periodSeconds;
+                    float cutoffTime =
+                        (Settings.sampleTime == ThrowConfiguration.SampleTime.UNSCALED
+                            ? Time.unscaledTime
+                            : Time.time) - Settings.periodSeconds;
                     _velocityHistory.RemoveAll(x => (cutoffTime - x.time) > 0);
                     break;
             }
@@ -294,6 +316,7 @@ namespace CloudFine.ThrowLab
             {
                 _attachedDevice = detector.DetectedDevice;
             }
+
             switch (Settings.sampleSourceType)
             {
                 case ThrowConfiguration.VelocitySource.DEVICE_CENTER_OF_MASS:
@@ -303,6 +326,7 @@ namespace CloudFine.ThrowLab
                     {
                         side = detector.Side;
                     }
+
                     _velocitySensor.localPosition = DeviceDetectionUtility.GetCenterOfMassOffset(_attachedDevice, side);
                     break;
                 case ThrowConfiguration.VelocitySource.HAND_TRACKED_POSITION:
@@ -322,6 +346,7 @@ namespace CloudFine.ThrowLab
                         Debug.LogWarning("Could not find CustomVelocitySensor on " + hand.name, hand.gameObject);
                         _velocitySensor.SetParent(this.transform);
                     }
+
                     break;
             }
 
@@ -348,6 +373,7 @@ namespace CloudFine.ThrowLab
                 {
                     OnTargetedThrow.Invoke(currentTarget);
                 }
+
                 currentTarget.RemoveTargettingHandle(this);
                 currentTarget = null;
             }
@@ -376,6 +402,7 @@ namespace CloudFine.ThrowLab
             {
                 transform.SetParent(null);
             }
+
             _rigidbody.isKinematic = !collision;
             foreach (Collider col in GetComponentsInChildren<Collider>())
             {
@@ -443,6 +470,7 @@ namespace CloudFine.ThrowLab
                         {
                             velocity = ApplyAssist(velocity, transform.position, currentTarget.GetTargetPosition());
                         }
+
                         break;
                     case ThrowConfiguration.AssistTargetMethod.NEAREST:
                         currentTarget = FindClosestThrowTarget(transform.position, velocity, ThrowTarget.AllTargets);
@@ -456,8 +484,8 @@ namespace CloudFine.ThrowLab
                         break;
                 }
             }
-            return velocity;
 
+            return velocity;
         }
 
         public Vector3 GetAngularVelocityEstimate()
@@ -472,6 +500,7 @@ namespace CloudFine.ThrowLab
             {
                 angularVelocity = _velocityHistory[_velocityHistory.Count - 1].angularVelocity;
             }
+
             return angularVelocity;
         }
 
@@ -480,8 +509,6 @@ namespace CloudFine.ThrowLab
             float[] weights;
             return Settings.GetEstimate(inputs, out weights);
         }
-
-
 
         #endregion
 
@@ -494,13 +521,15 @@ namespace CloudFine.ThrowLab
             float minAngle = float.MaxValue;
             for (int i = 0; i < targets.Count; i++)
             {
-                float angle = Vector3.Angle(cam.transform.forward, (targets[i].transform.position - cam.transform.position));
+                float angle = Vector3.Angle(cam.transform.forward,
+                                            (targets[i].transform.position - cam.transform.position));
                 if (angle < minAngle)
                 {
                     minAngle = angle;
                     best = targets[i];
                 }
             }
+
             return best;
         }
 
@@ -512,7 +541,9 @@ namespace CloudFine.ThrowLab
             float minAngle = float.MaxValue;
             for (int i = 0; i < targets.Count; i++)
             {
-                int numSolutions = BallisticsUtility.solve_ballistic_arc(origin, rawVelocity.magnitude, targets[i].GetTargetPosition(), -Physics.gravity.y, out ideal1, out ideal2);
+                int numSolutions = BallisticsUtility.solve_ballistic_arc(
+                    origin, rawVelocity.magnitude, targets[i].GetTargetPosition(), -Physics.gravity.y, out ideal1,
+                    out ideal2);
                 if (numSolutions == 0) continue;
 
                 float angle = Mathf.Min(Vector3.Angle(ideal1, rawVelocity), Vector3.Angle(ideal2, rawVelocity));
@@ -522,20 +553,24 @@ namespace CloudFine.ThrowLab
                     best = targets[i];
                 }
             }
+
             return best;
         }
 
         private Vector3 ApplyAssist(Vector3 rawVelocity, Vector3 origin, Vector3 targetPosition)
         {
             Vector3 ideal1, ideal2;
-            int numSolutions = BallisticsUtility.solve_ballistic_arc(origin, rawVelocity.magnitude, targetPosition, -Physics.gravity.y, out ideal1, out ideal2);
+            int numSolutions = BallisticsUtility.solve_ballistic_arc(origin, rawVelocity.magnitude, targetPosition,
+                                                                     -Physics.gravity.y, out ideal1, out ideal2);
 
             //cannot apply assist
             if (numSolutions == 0) return rawVelocity;
             if (Settings.assistRangeDegrees == 0) return rawVelocity;
 
             //find which potential solution is closer to actual throw
-            Vector3 idealVelocity = Vector3.Angle(rawVelocity, ideal1) < Vector3.Angle(rawVelocity, ideal2) ? ideal1 : ideal2;
+            Vector3 idealVelocity = Vector3.Angle(rawVelocity, ideal1) < Vector3.Angle(rawVelocity, ideal2)
+                ? ideal1
+                : ideal2;
 
             //1 is perfect accuracy, 0 is the edge of assistable range
             float rawAccuracy = (1 - Vector3.Angle(rawVelocity, idealVelocity) / Settings.assistRangeDegrees);
@@ -553,11 +588,12 @@ namespace CloudFine.ThrowLab
 
         private Vector3 ApplySpeedIncrease(Vector3 rawVelocity)
         {
-
             float ramp = 1;
             Vector3 localHandVelocity = rawVelocity - _rootVelocity;
-            if (Settings.scaleThreshold > 0 && Settings.scaleRampExponent > 0) ramp = Settings.SampleScalingCurve((localHandVelocity.magnitude / Settings.scaleThreshold));
-            return localHandVelocity.normalized * localHandVelocity.magnitude * Mathf.Lerp(1, Settings.scaleMultiplier, ramp) + _rootVelocity;
+            if (Settings.scaleThreshold > 0 && Settings.scaleRampExponent > 0)
+                ramp = Settings.SampleScalingCurve((localHandVelocity.magnitude / Settings.scaleThreshold));
+            return localHandVelocity.normalized * localHandVelocity.magnitude *
+                Mathf.Lerp(1, Settings.scaleMultiplier, ramp) + _rootVelocity;
         }
 
         #endregion

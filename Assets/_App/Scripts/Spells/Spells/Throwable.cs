@@ -7,7 +7,8 @@ using UnityEngine.Events;
 
 namespace MobaVR
 {
-    public class Throwable : MonoBehaviourPun, IThrowable
+    //public class Throwable : MonoBehaviourPun, IThrowable
+    public class Throwable : GrabbableEvents, IThrowable
     {
         [Space]
         [Header("Forces")]
@@ -27,6 +28,7 @@ namespace MobaVR
         [SerializeField] private float m_GravityDelay = 0.5f;
 
         [Header("Components")]
+        [SerializeField] private PhotonView m_PhotonView;
         [SerializeField] private Rigidbody m_Rigidbody;
         [SerializeField] private Grabbable m_Grabbable;
 
@@ -34,11 +36,18 @@ namespace MobaVR
         private bool m_IsThrown = false;
         private bool m_IsFirstThrown = true;
 
+        #region Events
+
         public UnityEvent<bool> OnThrowChecked;
         public UnityEvent OnThrown;
         public UnityEvent<Vector3> OnRedirected;
         public UnityEvent<Grabber> OnGrabbed;
-        public UnityEvent<Grabber> OnReleased;
+        public UnityEvent OnReleased;
+        //public UnityEvent<Grabber> OnReleased;
+
+        #endregion
+
+        #region Properties
 
         public bool IsThrown => m_IsThrown;
         public bool IsGrabbable => m_Grabbable != null && m_Grabbable.IsGrabbable();
@@ -56,6 +65,10 @@ namespace MobaVR
             set => m_GravityDelay = value;
         }
 
+        #endregion
+
+        #region MonoBehaviour
+
         private void OnValidate()
         {
             if (m_Rigidbody == null)
@@ -72,6 +85,11 @@ namespace MobaVR
             {
                 TryGetComponent(out m_PhysicsHandler);
             }
+
+            if (m_PhotonView == null)
+            {
+                TryGetComponent(out m_PhotonView);
+            }
         }
 
         private void OnEnable()
@@ -86,7 +104,7 @@ namespace MobaVR
 
         private void Start()
         {
-            if (photonView.IsMine)
+            if (m_PhotonView.IsMine)
             {
                 //m_Rigidbody.useGravity = true;
                 m_Grabbable.enabled = true;
@@ -96,6 +114,9 @@ namespace MobaVR
                 //m_Rigidbody.sleepThreshold = 0.0f;
             }
         }
+        
+        #endregion
+
 
         private IEnumerator Release()
         {
@@ -109,7 +130,7 @@ namespace MobaVR
                 float distance = Vector3.Distance(startPosition, endPosition);
                 if (distance < m_ThrowMinDistance)
                 {
-                    if (photonView.IsMine)
+                    if (m_PhotonView.IsMine)
                     {
                         OnThrowChecked?.Invoke(false);
                         StopAllCoroutines();
@@ -123,7 +144,7 @@ namespace MobaVR
 
             if (m_PhysicsHandler != null)
             {
-                m_PhysicsHandler.ApplyPhysics();
+                //m_PhysicsHandler.ApplyPhysics();
             }
 
             m_Rigidbody.isKinematic = false;
@@ -131,11 +152,11 @@ namespace MobaVR
 
         public void Init(WizardPlayer wizardPlayer, TeamType teamType)
         {
-            photonView.RPC(nameof(RpcSetPhysics),
-                           RpcTarget.All,
-                           wizardPlayer.GravityFireballType,
-                           wizardPlayer.ThrowForce,
-                           wizardPlayer.UseAim);
+            m_PhotonView.RPC(nameof(RpcSetPhysics),
+                             RpcTarget.All,
+                             wizardPlayer.GravityFireballType,
+                             wizardPlayer.ThrowForce,
+                             wizardPlayer.UseAim);
         }
 
         [PunRPC]
@@ -156,6 +177,19 @@ namespace MobaVR
             }
         }
 
+        public override void OnGrab(Grabber grabber)
+        {
+            base.OnGrab(grabber);
+            m_Grabber = grabber;
+            OnGrabbed?.Invoke(grabber);
+        }
+
+        public override void OnRelease()
+        {
+            base.OnRelease();
+            OnReleased.Invoke();
+        }
+        
         public void Grab(Grabber grabber)
         {
             m_Grabber = grabber;
@@ -165,19 +199,19 @@ namespace MobaVR
         public void Release(Grabber grabber)
         {
             m_Grabber = null;
-            OnReleased.Invoke(grabber);
+            OnReleased.Invoke();
         }
 
         public void Throw()
         {
             m_Grabbable.enabled = false;
             m_Rigidbody.WakeUp();
-            photonView.RPC(nameof(RpcThrow), RpcTarget.All);
+            m_PhotonView.RPC(nameof(RpcThrow), RpcTarget.All);
         }
 
         public void ThrowByDirection(Vector3 direction)
         {
-            photonView.RPC(nameof(RpcThrowByDirection), RpcTarget.All, direction);
+            m_PhotonView.RPC(nameof(RpcThrowByDirection), RpcTarget.All, direction);
         }
 
         [PunRPC]

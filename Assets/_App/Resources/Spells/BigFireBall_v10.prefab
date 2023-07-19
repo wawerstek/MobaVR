@@ -49249,7 +49249,8 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 0037eda154e12644b86f703bdfd278a2, type: 2}
     - {fileID: 11400000, guid: 0037eda154e12644b86f703bdfd278a2, type: 2}
     - {fileID: 11400000, guid: 0037eda154e12644b86f703bdfd278a2, type: 2}
-  m_Grabbable: {fileID: 6947949317090603735}
+  m_ThrowConfigurationSetSO: {fileID: 11400000, guid: a3cbde53bbab4304dbfe9de89ea7c090,
+    type: 2}
   m_UseGrabberToRecording: 1
 --- !u!114 &6947949317090603735
 MonoBehaviour:
@@ -49379,13 +49380,8 @@ MonoBehaviour:
   m_GravityType: 1
   m_CustomThrowSettings: {fileID: 11400000, guid: 0037eda154e12644b86f703bdfd278a2,
     type: 2}
-  m_FireBall: {fileID: 2814278547747146519}
-  m_Throwable: {fileID: 0}
-  m_ThrowHandle: {fileID: -1146988265662389042}
-  m_ThrowLabOvrGrabbable: {fileID: 6947949317090603735}
-  m_GravityFireball: {fileID: 8464461316636251568}
-  m_Rigidbody: {fileID: 3318618810848601280}
-  m_GravityDelay: 1.2
+  m_Grabbable: {fileID: 6947949317090603735}
+  m_IsAutoInit: 1
 --- !u!114 &129987473065859420
 MonoBehaviour:
   m_ObjectHideFlags: 0
