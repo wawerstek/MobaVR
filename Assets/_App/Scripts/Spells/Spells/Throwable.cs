@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using BNG;
 using MobaVR.Base;
@@ -43,6 +44,7 @@ namespace MobaVR
         public UnityEvent<Vector3> OnRedirected;
         public UnityEvent<Grabber> OnGrabbed;
         public UnityEvent OnReleased;
+        public UnityEvent OnDestroyed;
         //public UnityEvent<Grabber> OnReleased;
 
         #endregion
@@ -102,6 +104,11 @@ namespace MobaVR
             }
         }
 
+        private void OnDisable()
+        {
+            OnDestroyed?.Invoke();
+        }
+
         private void Start()
         {
             if (m_PhotonView.IsMine)
@@ -140,14 +147,25 @@ namespace MobaVR
             }
 
             OnThrowChecked?.Invoke(true);
-            OnThrown?.Invoke();
 
             if (m_PhysicsHandler != null)
             {
                 //m_PhysicsHandler.ApplyPhysics();
             }
 
+                        /*
+            Debug.DrawRay(transform.position, transform.position + m_Rigidbody.velocity * 100f, Color.blue, 100f);
+            
+            Vector3 targetDirection = transform.position - m_Rigidbody.velocity;
+            Quaternion quaternion = Quaternion.LookRotation(targetDirection);
+            Debug.DrawRay(transform.position, targetDirection, Color.red, 100f);
+
+            transform.rotation = quaternion;
+            */
+            
             m_Rigidbody.isKinematic = false;
+            
+            OnThrown?.Invoke();
         }
 
         public void Init(WizardPlayer wizardPlayer, TeamType teamType)
@@ -201,12 +219,13 @@ namespace MobaVR
             m_Grabber = null;
             OnReleased.Invoke();
         }
-
+        
         public void Throw()
         {
             m_Grabbable.enabled = false;
             m_Rigidbody.WakeUp();
             m_PhotonView.RPC(nameof(RpcThrow), RpcTarget.All);
+            //m_Grabbable.
         }
 
         public void ThrowByDirection(Vector3 direction)

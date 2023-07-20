@@ -1,5 +1,6 @@
 ﻿using System;
 using Photon.Pun;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,9 +9,10 @@ namespace MobaVR
     public class HammerSpellBehaviour : InputSpellBehaviour
     {
         [SerializeField] private InputActionReference m_RedirectInput;
-        [SerializeField] private HammerSpell_Okd m_HammerPrefab;
+        [SerializeField] private ThrowableSpell m_HammerPrefab;
 
-        private HammerSpell_Okd m_CurrentHammer;
+        private ThrowableSpell m_CurrentHammer;
+        private Throwable m_Throwable;
         private bool m_IsThrown = false;
         private int m_Number = 0;
 
@@ -62,13 +64,7 @@ namespace MobaVR
         protected override void OnCanceledCast(InputAction.CallbackContext context)
         {
             base.OnCanceledCast(context);
-
-            if (!CanCast())
-            {
-                return;
-            }
-
-            Throw();
+            Release();
         }
 
         protected void OnStartRedirect(InputAction.CallbackContext context)
@@ -108,7 +104,7 @@ namespace MobaVR
             if (!m_IsThrown && m_CurrentHammer != null)
             {
                 //m_CurrentHammer.Throw();
-                m_CurrentHammer.Show(false);
+                //m_CurrentHammer.Show(false);
 
                 m_CurrentHammer = null;
                 m_IsPerformed = false;
@@ -133,13 +129,23 @@ namespace MobaVR
 
         #region Fireball
 
+        private void Release()
+        {
+            if (!CanCast())
+            {
+                return;
+            }
+
+            Throw();
+        }
+
         private void CreateHammer(Transform point)
         {
             GameObject networkHammer = PhotonNetwork.Instantiate($"Spells/{m_HammerPrefab.name}",
                                                                    point.position,
                                                                    point.rotation);
 
-            if (networkHammer.TryGetComponent(out HammerSpell_Okd hammerSpell))
+            if (networkHammer.TryGetComponent(out ThrowableSpell hammerSpell))
             {
                 m_Number++;
                 string handName = m_SpellHandType == SpellHandType.RIGHT_HAND ? "Right" : "Left";
@@ -151,12 +157,17 @@ namespace MobaVR
                 fireBallTransform.localPosition = Vector3.zero;
                 fireBallTransform.localRotation = Quaternion.identity;
 
-                //hammerSpell.Init(m_PlayerVR.WizardPlayer, m_PlayerVR.TeamType);
-                //hammerSpell.OnInitSpell += () => OnInitSpell(hammerSpell);
-                //hammerSpell.OnDestroySpell += () => OnDestroySpell(hammerSpell);
+                hammerSpell.Init(m_PlayerVR.WizardPlayer, m_PlayerVR.TeamType);
+                hammerSpell.OnInitSpell += () => OnInitSpell(hammerSpell);
+                hammerSpell.OnDestroySpell += () => OnDestroySpell(hammerSpell);
 
                 m_IsThrown = false;
                 m_CurrentHammer = hammerSpell;
+
+                /*if (hammerSpell.TryGetComponent(out m_Throwable))
+                {
+                    m_Throwable.OnReleased.AddListener(Release);
+                }*/
             }
         }
 
@@ -169,18 +180,23 @@ namespace MobaVR
             }
         }
 
-        private void OnInitSpell(BigFireBall fireBall)
+        private void OnInitSpell(ThrowableSpell fireBall)
         {
             m_IsThrown = false;
             m_IsPerformed = true;
         }
 
-        private void OnDestroySpell(BigFireBall fireBall)
+        private void OnDestroySpell(ThrowableSpell fireBall)
         {
             if (fireBall != null)
             {
                 fireBall.OnInitSpell -= () => OnInitSpell(fireBall);
                 fireBall.OnDestroySpell -= () => OnDestroySpell(fireBall);
+                
+                /*if (fireBall.TryGetComponent(out Throwable throwable))
+                {
+                    throwable.OnReleased.RemoveListener(Release);
+                }*/
             }
 
             if (m_CurrentHammer == fireBall)

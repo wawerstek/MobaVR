@@ -5,11 +5,19 @@ namespace MobaVR
 {
     public class ThrowRotator : MonoBehaviour
     {
+        private const string TAG = nameof(ThrowRotator);
+        
         [SerializeField] private Throwable m_Throwable;
+        [SerializeField] private Rigidbody m_Rigidbody;
         [SerializeField] private ThrowableSpell m_ThrowableSpell;
         [SerializeField] private Vector3 m_RotateAxis = new Vector3(1, 0, 0);
-        [SerializeField] private float m_Speed = 45f;
+        [SerializeField] private float m_MaxSpeed = 45f;
+        [SerializeField] private float m_StepSpeed = 1f;
+        [SerializeField] private float m_MagnitudeK = 2f;
 
+
+        private float m_CurrentSpeed = 0f;
+        private float m_CurrentStep = 0f;
         private bool m_IsThrown = false;
 
         private void OnValidate()
@@ -22,6 +30,11 @@ namespace MobaVR
             if (m_ThrowableSpell == null)
             {
                 TryGetComponent(out m_ThrowableSpell);
+            }
+
+            if (m_Rigidbody == null)
+            {
+                TryGetComponent(out m_Rigidbody);
             }
         }
 
@@ -55,13 +68,31 @@ namespace MobaVR
         {
             if (m_IsThrown)
             {
-                transform.Rotate(m_RotateAxis * m_Speed);
+                m_CurrentSpeed += m_StepSpeed * Time.deltaTime;
+                m_CurrentSpeed = Mathf.Clamp(m_CurrentSpeed, 0, m_MaxSpeed);
+                //transform.Rotate(m_RotateAxis * m_MaxSpeed);
+                transform.Rotate(m_RotateAxis * m_CurrentSpeed);
             }
         }
 
         private void OnThrown()
         {
             m_IsThrown = true;
+
+            Vector3 velocity = m_Rigidbody.velocity;
+            float magnitude = velocity.magnitude;
+            
+            Debug.Log($"{TAG}: velocity = {velocity}; magnitude = {magnitude}");
+
+            /*
+            Debug.DrawRay(transform.position, transform.position + m_Rigidbody.velocity * 100f, Color.blue, 100f);
+            
+            Vector3 targetDirection = transform.position - m_Rigidbody.velocity;
+            Quaternion quaternion = Quaternion.LookRotation(targetDirection);
+            Debug.DrawRay(transform.position, targetDirection, Color.red, 100f);
+
+            transform.rotation = quaternion;
+            */
         }
     }
 }
