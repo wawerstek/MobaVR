@@ -22,7 +22,7 @@ namespace MobaVR
 
             if (m_Fireball != null)
             {
-                m_Fireball.OnThrown += Throw;
+                //m_Fireball.OnThrown += Throw;
                 m_Fireball.OnDestroySpell += DestroyTrail;
             }
         }

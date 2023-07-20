@@ -9,7 +9,6 @@ namespace MobaVR
         
         [SerializeField] private Throwable m_Throwable;
         [SerializeField] private Rigidbody m_Rigidbody;
-        [SerializeField] private ThrowableSpell m_ThrowableSpell;
         [SerializeField] private Vector3 m_RotateAxis = new Vector3(1, 0, 0);
         [SerializeField] private float m_MaxSpeed = 45f;
         [SerializeField] private float m_StepSpeed = 1f;
@@ -27,11 +26,6 @@ namespace MobaVR
                 TryGetComponent(out m_Throwable);
             }
             
-            if (m_ThrowableSpell == null)
-            {
-                TryGetComponent(out m_ThrowableSpell);
-            }
-
             if (m_Rigidbody == null)
             {
                 TryGetComponent(out m_Rigidbody);
@@ -45,10 +39,6 @@ namespace MobaVR
                 m_Throwable.OnThrown.AddListener(OnThrown);
             }
 
-            if (m_ThrowableSpell != null)
-            {
-                m_ThrowableSpell.OnThrown += OnThrown;
-            }
         }
 
         private void OnDisable()
@@ -56,11 +46,6 @@ namespace MobaVR
             if (m_Throwable != null)
             {
                 m_Throwable.OnThrown.RemoveListener(OnThrown);
-            }
-
-            if (m_ThrowableSpell != null)
-            {
-                m_ThrowableSpell.OnThrown -= OnThrown;
             }
         }
 

@@ -149,7 +149,7 @@ namespace MobaVR
             }
         }
 
-        protected override void InteractBall(Transform interactable)
+        protected override void HandleCollision(Transform interactable)
         {
             if (photonView.IsMine)
             {
@@ -283,7 +283,7 @@ namespace MobaVR
             }
             else
             {
-                OnThrown?.Invoke();
+                //OnThrown?.Invoke();
                 m_Rigidbody.useGravity = true;
                 m_Rigidbody.isKinematic = false;
             }

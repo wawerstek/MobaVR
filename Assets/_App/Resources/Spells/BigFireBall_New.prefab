@@ -54555,7 +54555,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7715638201539215869}
   - component: {fileID: 7195458261312377681}
-  - component: {fileID: 1244031294705360461}
+  - component: {fileID: 3371187951232270234}
   m_Layer: 10
   m_Name: Trail
   m_TagString: Untagged
@@ -54686,7 +54686,7 @@ TrailRenderer:
   m_MinVertexDistance: 0.02
   m_Autodestruct: 0
   m_Emitting: 1
---- !u!114 &1244031294705360461
+--- !u!114 &3371187951232270234
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -54695,10 +54695,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 4623802477879460878}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e222eaad47344a649069e0d0adac0c9f, type: 3}
+  m_Script: {fileID: 11500000, guid: 1785775ef7284b49a49c85af14dacd39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Fireball: {fileID: 5539838930902219004}
+  m_IsEnabledOnStart: 0
+  m_Spell: {fileID: 5539838930902219004}
+  m_Throwable: {fileID: 5316470898255099611}
   m_StartWidth:
     serializedVersion: 2
     m_Curve:

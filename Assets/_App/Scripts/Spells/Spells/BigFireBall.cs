@@ -168,7 +168,7 @@ namespace MobaVR
             }
         }
 
-        protected override void InteractBall(Transform interactable)
+        protected override void HandleCollision(Transform interactable)
         {
             //Explode(interactable);
 
@@ -305,7 +305,7 @@ namespace MobaVR
             }
             else
             {
-                OnThrown?.Invoke();
+                //OnThrown?.Invoke();
 
                 if (m_UseCustomGravity)
                 {

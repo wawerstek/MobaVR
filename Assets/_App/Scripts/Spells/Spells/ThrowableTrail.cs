@@ -5,7 +5,9 @@ namespace MobaVR
 {
     public class ThrowableTrail : MonoBehaviour
     {
+        [SerializeField] private bool m_IsEnabledOnStart = false;
         [SerializeField] private ThrowableSpell m_Spell;
+        [SerializeField] private Throwable m_Throwable;
         [SerializeField] private AnimationCurve m_StartWidth;
         [SerializeField] private AnimationCurve m_DestroyWidth;
         [SerializeField] private float m_StartTime;
@@ -22,13 +24,24 @@ namespace MobaVR
 
             if (m_Spell != null)
             {
-                m_Spell.OnThrown += Throw;
                 m_Spell.OnDestroySpell += DestroyTrail;
             }
+
+            if (m_Throwable != null)
+            {
+                m_Throwable.OnThrown.AddListener(Throw);
+            }
+        }
+
+        private void Awake()
+        {
+            m_TrailRenderer.enabled = m_IsEnabledOnStart;
         }
 
         private void Throw()
         {
+            m_TrailRenderer.enabled = true;
+            
             m_TrailRenderer.time = m_DestroyTime;
             m_TrailRenderer.widthCurve = m_DestroyWidth;
         }
@@ -41,7 +54,15 @@ namespace MobaVR
 
         private void OnDisable()
         {
-            m_Spell.OnDestroySpell -= DestroyTrail;
+            if (m_Spell != null)
+            {
+                m_Spell.OnDestroySpell -= DestroyTrail;
+            }
+
+            if (m_Throwable != null)
+            {
+                m_Throwable.OnThrown.RemoveListener(Throw);
+            }
         }
     }
 }

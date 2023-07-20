@@ -138,7 +138,7 @@ namespace MobaVR
             }
         }
 
-        protected override void InteractBall(Transform interactable)
+        protected override void HandleCollision(Transform interactable)
         {
             //Explode(interactable);
 

@@ -23,7 +23,7 @@ namespace MobaVR
         {
             if (m_Fireball != null)
             {
-                m_Fireball.OnThrown += OnThrown;
+                //m_Fireball.OnThrown += OnThrown;
                 m_Fireball.OnDestroySpell += OnDestroySpell;
             }
         }
@@ -35,7 +35,7 @@ namespace MobaVR
 
         private void OnDisable()
         {
-            m_Fireball.OnThrown -= OnThrown;
+            //m_Fireball.OnThrown -= OnThrown;
         }
 
         private void OnThrown()

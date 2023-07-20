@@ -47,7 +47,7 @@ namespace MobaVR
             m_ExplosionFx.SetActive(false);
         }
 
-        protected override void InteractBall(Transform interactable)
+        protected override void HandleCollision(Transform interactable)
         {
             if (photonView.IsMine)
             {
@@ -113,7 +113,7 @@ namespace MobaVR
         [PunRPC]
         private void RpcThrowByDirection(Vector3 direction)
         {
-            OnThrown?.Invoke();
+            //OnThrown?.Invoke();
             
             m_Rigidbody.isKinematic = false;
             m_Rigidbody.useGravity = m_UseGravity;

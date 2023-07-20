@@ -1972,25 +1972,6 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: -0.23477001
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 765827348276937267, guid: 8d3792d5ba4b7a14796cb2888a520acb, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 8d3792d5ba4b7a14796cb2888a520acb, type: 3}
---- !u!1 &1036546194933713664 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3976496476472148007, guid: 8d3792d5ba4b7a14796cb2888a520acb,
-    type: 3}
-  m_PrefabInstance: {fileID: 4129193101719341863}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1699099890353803919
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1036546194933713664}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2977c82ff7704b9889f0d9d464c345b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  blinkSpeed: 0.1
-  blinkInterval: 3

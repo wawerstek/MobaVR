@@ -97,7 +97,7 @@ namespace MobaVR
             }
         }
 
-        [ContextMenu("SetVisibility")]
+        [ContextMenu("SetVisibilityVR")]
         public void SetVisibilityVR(bool isVisible = false)
         {
             foreach (Skin skin in m_AliveSkins)

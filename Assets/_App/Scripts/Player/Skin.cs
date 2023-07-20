@@ -104,6 +104,18 @@ namespace MobaVR
                     return false;
                 }));
             }
+
+            Transform face = transform.Find("Body/Base/Head");
+            if (face != null)
+            {
+                m_FaceRenderers.AddRange(face.GetComponentsInChildren<Renderer>(true));
+            }
+            
+            Transform customization = transform.Find("Customization");
+            if (customization != null)
+            {
+                m_FaceRenderers.AddRange(customization.GetComponentsInChildren<Renderer>(true));
+            }
         }
 
         [ContextMenu("FindLegs")]

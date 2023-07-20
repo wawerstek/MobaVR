@@ -12,7 +12,8 @@ namespace MobaVR
     ///
     /// На игроках и щите должен висеть IsTrigger, чтобы прошла проверка
     /// </summary>
-    public abstract class ThrowableSpell : MonoBehaviourPunCallbacks, IThrowable
+    public abstract class ThrowableSpell : MonoBehaviourPunCallbacks
+                                         //, IThrowable
     {
         [Space]
         [Header("Components")]
@@ -27,7 +28,7 @@ namespace MobaVR
 
         public Action OnDestroySpell;
         public Action OnInitSpell;
-        public Action OnThrown;
+        //public Action OnThrown;
 
         public TeamItem Team => m_TeamItem;
         public WizardPlayer Owner
@@ -79,9 +80,11 @@ namespace MobaVR
                 return;
             }
             
+            Debug.Log($"ThrowableSpell: Collision: " + collision.gameObject.name);
+            
             if (m_IsThrown && !collision.transform.CompareTag("RemotePlayer"))
             {
-                InteractBall(collision.transform);
+                HandleCollision(collision.transform);
             }
         }
 
@@ -110,7 +113,7 @@ namespace MobaVR
                     }
                     
                     wizardPlayer.Hit(this, CalculateDamage());
-                    InteractBall(other.transform);
+                    HandleCollision(other.transform);
                 }
                 
                 if (other.CompareTag("LifeCollider") && other.transform.TryGetComponent(out HitCollider damagePlayer))
@@ -121,7 +124,7 @@ namespace MobaVR
                     }
 
                     damagePlayer.WizardPlayer.Hit(this, CalculateDamage());
-                    InteractBall(other.transform);
+                    HandleCollision(other.transform);
                 }
 
                 if (other.CompareTag("Item"))
@@ -130,7 +133,7 @@ namespace MobaVR
                     if (shield != null)
                     {
                         shield.Hit(this, CalculateDamage());
-                        InteractBall(other.transform);
+                        HandleCollision(other.transform);
                     }
                 }
                 
@@ -160,7 +163,7 @@ namespace MobaVR
         }
 
         protected abstract float CalculateDamage();
-        protected abstract void InteractBall(Transform interactable);
+        protected abstract void HandleCollision(Transform interactable);
         public abstract void Throw();
         public abstract void ThrowByDirection(Vector3 direction);
     }
