@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Photon.Pun;
+using Photon.Realtime;
 
 public class destruction : MonoBehaviour {
 	public GameObject[] Chunks;
@@ -15,10 +17,13 @@ public class destruction : MonoBehaviour {
 	public GameObject FX;
 	public bool AutoDestroy = true; //если true, то объект будет автоматически разорван по истечении "AutoDestTime" с момента запуска игры.
 	public float AutoDestTime = 2; //Время автоматического уничтожения (отсчитывается от начала игры).
+	PhotonView photonView;
 
 	void Start () {
+		photonView = GetComponent<PhotonView>();
 
-		if(AutoDestroy){
+
+		if (AutoDestroy){
 			Invoke("Crushing", AutoDestTime);
 		}
 
@@ -33,17 +38,42 @@ public class destruction : MonoBehaviour {
 	}
 
 	void OnCollisionEnter(Collision other){
-		if(other.gameObject.GetComponent<BulletsDamage>()){
-		Health -= other.gameObject.GetComponent<BulletsDamage>().Damage;
-			if(Health <= 0){
-				Crushing();
-				}
+		//if(other.gameObject.GetComponent<BulletsDamage>()){
+		//Health -= other.gameObject.GetComponent<BulletsDamage>().Damage;
+		//	if(Health <= 0){
+		//		Crushing();
+		//		}
+		//}
+		//else if(other.relativeVelocity.magnitude > strength){
+		//	Crushing();
+		//}
+
+
+		if (other.gameObject.GetComponent<BulletsDamage>())
+		{
+			int damage = other.gameObject.GetComponent<BulletsDamage>().Damage;
+			photonView.RPC("DecreaseHealth", RpcTarget.All, damage);
 		}
-		else if(other.relativeVelocity.magnitude > strength){
-			Crushing();
+		else if (other.relativeVelocity.magnitude > strength)
+		{
+			photonView.RPC("DecreaseHealth", RpcTarget.All, 1);
 		}
 
+
 	}
+
+	[PunRPC]
+	public void DecreaseHealth(int damage)
+	{
+		Health -= damage;
+		if (Health <= 0)
+		{
+			Crushing();
+		}
+	}
+
+
+
 	void OnMouseDown(){
 		if(BreakByClick){
 			Crushing();

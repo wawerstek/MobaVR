@@ -11,6 +11,8 @@ namespace MobaVR
 {
     public class Skin : TeamItem, ISkin
     {
+        public string ID;
+
         [Header("Armature")]
         [SerializeField] private Transform m_Armature;
         [SerializeField] [ReadOnly] private float m_ArmatureScale = 0.54f;
