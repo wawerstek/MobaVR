@@ -4,7 +4,8 @@ using UnityEngine;
 
 namespace MobaVR
 {
-    public class Shield : MonoBehaviourPunCallbacks, IHit
+    public class Shield : MonoBehaviourPunCallbacks
+                        //, IHit
     {
         [Header("Values")]
         [SerializeField] protected float m_Health = 1f;
