@@ -15,6 +15,8 @@ namespace MobaVR
     public class PlayerVR : MonoBehaviourPunCallbacks
     {
         [SerializeField] private InputVR m_InputVR;
+        //[SerializeField] private SpellsHandler m_SpellsHandler;
+        [SerializeField] private GameObject m_Spells;
 
         [SerializeField] private WizardPlayer m_WizardPlayer;
         [SerializeField] private PlayerMode m_PlayerMode;
@@ -91,6 +93,13 @@ namespace MobaVR
             {
                 TryGetComponent(out m_PlayerMode);
             }
+            
+            /*
+            if (m_SpellsHandler == null)
+            {
+                m_SpellsHandler = GetComponentInChildren<SpellsHandler>();
+            }
+            */
         }
 
         public override void OnDisable()
@@ -103,14 +112,18 @@ namespace MobaVR
         {
             if (m_InputVR != null)
             {
-                if (photonView.IsMine)
-                {
-                    m_InputVR.gameObject.SetActive(true);
-                }
-                else
-                {
-                    m_InputVR.gameObject.SetActive(false);
-                }
+                m_InputVR.gameObject.SetActive(photonView.IsMine);
+            }
+
+            /*
+            if (m_SpellsHandler != null)
+            {
+                m_SpellsHandler.gameObject.SetActive(photonView.IsMine);
+            }
+            */
+            if (m_Spells != null)
+            {
+                m_Spells.SetActive(photonView.IsMine);
             }
         }
 

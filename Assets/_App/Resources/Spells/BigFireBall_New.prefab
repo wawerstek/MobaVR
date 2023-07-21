@@ -48885,7 +48885,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3318618810848601293}
-  - component: {fileID: 3318618810848601282}
   - component: {fileID: 3318618810848601280}
   - component: {fileID: 1759997014084853414}
   - component: {fileID: 3318618810848601281}
@@ -48929,14 +48928,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &3318618810848601282
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3318618810848601306}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!54 &3318618810848601280
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -49152,7 +49143,7 @@ MonoBehaviour:
   RemoteGrabbable: 1
   RemoteGrabMechanic: 0
   RemoteGrabDistance: 2
-  ThrowForceMultiplier: 10
+  ThrowForceMultiplier: 6
   ThrowForceMultiplierAngular: 1
   BreakDistance: 0
   HideHandGraphics: 0
@@ -49304,9 +49295,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_TeamItem: {fileID: 2864111511535391836}
+  m_DestroyLifeTime: 20
   m_DefaultDamage: 10
   m_Force: 2000
-  m_DestroyLifeTime: 20
   m_Throwable: {fileID: 5316470898255099611}
   m_VfxParent: {fileID: 5871259036390363530}
   m_Ball: {fileID: 275312536090764041}

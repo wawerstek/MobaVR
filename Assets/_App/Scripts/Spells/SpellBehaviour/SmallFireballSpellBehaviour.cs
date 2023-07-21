@@ -44,7 +44,7 @@ namespace MobaVR
                     OnCompleted?.Invoke();
                 };
                 
-                m_SmallFireBall.ThrowByDirection(direction);
+                m_SmallFireBall.Shoot(direction);
             }
         }
     }

@@ -82,6 +82,7 @@ namespace MobaVR
             return m_DefaultDamage;
         }
 
+        /*
         public override void Throw()
         {
             photonView.RPC(nameof(RpcThrow), RpcTarget.AllBuffered);
@@ -91,6 +92,7 @@ namespace MobaVR
         {
             photonView.RPC(nameof(RpcThrowByDirection), RpcTarget.All, direction);
         }
+        */
 
         [PunRPC]
         private void RpcThrow()

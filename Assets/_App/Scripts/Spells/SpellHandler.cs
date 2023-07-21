@@ -11,9 +11,12 @@ namespace MobaVR
 
         [SerializeField] private PlayerVR m_PlayerVR;
         [SerializeField] private List<SpellMap> m_Spells;
+        [SerializeField] private bool m_IsInitOnStart = false;
 
         [SerializeField] [ReadOnly] private List<SpellBehaviour> m_ActiveSpells = new();
 
+        private bool m_IsInit = false;
+        
         public List<SpellMap> Spells => m_Spells;
         public List<SpellBehaviour> SpellBehaviours => m_Spells.Select(map => map.SpellBehaviour).Distinct().ToList();
         public List<SpellBehaviour> ActiveSpells => m_ActiveSpells;
@@ -35,6 +38,19 @@ namespace MobaVR
 
         private void Awake()
         {
+            if (m_IsInitOnStart)
+            {
+                Init();
+            }
+        }
+
+        public void Init()
+        {
+            if (m_IsInit)
+            {
+                return;
+            }
+            
             foreach (SpellMap spellMap in m_Spells)
             {
                 SpellBehaviour spellBehaviour = spellMap.SpellBehaviour;
@@ -44,6 +60,8 @@ namespace MobaVR
                 spellBehaviour.OnPerformed += () => { OnSpellPerformed(spellBehaviour); };
                 spellBehaviour.OnCompleted += () => { OnSpellCompleted(spellBehaviour); };
             }
+
+            m_IsInit = true;
         }
 
         private void OnSpellStarted(SpellBehaviour spellBehaviour)

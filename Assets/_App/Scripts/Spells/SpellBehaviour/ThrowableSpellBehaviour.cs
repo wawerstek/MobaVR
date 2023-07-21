@@ -162,7 +162,6 @@ namespace MobaVR
                 fireBallTransform.localPosition = Vector3.zero;
                 fireBallTransform.localRotation = Quaternion.identity;
 
-                fireBall.Init(m_PlayerVR.WizardPlayer, m_PlayerVR.TeamType);
                 fireBall.OnInitSpell += () => OnInitSpell(fireBall);
                 fireBall.OnDestroySpell += () => OnDestroySpell(fireBall);
 
@@ -170,6 +169,8 @@ namespace MobaVR
                 m_CurrentSpell = fireBall;
                 
                 fireBall.TryGetComponent(out m_Throwable);
+                
+                fireBall.Init(m_PlayerVR.WizardPlayer, m_PlayerVR.TeamType);
                 
                 Debug.Log($"{SpellName}: {nameof(CreateFireball)}: CreateFireball = 4");
             }

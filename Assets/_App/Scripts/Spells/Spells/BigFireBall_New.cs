@@ -266,27 +266,6 @@ namespace MobaVR
             return damage;
         }
 
-        public override void Throw()
-        {
-            if (!m_IsThrown)
-            {
-                m_ScaleFactor = 2.5f;
-            }
-
-            m_IsThrown = true;
-            m_Throwable.Throw();
-        }
-
-        public override void ThrowByDirection(Vector3 direction)
-        {
-            if (!m_IsThrown)
-            {
-                m_ScaleFactor = 1f;
-            }
-
-            m_Throwable.ThrowByDirection(direction);
-        }
-
         //[PunRPC]
         private void RpcThrowByDirection(Vector3 direction)
         {

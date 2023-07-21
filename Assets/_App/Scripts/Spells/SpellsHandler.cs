@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -13,6 +14,14 @@ namespace MobaVR
         private void FindSpellHandlers()
         {
             m_SpellHandlers.AddRange(GetComponentsInChildren<SpellHandler>());            
+        }
+
+        private void Awake()
+        {
+            foreach (SpellHandler spellHandler in m_SpellHandlers)
+            {
+                spellHandler.Init();
+            }
         }
     }
 }

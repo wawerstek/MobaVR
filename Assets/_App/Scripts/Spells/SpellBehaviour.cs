@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Photon.Pun;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -18,6 +19,9 @@ namespace MobaVR
         [SerializeField] protected bool m_CanInterrupted = true;
         [SerializeField] [ReadOnly] protected bool m_IsPerformed = false;
 
+        [Header("Network")]
+        [SerializeField] protected PhotonView m_PhotonView;
+        
         protected SpellHandler m_SpellsHandler;
         protected PlayerVR m_PlayerVR;
 
@@ -28,6 +32,14 @@ namespace MobaVR
         public Action OnCompleted;
 
         #region Spell
+
+        private void OnValidate()
+        {
+            if (m_PhotonView == null)
+            {
+                m_PhotonView = GetComponentInParent<PhotonView>();
+            }
+        }
 
         public virtual void Init(SpellHandler spellHandler, PlayerVR playerVR)
         {
@@ -54,7 +66,6 @@ namespace MobaVR
         }
 
         #endregion
-
 
         #region Spell States
 

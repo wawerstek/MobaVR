@@ -100,18 +100,25 @@ namespace MobaVR
             m_Collider.enabled = true;
         }
 
-        public override void Throw()
+        public void Throw()
         {
             //TODO
         }
 
-        public override void ThrowByDirection(Vector3 direction)
+        public void Shoot(Vector3 direction)
+        {
+            photonView.RPC(nameof(RpcShoot), RpcTarget.All, direction);
+        }
+        
+        /*
+        public void ThrowByDirection(Vector3 direction)
         {
             photonView.RPC(nameof(RpcThrowByDirection), RpcTarget.All, direction);
         }
+        */
 
         [PunRPC]
-        private void RpcThrowByDirection(Vector3 direction)
+        private void RpcShoot(Vector3 direction)
         {
             //OnThrown?.Invoke();
             

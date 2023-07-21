@@ -9,10 +9,9 @@ namespace MobaVR
     public class HammerSpellBehaviour : InputSpellBehaviour
     {
         [SerializeField] private InputActionReference m_RedirectInput;
-        [SerializeField] private ThrowableSpell m_HammerPrefab;
+        [SerializeField] private HammerSpell m_HammerPrefab;
 
-        private ThrowableSpell m_CurrentHammer;
-        private Throwable m_Throwable;
+        private HammerSpell m_CurrentHammer;
         private bool m_IsThrown = false;
         private int m_Number = 0;
 
@@ -58,7 +57,8 @@ namespace MobaVR
             m_IsPerformed = true;
             m_IsThrown = false;
 
-            CreateHammer(m_MainHandInputVR.Grabber.transform);
+            //CreateHammer(m_MainHandInputVR.Grabber.transform); Не работает??
+            CreateHammer(m_MainHandInputVR.InsideHandPoint);
         }
 
         protected override void OnCanceledCast(InputAction.CallbackContext context)
@@ -145,24 +145,25 @@ namespace MobaVR
                                                                    point.position,
                                                                    point.rotation);
 
-            if (networkHammer.TryGetComponent(out ThrowableSpell hammerSpell))
+            if (networkHammer.TryGetComponent(out HammerSpell hammerSpell))
             {
                 m_Number++;
                 string handName = m_SpellHandType == SpellHandType.RIGHT_HAND ? "Right" : "Left";
                 string fireballName = $"{m_HammerPrefab.name}_{handName}_{m_Number}";
                 networkHammer.name = fireballName;
 
-                Transform fireBallTransform = hammerSpell.transform;
-                fireBallTransform.parent = point.transform;
-                fireBallTransform.localPosition = Vector3.zero;
-                fireBallTransform.localRotation = Quaternion.identity;
+                Transform hammerSpellTransform = hammerSpell.transform;
+                hammerSpellTransform.parent = point.transform;
+                hammerSpellTransform.localPosition = Vector3.zero;
+                hammerSpellTransform.localRotation = Quaternion.identity;
 
-                hammerSpell.Init(m_PlayerVR.WizardPlayer, m_PlayerVR.TeamType);
                 hammerSpell.OnInitSpell += () => OnInitSpell(hammerSpell);
                 hammerSpell.OnDestroySpell += () => OnDestroySpell(hammerSpell);
 
                 m_IsThrown = false;
                 m_CurrentHammer = hammerSpell;
+                
+                hammerSpell.Init(m_PlayerVR.WizardPlayer, m_PlayerVR.TeamType);
 
                 /*if (hammerSpell.TryGetComponent(out m_Throwable))
                 {
@@ -176,7 +177,7 @@ namespace MobaVR
             if (m_CurrentHammer != null)
             {
                 m_IsThrown = true;
-                m_CurrentHammer.Throw();
+                m_CurrentHammer.Throwable.Throw();
             }
         }
 

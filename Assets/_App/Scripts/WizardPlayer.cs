@@ -681,7 +681,7 @@ namespace MobaVR
                 if (m_LeftSmallFireBall != null)
                 {
                     m_LeftSmallFireBall.transform.parent = null;
-                    m_LeftSmallFireBall.ThrowByDirection(m_LeftGrabber.transform.forward);
+                    m_LeftSmallFireBall.Shoot(m_LeftGrabber.transform.forward);
                 }
             }
 
@@ -691,7 +691,7 @@ namespace MobaVR
                 if (m_RightSmallFireBall != null)
                 {
                     m_RightSmallFireBall.transform.parent = null;
-                    m_RightSmallFireBall.ThrowByDirection(m_RightGrabber.transform.forward);
+                    m_RightSmallFireBall.Shoot(m_RightGrabber.transform.forward);
                 }
             }
 
@@ -784,7 +784,7 @@ namespace MobaVR
             if (fireBall != null)
             {
                 //fireBall.ThrowForce(grabber.transform.forward);
-                fireBall.ThrowByDirection(grabber.transform.forward);
+                fireBall.Shoot(grabber.transform.forward);
                 fireBall = null;
             }
         }

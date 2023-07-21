@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using AmazingAssets.AdvancedDissolve;
 using DG.Tweening;
 using DG.Tweening.Core;
@@ -8,6 +9,7 @@ using UnityEngine;
 
 namespace MobaVR
 {
+    [Serializable]
     public class IronShield : Shield
     {
         [SerializeField] private MeshRenderer m_Renderer;

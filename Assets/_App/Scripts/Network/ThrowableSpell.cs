@@ -12,38 +12,15 @@ namespace MobaVR
     ///
     /// На игроках и щите должен висеть IsTrigger, чтобы прошла проверка
     /// </summary>
-    public abstract class ThrowableSpell : MonoBehaviourPunCallbacks
+    public abstract class ThrowableSpell : Spell
                                          //, IThrowable
     {
         [Space]
         [Header("Components")]
-        [SerializeField] protected TeamItem m_TeamItem;
         [SerializeField] protected float m_DefaultDamage = 1f;
         [SerializeField] protected float m_Force = 4000f;
-        [SerializeField] protected float m_DestroyLifeTime = 20.0f;
 
-        protected TeamType m_TeamType;
         protected bool m_IsThrown = false;
-        protected WizardPlayer m_Owner;
-
-        public Action OnDestroySpell;
-        public Action OnInitSpell;
-        //public Action OnThrown;
-
-        public TeamItem Team => m_TeamItem;
-        public WizardPlayer Owner
-        {
-            get => m_Owner;
-            set => m_Owner = value;
-        }
-
-        protected virtual void OnValidate()
-        {
-            if (m_TeamItem == null)
-            {
-                TryGetComponent(out m_TeamItem);
-            }
-        }
 
         protected virtual void Awake()
         {
@@ -88,6 +65,7 @@ namespace MobaVR
             }
         }
 
+        //TODO
         protected void OnTriggerEnter(Collider other)
         {
             if (!photonView.IsMine)
@@ -135,6 +113,15 @@ namespace MobaVR
                         shield.Hit(this, CalculateDamage());
                         HandleCollision(other.transform);
                     }
+                    
+                    //TODO: Перенести логику в класс БигШит
+                    if (other.TryGetComponent(out BigShield bigShield))
+                    {
+                        if (bigShield.Team.TeamType != m_TeamType)
+                        {
+                            HandleCollision(other.transform);
+                        }
+                    }
                 }
                 
                 //InteractBall(other.transform);
@@ -164,7 +151,7 @@ namespace MobaVR
 
         protected abstract float CalculateDamage();
         protected abstract void HandleCollision(Transform interactable);
-        public abstract void Throw();
-        public abstract void ThrowByDirection(Vector3 direction);
+        //public abstract void Throw();
+        //public abstract void ThrowByDirection(Vector3 direction);
     }
 }

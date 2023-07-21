@@ -46,7 +46,7 @@ namespace MobaVR
         {
             if (fireBall != null)
             {
-                fireBall.ThrowByDirection(direction);
+                fireBall.Shoot(direction);
                 fireBall = null;
             }
         }

@@ -405,7 +405,7 @@ namespace MobaVR
             return damage;
         }
 
-        public override void Throw()
+        public void Throw()
         {
             if (!m_IsThrown)
             {
@@ -417,7 +417,7 @@ namespace MobaVR
             photonView.RPC(nameof(RpcThrow), RpcTarget.All);
         }
 
-        public override void ThrowByDirection(Vector3 direction)
+        public void ThrowByDirection(Vector3 direction)
         {
             if (!m_IsThrown)
             {

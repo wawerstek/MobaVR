@@ -34,7 +34,7 @@ namespace MobaVR
         protected override void OnEnable()
         {
             //base.OnEnable();
-            Invoke(nameof(RpcDestroy), m_DestroyLifeTime);
+            //Invoke(nameof(RpcDestroy), m_DestroyLifeTime); //TODO
 
             m_HammerMesh.SetActive(false);
             m_ProjectileFx.SetActive(false);
@@ -48,8 +48,6 @@ namespace MobaVR
                 m_Throwable.OnGrabbed.AddListener(OnGrabbed);
             }
         }
-
- 
 
         public override void OnDisable()
         {
@@ -66,7 +64,7 @@ namespace MobaVR
         {
             if (photonView.IsMine)
             {
-                photonView.RPC(nameof(RpcDestroy), RpcTarget.All);
+                photonView.RPC(nameof(RpcDestroy), RpcTarget.AllBuffered);
             }
         }
 
@@ -129,6 +127,7 @@ namespace MobaVR
         }
 
         //REMOVE
+        /*
         public override void Throw()
         {
             m_Throwable.Throw();
@@ -138,6 +137,7 @@ namespace MobaVR
         {
             m_Throwable.ThrowByDirection(direction);
         }
+        */
 
         //[PunRPC]
         private void RpcThrowByDirection(Vector3 direction)
@@ -155,12 +155,19 @@ namespace MobaVR
         {
             if (gameObject.activeSelf)
             {
-                photonView.RPC(nameof(RpcDestroy), RpcTarget.All);
+                photonView.RPC(nameof(RpcDestroy), RpcTarget.AllBuffered);
                 StopAllCoroutines();
             }
         }
 
         private void ShowWeapon()
+        {
+            m_HammerMesh.SetActive(true);
+            photonView.RPC(nameof(RpcShowWeapon), RpcTarget.AllBuffered);
+        }
+
+        [PunRPC]
+        private void RpcShowWeapon()
         {
             m_HammerMesh.SetActive(true);
         }
@@ -174,7 +181,6 @@ namespace MobaVR
             {
                 //collisionCollider.enabled = false;
             }
-
         }
 
         private void OnThrown()
@@ -195,7 +201,7 @@ namespace MobaVR
         {
             if (!isGoodThrow)
             {
-                photonView.RPC(nameof(RpcDestroy), RpcTarget.All);
+                photonView.RPC(nameof(RpcDestroy), RpcTarget.AllBuffered);
                 StopAllCoroutines();
             }
         }
