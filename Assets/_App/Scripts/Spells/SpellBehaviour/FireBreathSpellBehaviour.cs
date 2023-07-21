@@ -6,6 +6,18 @@ namespace MobaVR
     public class FireBreathSpellBehaviour : InputSpellBehaviour
     {
         [SerializeField] private FireBreath m_FireBreath;
+        
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+            m_FireBreath.gameObject.SetActive(true);
+        }
+
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+            m_FireBreath.gameObject.SetActive(false);
+        }
 
         protected override void OnStartCast(InputAction.CallbackContext context)
         {

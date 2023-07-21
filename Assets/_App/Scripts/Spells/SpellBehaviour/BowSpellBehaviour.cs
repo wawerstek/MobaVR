@@ -8,6 +8,18 @@ namespace MobaVR
     {
         [SerializeField] private BowSpell m_Bow;
 
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+            m_Bow.gameObject.SetActive(true);
+        }
+
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+            m_Bow.gameObject.SetActive(false);
+        }
+
         protected override void OnStartCast(InputAction.CallbackContext context)
         {
             base.OnStartCast(context);

@@ -16,6 +16,18 @@ namespace MobaVR
         private float Angle => Vector3.Angle(m_LeftHand.InsideHandPoint.transform.forward, 
                                              m_RightHand.InsideHandPoint.transform.forward);
 
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+            m_FireBreath.gameObject.SetActive(true);
+        }
+
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+            m_FireBreath.gameObject.SetActive(false);
+        }
+
         protected override void OnStartCast(InputAction.CallbackContext context)
         {
             base.OnStartCast(context);

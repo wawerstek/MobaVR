@@ -8,6 +8,18 @@ namespace MobaVR
     {
         [SerializeField] private Shield m_Shield;
 
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+            m_Shield.gameObject.SetActive(true);
+        }
+
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+            m_Shield.gameObject.SetActive(false);
+        }
+        
         protected override void OnStartCast(InputAction.CallbackContext context)
         {
             base.OnStartCast(context);
