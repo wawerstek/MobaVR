@@ -45,6 +45,7 @@ namespace MobaVR
         [SerializeField] [ReadOnly] private TeamType m_TeamType = TeamType.RED;
         private Team m_Team = null;
 
+        public bool IsMine => photonView.IsMine;
         public bool IsLocalPlayer => m_IsLocalPlayer;
         public bool IsInit => m_IsInit;
         public TeamType TeamType
@@ -123,7 +124,7 @@ namespace MobaVR
             */
             if (m_Spells != null)
             {
-                m_Spells.SetActive(photonView.IsMine);
+                //m_Spells.SetActive(photonView.IsMine);
             }
         }
 

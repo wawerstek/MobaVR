@@ -12,7 +12,7 @@ namespace MobaVR
         [SerializeField] private HandType m_HandType;
         [SerializeField] [ReadOnly] private bool m_IsTriggered = false;
         [SerializeField] [ReadOnly] private bool m_IsPickuped = false;
-        
+
         private HandInputVR m_HandInputVR;
         private Grabbable m_Grabbable;
         private Grabbable m_TriggeredGrabbable;
@@ -39,7 +39,8 @@ namespace MobaVR
 
         private void Subscribe()
         {
-            if (m_HandInputVR != null)
+            if (m_HandInputVR != null && m_PhotonView.IsMine)
+            //if (m_HandInputVR != null && m_PlayerVR != null && m_PlayerVR.IsMine)
             {
                 m_HandInputVR.RemoteGrabber.OnEnterGrabbableEvent.AddListener(OnRemoteEnter);
                 m_HandInputVR.RemoteGrabber.OnExitGrabbableEvent.AddListener(OnRemoteExit);
@@ -55,7 +56,8 @@ namespace MobaVR
 
         private void Unsubscribe()
         {
-            if (m_HandInputVR != null)
+            //if (m_HandInputVR != null && m_PhotonView.IsMine)
+            if (m_HandInputVR != null && m_PlayerVR != null && m_PlayerVR.IsMine)
             {
                 m_HandInputVR.RemoteGrabber.OnEnterGrabbableEvent.RemoveListener(OnRemoteEnter);
                 m_HandInputVR.RemoteGrabber.OnExitGrabbableEvent.RemoveListener(OnRemoteExit);
@@ -85,12 +87,12 @@ namespace MobaVR
         private void OnStartCast(InputAction.CallbackContext context)
         {
             Debug.Log($"{SpellName}: {nameof(OnStartCast)}: started");
-            
+
             if (!CanCast() || HasBlockingSpells())
             {
                 return;
             }
-            
+
             if (m_IsTriggered)
             {
                 m_IsPerformed = true;
@@ -100,12 +102,12 @@ namespace MobaVR
         private void OnPerformedCast(InputAction.CallbackContext context)
         {
             Debug.Log($"{SpellName}: {nameof(OnPerformedCast)}: performed");
-            
+
             if (!CanCast() || HasBlockingSpells())
             {
                 return;
             }
-            
+
             if (m_IsTriggered)
             {
                 m_IsPerformed = true;
@@ -127,7 +129,7 @@ namespace MobaVR
                 return;
             }
             */
-            
+
             ///
             /// TODO: Костыль
             /// У игрока не всегда сбрасывается исТриггер
@@ -143,12 +145,12 @@ namespace MobaVR
         private void OnRemoteExit(Grabbable grabbable)
         {
             Debug.Log($"{SpellName}: {nameof(OnRemoteExit)}: {grabbable}");
-            
+
             if (grabbable.TryGetComponent(out BaseSpell baseSpell))
             {
                 return;
             }
-            
+
             if (m_TriggeredGrabbable != null && m_TriggeredGrabbable == grabbable)
             {
                 m_IsTriggered = false;
@@ -159,7 +161,7 @@ namespace MobaVR
         private void OnGrab(Grabbable grabbable)
         {
             Debug.Log($"{SpellName}: {nameof(OnGrab)}: {grabbable}");
-            
+
             ///
             /// TODO: Костыль
             /// У игрока не всегда сбрасывается исТриггер
@@ -167,7 +169,7 @@ namespace MobaVR
             {
                 return;
             }
-            
+
             m_Grabbable = grabbable;
             m_IsPerformed = true;
             m_IsPickuped = true;
@@ -176,7 +178,7 @@ namespace MobaVR
         private void OnRelease(Grabbable grabbable)
         {
             Debug.Log($"{SpellName}: {nameof(OnRelease)}: {grabbable}");
-            
+
             m_Grabbable = null;
             m_IsPerformed = false;
             m_IsPickuped = false;

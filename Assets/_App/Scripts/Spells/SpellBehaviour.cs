@@ -24,8 +24,10 @@ namespace MobaVR
         
         protected SpellHandler m_SpellsHandler;
         protected PlayerVR m_PlayerVR;
+        protected bool m_IsInit = false;
 
         public string SpellName => m_SpellName;
+        public bool IsInit => m_IsInit;
 
         public Action OnStarted;
         public Action OnPerformed;
@@ -43,13 +45,20 @@ namespace MobaVR
 
         public virtual void Init(SpellHandler spellHandler, PlayerVR playerVR)
         {
+            m_IsInit = true;
+            
             m_SpellsHandler = spellHandler;
             m_PlayerVR = playerVR;
         }
 
         protected virtual bool CanCast()
         {
-            return m_PlayerVR.WizardPlayer.PlayerState.StateSo.CanCast && m_PlayerVR.WizardPlayer.IsLife;
+            //return m_PlayerVR.WizardPlayer.PlayerState.StateSo.CanCast && m_PlayerVR.WizardPlayer.IsLife;
+            return m_IsInit &&
+                   m_PhotonView.IsMine && 
+                   //m_PlayerVR.IsMine && 
+                   m_PlayerVR.WizardPlayer.PlayerState.StateSo.CanCast && 
+                   m_PlayerVR.WizardPlayer.IsLife;
         }
 
         protected virtual bool HasBlockingSpells()

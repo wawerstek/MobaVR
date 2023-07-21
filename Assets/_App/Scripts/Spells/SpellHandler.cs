@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Photon.Pun;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -34,6 +35,13 @@ namespace MobaVR
                     m_PlayerVR = GetComponentInParent<PlayerVR>();
                 }
             }
+
+            /*
+            if (m_PhotonView == null)
+            {
+                m_PhotonView = GetComponentInParent<PhotonView>();
+            }
+            */
         }
 
         private void Awake()
@@ -50,15 +58,28 @@ namespace MobaVR
             {
                 return;
             }
+
+            /*
+            if (m_PhotonView != null && m_PhotonView.IsMine)
+            {
+                return;
+            }
+            */
+            
+            if (m_PlayerVR == null || !m_PlayerVR.IsMine)
+            {
+                return;
+            }
             
             foreach (SpellMap spellMap in m_Spells)
             {
                 SpellBehaviour spellBehaviour = spellMap.SpellBehaviour;
-                spellBehaviour.Init(this, m_PlayerVR);
 
                 spellBehaviour.OnStarted += () => { OnSpellStarted(spellBehaviour); };
                 spellBehaviour.OnPerformed += () => { OnSpellPerformed(spellBehaviour); };
                 spellBehaviour.OnCompleted += () => { OnSpellCompleted(spellBehaviour); };
+                
+                spellBehaviour.Init(this, m_PlayerVR);
             }
 
             m_IsInit = true;

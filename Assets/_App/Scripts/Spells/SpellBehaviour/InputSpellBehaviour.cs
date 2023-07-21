@@ -16,16 +16,24 @@ namespace MobaVR
 
         protected virtual void OnEnable()
         {
-            m_CastInput.action.started += OnStartCast;
-            m_CastInput.action.performed += OnPerformedCast;
-            m_CastInput.action.canceled += OnCanceledCast;
+            if (m_PhotonView.IsMine)
+            //if (m_PlayerVR != null && m_PlayerVR.IsMine)
+            {
+                m_CastInput.action.started += OnStartCast;
+                m_CastInput.action.performed += OnPerformedCast;
+                m_CastInput.action.canceled += OnCanceledCast;
+            }
         }
 
         protected virtual void OnDisable()
         {
-            m_CastInput.action.started -= OnStartCast;
-            m_CastInput.action.performed -= OnPerformedCast;
-            m_CastInput.action.canceled -= OnCanceledCast;
+            if (m_PhotonView.IsMine)
+            //if (m_PlayerVR != null && m_PlayerVR.IsMine)
+            {
+                m_CastInput.action.started -= OnStartCast;
+                m_CastInput.action.performed -= OnPerformedCast;
+                m_CastInput.action.canceled -= OnCanceledCast;
+            }
         }
 
         #endregion

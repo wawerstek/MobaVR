@@ -941,7 +941,7 @@ namespace MobaVR
         }
 
         [PunRPC]
-        public void RpcHit(float damage)
+        private void RpcHit(float damage)
         {
             if (!m_State.StateSo.CanGetDamage)
             {
