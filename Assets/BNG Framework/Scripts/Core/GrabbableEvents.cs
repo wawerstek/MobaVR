@@ -35,6 +35,21 @@ namespace BNG {
         public virtual void OnRelease() {
            
         }
+        
+        /// <summary>
+        /// Has been dropped from the Grabber
+        /// </summary>
+        public virtual void OnReleaseCompleted() {
+           
+        }
+        
+        /// <summary>
+        /// Has been dropped from the Grabber with velocity and angularVelocity
+        /// ResetVelocity must be TRUE
+        /// </summary>
+        public virtual void OnApplyVelocity(Vector3 velocity, Vector3 angularVelocity ) {
+           
+        }
 
         /// <summary>
         /// Called if this is the closest grabbable but wasn't in the previous frame 

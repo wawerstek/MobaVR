@@ -28,17 +28,20 @@ namespace MobaVR
             {
                 m_Throwable.OnThrown.AddListener(OnThrown);
                 m_Throwable.OnGrabbed.AddListener(OnGrabItem);
-                m_Throwable.OnReleased.AddListener(OnReleaseItem);
+                //m_Throwable.OnReleased.AddListener(OnReleaseItem);
+                m_Throwable.OnAppliedVelocity.AddListener(OnAppliedVelocity);
             }
         }
 
+  
         private void OnDisable()
         {
             if (m_Throwable != null)
             {
+                m_Throwable.OnThrown.RemoveListener(OnThrown);
                 m_Throwable.OnGrabbed.RemoveListener(OnGrabItem);
-                m_Throwable.OnReleased.RemoveListener(OnReleaseItem);
-                m_Throwable.OnThrown.RemoveListener(OnReleaseItem);
+                //m_Throwable.OnReleased.RemoveListener(OnReleaseItem);
+                m_Throwable.OnAppliedVelocity.RemoveListener(OnAppliedVelocity);
             }
         }
 
@@ -63,6 +66,11 @@ namespace MobaVR
         private void OnGrabItem(Grabber grabber)
         {
             OnAttach(grabber.gameObject, grabber.gameObject);
+        }
+        
+        private void OnAppliedVelocity(Vector3 arg0, Vector3 arg1)
+        {
+            OnReleaseItem();
         }
         
         private void OnReleaseItem()

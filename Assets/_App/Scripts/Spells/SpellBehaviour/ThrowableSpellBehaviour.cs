@@ -1,4 +1,5 @@
 ﻿using System;
+using BNG;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -13,6 +14,7 @@ namespace MobaVR
 
         private ThrowableSpell m_CurrentSpell;
         private Throwable m_Throwable;
+        private bool m_IsGrabbed = false;
         private bool m_IsThrown = false;
         private int m_Number = 0;
 
@@ -54,6 +56,10 @@ namespace MobaVR
                 return;
             }
 
+            if (m_IsGrabbed)
+            {
+                return;
+            }
 
             //TODO
             Debug.Log($"{SpellName}: {nameof(OnPerformedCast)}: PERFORMED = 1");
@@ -75,7 +81,12 @@ namespace MobaVR
                 return;
             }
 
-            ThrowFireball();
+            if (m_Throwable != null && !m_IsGrabbed)
+            {
+                Throw();
+            }
+
+            //ThrowFireball();
         }
 
         protected void OnStartRedirect(InputAction.CallbackContext context)
@@ -148,7 +159,7 @@ namespace MobaVR
 
             Debug.Log($"{SpellName}: {nameof(CreateFireball)}: CreateFireball = 2");
             
-            if (networkFireball.TryGetComponent(out ThrowableSpell fireBall))
+            if (networkFireball.TryGetComponent(out ThrowableSpell throwableSpell))
             {
                 m_Number++;
                 string handName = m_SpellHandType == SpellHandType.RIGHT_HAND ? "Right" : "Left";
@@ -157,29 +168,50 @@ namespace MobaVR
 
                 Debug.Log($"{SpellName}: {nameof(CreateFireball)}: CreateFireball = 3");
                 
-                Transform fireBallTransform = fireBall.transform;
+                Transform fireBallTransform = throwableSpell.transform;
                 fireBallTransform.parent = point.transform;
                 fireBallTransform.localPosition = Vector3.zero;
                 fireBallTransform.localRotation = Quaternion.identity;
 
-                fireBall.OnInitSpell += () => OnInitSpell(fireBall);
-                fireBall.OnDestroySpell += () => OnDestroySpell(fireBall);
+                throwableSpell.OnInitSpell += () => OnInitSpell(throwableSpell);
+                throwableSpell.OnDestroySpell += () => OnDestroySpell(throwableSpell);
 
                 m_IsThrown = false;
-                m_CurrentSpell = fireBall;
+                m_CurrentSpell = throwableSpell;
+
+                if (throwableSpell.TryGetComponent(out m_Throwable))
+                {
+                    //m_Throwable.OnAppliedVelocity.AddListener(Throw);
+                    m_Throwable.OnGrabbed.AddListener(Grab);    
+                    m_Throwable.OnReleased.AddListener(Throw);
+                }
                 
-                fireBall.TryGetComponent(out m_Throwable);
-                
-                fireBall.Init(m_PlayerVR.WizardPlayer, m_PlayerVR.TeamType);
+                throwableSpell.Init(m_PlayerVR.WizardPlayer, m_PlayerVR.TeamType);
                 
                 Debug.Log($"{SpellName}: {nameof(CreateFireball)}: CreateFireball = 4");
             }
         }
 
-        private void ThrowFireball()
+        private void Grab(Grabber arg0)
+        {
+            m_IsGrabbed = true;
+        }
+
+        private void Throw(Vector3 velocity, Vector3 angularVelocity)
         {
             if (m_Throwable != null)
             {
+                m_IsGrabbed = false;
+                m_IsThrown = true;
+                m_Throwable.Throw();
+            }
+        }
+
+        private void Throw()
+        {
+            if (m_Throwable != null)
+            {
+                m_IsGrabbed = false;
                 m_IsThrown = true;
                 m_Throwable.Throw();
             }
@@ -197,12 +229,20 @@ namespace MobaVR
             {
                 fireBall.OnInitSpell -= () => OnInitSpell(fireBall);
                 fireBall.OnDestroySpell -= () => OnDestroySpell(fireBall);
+                
+                if (fireBall.TryGetComponent(out Throwable throwable))
+                {
+                    throwable.OnGrabbed.RemoveListener(Grab);    
+                    throwable.OnReleased.RemoveListener(Throw);
+                }
             }
 
             if (m_CurrentSpell == fireBall)
             {
                 //m_CurrentFireBall = null;
                 Debug.Log($"CurrentFireball == fireball OK; {m_CurrentSpell.name}; {fireBall.name}");
+                m_IsGrabbed = false;
+                m_IsThrown = false;
                 m_IsPerformed = false;
                 OnCompleted?.Invoke();
             }

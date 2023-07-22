@@ -13,7 +13,7 @@ namespace MobaVR
     /// На игроках и щите должен висеть IsTrigger, чтобы прошла проверка
     /// </summary>
     public abstract class ThrowableSpell : Spell
-                                         //, IThrowable
+        //, IThrowable
     {
         [Space]
         [Header("Components")]
@@ -54,11 +54,11 @@ namespace MobaVR
             //if (m_IsThrown)
             if (!photonView.IsMine)
             {
-                return;
+                //return;
             }
-            
+
             Debug.Log($"ThrowableSpell: Collision: " + collision.gameObject.name);
-            
+
             if (m_IsThrown && !collision.transform.CompareTag("RemotePlayer"))
             {
                 HandleCollision(collision.transform);
@@ -70,7 +70,7 @@ namespace MobaVR
         {
             if (!photonView.IsMine)
             {
-                return;
+                //return;
             }
 
             if (other.transform.TryGetComponent(out PhotonView colliderPhoton))
@@ -80,7 +80,7 @@ namespace MobaVR
                     return;
                 }
             }
-            
+
             if (m_IsThrown)
             {
                 if (other.CompareTag("RemotePlayer") && other.transform.TryGetComponent(out WizardPlayer wizardPlayer))
@@ -89,11 +89,15 @@ namespace MobaVR
                     {
                         return;
                     }
-                    
-                    wizardPlayer.Hit(this, CalculateDamage());
+
+                    if (photonView.IsMine)
+                    {
+                        wizardPlayer.Hit(this, CalculateDamage());
+                    }
+
                     HandleCollision(other.transform);
                 }
-                
+
                 if (other.CompareTag("LifeCollider") && other.transform.TryGetComponent(out HitCollider damagePlayer))
                 {
                     if (damagePlayer.WizardPlayer == Owner)
@@ -101,7 +105,11 @@ namespace MobaVR
                         return;
                     }
 
-                    damagePlayer.WizardPlayer.Hit(this, CalculateDamage());
+                    if (photonView.IsMine)
+                    {
+                        damagePlayer.WizardPlayer.Hit(this, CalculateDamage());
+                    }
+
                     HandleCollision(other.transform);
                 }
 
@@ -110,10 +118,14 @@ namespace MobaVR
                     Shield shield = other.GetComponentInParent<Shield>();
                     if (shield != null)
                     {
-                        shield.Hit(this, CalculateDamage());
+                        if (photonView.IsMine)
+                        {
+                            shield.Hit(this, CalculateDamage());
+                        }
+
                         HandleCollision(other.transform);
                     }
-                    
+
                     //TODO: Перенести логику в класс БигШит
                     if (other.TryGetComponent(out BigShield bigShield))
                     {
@@ -123,11 +135,11 @@ namespace MobaVR
                         }
                     }
                 }
-                
+
                 //InteractBall(other.transform);
             }
         }
-        
+
         public virtual void Init(WizardPlayer wizardPlayer, TeamType teamType)
         {
             m_Owner = wizardPlayer;
@@ -150,6 +162,7 @@ namespace MobaVR
         }
 
         protected abstract float CalculateDamage();
+
         protected abstract void HandleCollision(Transform interactable);
         //public abstract void Throw();
         //public abstract void ThrowByDirection(Vector3 direction);

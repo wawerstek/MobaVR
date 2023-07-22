@@ -25,6 +25,7 @@ namespace MobaVR
         [Space]
         [Header("Rising on Enable")]
         [SerializeField] private bool m_IsRisingOnStart = false;
+        [SerializeField] private bool m_IsDestroySmallSize = false;
         [SerializeField] private float m_DurationRisingOnStart = 2f;
         [SerializeField] private float m_MaxScaleOnStart = 0.2f;
 
@@ -57,6 +58,8 @@ namespace MobaVR
         [SerializeField] private SphereCollider m_CollisionCollider;
         [SerializeField] private SphereCollider m_TriggerCollider;
 
+        private TweenerCore<Vector3, Vector3, VectorOptions> m_RisingOnStart;
+        
         private float m_InitColliderRadius = 0.1f;
         private float m_InitTriggerRadius = 0.12f;
         private float m_ColliderScale = 2f;
@@ -76,16 +79,16 @@ namespace MobaVR
             m_FailFx.SetActive(false);
 
             //TODO: Check??
-            if (!m_IsRisingOnStart)
+            if (m_IsRisingOnStart)
             {
-                m_Ball.transform.localScale = Vector3.zero;
-                m_Ball.transform.DOScale(1f, 1f);
+                m_Ball.transform.localScale = Vector3.one;
+                m_VfxParent.transform.localScale = Vector3.zero;
+                m_RisingOnStart = m_VfxParent.transform.DOScale(m_MaxScaleOnStart, m_DurationRisingOnStart);
             }
             else
             {
                 m_Ball.transform.localScale = Vector3.one;
-                m_VfxParent.transform.localScale = Vector3.zero;
-                m_VfxParent.transform.DOScale(m_MaxScaleOnStart, m_DurationRisingOnStart);
+                m_VfxParent.transform.localScale = new Vector3(m_MaxScaleOnStart, m_MaxScaleOnStart, m_MaxScaleOnStart);
             }
 
             if (m_Throwable != null)
@@ -162,8 +165,15 @@ namespace MobaVR
                     }
                 }
 
-                photonView.RPC(nameof(RpcDestroyBall), RpcTarget.All);
+                //photonView.RPC(nameof(RpcDestroyBall), RpcTarget.AllBuffered);
             }
+            
+            RpcDestroyBall();
+        }
+
+        public void DestroySpell()
+        {
+            photonView.RPC(nameof(RpcDestroyBall), RpcTarget.AllBuffered);
         }
 
         [PunRPC]
@@ -182,7 +192,9 @@ namespace MobaVR
 
             if (photonView.IsMine)
             {
-                PhotonNetwork.Destroy(gameObject);
+                gameObject.SetActive(false);
+                Invoke(nameof(DelayDestroy), 4f);
+                //PhotonNetwork.Destroy(gameObject);
             }
             else
             {
@@ -203,12 +215,23 @@ namespace MobaVR
 
             if (photonView.IsMine)
             {
-                PhotonNetwork.Destroy(gameObject);
+                gameObject.SetActive(false);
+                Invoke(nameof(DelayDestroy), 4f);
+                //PhotonNetwork.Destroy(gameObject);
             }
             else
             {
                 gameObject.SetActive(false);
                 //Destroy(gameObject);
+            }
+        }
+
+        private void DelayDestroy()
+        {
+            gameObject.SetActive(false);
+            if (photonView.IsMine)
+            {
+                PhotonNetwork.Destroy(gameObject);
             }
         }
 
@@ -292,6 +315,11 @@ namespace MobaVR
             m_CreateFx.SetActive(false);
             m_ProjectileFx.SetActive(true);
 
+            if (m_RisingOnStart != null)
+            {
+                m_RisingOnStart.Kill();
+            }
+
             TweenerCore<Vector3, Vector3, VectorOptions> ballScale =
                 m_VfxParent.transform
                            //.DOScale(m_VfxParent.transform.localScale.x * 4f, 4f);
@@ -311,7 +339,17 @@ namespace MobaVR
 
         private void OnThrowChecked(bool isGoodThrow)
         {
-            if (!isGoodThrow)
+            bool isSmall = false;
+            
+            if (m_IsDestroySmallSize)
+            {
+                if (m_VfxParent.transform.localScale.x < m_MaxScaleOnStart)
+                {
+                    isSmall = true;
+                }
+            }
+            
+            if (!isGoodThrow || isSmall)
             {
                 photonView.RPC(nameof(RpcFailDestroyBall), RpcTarget.All);
                 StopAllCoroutines();

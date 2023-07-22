@@ -44,6 +44,7 @@ namespace MobaVR
         public UnityEvent<Vector3> OnRedirected;
         public UnityEvent<Grabber> OnGrabbed;
         public UnityEvent OnReleased;
+        public UnityEvent<Vector3, Vector3> OnAppliedVelocity;
         public UnityEvent OnDestroyed;
         //public UnityEvent<Grabber> OnReleased;
 
@@ -124,7 +125,6 @@ namespace MobaVR
         
         #endregion
 
-
         private IEnumerator Release()
         {
             m_Grabbable.enabled = false;
@@ -175,7 +175,10 @@ namespace MobaVR
                              wizardPlayer.GravityFireballType,
                              wizardPlayer.ThrowForce,
                              wizardPlayer.UseAim);
+            
+         //   m_Grabbable.move
         }
+
 
         [PunRPC]
         private void RpcSwitchGravity(GravityType gravityType)
@@ -207,7 +210,14 @@ namespace MobaVR
             base.OnRelease();
             OnReleased.Invoke();
         }
-        
+
+        public override void OnApplyVelocity(Vector3 velocity, Vector3 angularVelocity)
+        {
+            base.OnApplyVelocity(velocity, angularVelocity);
+            OnAppliedVelocity?.Invoke(velocity, angularVelocity);
+            
+        }
+
         public void Grab(Grabber grabber)
         {
             m_Grabber = grabber;
@@ -219,14 +229,38 @@ namespace MobaVR
             m_Grabber = null;
             OnReleased.Invoke();
         }
-        
+
+        //TODO
+        public override void OnReleaseCompleted()
+        {
+            base.OnReleaseCompleted();
+        }
+
         public void Throw()
         {
-            m_Grabbable.enabled = false;
-            m_Rigidbody.WakeUp();
-            m_PhotonView.RPC(nameof(RpcThrow), RpcTarget.All);
+            
+            /*
+            
+            if (rigid && resetVelocity && droppedBy && AddControllerVelocityOnDrop&& GrabPhysics != GrabPhysics.None) {
+                // Make sure velocity is passed on
+                Vector3 velocity = droppedBy.GetGrabberAveragedVelocity() + droppedBy.GetComponent<Rigidbody>().velocity;
+                Vector3 angularVelocity = droppedBy.GetGrabberAveragedAngularVelocity() + droppedBy.GetComponent<Rigidbody>().angularVelocity;
+
+
+            */
+            
+            Vector3 velocity = m_Rigidbody.velocity;
+            Vector3 angularVelocity = m_Rigidbody.angularVelocity;
+            
+            //m_Grabbable.enabled = false;
+            //m_Rigidbody.WakeUp();
+            //m_PhotonView.RPC(nameof(RpcThrow), RpcTarget.All);
+            m_PhotonView.RPC(nameof(RpcThrowByVelocity), RpcTarget.All, transform.position, velocity, angularVelocity);
             //m_Grabbable.
         }
+        
+        
+        
 
         public void ThrowByDirection(Vector3 direction)
         {
@@ -236,8 +270,27 @@ namespace MobaVR
         [PunRPC]
         private void RpcThrow()
         {
+            m_Rigidbody.isKinematic = false;
+
+            
             m_Grabbable.enabled = false;
             m_Rigidbody.WakeUp();
+            m_IsThrown = true;
+            m_IsFirstThrown = false;
+            StartCoroutine(Release());
+        }
+        
+        [PunRPC]
+        private void RpcThrowByVelocity(Vector3 position, Vector3 velocity, Vector3 angularVelocity)
+        {
+            m_Rigidbody.isKinematic = false;
+            m_Grabbable.enabled = false;
+            //m_Rigidbody.WakeUp();
+
+            m_Rigidbody.position = position;
+            m_Rigidbody.velocity = velocity;
+            m_Rigidbody.angularVelocity = angularVelocity;
+            
             m_IsThrown = true;
             m_IsFirstThrown = false;
             StartCoroutine(Release());

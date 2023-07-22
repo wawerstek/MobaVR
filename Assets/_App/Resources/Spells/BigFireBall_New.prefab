@@ -48890,7 +48890,6 @@ GameObject:
   - component: {fileID: 3318618810848601281}
   - component: {fileID: 3318618810848601287}
   - component: {fileID: 232510063208312151}
-  - component: {fileID: 8088482697493106695}
   - component: {fileID: 3318618810848601285}
   - component: {fileID: 597119050514032706}
   - component: {fileID: 3318618810848601284}
@@ -48940,7 +48939,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 2
@@ -49085,26 +49084,10 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 8088482697493106695}
+  - {fileID: 0}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &8088482697493106695
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3318618810848601306}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 1
-  m_UseLocal: 0
 --- !u!114 &3318618810848601285
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49136,7 +49119,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BeingHeld: 0
   GrabButton: 0
-  Grabtype: 2
+  Grabtype: 0
   GrabPhysics: 1
   GrabMechanic: 0
   GrabSpeed: 15
@@ -49150,9 +49133,9 @@ MonoBehaviour:
   ParentToHands: 1
   ParentHandModel: 1
   SnapHandModel: 1
-  CanBeDropped: 0
+  CanBeDropped: 1
   CanBeSnappedToSnapZone: 1
-  ForceDisableKinematicOnDrop: 0
+  ForceDisableKinematicOnDrop: 1
   InstantMovement: 1
   MakeChildCollidersGrabbable: 0
   handPoseType: 1
@@ -49248,6 +49231,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   OnReleased:
+    m_PersistentCalls:
+      m_Calls: []
+  OnAppliedVelocity:
     m_PersistentCalls:
       m_Calls: []
   OnDestroyed:
