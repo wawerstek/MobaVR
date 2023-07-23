@@ -8,33 +8,14 @@ namespace MobaVR
 {
     public class ThrowableSpellBehaviour : InputSpellBehaviour
     {
-        [SerializeField] private InputActionReference m_RedirectInput;
-        [SerializeField] private ThrowableSpell m_ThrowableSpell;
+        [SerializeField] protected ThrowableSpell m_ThrowableSpell;
 
-        private ThrowableSpell m_CurrentSpell;
-        private bool m_IsGrabbed = false;
-        private bool m_IsThrown = false;
-        private int m_Number = 0;
+        protected ThrowableSpell m_CurrentSpell;
+        protected bool m_IsGrabbed = false;
+        protected bool m_IsThrown = false;
+        protected int m_Number = 0;
 
         #region Unity
-
-        protected override void OnEnable()
-        {
-            base.OnEnable();
-
-            m_RedirectInput.action.started += OnStartRedirect;
-            m_RedirectInput.action.performed += OnPerformedRedirect;
-            m_RedirectInput.action.canceled += OnCanceledRedirect;
-        }
-
-        protected override void OnDisable()
-        {
-            base.OnDisable();
-
-            m_RedirectInput.action.started -= OnStartRedirect;
-            m_RedirectInput.action.performed -= OnPerformedRedirect;
-            m_RedirectInput.action.canceled -= OnCanceledRedirect;
-        }
 
         #endregion
 
@@ -49,7 +30,7 @@ namespace MobaVR
         protected override void OnPerformedCast(InputAction.CallbackContext context)
         {
             base.OnPerformedCast(context);
-            if (!CanCast() || HasBlockingSpells())
+            if (!CanCast() || HasBlockingSpells() || HasBlockingInputs())
             {
                 return;
             }
@@ -80,36 +61,6 @@ namespace MobaVR
             {
                 Interrupt();
             }
-        }
-
-        protected void OnStartRedirect(InputAction.CallbackContext context)
-        {
-            Debug.Log($"{SpellName}: {nameof(OnStartRedirect)}: started");
-        }
-
-        protected void OnPerformedRedirect(InputAction.CallbackContext context)
-        {
-            Debug.Log($"{SpellName}: {nameof(OnPerformedRedirect)}: performed");
-
-            if (!CanCast() || HasBlockingSpells() || !m_IsThrown)
-            {
-                return;
-            }
-
-            // TODO: set direction
-            // Check transform from point
-            int kInvert = m_SpellHandType == SpellHandType.RIGHT_HAND ? -1 : 1;
-            Vector3 direction = m_MainHandInputVR.Grabber.transform.right * kInvert;
-
-            if (m_CurrentSpell != null)
-            {
-                m_CurrentSpell.Throwable.ThrowByDirection(direction);
-            }
-        }
-
-        protected void OnCanceledRedirect(InputAction.CallbackContext context)
-        {
-            Debug.Log($"{SpellName}: {nameof(OnCanceledRedirect)}: canceled");
         }
 
         protected override void Interrupt()
@@ -204,20 +155,6 @@ namespace MobaVR
                 m_IsPerformed = false;
                 OnCompleted?.Invoke();
             }
-        }
-
-        #endregion
-
-        #region Input
-
-        public override bool IsInProgress()
-        {
-            return m_CastInput.action.inProgress || m_RedirectInput.action.inProgress;
-        }
-
-        public override bool IsPressed()
-        {
-            return m_CastInput.action.IsPressed() || m_RedirectInput.action.IsPressed();
         }
 
         #endregion

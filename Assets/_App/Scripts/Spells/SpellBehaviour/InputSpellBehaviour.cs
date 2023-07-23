@@ -1,10 +1,15 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace MobaVR
 {
     public abstract class InputSpellBehaviour : SpellBehaviour, ISpellInput
     {
+        [Header("Blocking inputs")]
+        [Tooltip("If blocking inputs is performed, player can't use this spell.")]
+        [SerializeField] protected List<InputActionReference> m_BlockingInputs = new();
+
         [SerializeField] protected SpellHandType m_SpellHandType = SpellHandType.RIGHT_HAND;
         [SerializeField] protected InputActionReference m_CastInput;
 
@@ -93,6 +98,19 @@ namespace MobaVR
         public virtual bool IsPressed()
         {
             return m_CastInput.action.IsPressed();
+        }
+
+        public virtual bool HasBlockingInputs()
+        {
+            foreach (InputActionReference inputActionReference in m_BlockingInputs)
+            {
+                if (inputActionReference.action.inProgress)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         #endregion
