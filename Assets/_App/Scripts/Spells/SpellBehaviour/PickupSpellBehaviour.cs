@@ -137,6 +137,11 @@ namespace MobaVR
             {
                 return;
             }
+            
+            if (grabbable.TryGetComponent(out Spell spell))
+            {
+                return;
+            }
 
             m_TriggeredGrabbable = grabbable;
             m_IsTriggered = true;
@@ -147,6 +152,11 @@ namespace MobaVR
             Debug.Log($"{SpellName}: {nameof(OnRemoteExit)}: {grabbable}");
 
             if (grabbable.TryGetComponent(out BaseSpell baseSpell))
+            {
+                return;
+            }
+
+            if (grabbable.TryGetComponent(out Spell spell))
             {
                 return;
             }

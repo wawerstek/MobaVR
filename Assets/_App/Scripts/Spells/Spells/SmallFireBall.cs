@@ -12,7 +12,7 @@ namespace MobaVR
         [SerializeField] private GameObject m_ProjectileFx;
         [SerializeField] private GameObject m_ExplosionFx;
         [SerializeField] private bool m_UseGravity = false;
-        
+
         [SerializeField] private float m_DestroyExplosion = 4.0f;
         [SerializeField] private float m_DestroyChildren = 2.0f;
         [SerializeField] private float m_Delay = 0.1f;
@@ -35,14 +35,14 @@ namespace MobaVR
                 m_Collider.enabled = false;
             }
         }
-        
+
         protected override void OnEnable()
         {
             //base.OnEnable();
-            Invoke(nameof(RpcDestroyBall), m_DestroyLifeTime);
+            Invoke(nameof(RpcDestroy), m_DestroyLifeTime);
 
             m_Collider.enabled = false;
-            
+
             m_ProjectileFx.SetActive(true);
             m_ExplosionFx.SetActive(false);
         }
@@ -55,10 +55,12 @@ namespace MobaVR
                 {
                     hitEnemy.RpcHit(CalculateDamage() * m_KMonsterDamage);
                 }
-                
-                photonView.RPC(nameof(RpcDestroyBall), RpcTarget.All);
+
+                //photonView.RPC(nameof(RpcDestroyBall), RpcTarget.All);
                 //DestroyBall();
             }
+
+            RpcDestroy();
         }
 
         protected override float CalculateDamage()
@@ -67,31 +69,42 @@ namespace MobaVR
         }
 
         [PunRPC]
-        private void RpcDestroyBall()
+        protected override void RpcDestroy()
         {
+            if (m_IsDestroyed)
+            {
+                return;
+            }
+
             OnDestroySpell?.Invoke();
-            
+
             m_Trail.transform.parent = null;
             Destroy(m_Trail.gameObject, m_DestroyChildren);
-            
+
             m_ExplosionFx.SetActive(true);
             m_ExplosionFx.transform.parent = null;
             Destroy(m_ExplosionFx, m_DestroyExplosion);
+
+            base.RpcDestroy();
+
             //Destroy(gameObject);
-            
+
+            /*
             if (photonView.IsMine)
             {
-                PhotonNetwork.Destroy(gameObject);
+                gameObject.SetActive(false);
+                Invoke(nameof(DelayDestroy), 4f);
             }
             else
             {
+                gameObject.SetActive(false);
                 //Destroy(gameObject);
             }
+            */
 
-            
             //PhotonNetwork.Destroy(gameObject);
         }
-        
+
         private IEnumerator EnableCollider()
         {
             m_Collider.enabled = false;
@@ -100,32 +113,21 @@ namespace MobaVR
             m_Collider.enabled = true;
         }
 
-        public void Throw()
-        {
-            //TODO
-        }
-
         public void Shoot(Vector3 direction)
         {
-            photonView.RPC(nameof(RpcShoot), RpcTarget.All, direction);
+            photonView.RPC(nameof(RpcShoot), RpcTarget.All, transform.position, direction);
         }
-        
-        /*
-        public void ThrowByDirection(Vector3 direction)
-        {
-            photonView.RPC(nameof(RpcThrowByDirection), RpcTarget.All, direction);
-        }
-        */
 
         [PunRPC]
-        private void RpcShoot(Vector3 direction)
+        private void RpcShoot(Vector3 position, Vector3 direction)
         {
             //OnThrown?.Invoke();
-            
+
             m_Rigidbody.isKinematic = false;
             m_Rigidbody.useGravity = m_UseGravity;
+            m_Rigidbody.position = position;
             m_Rigidbody.AddForce(direction * m_Force);
-            
+
             m_ProjectileFx.SetActive(true);
 
             StartCoroutine(EnableCollider());

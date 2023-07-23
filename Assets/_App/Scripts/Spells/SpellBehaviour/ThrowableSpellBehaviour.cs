@@ -71,8 +71,8 @@ namespace MobaVR
 
                 m_IsGrabbed = false;
                 m_IsThrown = false;
-                m_CurrentSpell = null;
                 m_IsPerformed = false;
+                m_CurrentSpell = null;
             }
 
             OnCompleted?.Invoke();
@@ -131,7 +131,7 @@ namespace MobaVR
             }
         }
 
-        private void OnInitSpell(ThrowableSpell fireBall)
+        private void OnInitSpell(ThrowableSpell throwableSpell)
         {
             m_IsThrown = false;
             m_IsPerformed = true;

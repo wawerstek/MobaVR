@@ -89,7 +89,7 @@ namespace MobaVR
                     //������ ���������� ���� � ������� ������
                     if (playerVR != null)
                     {
-                        photonView.RPC(nameof(SetDie), RpcTarget.AllBuffered);
+                        //photonView.RPC(nameof(SetDie), RpcTarget.AllBuffered);
                     }
                 }
             }

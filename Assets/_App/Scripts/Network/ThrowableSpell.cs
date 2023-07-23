@@ -175,10 +175,6 @@ namespace MobaVR
             m_TeamItem.SetTeam(teamType);
         }
 
-        public virtual void DestroySpell()
-        {
-        }
-
         protected abstract float CalculateDamage();
 
         protected abstract void HandleCollision(Transform interactable);

@@ -1,4 +1,3 @@
-using System;
 using Photon.Pun;
 using UnityEngine;
 
@@ -24,7 +23,7 @@ namespace MobaVR
         [PunRPC]
         public virtual void RpcShow(bool isShow)
         {
-            if (photonView.IsMine)
+            //if (photonView.IsMine)
             {
                 if (isShow)
                 {
@@ -41,6 +40,11 @@ namespace MobaVR
 
         private void OnTriggerStay(Collider other)
         {
+            if (!photonView.IsMine)
+            {
+                return;
+            }
+            
             if (other.TryGetComponent(out IHit hitEnemy))
             {
                 hitEnemy.RpcHit(m_Damage);

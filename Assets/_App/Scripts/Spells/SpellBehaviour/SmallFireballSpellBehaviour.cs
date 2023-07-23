@@ -19,10 +19,10 @@ namespace MobaVR
                 return;
             }
 
-            Shoot(m_MainHandInputVR.FingerPoint, m_MainHandInputVR.Grabber.transform.forward);
+            CreateSpell(m_MainHandInputVR.FingerPoint, m_MainHandInputVR.Grabber.transform.forward);
         }
 
-        private void Shoot(Transform point, Vector3 direction)
+        private void CreateSpell(Transform point, Vector3 direction)
         {
             GameObject networkFireball = PhotonNetwork.Instantiate($"Spells/{m_SmallFireballPrefab.name}",
                                                                    point.position,
@@ -35,7 +35,6 @@ namespace MobaVR
                 fireBallTransform.position = point.transform.position;
                 fireBallTransform.rotation = Quaternion.identity;
 
-                m_SmallFireBall.Init(m_PlayerVR.WizardPlayer, m_PlayerVR.TeamType);
                 m_SmallFireBall.OnInitSpell = () => { m_IsPerformed = true; };
                 m_SmallFireBall.OnDestroySpell = () =>
                 {
@@ -44,6 +43,7 @@ namespace MobaVR
                     OnCompleted?.Invoke();
                 };
                 
+                m_SmallFireBall.Init(m_PlayerVR.WizardPlayer, m_PlayerVR.TeamType);
                 m_SmallFireBall.Shoot(direction);
             }
         }

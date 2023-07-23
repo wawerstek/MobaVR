@@ -6,17 +6,17 @@ using BNG;
 
 public class ZonaBook : MonoBehaviour
 {
-    public GameObject objectToActivate; //тут меню книги
-    public GameObject Book_Menu; //тут внешний вид страницы меню. Именно задний план
-    public GameObject Book; //тут внешний вид страницы стандартной, который видят другие игроки
-    public Transform destinationParent; //точка, куда должны перенестись скины
-    private int playerCount = 0; //количество игроков, находящихся в зоне
-    //public MeshRenderer meshRenderer; //визуальный вид зоны
-    public GameObject meshRenderer; //визуальный вид зоны
-    public string targetID; //ID скина. Сюда можно его присылать и от сюда забирать
+    public GameObject objectToActivate; //пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+    public GameObject Book_Menu; //пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ. пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
+    public GameObject Book; //пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+    public Transform destinationParent; //пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+    private int playerCount = 0; //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ
+    //public MeshRenderer meshRenderer; //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
+    public GameObject meshRenderer; //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
+    public string targetID; //ID пїЅпїЅпїЅпїЅпїЅ. пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     public GameObject[] childObjects;
 
-    //звук
+    //пїЅпїЅпїЅпїЅ
     public AudioClip soundOnEnter;
     public AudioClip soundOffSoundMaps;
     public AudioClip soundOnExit;
@@ -24,22 +24,22 @@ public class ZonaBook : MonoBehaviour
 
     private AudioSource audioSource;
 
-    //туман
-    public float fogDensityTarget = 1f; // Целевое значение fog density
-    public float transitionDuration = 1f; // Длительность перехода в секундах
+    //пїЅпїЅпїЅпїЅпїЅ
+    public float fogDensityTarget = 1f; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ fog density
+    public float transitionDuration = 1f; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
-    private bool isInTrigger = false; // Флаг, указывающий на нахождение внутри триггера
-    private float initialFogDensity; // Начальное значение fog density
-    private float transitionTimer = 0f; // Таймер для перехода
+    private bool isInTrigger = false; // пїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    private float initialFogDensity; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ fog density
+    private float transitionTimer = 0f; // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
 
 
 
     private void Start()
     {
-        // Получаем компонент AudioSource из текущего объекта или его дочерних объектов
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ AudioSource пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         audioSource = GetComponent<AudioSource>();
-        // Сохраняем начальное значение fog density
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ fog density
         initialFogDensity = RenderSettings.fogDensity;
 
     }
@@ -50,7 +50,7 @@ public class ZonaBook : MonoBehaviour
     {
         if (isInTrigger)
         {
-            // Если в триггере, начинаем плавно менять fog density к целевому значению
+            // пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ fog density пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             if (transitionTimer < transitionDuration)
             {
                 transitionTimer += Time.deltaTime;
@@ -60,13 +60,13 @@ public class ZonaBook : MonoBehaviour
             }
             else
             {
-                // Завершили переход
+                // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                 RenderSettings.fogDensity = fogDensityTarget;
             }
         }
         else
         {
-            // Если не в триггере, плавно меняем fog density к начальному значению
+            // пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ fog density пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             if (transitionTimer > 0f)
             {
                 transitionTimer -= Time.deltaTime;
@@ -76,7 +76,7 @@ public class ZonaBook : MonoBehaviour
             }
             else
             {
-                // Завершили переход
+                // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                 RenderSettings.fogDensity = initialFogDensity;
             }
         }
@@ -93,14 +93,14 @@ public class ZonaBook : MonoBehaviour
             if (playerCount == 1)
             {
 
-                // Воспроизводим звук при входе в коллайдер
+                // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                 if (soundOnEnter != null)
                 {
                     audioSource.PlayOneShot(soundOnEnter);
                     audioSource.PlayOneShot(soundOffSoundMaps);
                 }
 
-                //запускаем туман
+                //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
                 isInTrigger = true;
 
                 meshRenderer.SetActive(false);
@@ -113,14 +113,14 @@ public class ZonaBook : MonoBehaviour
                 int childCount = other.transform.childCount;
                 childObjects = new GameObject[childCount];
 
-                // Проход для подсчета количества дочерних объектов
+                // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                 for (int i = 0; i < childCount; i++)
                 {
                     Transform child = other.transform.GetChild(i);
                     childObjects[i] = child.gameObject;
                 }
 
-                // Проход для перемещения их в destinationParent
+                // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅ destinationParent
                 for (int i = 0; i < childCount; i++)
                 {
                     Transform child = childObjects[i].transform;
@@ -146,14 +146,14 @@ public class ZonaBook : MonoBehaviour
             playerCount--;
             if (playerCount == 0)
             {
-                // Воспроизводим звук при выходе из коллайдера
+                // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                 if (soundOnExit != null)
                 {
                     audioSource.PlayOneShot(soundOnExit);
                     audioSource.PlayOneShot(soundOnSoundMaps);
                 }
 
-                //отключаем туман
+                //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
                 isInTrigger = false;
 
 
@@ -164,17 +164,17 @@ public class ZonaBook : MonoBehaviour
 
                 int childCount = destinationParent.transform.childCount;
 
-                // Создаем временный массив для хранения ссылок на дочерние объекты
+                // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                 GameObject[] childObjects = new GameObject[childCount];
 
-                // Проходимся по дочерним объектам и сохраняем ссылки
+                // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
                 for (int i = 0; i < childCount; i++)
                 {
                     Transform child = destinationParent.transform.GetChild(i);
                     childObjects[i] = child.gameObject;
                 }
 
-                // Перемещаем дочерние объекты обратно в other
+                // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ other
                 foreach (GameObject childObject in childObjects)
                 {
                     Transform childTransform = childObject.transform;
@@ -187,7 +187,7 @@ public class ZonaBook : MonoBehaviour
 
 
 
-                //// Переносим дочерние объекты из destinationParent обратно в other
+                //// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ destinationParent пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ other
                 //foreach (Transform child in destinationParent)
                 //{
                 //    child.SetParent(other.transform);
@@ -205,11 +205,15 @@ public class ZonaBook : MonoBehaviour
     {
         targetID = newTargetID;
 
-        // Проход по дочерним объектам и включение объектов с нужным ID
+        // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ ID
         foreach (Transform child in destinationParent)
         {
-            Skin skin = child.GetComponent<Skin>();
-            skin.gameObject.SetActive(false);
+            //Skin skin = child.GetComponent<Skin>();
+            Skin skin = child.GetComponentInChildren<Skin>();
+            if (skin != null)
+            {
+                skin.gameObject.SetActive(false);
+            }
 
             if (skin != null && skin.ID == targetID)
             {

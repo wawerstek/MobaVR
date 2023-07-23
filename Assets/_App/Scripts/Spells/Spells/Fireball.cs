@@ -144,29 +144,38 @@ namespace MobaVR
 
             if (photonView.IsMine && m_UseExplosionWave)
             {
+                Collider[] colliders = Physics.OverlapSphere(transform.position,
+                                                             //m_ExplosionCollisionRadius,
+                                                             m_ExplosionCollisionRadius + m_TriggerCollider.radius,
+                                                             m_ExplosionLayers,
+                                                             QueryTriggerInteraction.Collide);
+                foreach (Collider enemy in colliders)
+                {
+                    if (enemy.TryGetComponent(out IHit hitEnemy))
+                    {
+                        hitEnemy.RpcHit(CalculateDamage());
+                        hitEnemy.Explode(m_ExplosionForce,
+                                         transform.position,
+                                         m_ExplosionForceRadius,
+                                         m_ExplosionModifier);
+                    }
+                }
+
                 Explode(interactable);
                 //photonView.RPC(nameof(RpcDestroyBall), RpcTarget.AllBuffered);
             }
 
-            RpcDestroyBall();
-        }
-
-        public override void DestroySpell()
-        {
-            base.DestroySpell();
-            photonView.RPC(nameof(RpcDestroyBall), RpcTarget.AllBuffered);
+            RpcDestroy();
         }
 
         [PunRPC]
-        private void RpcDestroyBall()
+        protected override void RpcDestroy()
         {
             if (m_IsDestroyed)
             {
                 return;
             }
-
-            m_IsDestroyed = true;
-
+            
             Destroy(m_Ball.gameObject);
             m_ExplosionFx.SetActive(true);
             m_ExplosionFx.transform.parent = null;
@@ -178,6 +187,9 @@ namespace MobaVR
             m_Trail.transform.parent = null; //
             Destroy(m_Trail.gameObject, m_DestroyChildren);
 
+            base.RpcDestroy();
+            
+            /*
             if (photonView.IsMine)
             {
                 gameObject.SetActive(false);
@@ -189,38 +201,7 @@ namespace MobaVR
                 //Destroy(gameObject);
                 gameObject.SetActive(false);
             }
-        }
-
-        [PunRPC]
-        private void RpcFailDestroyBall()
-        {
-            m_ExplosionFx.SetActive(true);
-            m_ExplosionFx.transform.parent = null;
-            Destroy(m_ExplosionFx, m_DestroyExplosion);
-            //Destroy(gameObject);
-
-            OnDestroySpell?.Invoke();
-
-            if (photonView.IsMine)
-            {
-                gameObject.SetActive(false);
-                Invoke(nameof(DelayDestroy), 4f);
-                //PhotonNetwork.Destroy(gameObject);
-            }
-            else
-            {
-                gameObject.SetActive(false);
-                //Destroy(gameObject);
-            }
-        }
-
-        private void DelayDestroy()
-        {
-            gameObject.SetActive(false);
-            if (photonView.IsMine)
-            {
-                PhotonNetwork.Destroy(gameObject);
-            }
+            */
         }
 
         private void UpdateColliderRadius(TweenerCore<Vector3, Vector3, VectorOptions> ballScale)
@@ -319,7 +300,7 @@ namespace MobaVR
 
             if (!isGoodThrow || isSmall)
             {
-                photonView.RPC(nameof(RpcDestroyBall), RpcTarget.All);
+                photonView.RPC(nameof(RpcDestroy), RpcTarget.All);
                 StopAllCoroutines();
             }
         }

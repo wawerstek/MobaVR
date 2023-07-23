@@ -25,7 +25,7 @@ namespace MobaVR
         [SerializeField] private List<Collider> m_TriggerColliders;
 
         private Grabber m_Grabber;
-        
+
         public Grabbable Grabbable => m_Grabbable;
         public Throwable Throwable => m_Throwable;
 
@@ -42,7 +42,7 @@ namespace MobaVR
             {
                 m_Throwable.OnThrown.AddListener(OnThrown);
                 m_Throwable.OnRedirected.AddListener(OnRedirected);
-                m_Throwable.OnValidated.AddListener(OnThrowChecked);
+                m_Throwable.OnValidated.AddListener(OnValidated);
                 m_Throwable.OnGrabbed.AddListener(OnGrabbed);
             }
         }
@@ -54,7 +54,7 @@ namespace MobaVR
             {
                 m_Throwable.OnThrown.RemoveListener(OnThrown);
                 m_Throwable.OnRedirected.RemoveListener(OnRedirected);
-                m_Throwable.OnValidated.RemoveListener(OnThrowChecked);
+                m_Throwable.OnValidated.RemoveListener(OnValidated);
             }
         }
 
@@ -62,29 +62,42 @@ namespace MobaVR
         {
             if (photonView.IsMine)
             {
-                photonView.RPC(nameof(RpcDestroy), RpcTarget.AllBuffered);
+                //photonView.RPC(nameof(RpcDestroy), RpcTarget.AllBuffered);
             }
+
+            RpcDestroy();
         }
 
         [PunRPC]
-        private void RpcDestroy()
+        protected override void RpcDestroy()
         {
+            if (m_IsDestroyed)
+            {
+                return;
+            }
+
+            m_IsDestroyed = true;
+            
             m_ExplosionFx.SetActive(true);
             m_ExplosionFx.transform.parent = null;
 
             OnDestroySpell?.Invoke();
 
             Destroy(m_ExplosionFx, m_DestroyExplosion);
-
+            
+            base.RpcDestroy();
+            /*
             if (photonView.IsMine)
             {
-                PhotonNetwork.Destroy(gameObject);
+                gameObject.SetActive(false);
+                Invoke(nameof(DelayDestroy), 4f);
+                //PhotonNetwork.Destroy(gameObject);
             }
             else
             {
-                //Destroy(gameObject);
                 gameObject.SetActive(false);
             }
+            */
         }
 
         public override void Init(WizardPlayer wizardPlayer, TeamType teamType)
@@ -99,18 +112,6 @@ namespace MobaVR
                            wizardPlayer.UseAim);
         }
 
-        //TODO: add destroy public method
-
-        //[PunRPC]
-        private void RpcSwitchGravity(GravityType gravityType)
-        {
-            if (m_Throwable != null)
-            {
-                m_Throwable.PhysicsHandler.GravityType = gravityType;
-            }
-        }
-
-        //[PunRPC]
         private void RpcSetPhysics(GravityType gravityType, float force, bool useAim)
         {
             if (m_Throwable != null)
@@ -124,40 +125,6 @@ namespace MobaVR
             return m_DefaultDamage;
         }
 
-        //REMOVE
-        /*
-        public override void Throw()
-        {
-            m_Throwable.Throw();
-        }
-
-        public override void ThrowByDirection(Vector3 direction)
-        {
-            m_Throwable.ThrowByDirection(direction);
-        }
-        */
-
-        //[PunRPC]
-        private void RpcThrowByDirection(Vector3 direction)
-        {
-            if (m_Grabbable != null)
-            {
-                m_Grabbable.DropItem(true, true);
-            }
-
-            m_IsThrown = true;
-            m_ProjectileFx.SetActive(true);
-        }
-
-        private void DestroySpell()
-        {
-            if (gameObject.activeSelf)
-            {
-                photonView.RPC(nameof(RpcDestroy), RpcTarget.AllBuffered);
-                StopAllCoroutines();
-            }
-        }
-
         private void ShowWeapon()
         {
             m_HammerMesh.SetActive(true);
@@ -169,12 +136,12 @@ namespace MobaVR
         {
             m_HammerMesh.SetActive(true);
         }
-        
+
         private void OnGrabbed(Grabber grabber)
         {
             m_Grabber = grabber;
             Invoke(nameof(ShowWeapon), 0.2f);
-            
+
             foreach (Collider collisionCollider in m_CollisionColliders)
             {
                 //collisionCollider.enabled = false;
@@ -183,6 +150,11 @@ namespace MobaVR
 
         private void OnThrown()
         {
+            if (m_IsThrown)
+            {
+                return;
+            }
+            
             m_IsThrown = true;
 
             foreach (Collider collisionCollider in m_CollisionColliders)
@@ -191,11 +163,10 @@ namespace MobaVR
             }
 
             m_ProjectileFx.SetActive(true);
-            
             Invoke(nameof(DestroySpell), m_DestroyLifeTime);
         }
 
-        private void OnThrowChecked(bool isGoodThrow)
+        private void OnValidated(bool isGoodThrow)
         {
             if (!isGoodThrow)
             {

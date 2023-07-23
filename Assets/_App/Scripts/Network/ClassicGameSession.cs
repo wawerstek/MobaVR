@@ -124,6 +124,14 @@ namespace MobaVR
             SetTeam(TeamType.BLUE);
         }
 
+        public void SwitchRole(string idClass)
+        {
+            if (m_LocalPlayer.TryGetComponent(out ClassSwitcher classSwitcher))
+            {
+                classSwitcher.SetRole(idClass);
+            }
+        }
+
         #endregion
 
         #region Base Mode

@@ -151,6 +151,15 @@ namespace MobaVR
             SetAliveSkin(0);
         }
 
+        public void SetAliveSkin(Skin skin)
+        {
+            int position = m_AliveSkins.FindIndex(matchSkin => matchSkin == skin);
+            if (position >= 0)
+            {
+                SetAliveSkin(position);
+            }
+        }
+
         [ContextMenu("SetAliveSkin")]
         public void SetAliveSkin(int position = 0)
         {
@@ -178,6 +187,37 @@ namespace MobaVR
 
             TeamType teamType = m_PlayerVR != null ? m_PlayerVR.TeamType : TeamType.RED;
             m_AliveActiveSkin.ActivateSkin(teamType);
+        }
+        
+        public void SetAliveSkin(string idSkin)
+        {
+            if (m_PhotonView != null)
+            {
+                m_PhotonView.RPC(nameof(RpcSetAliveSkinById), RpcTarget.AllBuffered, idSkin);
+            }
+        }
+
+        [PunRPC]
+        private void RpcSetAliveSkinById(string idSkin)
+        {
+            Skin skin = m_AliveSkins.Find(skin => skin.ID.Equals(idSkin));
+            if (skin != null)
+            {
+                if (m_DeadActiveSkin != null)
+                {
+                    m_DeadActiveSkin.DeactivateSkin();
+                }
+
+                if (m_AliveActiveSkin != null)
+                {
+                    m_AliveActiveSkin.DeactivateSkin();
+                }
+
+                m_AliveActiveSkin = skin;
+
+                TeamType teamType = m_PlayerVR != null ? m_PlayerVR.TeamType : TeamType.RED;
+                m_AliveActiveSkin.ActivateSkin(teamType);
+            }
         }
 
         [ContextMenu("SetDeadDefaultSkin")]

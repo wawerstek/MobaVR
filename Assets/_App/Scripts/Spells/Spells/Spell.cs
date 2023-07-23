@@ -31,5 +31,45 @@ namespace MobaVR
                 TryGetComponent(out m_TeamItem);
             }
         }
+
+        #region Destroy Spell
+
+        public virtual void DestroySpell()
+        {
+            photonView.RPC(nameof(RpcDestroy), RpcTarget.AllBuffered);
+        }
+
+        [PunRPC]
+        protected virtual void RpcDestroy()
+        {
+            if (m_IsDestroyed)
+            {
+                return;
+            }
+            
+            m_IsDestroyed = true;
+            
+            if (photonView.IsMine)
+            {
+                gameObject.SetActive(false);
+                Invoke(nameof(DelayDestroy), 4f);
+            }
+            else
+            {
+                gameObject.SetActive(false);
+                //Destroy(gameObject);
+            }
+        }
+
+        protected void DelayDestroy()
+        {
+            gameObject.SetActive(false);
+            if (photonView.IsMine)
+            {
+                PhotonNetwork.Destroy(gameObject);
+            }
+        }
+
+        #endregion
     }
 }

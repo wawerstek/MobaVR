@@ -15259,9 +15259,7 @@ GameObject:
   - component: {fileID: 5735091862285679306}
   - component: {fileID: 5735091862285679302}
   - component: {fileID: 4914264213434692326}
-  - component: {fileID: 3395079227930165168}
   - component: {fileID: 5735091862285679305}
-  - component: {fileID: 5082405697986428383}
   - component: {fileID: 868586108129769326}
   - component: {fileID: 8221984669141871371}
   - component: {fileID: -2233907878299994585}
@@ -15269,6 +15267,7 @@ GameObject:
   - component: {fileID: 2094475954465768569}
   - component: {fileID: 6727756966319884898}
   - component: {fileID: 2270474295357567928}
+  - component: {fileID: 1827812444303560658}
   m_Layer: 10
   m_Name: Hammer
   m_TagString: Untagged
@@ -15306,14 +15305,14 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5735091862285679153}
   serializedVersion: 2
-  m_Mass: 10
+  m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
+  m_AngularDrag: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 1
   m_Constraints: 96
-  m_CollisionDetection: 2
+  m_CollisionDetection: 1
 --- !u!136 &5735091862285679309
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -15486,26 +15485,10 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 3395079227930165168}
+  - {fileID: 1827812444303560658}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &3395079227930165168
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5735091862285679153}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 0
 --- !u!114 &5735091862285679305
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15525,77 +15508,6 @@ MonoBehaviour:
   VibrateFrequency: 0.3
   VibrateAmplitude: 0.1
   VibrateDuration: 0.1
---- !u!114 &5082405697986428383
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5735091862285679153}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5cdea428d48e2bb488d33d5f75c39bb9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  BeingHeld: 0
-  GrabButton: 0
-  Grabtype: 2
-  GrabPhysics: 1
-  GrabMechanic: 0
-  GrabSpeed: 15
-  RemoteGrabbable: 1
-  RemoteGrabMechanic: 0
-  RemoteGrabDistance: 2
-  ThrowForceMultiplier: 10
-  ThrowForceMultiplierAngular: 1
-  BreakDistance: 0
-  HideHandGraphics: 0
-  ParentToHands: 1
-  ParentHandModel: 1
-  SnapHandModel: 1
-  CanBeDropped: 0
-  CanBeSnappedToSnapZone: 1
-  ForceDisableKinematicOnDrop: 0
-  InstantMovement: 0
-  MakeChildCollidersGrabbable: 0
-  handPoseType: 1
-  SelectedHandPose: {fileID: 11400000, guid: 77df2c0f35f2c9c48b126f33e191f866, type: 2}
-  CustomHandPose: 0
-  SecondaryGrabBehavior: 0
-  TwoHandedPosition: 0
-  TwoHandedPostionLerpAmount: 0.5
-  TwoHandedRotation: 1
-  TwoHandedRotationLerpAmount: 0.5
-  TwoHandedDropBehavior: 0
-  TwoHandedLookVector: 0
-  SecondHandLookSpeed: 40
-  SecondaryGrabbable: {fileID: 0}
-  OtherGrabbableMustBeGrabbed: {fileID: 0}
-  CollisionSpring: 3000
-  CollisionSlerp: 500
-  CollisionLinearMotionX: 2
-  CollisionLinearMotionY: 2
-  CollisionLinearMotionZ: 2
-  CollisionAngularMotionX: 2
-  CollisionAngularMotionY: 2
-  CollisionAngularMotionZ: 2
-  ApplyCorrectiveForce: 1
-  MoveVelocityForce: 3000
-  MoveAngularVelocityForce: 90
-  LastGrabTime: 0
-  LastDropTime: 0
-  AddControllerVelocityOnDrop: 1
-  collisions: []
-  ActiveGrabPoint: {fileID: 0}
-  SecondaryLookOffset: {x: 0, y: 0, z: 0}
-  SecondaryLookAtTransform: {fileID: 0}
-  LocalOffsetTransform: {fileID: 0}
-  GrabPoints:
-  - {fileID: 6891241667357966094}
-  - {fileID: 3102796989204575914}
-  UseCustomInspector: 1
-  lastFlickTime: 0
-  FlickForce: 1
 --- !u!114 &868586108129769326
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15608,18 +15520,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c0052302f484c8897055db7af4455ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_PrimaryForce: 4000
-  m_SecondForce: 4000
-  m_IsCheckBadThrow: 1
-  m_ThrowCheckDelay: 0
-  m_ThrowMinDistance: 0
+  m_IsThrowOnReleased: 1
+  m_UseValidateThrow: 0
+  m_MinVelocity: 1
   m_PhysicsHandler: {fileID: 8221984669141871371}
-  m_UseCustomGravity: 0
-  m_GravityDelay: 0.5
+  m_PrimaryForce: 4000
+  m_SecondaryForce: 4000
   m_PhotonView: {fileID: 4914264213434692326}
   m_Rigidbody: {fileID: 5735091862285679307}
-  m_Grabbable: {fileID: 5082405697986428383}
-  OnThrowChecked:
+  m_Grabbable: {fileID: 1827812444303560658}
+  OnValidated:
     m_PersistentCalls:
       m_Calls: []
   OnThrown:
@@ -15632,6 +15542,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   OnReleased:
+    m_PersistentCalls:
+      m_Calls: []
+  OnAppliedVelocity:
     m_PersistentCalls:
       m_Calls: []
   OnDestroyed:
@@ -15650,10 +15563,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_GravityType: 1
-  m_CustomThrowSettings: {fileID: 11400000, guid: 10c7fa5a6238f5546bfe36351916e15e,
+  m_CustomThrowSettings: {fileID: 11400000, guid: 0037eda154e12644b86f703bdfd278a2,
     type: 2}
-  m_Grabbable: {fileID: 5082405697986428383}
-  m_IsAutoInit: 0
+  m_Grabbable: {fileID: 1827812444303560658}
+  m_IsAutoInit: 1
 --- !u!114 &-2233907878299994585
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15688,7 +15601,7 @@ MonoBehaviour:
   m_ExplosionFx: {fileID: 8570868992653829974}
   m_DestroyExplosion: 4
   m_DestroyChildren: 2
-  m_Grabbable: {fileID: 5082405697986428383}
+  m_Grabbable: {fileID: 1827812444303560658}
   m_CollisionColliders:
   - {fileID: 4856782979894469518}
   - {fileID: 5735091862285679309}
@@ -15749,6 +15662,77 @@ MonoBehaviour:
   m_BlueTeamThemeSo: {fileID: 11400000, guid: f0548a8be222d024394f7595294ade09, type: 2}
   m_ExplosionParticle: {fileID: 7485281838839858529}
   m_TrailRenderer: {fileID: 3810034775163697477}
+--- !u!114 &1827812444303560658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5735091862285679153}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7aadde3a3e5de5442829b0f765c0d1e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BeingHeld: 0
+  GrabButton: 0
+  Grabtype: 0
+  GrabPhysics: 1
+  GrabMechanic: 0
+  GrabSpeed: 15
+  RemoteGrabbable: 1
+  RemoteGrabMechanic: 0
+  RemoteGrabDistance: 2
+  ThrowForceMultiplier: 10
+  ThrowForceMultiplierAngular: 10
+  BreakDistance: 0
+  HideHandGraphics: 0
+  ParentToHands: 1
+  ParentHandModel: 0
+  SnapHandModel: 1
+  CanBeDropped: 1
+  CanBeSnappedToSnapZone: 1
+  ForceDisableKinematicOnDrop: 1
+  InstantMovement: 1
+  MakeChildCollidersGrabbable: 0
+  handPoseType: 1
+  SelectedHandPose: {fileID: 11400000, guid: 77df2c0f35f2c9c48b126f33e191f866, type: 2}
+  CustomHandPose: 0
+  SecondaryGrabBehavior: 0
+  TwoHandedPosition: 0
+  TwoHandedPostionLerpAmount: 0.5
+  TwoHandedRotation: 1
+  TwoHandedRotationLerpAmount: 0.5
+  TwoHandedDropBehavior: 0
+  TwoHandedLookVector: 0
+  SecondHandLookSpeed: 40
+  SecondaryGrabbable: {fileID: 0}
+  OtherGrabbableMustBeGrabbed: {fileID: 0}
+  CollisionSpring: 3000
+  CollisionSlerp: 500
+  CollisionLinearMotionX: 2
+  CollisionLinearMotionY: 2
+  CollisionLinearMotionZ: 2
+  CollisionAngularMotionX: 2
+  CollisionAngularMotionY: 2
+  CollisionAngularMotionZ: 2
+  ApplyCorrectiveForce: 1
+  MoveVelocityForce: 3000
+  MoveAngularVelocityForce: 90
+  LastGrabTime: 0
+  LastDropTime: 0
+  AddControllerVelocityOnDrop: 1
+  collisions: []
+  ActiveGrabPoint: {fileID: 0}
+  SecondaryLookOffset: {x: 0, y: 0, z: 0}
+  SecondaryLookAtTransform: {fileID: 0}
+  LocalOffsetTransform: {fileID: 0}
+  GrabPoints:
+  - {fileID: 6891241667357966094}
+  - {fileID: 3102796989204575914}
+  UseCustomInspector: 1
+  lastFlickTime: 0
+  FlickForce: 1
 --- !u!1 &5735091863404537185
 GameObject:
   m_ObjectHideFlags: 0

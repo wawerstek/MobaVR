@@ -37,6 +37,7 @@ namespace MobaVR
         [SerializeField] private PlayerView m_PlayerView;
         [SerializeField] private InputBridge inputBridge;
         [SerializeField] private PlayerMode m_State;
+        [SerializeField] private ClassStatsSO m_StatsSO;
         [SerializeField] private Collider m_Collider;
         [SerializeField] [ReadOnly] private List<HitCollider> m_Colliders = new();
         [SerializeField] private Transform m_PlayerPoint;
@@ -84,10 +85,10 @@ namespace MobaVR
 
         private IDamageIndicator m_DamageIndicator;
         private TeamType m_TeamType = TeamType.RED;
-        private float m_Health = 100f;
+        private float m_MaxHp = 100f;
 
         [SerializeField] private bool m_CanInit = true;
-        
+
         [SerializeField] private float m_ThrowForce = 10f;
         [SerializeField] private bool m_UseAim = false;
         [SerializeField] private float m_CurrentHealth = 100f;
@@ -105,6 +106,10 @@ namespace MobaVR
         private bool m_UseLeftFireBreath = false;
         private bool m_UseRightFireBreath = false;
 
+        [Space]
+        [Header("Utils")]
+        [SerializeField] private bool m_CanOverrideThrowableSettings = false;
+
         public float CurrentHealth => m_CurrentHealth;
         public GravityType GravityFireballType
         {
@@ -120,6 +125,11 @@ namespace MobaVR
         {
             get => m_UseAim;
             set => m_UseAim = value;
+        }
+        public bool CanOverrideThrowableSettings
+        {
+            get => m_CanOverrideThrowableSettings;
+            set => m_CanOverrideThrowableSettings = value;
         }
         public PlayerMode PlayerState => m_State;
         public PlayerStateSO CurrentPlayerState => m_State.StateSo;
@@ -147,7 +157,17 @@ namespace MobaVR
                 return transform;
             }
         }
-
+        public ClassStatsSO Stats
+        {
+            get => m_StatsSO;
+            set
+            {
+                m_StatsSO = value;
+                m_MaxHp = m_StatsSO.MaxHp;
+                m_CurrentHealth = m_MaxHp;
+                m_PlayerView.SetHealth(m_CurrentHealth);
+            }
+        }
 
         public Action OnInit;
         public Action<float> OnHit;
@@ -156,7 +176,7 @@ namespace MobaVR
 
         private void Start()
         {
-            m_Colliders.AddRange(GetComponentsInChildren<HitCollider>());
+            m_Colliders.AddRange(GetComponentsInChildren<HitCollider>(true));
 
             if (!photonView.IsMine)
             {
@@ -168,7 +188,7 @@ namespace MobaVR
             {
                 return;
             }
-            
+
             //m_Collider.enabled = true;
 
             InputActionSO inputActionSO = m_ActiveInput;
@@ -623,7 +643,7 @@ namespace MobaVR
                 return;
             }
 
-            if (m_State.StateSo.CanCast && IsLife)
+            if (m_CanInit && m_State.StateSo.CanCast && IsLife)
             {
                 CastSpells();
             }
@@ -881,8 +901,7 @@ namespace MobaVR
         [PunRPC]
         private void RpcReborn()
         {
-            m_CurrentHealth = m_Health;
-            m_PlayerView.SetHealth(m_CurrentHealth);
+            m_CurrentHealth = m_MaxHp;
             //m_Collider.enabled = true;
 
             foreach (HitCollider damagePlayer in m_Colliders)
@@ -895,6 +914,8 @@ namespace MobaVR
 
             //TODO: MERGE
             m_PlayerVR.PlayerReborn();
+            //m_PlayerView.SetHealth(m_CurrentHealth);
+            m_PlayerView.RpcSetHealth(m_CurrentHealth);
         }
 
         public void RestoreHp()
@@ -905,7 +926,7 @@ namespace MobaVR
         [PunRPC]
         private void RpcRestoreHp()
         {
-            m_CurrentHealth = m_Health;
+            m_CurrentHealth = m_MaxHp;
 
             if (photonView.IsMine)
             {
@@ -918,7 +939,14 @@ namespace MobaVR
         {
             Hit(25f);
         }
-        
+
+
+        [ContextMenu("Kill")]
+        private void Hit_Debug_Kill()
+        {
+            Hit(250f);
+        }
+
         public void Hit(float damage)
         {
             photonView.RPC(nameof(RpcHit), RpcTarget.All, damage);
