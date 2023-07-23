@@ -388,7 +388,10 @@ namespace CloudFine.ThrowLab
                 IgnoreCollisionWithOtherForFixedUpdate(_handCollisionRoot);
             }
 
-            if (onDetachFromHand != null) onDetachFromHand.Invoke();
+            if (onDetachFromHand != null)
+            {
+                onDetachFromHand.Invoke();
+            }
             _timeOfRelease = Time.time;
         }
 

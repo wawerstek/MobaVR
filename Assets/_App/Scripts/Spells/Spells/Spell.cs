@@ -11,6 +11,7 @@ namespace MobaVR
 
         protected TeamType m_TeamType;
         protected WizardPlayer m_Owner;
+        protected bool m_IsDestroyed = false;
 
         public Action OnDestroySpell;
         public Action OnInitSpell;

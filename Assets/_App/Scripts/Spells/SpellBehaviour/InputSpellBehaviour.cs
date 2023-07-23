@@ -16,6 +16,7 @@ namespace MobaVR
 
         protected virtual void OnEnable()
         {
+            base.OnEnable();
             if (m_PhotonView.IsMine)
             //if (m_PlayerVR != null && m_PlayerVR.IsMine)
             {
@@ -26,7 +27,8 @@ namespace MobaVR
         }
 
         protected virtual void OnDisable()
-        {
+        {            base.OnDisable();
+
             if (m_PhotonView.IsMine)
             //if (m_PlayerVR != null && m_PlayerVR.IsMine)
             {

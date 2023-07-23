@@ -72,8 +72,8 @@ namespace MobaVR
                         {
                             if (m_Throwable != null)
                             {
-                                m_Throwable.UseCustomGravity = false;
-                                m_Throwable.GravityDelay = 1.2f;
+                             //   m_Throwable.UseCustomGravity = false;
+                               // m_Throwable.GravityDelay = 1.2f;
                             }
                         }
 
@@ -90,8 +90,8 @@ namespace MobaVR
                         {
                             if (m_Throwable != null)
                             {
-                                m_Throwable.UseCustomGravity = false;
-                                m_Throwable.GravityDelay = 0f;
+                              //  m_Throwable.UseCustomGravity = false;
+                              //  m_Throwable.GravityDelay = 0f;
                             }
                         }
 
@@ -108,7 +108,7 @@ namespace MobaVR
                         {
                             if (m_Throwable != null)
                             {
-                                m_Throwable.UseCustomGravity = true;
+                               // m_Throwable.UseCustomGravity = true;
                             }
                         }
 
@@ -125,9 +125,9 @@ namespace MobaVR
                         {
                             if (m_Throwable != null)
                             {
-                                m_Throwable.UseCustomGravity = false;
-                                m_Throwable.GravityDelay = 0f;
-                            }
+                              //  m_Throwable.UseCustomGravity = false;
+                               // m_Throwable.GravityDelay = 0f;
+                            }//
                         }
 
                         break;

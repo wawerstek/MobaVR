@@ -12,21 +12,16 @@ namespace MobaVR
     public class Throwable : GrabbableEvents, IThrowable
     {
         [Space]
+        [Header("Validate throw")]
+        [SerializeField] private bool m_IsThrowOnReleased = true;
+        [SerializeField] private bool m_UseValidateThrow = true;
+        [SerializeField] private float m_MinVelocity = 1f;
+        [SerializeField] private PhysicsHandler m_PhysicsHandler;
+
+        [Space]
         [Header("Forces")]
         [SerializeField] private float m_PrimaryForce = 4000f;
-        [SerializeField] private float m_SecondForce = 4000f;
-
-        [Space]
-        [Header("Validate throw")]
-        [SerializeField] private bool m_IsCheckBadThrow = true;
-        [SerializeField] private float m_ThrowCheckDelay = 0.2f;
-        [SerializeField] private float m_ThrowMinDistance = 1.0f;
-
-        [Space]
-        [Header("Physics")]
-        [SerializeField] private PhysicsHandler m_PhysicsHandler;
-        [SerializeField] private bool m_UseCustomGravity = false;
-        [SerializeField] private float m_GravityDelay = 0.5f;
+        [SerializeField] private float m_SecondaryForce = 4000f;
 
         [Header("Components")]
         [SerializeField] private PhotonView m_PhotonView;
@@ -39,7 +34,7 @@ namespace MobaVR
 
         #region Events
 
-        public UnityEvent<bool> OnThrowChecked;
+        public UnityEvent<bool> OnValidated;
         public UnityEvent OnThrown;
         public UnityEvent<Vector3> OnRedirected;
         public UnityEvent<Grabber> OnGrabbed;
@@ -52,21 +47,12 @@ namespace MobaVR
 
         #region Properties
 
+        public bool IsThrowOnReleased => m_IsThrowOnReleased;
         public bool IsThrown => m_IsThrown;
         public bool IsGrabbable => m_Grabbable != null && m_Grabbable.IsGrabbable();
         public Grabbable Grabbable => m_Grabbable;
         public Grabber Grabber => m_Grabber;
         public PhysicsHandler PhysicsHandler => m_PhysicsHandler;
-        public bool UseCustomGravity
-        {
-            get => m_UseCustomGravity;
-            set => m_UseCustomGravity = value;
-        }
-        public float GravityDelay
-        {
-            get => m_GravityDelay;
-            set => m_GravityDelay = value;
-        }
 
         #endregion
 
@@ -95,16 +81,6 @@ namespace MobaVR
             }
         }
 
-        private void OnEnable()
-        {
-            //m_Rigidbody.WakeUp();
-            //m_Rigidbody.sleepThreshold = 0.0f;
-            if (m_Grabbable != null)
-            {
-                //m_Grabbable.GetPrimaryGrabber();
-            }
-        }
-
         private void OnDisable()
         {
             OnDestroyed?.Invoke();
@@ -114,59 +90,14 @@ namespace MobaVR
         {
             if (m_PhotonView.IsMine)
             {
-                //m_Rigidbody.useGravity = true;
                 m_Grabbable.enabled = true;
                 m_Grabbable.CanBeDropped = true;
-
-                //m_Rigidbody.WakeUp();
-                //m_Rigidbody.sleepThreshold = 0.0f;
             }
         }
-        
+
         #endregion
 
-        private IEnumerator Release()
-        {
-            m_Grabbable.enabled = false;
-
-            if (m_IsCheckBadThrow)
-            {
-                Vector3 startPosition = transform.position;
-                yield return new WaitForSeconds(m_ThrowCheckDelay);
-                Vector3 endPosition = transform.position;
-                float distance = Vector3.Distance(startPosition, endPosition);
-                if (distance < m_ThrowMinDistance)
-                {
-                    if (m_PhotonView.IsMine)
-                    {
-                        OnThrowChecked?.Invoke(false);
-                        StopAllCoroutines();
-                        yield break;
-                    }
-                }
-            }
-
-            OnThrowChecked?.Invoke(true);
-
-            if (m_PhysicsHandler != null)
-            {
-                //m_PhysicsHandler.ApplyPhysics();
-            }
-
-                        /*
-            Debug.DrawRay(transform.position, transform.position + m_Rigidbody.velocity * 100f, Color.blue, 100f);
-            
-            Vector3 targetDirection = transform.position - m_Rigidbody.velocity;
-            Quaternion quaternion = Quaternion.LookRotation(targetDirection);
-            Debug.DrawRay(transform.position, targetDirection, Color.red, 100f);
-
-            transform.rotation = quaternion;
-            */
-            
-            m_Rigidbody.isKinematic = false;
-            
-            OnThrown?.Invoke();
-        }
+        #region Physics
 
         public void Init(WizardPlayer wizardPlayer, TeamType teamType)
         {
@@ -175,10 +106,7 @@ namespace MobaVR
                              wizardPlayer.GravityFireballType,
                              wizardPlayer.ThrowForce,
                              wizardPlayer.UseAim);
-            
-         //   m_Grabbable.move
         }
-
 
         [PunRPC]
         private void RpcSwitchGravity(GravityType gravityType)
@@ -198,6 +126,10 @@ namespace MobaVR
             }
         }
 
+        #endregion
+
+        #region Events
+
         public override void OnGrab(Grabber grabber)
         {
             base.OnGrab(grabber);
@@ -208,92 +140,91 @@ namespace MobaVR
         public override void OnRelease()
         {
             base.OnRelease();
-            OnReleased.Invoke();
+
+            m_Grabber = null;
+            bool isGoodThrow = true;
+            if (m_UseValidateThrow)
+            {
+                isGoodThrow = m_Rigidbody.velocity.magnitude > m_MinVelocity;
+            }
+
+            OnValidated?.Invoke(isGoodThrow);
+            OnReleased?.Invoke();
+
+            if (isGoodThrow && m_IsThrowOnReleased)
+            {
+                ThrowByVelocity(m_Rigidbody.velocity, m_Rigidbody.angularVelocity);
+            }
         }
 
         public override void OnApplyVelocity(Vector3 velocity, Vector3 angularVelocity)
         {
             base.OnApplyVelocity(velocity, angularVelocity);
             OnAppliedVelocity?.Invoke(velocity, angularVelocity);
-            
         }
 
-        public void Grab(Grabber grabber)
-        {
-            m_Grabber = grabber;
-            OnGrabbed?.Invoke(grabber);
-        }
+        #endregion
 
-        public void Release(Grabber grabber)
-        {
-            m_Grabber = null;
-            OnReleased.Invoke();
-        }
+        #region Throw
 
-        //TODO
-        public override void OnReleaseCompleted()
+        public void Drop()
         {
-            base.OnReleaseCompleted();
+            if (m_Grabbable != null)
+            {
+                m_Grabbable.DropItem(true, true);
+            }
         }
 
         public void Throw()
         {
-            
-            /*
-            
-            if (rigid && resetVelocity && droppedBy && AddControllerVelocityOnDrop&& GrabPhysics != GrabPhysics.None) {
-                // Make sure velocity is passed on
-                Vector3 velocity = droppedBy.GetGrabberAveragedVelocity() + droppedBy.GetComponent<Rigidbody>().velocity;
-                Vector3 angularVelocity = droppedBy.GetGrabberAveragedAngularVelocity() + droppedBy.GetComponent<Rigidbody>().angularVelocity;
-
-
-            */
-            
-            Vector3 velocity = m_Rigidbody.velocity;
-            Vector3 angularVelocity = m_Rigidbody.angularVelocity;
-            
-            //m_Grabbable.enabled = false;
-            //m_Rigidbody.WakeUp();
-            //m_PhotonView.RPC(nameof(RpcThrow), RpcTarget.All);
-            m_PhotonView.RPC(nameof(RpcThrowByVelocity), RpcTarget.All, transform.position, velocity, angularVelocity);
-            //m_Grabbable.
+            m_PhotonView.RPC(nameof(RpcThrow), RpcTarget.AllBuffered);
         }
-        
-        
-        
+
+        public void ThrowByVelocity(Vector3 velocity, Vector3 angularVelocity)
+        {
+            m_PhotonView.RPC(nameof(RpcThrowByVelocity),
+                             RpcTarget.AllBuffered, 
+                             transform.position,
+                             velocity,
+                             angularVelocity);
+        }
 
         public void ThrowByDirection(Vector3 direction)
         {
-            m_PhotonView.RPC(nameof(RpcThrowByDirection), RpcTarget.All, direction);
+            m_PhotonView.RPC(nameof(RpcThrowByDirection), RpcTarget.AllBuffered, direction);
+        }
+
+        private void InitThrow()
+        {
+            m_Grabbable.enabled = false;
+
+            m_Rigidbody.isKinematic = false;
+            m_Rigidbody.WakeUp();
+
+            m_IsThrown = true;
+            m_IsFirstThrown = false;
         }
 
         [PunRPC]
         private void RpcThrow()
         {
-            m_Rigidbody.isKinematic = false;
-
-            
-            m_Grabbable.enabled = false;
-            m_Rigidbody.WakeUp();
-            m_IsThrown = true;
-            m_IsFirstThrown = false;
-            StartCoroutine(Release());
+            InitThrow();
+            OnThrown?.Invoke();
         }
-        
+
         [PunRPC]
         private void RpcThrowByVelocity(Vector3 position, Vector3 velocity, Vector3 angularVelocity)
         {
-            m_Rigidbody.isKinematic = false;
-            m_Grabbable.enabled = false;
-            //m_Rigidbody.WakeUp();
+            InitThrow();
 
-            m_Rigidbody.position = position;
-            m_Rigidbody.velocity = velocity;
-            m_Rigidbody.angularVelocity = angularVelocity;
-            
-            m_IsThrown = true;
-            m_IsFirstThrown = false;
-            StartCoroutine(Release());
+            //if (m_PhotonView.IsMine)
+            {
+                m_Rigidbody.position = position;
+                m_Rigidbody.velocity = velocity;
+                m_Rigidbody.angularVelocity = angularVelocity;
+            }
+
+            OnThrown?.Invoke();
         }
 
         [PunRPC]
@@ -304,9 +235,8 @@ namespace MobaVR
                 m_Grabbable.DropItem(true, true);
             }
 
-            m_IsThrown = true;
-            m_Rigidbody.isKinematic = false;
-            m_Rigidbody.useGravity = true;
+            InitThrow();
+
             if (m_IsFirstThrown)
             {
                 m_Rigidbody.AddForce(direction * m_PrimaryForce);
@@ -314,11 +244,13 @@ namespace MobaVR
             }
             else
             {
-                m_Rigidbody.AddForce(direction * m_SecondForce);
+                m_Rigidbody.AddForce(direction * m_SecondaryForce);
             }
 
             OnThrown?.Invoke();
             OnRedirected?.Invoke(direction);
         }
+
+        #endregion
     }
 }

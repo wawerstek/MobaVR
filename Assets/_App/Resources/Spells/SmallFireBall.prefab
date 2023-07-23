@@ -5187,6 +5187,8 @@ GameObject:
   - component: {fileID: 7376523045317206948}
   - component: {fileID: -5569363721651169435}
   - component: {fileID: 4988148395813526011}
+  - component: {fileID: 9099710404943773451}
+  - component: {fileID: 2038837458748189027}
   m_Layer: 10
   m_Name: SmallFireBall
   m_TagString: Untagged
@@ -5265,6 +5267,7 @@ MonoBehaviour:
   m_DestroyLifeTime: 5
   m_DefaultDamage: 5
   m_Force: 1400
+  m_Throwable: {fileID: 2038837458748189027}
   m_Trail: {fileID: 3771224736443066004}
   m_ProjectileFx: {fileID: 3771224736010139902}
   m_ExplosionFx: {fileID: 4146456577623192803}
@@ -5333,6 +5336,117 @@ MonoBehaviour:
   m_TrailParticle: {fileID: 3771224736443066001}
   m_ExplosionParticle: {fileID: 2926191410606429908}
   m_TrailRenderer: {fileID: 875513895580817429}
+--- !u!114 &9099710404943773451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3318618810848601306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cdea428d48e2bb488d33d5f75c39bb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BeingHeld: 0
+  GrabButton: 2
+  Grabtype: 2
+  GrabPhysics: 4
+  GrabMechanic: 1
+  GrabSpeed: 15
+  RemoteGrabbable: 0
+  RemoteGrabMechanic: 0
+  RemoteGrabDistance: 2
+  ThrowForceMultiplier: 2
+  ThrowForceMultiplierAngular: 1.5
+  BreakDistance: 0
+  HideHandGraphics: 0
+  ParentToHands: 0
+  ParentHandModel: 1
+  SnapHandModel: 1
+  CanBeDropped: 1
+  CanBeSnappedToSnapZone: 1
+  ForceDisableKinematicOnDrop: 0
+  InstantMovement: 0
+  MakeChildCollidersGrabbable: 0
+  handPoseType: 1
+  SelectedHandPose: {fileID: 0}
+  CustomHandPose: 0
+  SecondaryGrabBehavior: 0
+  TwoHandedPosition: 0
+  TwoHandedPostionLerpAmount: 0.5
+  TwoHandedRotation: 1
+  TwoHandedRotationLerpAmount: 0.5
+  TwoHandedDropBehavior: 0
+  TwoHandedLookVector: 0
+  SecondHandLookSpeed: 40
+  SecondaryGrabbable: {fileID: 0}
+  OtherGrabbableMustBeGrabbed: {fileID: 0}
+  CollisionSpring: 3000
+  CollisionSlerp: 500
+  CollisionLinearMotionX: 2
+  CollisionLinearMotionY: 2
+  CollisionLinearMotionZ: 2
+  CollisionAngularMotionX: 2
+  CollisionAngularMotionY: 2
+  CollisionAngularMotionZ: 2
+  ApplyCorrectiveForce: 1
+  MoveVelocityForce: 3000
+  MoveAngularVelocityForce: 90
+  LastGrabTime: 0
+  LastDropTime: 0
+  AddControllerVelocityOnDrop: 1
+  collisions: []
+  ActiveGrabPoint: {fileID: 0}
+  SecondaryLookOffset: {x: 0, y: 0, z: 0}
+  SecondaryLookAtTransform: {fileID: 0}
+  LocalOffsetTransform: {fileID: 0}
+  GrabPoints: []
+  UseCustomInspector: 1
+  lastFlickTime: 0
+  FlickForce: 1
+--- !u!114 &2038837458748189027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3318618810848601306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c0052302f484c8897055db7af4455ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IsThrowOnReleased: 1
+  m_UseValidateThrow: 1
+  m_MinVelocity: 1
+  m_PhysicsHandler: {fileID: 0}
+  m_PrimaryForce: 4000
+  m_SecondaryForce: 4000
+  m_PhotonView: {fileID: 7376523045317206948}
+  m_Rigidbody: {fileID: 3318618810848601280}
+  m_Grabbable: {fileID: 9099710404943773451}
+  OnValidated:
+    m_PersistentCalls:
+      m_Calls: []
+  OnThrown:
+    m_PersistentCalls:
+      m_Calls: []
+  OnRedirected:
+    m_PersistentCalls:
+      m_Calls: []
+  OnGrabbed:
+    m_PersistentCalls:
+      m_Calls: []
+  OnReleased:
+    m_PersistentCalls:
+      m_Calls: []
+  OnAppliedVelocity:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDestroyed:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &3771224736010139902
 GameObject:
   m_ObjectHideFlags: 0

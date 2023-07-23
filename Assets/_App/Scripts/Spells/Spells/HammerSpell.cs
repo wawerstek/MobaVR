@@ -8,8 +8,6 @@ namespace MobaVR
 {
     public class HammerSpell : ThrowableSpell
     {
-        [SerializeField] private Throwable m_Throwable;
-
         [Space]
         [Header("Magic")]
         [SerializeField] private GameObject m_HammerMesh;
@@ -44,7 +42,7 @@ namespace MobaVR
             {
                 m_Throwable.OnThrown.AddListener(OnThrown);
                 m_Throwable.OnRedirected.AddListener(OnRedirected);
-                m_Throwable.OnThrowChecked.AddListener(OnThrowChecked);
+                m_Throwable.OnValidated.AddListener(OnThrowChecked);
                 m_Throwable.OnGrabbed.AddListener(OnGrabbed);
             }
         }
@@ -56,7 +54,7 @@ namespace MobaVR
             {
                 m_Throwable.OnThrown.RemoveListener(OnThrown);
                 m_Throwable.OnRedirected.RemoveListener(OnRedirected);
-                m_Throwable.OnThrowChecked.RemoveListener(OnThrowChecked);
+                m_Throwable.OnValidated.RemoveListener(OnThrowChecked);
             }
         }
 

@@ -48902,6 +48902,7 @@ GameObject:
   - component: {fileID: 9188032268869581275}
   - component: {fileID: 129987473065859420}
   - component: {fileID: 6762492436249963837}
+  - component: {fileID: 2038837458748189027}
   m_Layer: 10
   m_Name: BigFireBall_v10
   m_TagString: Untagged
@@ -49128,6 +49129,7 @@ MonoBehaviour:
   m_DestroyLifeTime: 20
   m_DefaultDamage: 10
   m_Force: 2000
+  m_Throwable: {fileID: 2038837458748189027}
   m_GravitySwitcher: {fileID: 9188032268869581275}
   m_VfxParent: {fileID: 5871259036390363530}
   m_Ball: {fileID: 275312536090764041}
@@ -49407,6 +49409,48 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Damage: 25
+--- !u!114 &2038837458748189027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3318618810848601306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c0052302f484c8897055db7af4455ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IsThrowOnReleased: 1
+  m_UseValidateThrow: 1
+  m_MinVelocity: 1
+  m_PhysicsHandler: {fileID: 9188032268869581275}
+  m_PrimaryForce: 4000
+  m_SecondaryForce: 4000
+  m_PhotonView: {fileID: 232510063208312151}
+  m_Rigidbody: {fileID: 3318618810848601280}
+  m_Grabbable: {fileID: 6947949317090603735}
+  OnValidated:
+    m_PersistentCalls:
+      m_Calls: []
+  OnThrown:
+    m_PersistentCalls:
+      m_Calls: []
+  OnRedirected:
+    m_PersistentCalls:
+      m_Calls: []
+  OnGrabbed:
+    m_PersistentCalls:
+      m_Calls: []
+  OnReleased:
+    m_PersistentCalls:
+      m_Calls: []
+  OnAppliedVelocity:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDestroyed:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &3318618811458133669
 GameObject:
   m_ObjectHideFlags: 0

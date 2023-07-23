@@ -12,15 +12,29 @@ namespace MobaVR
     ///
     /// На игроках и щите должен висеть IsTrigger, чтобы прошла проверка
     /// </summary>
+    [RequireComponent(typeof(Throwable))]
     public abstract class ThrowableSpell : Spell
         //, IThrowable
     {
         [Space]
-        [Header("Components")]
+        [Header("Spell")]
         [SerializeField] protected float m_DefaultDamage = 1f;
         [SerializeField] protected float m_Force = 4000f;
 
+        [SerializeField] protected Throwable m_Throwable;
+
         protected bool m_IsThrown = false;
+
+        public Throwable Throwable => m_Throwable;
+
+        protected override void OnValidate()
+        {
+            base.OnValidate();
+            if (m_Throwable == null)
+            {
+                TryGetComponent(out m_Throwable);
+            }
+        }
 
         protected virtual void Awake()
         {
@@ -159,6 +173,10 @@ namespace MobaVR
         public virtual void RpcInit(TeamType teamType)
         {
             m_TeamItem.SetTeam(teamType);
+        }
+
+        public virtual void DestroySpell()
+        {
         }
 
         protected abstract float CalculateDamage();

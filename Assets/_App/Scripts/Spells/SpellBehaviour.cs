@@ -35,12 +35,21 @@ namespace MobaVR
 
         #region Spell
 
-        private void OnValidate()
+        protected  virtual void OnValidate()
         {
             if (m_PhotonView == null)
             {
                 m_PhotonView = GetComponentInParent<PhotonView>();
             }
+        }
+
+        protected  virtual  void OnEnable()
+        {
+        }
+
+        protected virtual void OnDisable()
+        {
+            m_IsPerformed = false;
         }
 
         public virtual void Init(SpellHandler spellHandler, PlayerVR playerVR)

@@ -2154,6 +2154,11 @@ namespace BNG {
                         continue;
                     }
 
+                    if (grabber == null)
+                    {
+                        continue;
+                    }
+
                     float thisDist = Vector3.Distance(g.transform.position, grabber.transform.position);
                     if (thisDist <= lastDistance) {
 
@@ -2196,6 +2201,7 @@ namespace BNG {
         /// <param name="angularVelocity">How much angular velocity to apply to the grabbable.</param>
         public virtual void Release(Vector3 velocity, Vector3 angularVelocity) {
             Vector3 releaseVelocity = velocity * ThrowForceMultiplier;
+            Vector3 releaseAngularVelocity = velocity * ThrowForceMultiplierAngular;
 
             // Make sure this is a valid velocity
             if (float.IsInfinity(releaseVelocity.x) || float.IsNaN(releaseVelocity.x)) {
@@ -2203,7 +2209,7 @@ namespace BNG {
             }
 
             rigid.velocity = releaseVelocity;
-            rigid.angularVelocity = angularVelocity;
+            rigid.angularVelocity = releaseAngularVelocity;
             
             if (events != null) {
                 for (int x = 0; x < events.Count; x++) {
