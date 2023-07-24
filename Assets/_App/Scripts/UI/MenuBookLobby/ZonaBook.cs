@@ -25,7 +25,7 @@ public class ZonaBook : MonoBehaviour
     private AudioSource audioSource;
 
     //туман
-    public float fogDensityTarget = 1f; // Целевое значение fog density
+    public float fogDensityTarget = 0.5f; // Целевое значение fog density
     public float transitionDuration = 1f; // Длительность перехода в секундах
 
     private bool isInTrigger = false; // Флаг, указывающий на нахождение внутри триггера

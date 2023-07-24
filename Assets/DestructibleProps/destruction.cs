@@ -38,15 +38,6 @@ public class destruction : MonoBehaviour {
 	}
 
 	void OnCollisionEnter(Collision other){
-		//if(other.gameObject.GetComponent<BulletsDamage>()){
-		//Health -= other.gameObject.GetComponent<BulletsDamage>().Damage;
-		//	if(Health <= 0){
-		//		Crushing();
-		//		}
-		//}
-		//else if(other.relativeVelocity.magnitude > strength){
-		//	Crushing();
-		//}
 
 
 		if (other.gameObject.GetComponent<BulletsDamage>())
@@ -107,6 +98,10 @@ public class destruction : MonoBehaviour {
 		}
 		
 		foreach(GameObject chunk in Chunks){
+
+
+
+
 			chunk.SetActive(true);
 			chunk.GetComponent<Rigidbody>().AddRelativeForce(Vector3.forward * -ExplosionForce);
 			chunk.GetComponent<Rigidbody>().AddRelativeTorque(Vector3.forward * -ChunksRotation*Random.Range(-5f, 5f));
