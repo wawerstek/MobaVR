@@ -99,10 +99,36 @@ namespace MobaVR
 
         #region Physics
 
+        public void InitPhysics(WizardPlayer wizardPlayer)
+        {
+            if (m_PhysicsHandler == null)
+            {
+                return;
+            }
+
+            float force = m_Grabbable.ThrowForceMultiplier;
+            bool useAim = false;
+            GravityType gravityType = m_PhysicsHandler.GravityType;
+
+            if (wizardPlayer.CanOverrideThrowableSettings)
+            {
+                force = wizardPlayer.ThrowForce;
+                useAim = wizardPlayer.UseAim;
+                gravityType = wizardPlayer.GravityFireballType;
+            }
+
+            m_PhotonView.RPC(nameof(RpcSetPhysics),
+                             RpcTarget.AllBuffered,
+                             gravityType,
+                             force,
+                             useAim
+            );
+        }
+
         public void Init(WizardPlayer wizardPlayer, TeamType teamType)
         {
             m_PhotonView.RPC(nameof(RpcSetPhysics),
-                             RpcTarget.All,
+                             RpcTarget.AllBuffered,
                              wizardPlayer.GravityFireballType,
                              wizardPlayer.ThrowForce,
                              wizardPlayer.UseAim);
@@ -183,7 +209,7 @@ namespace MobaVR
         public void ThrowByVelocity(Vector3 velocity, Vector3 angularVelocity)
         {
             m_PhotonView.RPC(nameof(RpcThrowByVelocity),
-                             RpcTarget.AllBuffered, 
+                             RpcTarget.AllBuffered,
                              transform.position,
                              velocity,
                              angularVelocity);

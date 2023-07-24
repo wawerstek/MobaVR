@@ -102,20 +102,10 @@ namespace MobaVR
         {
             base.Init(wizardPlayer, teamType);
 
-            //photonView.RPC(nameof(RpcSwitchGravity), RpcTarget.All, wizardPlayer.GravityFireballType);
-            photonView.RPC(nameof(RpcSetPhysics),
-                           RpcTarget.All,
-                           wizardPlayer.GravityFireballType,
-                           wizardPlayer.ThrowForce,
-                           wizardPlayer.UseAim);
-        }
-
-        private void RpcSetPhysics(GravityType gravityType, float force, bool useAim)
-        {
             if (m_Throwable != null)
             {
-                m_Throwable.PhysicsHandler.InitPhysics(gravityType, force, useAim);
-            }
+                m_Throwable.InitPhysics(wizardPlayer);
+            } 
         }
 
         protected override float CalculateDamage()
