@@ -41,12 +41,8 @@ namespace MobaVR
 
             if (m_Renderer != null)
             {
-                Debug.LogError("PHOTON IS MINE 0");
-
                 if (m_PhotonView.IsMine && m_UseTransparent)
                 {
-                    Debug.LogError("PHOTON IS MINE");
-
                     material = new Material(material);
 
                     Color transparentColor = new Color(1f, 1f, 1f, m_TransparentVale);
@@ -65,7 +61,6 @@ namespace MobaVR
                     material.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent;
 
                     material.SetFloat("_Mode", 2.0f);
-                    Debug.LogError("PHOTON IS MINE 2");
                 }
 
                 m_Renderer.material = material;

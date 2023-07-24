@@ -13,6 +13,7 @@ Material:
   - _AD_CUTOUT_STANDARD_SOURCE_CUSTOM_MAP
   - _AD_EDGE_BASE_SOURCE_CUTOUT_STANDARD
   - _AD_STATE_ENABLED
+  - _ALPHABLEND_ON
   m_InvalidKeywords:
   - _AD_CUTOUT_GEOMETRIC_COUNT_ONE
   - _AD_CUTOUT_GEOMETRIC_TYPE_NONE
@@ -24,9 +25,9 @@ Material:
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 3000
   stringTagMap:
-    RenderType: AdvancedDissolveCutout
+    RenderType: Transparent
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
@@ -163,14 +164,14 @@ Material:
     - _Cull: 0
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
-    - _DstBlend: 0
+    - _DstBlend: 10
     - _GlossMapScale: 1
     - _Glossiness: 0
     - _GlossyReflections: 1
     - _IncludeVertexColor: 0
     - _LightLookupOffset: 0
     - _Metallic: 0
-    - _Mode: 0
+    - _Mode: 2
     - _NormalMapStrength: 1
     - _OcclusionStrength: 1
     - _Parallax: 0.02
@@ -183,10 +184,10 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SpecularMaskOffset: 0
-    - _SrcBlend: 1
+    - _SrcBlend: 5
     - _TextureMix: 0
     - _UVSec: 0
-    - _ZWrite: 1
+    - _ZWrite: 0
     m_Colors:
     - _AdvancedDissolveBakedKeywords: {r: 0, g: 0, b: 0, a: 0}
     - _AdvancedDissolveCutoutGeometric1Normal: {r: 1, g: 0, b: 0, a: 0}

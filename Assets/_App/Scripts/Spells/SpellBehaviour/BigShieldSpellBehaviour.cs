@@ -53,6 +53,11 @@ namespace MobaVR
             base.Interrupt();
             OnCompleted?.Invoke();
             m_IsPerformed = false;
+            m_IsPlaced = false;
+            if (m_CurrentShield != null)
+            {
+                m_CurrentShield.DestroySpell();
+            }
         }
 
         private void CreateShield()

@@ -43,6 +43,11 @@ namespace MobaVR
                 m_TweenDissolve.Kill();
             }
 
+            if (m_View != null)
+            {
+                m_View.gameObject.SetActive(isShow);
+            }
+            
             float duration = Math.Abs(endClip - m_CurrentClip) * m_ScaleDuration;
             
             m_TweenDissolve = DOTween

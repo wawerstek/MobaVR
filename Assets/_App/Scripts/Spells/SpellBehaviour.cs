@@ -21,7 +21,7 @@ namespace MobaVR
 
         [Header("Network")]
         [SerializeField] protected PhotonView m_PhotonView;
-        
+
         protected SpellHandler m_SpellsHandler;
         protected PlayerVR m_PlayerVR;
         protected bool m_IsInit = false;
@@ -35,7 +35,7 @@ namespace MobaVR
 
         #region Spell
 
-        protected  virtual void OnValidate()
+        protected virtual void OnValidate()
         {
             if (m_PhotonView == null)
             {
@@ -43,7 +43,7 @@ namespace MobaVR
             }
         }
 
-        protected  virtual  void OnEnable()
+        protected virtual void OnEnable()
         {
         }
 
@@ -55,7 +55,7 @@ namespace MobaVR
         public virtual void Init(SpellHandler spellHandler, PlayerVR playerVR)
         {
             m_IsInit = true;
-            
+
             m_SpellsHandler = spellHandler;
             m_PlayerVR = playerVR;
         }
@@ -64,9 +64,9 @@ namespace MobaVR
         {
             //return m_PlayerVR.WizardPlayer.PlayerState.StateSo.CanCast && m_PlayerVR.WizardPlayer.IsLife;
             return m_IsInit &&
-                   m_PhotonView.IsMine && 
+                   m_PhotonView.IsMine &&
                    //m_PlayerVR.IsMine && 
-                   m_PlayerVR.WizardPlayer.PlayerState.StateSo.CanCast && 
+                   m_PlayerVR.WizardPlayer.PlayerState.StateSo.CanCast &&
                    m_PlayerVR.WizardPlayer.IsLife;
         }
 
@@ -97,6 +97,11 @@ namespace MobaVR
             }
 
             return m_CanInterrupted;
+        }
+
+        public void Reset()
+        {
+            Interrupt();
         }
 
         protected virtual void Interrupt()

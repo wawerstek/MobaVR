@@ -77,7 +77,7 @@ namespace MobaVR
             }
         }
 
-        private void DestroySpell()
+        public void DestroySpell()
         {
             if (gameObject.activeSelf)
             {

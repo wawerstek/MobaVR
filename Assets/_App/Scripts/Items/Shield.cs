@@ -6,7 +6,7 @@ using UnityEngine;
 namespace MobaVR
 {
     public class Shield : MonoBehaviourPunCallbacks
-                        //, IHit
+        //, IHit
     {
         [Header("Values")]
         [SerializeField] protected float m_Health = 1f;
@@ -18,6 +18,7 @@ namespace MobaVR
         [SerializeField] protected TeamItem m_TeamItem;
         [SerializeField] protected GameObject m_Shield;
         [SerializeField] protected Collider m_Collider;
+        [SerializeField] protected ShieldView m_View;
 
         protected float m_CurrentCooldownTime = 0f;
         protected bool m_Use = false;
@@ -36,13 +37,18 @@ namespace MobaVR
             m_IsAvailable = true;
             m_CurrentHealth = m_Health;
 
+            if (m_View != null)
+            {
+                m_View.gameObject.SetActive(false);
+                m_View.RpcSetDefenceValue(m_CurrentHealth);
+            }
+
             m_Collider.enabled = false;
             m_Shield.SetActive(false);
         }
 
         protected virtual void UpdateVisualState()
         {
-            
         }
 
         public virtual void Show(bool isShow)
@@ -54,7 +60,6 @@ namespace MobaVR
         [PunRPC]
         public virtual void RpcShow(bool isShow)
         {
-            //if (isShow && !m_IsAvailable)
             if (!m_IsAvailable)
             {
                 if (photonView.IsMine && m_TimeView != null)
@@ -62,17 +67,17 @@ namespace MobaVR
                     m_TimeView.SetTime(m_CurrentCooldownTime);
                     m_TimeView.Show(true);
                 }
+
                 return;
             }
         }
-
 
         [ContextMenu("Hit")]
         public virtual void Hit()
         {
             photonView.RPC(nameof(RpcHit), RpcTarget.All, 1f);
         }
-        
+
         public virtual void Hit(float damage)
         {
             photonView.RPC(nameof(RpcHit), RpcTarget.All, damage);
@@ -101,6 +106,11 @@ namespace MobaVR
             if (IsLife)
             {
                 m_CurrentHealth -= damage;
+                if (m_View != null)
+                {
+                    m_View.RpcSetDefenceValue(m_CurrentHealth);
+                }
+
                 UpdateVisualState();
                 if (m_CurrentHealth <= 0)
                 {
