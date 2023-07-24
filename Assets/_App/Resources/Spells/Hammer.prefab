@@ -15308,8 +15308,8 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
   m_Interpolate: 1
   m_Constraints: 96
   m_CollisionDetection: 1
@@ -15521,7 +15521,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_IsThrowOnReleased: 1
-  m_UseValidateThrow: 0
+  m_UseValidateThrow: 1
   m_MinVelocity: 1
   m_PhysicsHandler: {fileID: 8221984669141871371}
   m_PrimaryForce: 4000
@@ -15566,7 +15566,7 @@ MonoBehaviour:
   m_CustomThrowSettings: {fileID: 11400000, guid: 0037eda154e12644b86f703bdfd278a2,
     type: 2}
   m_Grabbable: {fileID: 1827812444303560658}
-  m_IsAutoInit: 1
+  m_IsAutoInit: 0
 --- !u!114 &-2233907878299994585
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15593,7 +15593,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_TeamItem: {fileID: 2270474295357567928}
   m_DestroyLifeTime: 20
-  m_DefaultDamage: 1
+  m_DefaultDamage: 20
   m_Force: 4000
   m_Throwable: {fileID: 868586108129769326}
   m_HammerMesh: {fileID: 2889683674648275624}
@@ -15684,11 +15684,11 @@ MonoBehaviour:
   RemoteGrabMechanic: 0
   RemoteGrabDistance: 2
   ThrowForceMultiplier: 10
-  ThrowForceMultiplierAngular: 10
+  ThrowForceMultiplierAngular: 100
   BreakDistance: 0
   HideHandGraphics: 0
   ParentToHands: 1
-  ParentHandModel: 0
+  ParentHandModel: 1
   SnapHandModel: 1
   CanBeDropped: 1
   CanBeSnappedToSnapZone: 1
@@ -35327,8 +35327,8 @@ Transform:
   m_GameObject: {fileID: 8570868992653829974}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
-  m_ConstrainProportionsScale: 1
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5772445933899941592}
   - {fileID: 5465986932385946323}

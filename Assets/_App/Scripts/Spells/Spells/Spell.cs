@@ -36,11 +36,11 @@ namespace MobaVR
 
         public virtual void DestroySpell()
         {
-            photonView.RPC(nameof(RpcDestroy), RpcTarget.AllBuffered);
+            photonView.RPC(nameof(RpcDestroyThrowable), RpcTarget.AllBuffered);
         }
 
         [PunRPC]
-        protected virtual void RpcDestroy()
+        protected virtual void RpcDestroyThrowable()
         {
             if (m_IsDestroyed)
             {

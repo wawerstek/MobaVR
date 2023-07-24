@@ -1,5 +1,6 @@
 ﻿using DG.Tweening;
 using Photon.Pun;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace MobaVR
@@ -21,7 +22,7 @@ namespace MobaVR
         protected float m_CurrentCooldownTime = 0f;
         protected bool m_Use = false;
         protected bool m_IsAvailable = true;
-        protected float m_CurrentHealth = 1f;
+        [SerializeField] [ReadOnly] protected float m_CurrentHealth = 1f;
 
         public bool IsLife => m_CurrentHealth > 0f;
 

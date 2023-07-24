@@ -65,19 +65,17 @@ namespace MobaVR
                 //photonView.RPC(nameof(RpcDestroy), RpcTarget.AllBuffered);
             }
 
-            RpcDestroy();
+            RpcDestroyThrowable();
         }
 
         [PunRPC]
-        protected override void RpcDestroy()
+        protected override void RpcDestroyThrowable()
         {
             if (m_IsDestroyed)
             {
                 return;
             }
 
-            m_IsDestroyed = true;
-            
             m_ExplosionFx.SetActive(true);
             m_ExplosionFx.transform.parent = null;
 
@@ -85,7 +83,7 @@ namespace MobaVR
 
             Destroy(m_ExplosionFx, m_DestroyExplosion);
             
-            base.RpcDestroy();
+            base.RpcDestroyThrowable();
             /*
             if (photonView.IsMine)
             {
@@ -170,7 +168,7 @@ namespace MobaVR
         {
             if (!isGoodThrow)
             {
-                photonView.RPC(nameof(RpcDestroy), RpcTarget.AllBuffered);
+                photonView.RPC(nameof(RpcDestroyThrowable), RpcTarget.AllBuffered);
                 StopAllCoroutines();
             }
         }

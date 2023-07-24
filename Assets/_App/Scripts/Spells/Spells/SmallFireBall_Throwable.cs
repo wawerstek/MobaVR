@@ -39,7 +39,7 @@ namespace MobaVR
         protected override void OnEnable()
         {
             //base.OnEnable();
-            Invoke(nameof(RpcDestroy), m_DestroyLifeTime);
+            Invoke(nameof(RpcDestroyThrowable), m_DestroyLifeTime);
 
             m_Collider.enabled = false;
             
@@ -60,7 +60,7 @@ namespace MobaVR
                 //DestroyBall();
             }
             
-            RpcDestroy();
+            RpcDestroyThrowable();
         }
 
         protected override float CalculateDamage()
@@ -69,9 +69,9 @@ namespace MobaVR
         }
 
         [PunRPC]
-        protected override void RpcDestroy()
+        protected override void RpcDestroyThrowable()
         {
-            base.RpcDestroy();
+            base.RpcDestroyThrowable();
             if (m_IsDestroyed)
             {
                 return;

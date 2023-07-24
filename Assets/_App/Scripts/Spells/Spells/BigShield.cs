@@ -81,13 +81,13 @@ namespace MobaVR
         {
             if (gameObject.activeSelf)
             {
-                photonView.RPC(nameof(RpcDestroy), RpcTarget.All);
+                photonView.RPC(nameof(RpcDestroyShield), RpcTarget.All);
                 StopAllCoroutines();
             }
         }
 
         [PunRPC]
-        private void RpcDestroy()
+        private void RpcDestroyShield()
         {
             OnDestroySpell?.Invoke();
 
