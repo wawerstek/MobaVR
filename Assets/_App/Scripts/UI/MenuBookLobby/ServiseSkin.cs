@@ -10,7 +10,7 @@ public class ServiseSkin : MonoBehaviour
 
     public GameObject targetObject; // GameObject, для которого нужно найти дочерние элементы
     public Transform destinationParent; // Родительский элемент для созданных копий
-
+    
 
     private void Start()
     {
@@ -43,12 +43,15 @@ public class ServiseSkin : MonoBehaviour
                 vrIK.enabled = false;
             }
 
-            // Выключаем компонент VR IK
-            IKDummy ikDummy = copiedChild.GetComponent<IKDummy>();
-            if (ikDummy != null)
+
+            // Ищем объект "Hands" и включаем его, если найден
+            Transform handsObject = child.transform.Find("Hands");
+            if (handsObject != null)
             {
-                ikDummy.enabled = true;
+                handsObject.gameObject.SetActive(false);
             }
+
+
 
 
             // Выключаем скопированный объект

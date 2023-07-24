@@ -55,6 +55,14 @@ namespace BNG {
             }
         }
 
+
+        public void Enter_Of()
+        {
+          
+                AttachedKeyboard.gameObject.SetActive(false);
+          
+        }
+
         // Assign the AttachedKeyboard variable when adding the component to a GameObject for the first time
         void Reset() {
             var keyboard = GameObject.FindObjectOfType<VRKeyboard>();
