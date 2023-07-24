@@ -9,7 +9,7 @@ public class MenuBookLobby : MonoBehaviour
     public Text outputText;
     public TextData[] textElements;
     public ZonaBook zonaBook;
-
+    public AudioClip clickSound;
 
     public void OnButtonClick(string buttonId)
     {
@@ -17,6 +17,10 @@ public class MenuBookLobby : MonoBehaviour
         {
             if (textData.id == buttonId)
             {
+                // Воспроизводим звук нажатия
+                PlaySound(clickSound);
+
+
                 titleText.text = textData.title; // заголовок
                 outputText.text = textData.text; // Текст
 
@@ -25,6 +29,16 @@ public class MenuBookLobby : MonoBehaviour
                 zonaBook.UpdateTargetID(textData.id);
                 break;
             }
+        }
+    }
+
+
+    private void PlaySound(AudioClip sound)
+    {
+        // Воспроизведение звука
+        if (sound != null)
+        {
+            AudioSource.PlayClipAtPoint(sound, Camera.main.transform.position);
         }
     }
 
