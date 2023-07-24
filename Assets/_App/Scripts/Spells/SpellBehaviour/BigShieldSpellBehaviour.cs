@@ -1,5 +1,6 @@
 ﻿using System;
 using Photon.Pun;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,10 +10,19 @@ namespace MobaVR
     {
         [SerializeField] private BigShield m_ShieldPrefab;
         [SerializeField] private Transform m_SpawnPoint;
-        [SerializeField] private bool m_IsPlaced = false;
+        [SerializeField] private float m_Cooldown = 30f;
+        [SerializeField] [ReadOnly] private bool m_IsPlaced = false;
 
+        private bool m_IsAvailable = true;
         private BigShield m_CurrentShield;
         private int m_Number = 1;
+
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+            m_IsPerformed = false;
+            m_IsAvailable = true;
+        }
 
         protected override void OnStartCast(InputAction.CallbackContext context)
         {
@@ -23,7 +33,7 @@ namespace MobaVR
         protected override void OnPerformedCast(InputAction.CallbackContext context)
         {
             base.OnPerformedCast(context);
-            if (!CanCast() || HasBlockingSpells())
+            if (!CanCast() || HasBlockingSpells() || !m_IsAvailable)
             {
                 return;
             }
@@ -40,8 +50,11 @@ namespace MobaVR
 
             if (m_IsPerformed && m_CurrentShield != null)
             {
+                m_IsAvailable = false;
                 m_CurrentShield.Place();
                 m_IsPlaced = true;
+                
+                Invoke(nameof(SetAvailable), m_Cooldown);
             }
 
             m_IsPerformed = false;
@@ -98,6 +111,11 @@ namespace MobaVR
                 shield.OnDestroySpell -= () => OnInitSpell(shield);
                 shield.OnDestroySpell -= () => OnDestroySpell(shield);
             }
+        }
+
+        private void SetAvailable()
+        {
+            m_IsAvailable = true;
         }
     }
 }

@@ -359,7 +359,7 @@ MeshCollider:
   m_GameObject: {fileID: 3398600491305313551}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   m_Convex: 1
   m_CookingOptions: 30
@@ -663,6 +663,7 @@ GameObject:
   - component: {fileID: 6313876636814145502}
   - component: {fileID: 1256544414490149151}
   - component: {fileID: 7349842883598653204}
+  - component: {fileID: 8690696965362966702}
   m_Layer: 0
   m_Name: BigDefenderShield
   m_TagString: Item
@@ -757,7 +758,7 @@ MonoBehaviour:
   m_TeamItem: {fileID: 7349842883598653204}
   m_DestroyLifeTime: 10
   m_Renderer: {fileID: 381314513320908648}
-  m_Collider: {fileID: 5048545460609238906}
+  m_Collider: {fileID: 8690696965362966702}
   m_Slider: {fileID: 1712487048817753394}
 --- !u!114 &7349842883598653204
 MonoBehaviour:
@@ -782,3 +783,16 @@ MonoBehaviour:
   m_RedMaterials:
   - {fileID: 2100000, guid: 0b6128360ea4a0b4299c53b746d0de35, type: 2}
   - {fileID: 2100000, guid: 77b253c42b26b3a4296970223b8be0cc, type: 2}
+--- !u!65 &8690696965362966702
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8857347568595034639}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.5, y: 1.7, z: 3.4}
+  m_Center: {x: 0.1, y: -0.1, z: 0}
