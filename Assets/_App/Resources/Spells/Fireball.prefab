@@ -48898,7 +48898,8 @@ GameObject:
   - component: {fileID: 5539838930902219004}
   - component: {fileID: 2864111511535391836}
   - component: {fileID: 6762492436249963837}
-  - component: {fileID: 6770378812314868173}
+  - component: {fileID: 1125431837953816194}
+  - component: {fileID: 5626879491509573030}
   m_Layer: 10
   m_Name: Fireball
   m_TagString: Untagged
@@ -48938,8 +48939,8 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0
-  m_UseGravity: 1
-  m_IsKinematic: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 2
@@ -49084,7 +49085,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 6770378812314868173}
+  - {fileID: 5626879491509573030}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -49144,13 +49145,25 @@ MonoBehaviour:
   m_SecondaryForce: 1000
   m_PhotonView: {fileID: 232510063208312151}
   m_Rigidbody: {fileID: 3318618810848601280}
-  m_Grabbable: {fileID: 6770378812314868173}
+  m_Grabbable: {fileID: 1125431837953816194}
   OnValidated:
     m_PersistentCalls:
       m_Calls: []
   OnThrown:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5626879491509573030}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnRedirected:
     m_PersistentCalls:
       m_Calls: []
@@ -49159,7 +49172,19 @@ MonoBehaviour:
       m_Calls: []
   OnReleased:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5626879491509573030}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnAppliedVelocity:
     m_PersistentCalls:
       m_Calls: []
@@ -49181,7 +49206,7 @@ MonoBehaviour:
   m_GravityType: 1
   m_CustomThrowSettings: {fileID: 11400000, guid: 10c7fa5a6238f5546bfe36351916e15e,
     type: 2}
-  m_Grabbable: {fileID: 6770378812314868173}
+  m_Grabbable: {fileID: 1125431837953816194}
   m_IsAutoInit: 1
 --- !u!114 &129987473065859420
 MonoBehaviour:
@@ -49237,7 +49262,7 @@ MonoBehaviour:
   m_ExplosionForce: 300
   m_ExplosionForceRadius: 2
   m_ExplosionModifier: 1
-  m_Grabbable: {fileID: 6770378812314868173}
+  m_Grabbable: {fileID: 1125431837953816194}
   m_CollisionCollider: {fileID: 1759997014084853414}
   m_TriggerCollider: {fileID: 3318618810848601281}
 --- !u!114 &2864111511535391836
@@ -49282,7 +49307,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Damage: 25
---- !u!114 &6770378812314868173
+--- !u!114 &1125431837953816194
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -49291,7 +49316,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3318618810848601306}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 998e65cd71651ad4cb6c2533f5dd49d6, type: 3}
+  m_Script: {fileID: 11500000, guid: 5cdea428d48e2bb488d33d5f75c39bb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   BeingHeld: 0
@@ -49303,7 +49328,7 @@ MonoBehaviour:
   RemoteGrabbable: 1
   RemoteGrabMechanic: 0
   RemoteGrabDistance: 2
-  ThrowForceMultiplier: 5.8
+  ThrowForceMultiplier: 6
   ThrowForceMultiplierAngular: 1
   BreakDistance: 0
   HideHandGraphics: 0
@@ -49353,6 +49378,22 @@ MonoBehaviour:
   UseCustomInspector: 1
   lastFlickTime: 0
   FlickForce: 1
+--- !u!114 &5626879491509573030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3318618810848601306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 0
 --- !u!1 &3318618811458133669
 GameObject:
   m_ObjectHideFlags: 0
