@@ -12,6 +12,7 @@ namespace MobaVR
         [SerializeField] private GameObject m_ExplosionFx;
         [SerializeField] private TrailRenderer m_TrailRenderer;
         [SerializeField] private Grabbable m_Grabbable;
+        [SerializeField] private Rigidbody m_Rigidbody;
         [SerializeField] private float m_Damage = 10f;
         [SerializeField] private float m_DestroyExplosion = 4f;
 
@@ -32,6 +33,11 @@ namespace MobaVR
             if (m_Grabbable == null)
             {
                 TryGetComponent(out m_Grabbable);
+            }
+
+            if (m_Rigidbody == null)
+            {
+                TryGetComponent(out m_Rigidbody);
             }
         }
 
@@ -61,9 +67,9 @@ namespace MobaVR
         {
             if (!photonView.IsMine)
             {
-                if (TryGetComponent(out Grabbable grabbable))
+                if (m_Grabbable != null)
                 {
-                    grabbable.enabled = false;
+                    //m_Grabbable.enabled = false;
                 }
             }
         }
@@ -106,19 +112,30 @@ namespace MobaVR
         {
             if (arrow == m_Arrow)
             {
-                photonView.RPC(nameof(RpcReleaseArrow), RpcTarget.AllBuffered, m_Arrow.transform.position, force);
+                m_Grabbable.enabled = false;
+
+                photonView.RPC(nameof(RpcReleaseArrow), 
+                               RpcTarget.AllBuffered,
+                               m_Arrow.transform.position, 
+                               m_Arrow.transform.rotation, 
+                               force);
             }
         }
 
         [PunRPC]
-        private void RpcReleaseArrow(Vector3 position, Vector3 force)
+        private void RpcReleaseArrow(Vector3 position, Quaternion rotation, Vector3 force)
         {
             if (m_Arrow != null)
             {
                 if (!photonView.IsMine)
                 {
                     m_Arrow.transform.position = position;
-                    m_Arrow.ShootArrow(force);
+                    m_Arrow.transform.rotation = rotation;
+                    //m_Arrow.ShootArrow(force);
+                    
+                    m_Rigidbody.isKinematic = false;
+                    m_Rigidbody.useGravity = true;
+                    m_Rigidbody.AddForce(force, ForceMode.VelocityChange);
                 }
 
                 RpcRelease();
@@ -138,7 +155,7 @@ namespace MobaVR
                 return;
             }
 
-            m_Gr
+            m_Grabbable.enabled = false;
             m_TrailRenderer.enabled = true;
 
             m_IsThrown = true;
@@ -177,6 +194,11 @@ namespace MobaVR
                 {
                     return;
                 }
+                
+                if (wizardPlayer.photonView.Owner.ActorNumber == photonView.Owner.ActorNumber)
+                {
+                    return;
+                }
 
                 if (photonView.IsMine)
                 {
@@ -189,6 +211,11 @@ namespace MobaVR
             if (other.CompareTag("LifeCollider") && other.transform.TryGetComponent(out HitCollider damagePlayer))
             {
                 if (damagePlayer.WizardPlayer == Owner)
+                {
+                    return;
+                }
+                
+                if (damagePlayer.WizardPlayer.photonView.Owner.ActorNumber == photonView.Owner.ActorNumber)
                 {
                     return;
                 }
@@ -225,7 +252,11 @@ namespace MobaVR
             
             if (other.CompareTag("Enemy") && other.TryGetComponent(out IHit hitEnemy))
             {
-                hitEnemy.RpcHit(m_Damage);
+                if (photonView.IsMine)
+                {
+                    hitEnemy.RpcHit(m_Damage);
+                }
+
                 HandleCollision(other.transform);
                 return;
             }

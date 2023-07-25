@@ -117,6 +117,10 @@ namespace MobaVR
         private void OnCanceledCast(InputAction.CallbackContext context)
         {
             Debug.Log($"{SpellName}: {nameof(OnCanceledCast)}: canceled");
+            if (!m_PhotonView.IsMine)
+            {
+                return;
+            }
             m_IsPerformed = false;
         }
 

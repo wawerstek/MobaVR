@@ -446,8 +446,8 @@ namespace MobaVR.Weapons.Bow
             // Calculate shot force
             float shotForce = BowForce * StringDistance;
             Vector3 transformForward = GrabbedArrow.transform.forward * shotForce;
-            OnReleaseArrow?.Invoke(GrabbedArrow, transformForward);
             GrabbedArrow.ShootArrow(transformForward);
+            OnReleaseArrow?.Invoke(GrabbedArrow, transformForward);
 
             // Make sure hands are showing if we hid them
             arrowGrabber.ResetHandGraphics();

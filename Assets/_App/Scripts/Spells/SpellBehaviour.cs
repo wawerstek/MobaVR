@@ -91,6 +91,11 @@ namespace MobaVR
 
         public virtual bool TryInterrupt()
         {
+            if (!m_PhotonView.IsMine)
+            {
+                return false;
+            }
+            
             if (m_CanInterrupted)
             {
                 Interrupt();
@@ -101,6 +106,11 @@ namespace MobaVR
 
         public void Reset()
         {
+            if (!m_PhotonView.IsMine)
+            {
+                return;
+            }
+            
             Interrupt();
         }
 

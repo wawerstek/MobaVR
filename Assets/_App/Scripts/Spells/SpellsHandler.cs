@@ -39,6 +39,11 @@ namespace MobaVR
 
         private void Reset()
         {
+            if (!m_Player.photonView.IsMine)
+            {
+                return;
+            }
+            
             foreach (SpellHandler spellHandler in m_SpellHandlers)
             {
                 foreach (SpellMap spellMap in spellHandler.Spells)
@@ -50,6 +55,11 @@ namespace MobaVR
 
         private void Awake()
         {
+            if (!m_Player.photonView.IsMine)
+            {
+                return;
+            }
+            
             foreach (SpellHandler spellHandler in m_SpellHandlers)
             {
                 spellHandler.Init();

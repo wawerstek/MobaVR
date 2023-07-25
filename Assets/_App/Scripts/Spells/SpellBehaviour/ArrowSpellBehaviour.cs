@@ -124,7 +124,7 @@ namespace MobaVR
         {
             if (m_CurrentArrow != null)
             {
-                m_CurrentArrow.Release();
+                //m_CurrentArrow.Release();
 
                 m_IsThrown = true;
                 m_CurrentArrow = null;

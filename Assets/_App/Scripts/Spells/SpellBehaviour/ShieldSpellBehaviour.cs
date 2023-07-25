@@ -19,10 +19,15 @@ namespace MobaVR
             base.OnDisable();
             m_Shield.gameObject.SetActive(false);
         }
-        
+
         protected override void OnStartCast(InputAction.CallbackContext context)
         {
             base.OnStartCast(context);
+            if (!m_PhotonView.IsMine)
+            {
+                return;
+            }
+
             OnStarted?.Invoke();
         }
 
@@ -33,7 +38,7 @@ namespace MobaVR
             {
                 return;
             }
-            
+
             OnPerformed?.Invoke();
             m_IsPerformed = true;
             m_Shield.Show(true);
@@ -42,13 +47,22 @@ namespace MobaVR
         protected override void OnCanceledCast(InputAction.CallbackContext context)
         {
             base.OnCanceledCast(context);
+            if (!m_PhotonView.IsMine)
+            {
+                return;
+            }
+            
             Interrupt();
         }
 
         protected override void Interrupt()
         {
             base.Interrupt();
-            
+            if (!m_PhotonView.IsMine)
+            {
+                return;
+            }
+
             OnCompleted?.Invoke();
             m_IsPerformed = false;
             m_Shield.Show(false);

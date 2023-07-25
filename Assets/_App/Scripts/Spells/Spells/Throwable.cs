@@ -179,7 +179,7 @@ namespace MobaVR
 
             if (isGoodThrow && m_IsThrowOnReleased)
             {
-                ThrowByVelocity(m_Rigidbody.velocity, m_Rigidbody.angularVelocity);
+                ThrowByVelocity(m_Rigidbody.velocity, m_Rigidbody.rotation, m_Rigidbody.angularVelocity);
             }
         }
 
@@ -206,11 +206,12 @@ namespace MobaVR
             m_PhotonView.RPC(nameof(RpcThrow), RpcTarget.AllBuffered);
         }
 
-        public void ThrowByVelocity(Vector3 velocity, Vector3 angularVelocity)
+        public void ThrowByVelocity(Vector3 velocity, Quaternion quaternion, Vector3 angularVelocity)
         {
             m_PhotonView.RPC(nameof(RpcThrowByVelocity),
                              RpcTarget.AllBuffered,
                              transform.position,
+                             transform.rotation,
                              velocity,
                              angularVelocity);
         }
@@ -239,13 +240,14 @@ namespace MobaVR
         }
 
         [PunRPC]
-        private void RpcThrowByVelocity(Vector3 position, Vector3 velocity, Vector3 angularVelocity)
+        private void RpcThrowByVelocity(Vector3 position,Quaternion rotation, Vector3 velocity, Vector3 angularVelocity)
         {
             InitThrow();
 
             //if (m_PhotonView.IsMine)
             {
                 m_Rigidbody.position = position;
+                m_Rigidbody.rotation = rotation;
                 m_Rigidbody.velocity = velocity;
                 m_Rigidbody.angularVelocity = angularVelocity;
             }

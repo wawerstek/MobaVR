@@ -103,6 +103,11 @@ namespace MobaVR
                     {
                         return;
                     }
+                    
+                    if (wizardPlayer.photonView.Owner.ActorNumber == photonView.Owner.ActorNumber)
+                    {
+                        return;
+                    }
 
                     if (photonView.IsMine)
                     {
@@ -115,6 +120,11 @@ namespace MobaVR
                 if (other.CompareTag("LifeCollider") && other.transform.TryGetComponent(out HitCollider damagePlayer))
                 {
                     if (damagePlayer.WizardPlayer == Owner)
+                    {
+                        return;
+                    }
+                             
+                    if (damagePlayer.WizardPlayer.photonView.Owner.ActorNumber == photonView.Owner.ActorNumber)
                     {
                         return;
                     }

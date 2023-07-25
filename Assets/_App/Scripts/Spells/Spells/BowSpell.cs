@@ -34,7 +34,7 @@ namespace MobaVR
 
             if (!photonView.IsMine)
             {
-                m_Grabbable.enabled = false;
+                //m_Grabbable.enabled = false;
             }
             
             foreach (Collider bowCollider in m_Colliders)
