@@ -36,6 +36,20 @@ namespace MobaVR
             
             OnPerformed?.Invoke();
             m_IsPerformed = true;
+
+            if (!m_Bow.Grabbable.IsGrabbable())
+            {
+                if (m_SpellHandType == SpellHandType.LEFT_HAND)
+                {
+                    m_Bow.Grabbable.DropItem(m_RightHand.Grabber);
+                }
+                else
+                {
+                    m_Bow.Grabbable.DropItem(m_LeftHand.Grabber);
+                }
+            }
+            
+            m_Bow.Grabbable.GrabRemoteItem(m_MainHandInputVR.Grabber);
             m_Bow.Show(true);
         }
 
@@ -52,6 +66,14 @@ namespace MobaVR
             OnCompleted?.Invoke();
             m_IsPerformed = false;
             m_Bow.Show(false);
+            
+            m_Bow.Grabbable.DropItem(m_MainHandInputVR.Grabber);
+        }
+
+        public override void Init(SpellHandler spellHandler, PlayerVR playerVR)
+        {
+            base.Init(spellHandler, playerVR);
+            //m_Bow.Grabbable.GrabRemoteItem(m_MainHandInputVR.Grabber);
         }
     }
 }

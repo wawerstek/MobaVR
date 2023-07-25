@@ -435,7 +435,12 @@ namespace BNG {
             }
         }
 
-//#if UNITY_EDITOR
+        private void OnControllerColliderHit(ControllerColliderHit hit)
+        {
+            //Debug.Log(hit.gameObject.name);
+        }
+
+        //#if UNITY_EDITOR
 //        public static void DrawWireCapsule(Vector3 _pos, Vector3 _pos2, float _radius, float _height, Color _color = default) {
 //            if (_color != default) {
 //                UnityEditor.Handles.color = _color;

@@ -1,19 +1,62 @@
 ﻿using System;
+using BNG;
 using Photon.Pun;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Bow = MobaVR.Weapons.Bow.Bow;
 
 namespace MobaVR
 {
     public class ArrowSpellBehaviour : InputSpellBehaviour
     {
+        [SerializeField] private Quiver m_Quiver;
+        [SerializeField] private bool m_UseQuiver = false;
         [SerializeField] private ArrowSpell m_ArrowPrefab;
 
-        private GameObject m_CurrentArrow;
+        private ArrowSpell m_CurrentArrow;
         private bool m_IsThrown = false;
         private int m_Number = 0;
+        private bool m_IsAttach = false;
+        [SerializeField] [ReadOnly] private bool m_IsTriggerQuiver = false;
 
         #region Input Callbacks
+
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+            if (m_Quiver != null)
+            {
+                m_Quiver.OnGrabberTriggerEnter += OnGrabberTriggerEnter;
+                m_Quiver.OnGrabberTriggerExit += OnGrabberTriggerExit;
+            }
+        }
+        
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+            if (m_Quiver != null)
+            {
+                m_Quiver.OnGrabberTriggerEnter -= OnGrabberTriggerEnter;
+                m_Quiver.OnGrabberTriggerExit -= OnGrabberTriggerExit;
+            }
+        }
+
+        private void OnGrabberTriggerEnter(Grabber grabber)
+        {
+            if (grabber == m_MainHandInputVR.Grabber)
+            {
+                m_IsTriggerQuiver = true;
+            }
+        }
+        
+        private void OnGrabberTriggerExit(Grabber grabber)
+        {
+            if (grabber == m_MainHandInputVR.Grabber)
+            {
+                m_IsTriggerQuiver = false;
+            }
+        }
 
         protected override void OnStartCast(InputAction.CallbackContext context)
         {
@@ -29,11 +72,15 @@ namespace MobaVR
                 return;
             }
 
-            OnPerformed?.Invoke();
-            m_IsPerformed = true;
-            m_IsThrown = false;
+            if (!m_UseQuiver || (m_UseQuiver && m_IsTriggerQuiver))
+            {
+                OnPerformed?.Invoke();
+                m_IsPerformed = true;
+                m_IsThrown = false;
+                m_IsAttach = false;
 
-            CreateArrow(m_MainHandInputVR.Grabber.transform);
+                CreateArrow(m_MainHandInputVR.Grabber.transform);
+            }
         }
 
         protected override void OnCanceledCast(InputAction.CallbackContext context)
@@ -44,37 +91,51 @@ namespace MobaVR
             {
                 return;
             }
-
+            
             m_IsPerformed = false;
-            ThrowFireball();
+
+
+            if (m_IsAttach)
+            {
+                Release();
+            }
+            else
+            {
+                Interrupt();
+            }
         }
 
         protected override void Interrupt()
         {
-            if (!m_IsThrown && m_CurrentArrow != null)
+            if (m_CurrentArrow != null)
             {
-                //m_CurrentArrow.Throw();
+                m_CurrentArrow.DestroySpell();
 
                 m_CurrentArrow = null;
                 m_IsPerformed = false;
+                m_IsAttach = false;
+                m_IsThrown = false;
             }
 
             OnCompleted?.Invoke();
+        }
+        
+        private void Release()
+        {
+            if (m_CurrentArrow != null)
+            {
+                m_CurrentArrow.Release();
 
-            //m_CurrentFireBall = null;
-            //m_IsPerformed = false;
-            //OnCompleted?.Invoke();
+                m_IsThrown = true;
+                m_CurrentArrow = null;
+                m_IsPerformed = false;
+                m_IsAttach = false;
+            }
+            
+            OnCompleted?.Invoke();
         }
 
         #endregion
-
-        /*
-                public override bool CanCast()
-                {
-                    bool canCast = base.CanCast();
-                    //return canCast && m_MainHandInputVR.GrabbableTrigger.
-                }
-        */
 
         #region Fireball
 
@@ -86,35 +147,51 @@ namespace MobaVR
 
             m_IsThrown = false;
 
-            m_Number++;
-            string handName = m_SpellHandType == SpellHandType.RIGHT_HAND ? "Right" : "Left";
-            string fireballName = $"{m_ArrowPrefab.name}_{handName}_{m_Number}";
-            networkArrow.name = fireballName;
-
-            Transform fireBallTransform = networkArrow.transform;
-            fireBallTransform.parent = point.transform;
-            fireBallTransform.localPosition = Vector3.zero;
-            fireBallTransform.localRotation = Quaternion.identity;
-
-            /*
-            fireBall.Init(m_PlayerVR.WizardPlayer, m_PlayerVR.TeamType);
-            fireBall.OnInitSpell += () => OnInitSpell(fireBall);
-            fireBall.OnDestroySpell += () => OnDestroySpell(fireBall);
-            */
-
-            m_CurrentArrow = networkArrow;
-        }
-
-        private void ThrowFireball()
-        {
-            if (m_CurrentArrow != null)
+            if (networkArrow.TryGetComponent(out ArrowSpell arrowSpell))
             {
-                m_IsThrown = true;
-                //m_CurrentArrow.Throw();
+                m_Number++;
+                string handName = m_SpellHandType == SpellHandType.RIGHT_HAND ? "Right" : "Left";
+                string fireballName = $"{m_ArrowPrefab.name}_{handName}_{m_Number}";
+                networkArrow.name = fireballName;
+
+                Transform fireBallTransform = networkArrow.transform;
+                fireBallTransform.parent = point.transform;
+                fireBallTransform.localPosition = Vector3.zero;
+                fireBallTransform.localRotation = Quaternion.identity;
+
+                arrowSpell.Arrow.OnAttach.AddListener(OnAttach);
+                
+                arrowSpell.OnInitSpell += () => OnInitSpell(arrowSpell);
+                arrowSpell.OnDestroySpell += () => OnDestroySpell(arrowSpell);
+
+                arrowSpell.Init(m_PlayerVR.WizardPlayer, m_PlayerVR.TeamType);
+                m_CurrentArrow = arrowSpell;
             }
         }
 
-        private void OnInitSpell(BigFireBall fireBall)
+        private void OnAttach(Bow bow)
+        {
+            m_IsAttach = true;
+        }
+
+        private void OnDestroySpell(ArrowSpell arrowSpell)
+        {
+            if (arrowSpell != null)
+            {
+                arrowSpell.OnInitSpell -= () => OnInitSpell(arrowSpell);
+                arrowSpell.OnDestroySpell -= () => OnDestroySpell(arrowSpell);
+                
+                arrowSpell.Arrow.OnAttach.RemoveListener(OnAttach);
+            }
+
+            if (m_CurrentArrow == arrowSpell)
+            {
+                m_IsPerformed = false;
+                OnCompleted?.Invoke();
+            }
+        }
+
+        private void OnInitSpell(ArrowSpell arrowSpell)
         {
             m_IsThrown = false;
             m_IsPerformed = true;

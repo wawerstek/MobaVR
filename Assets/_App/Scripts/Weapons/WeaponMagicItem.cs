@@ -12,7 +12,6 @@ namespace MobaVR
         [SerializeField] private FireballTeamThemeSO m_BlueTeamThemeSo;
 
         [SerializeField] private ParticleSystem m_ExplosionParticle;
-
         [SerializeField] private TrailRenderer m_TrailRenderer;
 
         public override void SetTeam(TeamType teamType)
@@ -41,7 +40,6 @@ namespace MobaVR
             {
                 m_ExplosionParticle.SetColorOverLifeTime(fireballTheme.Gradient);
             }
-
         }
 
         public Material GetMagicMaterial()

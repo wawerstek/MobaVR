@@ -57,12 +57,15 @@ namespace MobaVR
                 m_Throwable.OnValidated.RemoveListener(OnValidated);
             }
         }
-
+        
         protected override void HandleCollision(Transform interactable)
         {
             if (photonView.IsMine)
             {
-                //photonView.RPC(nameof(RpcDestroy), RpcTarget.AllBuffered);
+                if (interactable.CompareTag("Enemy") && interactable.TryGetComponent(out IHit hitEnemy))
+                {
+                    hitEnemy.RpcHit(CalculateDamage());
+                }
             }
 
             RpcDestroyThrowable();

@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace MobaVR
@@ -10,6 +7,7 @@ namespace MobaVR
     {
         [SerializeField] private CharacterController m_CharacterController;
         [SerializeField] private bool m_UseDetectCollision;
+        [SerializeField] private bool m_IsTrigger;
 
         private void OnValidate()
         {
@@ -24,7 +22,7 @@ namespace MobaVR
             if (m_CharacterController != null)
             {
                 m_CharacterController.detectCollisions = m_UseDetectCollision;
-                m_CharacterController.isTrigger = false;
+                //m_CharacterController.isTrigger = m_IsTrigger;
             }
         }
     }
