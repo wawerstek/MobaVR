@@ -15,7 +15,6 @@ namespace MobaVR
 
             if (m_PhotonView.IsMine)
             {
-
                 m_RedirectInput.action.started += OnStartRedirect;
                 m_RedirectInput.action.performed += OnPerformedRedirect;
                 m_RedirectInput.action.canceled += OnCanceledRedirect;

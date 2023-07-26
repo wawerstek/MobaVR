@@ -23,7 +23,6 @@ namespace MobaVR
         {
             base.OnEnable();
             if (m_PhotonView.IsMine)
-            //if (m_PlayerVR != null && m_PlayerVR.IsMine)
             {
                 m_CastInput.action.started += OnStartCast;
                 m_CastInput.action.performed += OnPerformedCast;
@@ -32,10 +31,9 @@ namespace MobaVR
         }
 
         protected virtual void OnDisable()
-        {            base.OnDisable();
-
+        {
+            base.OnDisable();
             if (m_PhotonView.IsMine)
-            //if (m_PlayerVR != null && m_PlayerVR.IsMine)
             {
                 m_CastInput.action.started -= OnStartCast;
                 m_CastInput.action.performed -= OnPerformedCast;

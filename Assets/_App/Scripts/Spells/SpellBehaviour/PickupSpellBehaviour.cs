@@ -40,7 +40,6 @@ namespace MobaVR
         private void Subscribe()
         {
             if (m_HandInputVR != null && m_PhotonView.IsMine)
-            //if (m_HandInputVR != null && m_PlayerVR != null && m_PlayerVR.IsMine)
             {
                 m_HandInputVR.RemoteGrabber.OnEnterGrabbableEvent.AddListener(OnRemoteEnter);
                 m_HandInputVR.RemoteGrabber.OnExitGrabbableEvent.AddListener(OnRemoteExit);
@@ -56,7 +55,6 @@ namespace MobaVR
 
         private void Unsubscribe()
         {
-            //if (m_HandInputVR != null && m_PhotonView.IsMine)
             if (m_HandInputVR != null && m_PlayerVR != null && m_PlayerVR.IsMine)
             {
                 m_HandInputVR.RemoteGrabber.OnEnterGrabbableEvent.RemoveListener(OnRemoteEnter);
@@ -75,8 +73,9 @@ namespace MobaVR
 
         #region MonoBehaviour
 
-        private void OnDisable()
+        protected override void OnDisable()
         {
+            base.OnDisable();
             Unsubscribe();
         }
 
@@ -117,26 +116,19 @@ namespace MobaVR
         private void OnCanceledCast(InputAction.CallbackContext context)
         {
             Debug.Log($"{SpellName}: {nameof(OnCanceledCast)}: canceled");
-            if (!m_PhotonView.IsMine)
+            //if (!m_IsPickuped)
             {
-                return;
+                m_IsPerformed = false;
             }
-            m_IsPerformed = false;
         }
 
+        ///
+        /// TODO: Костыль
+        /// У игрока не всегда сбрасывается исТриггер
         private void OnRemoteEnter(Grabbable grabbable)
         {
             Debug.Log($"{SpellName}: {nameof(OnRemoteEnter)}: {grabbable}");
-            /*
-            if (grabbable.TryGetComponent(out Fireball fireball))
-            {
-                return;
-            }
-            */
-
-            ///
-            /// TODO: Костыль
-            /// У игрока не всегда сбрасывается исТриггер
+       
             if (grabbable.TryGetComponent(out BaseSpell baseSpell))
             {
                 return;
@@ -172,14 +164,19 @@ namespace MobaVR
             }
         }
 
+        ///
+        /// TODO: Костыль
+        /// У игрока не всегда сбрасывается исТриггер
         private void OnGrab(Grabbable grabbable)
         {
             Debug.Log($"{SpellName}: {nameof(OnGrab)}: {grabbable}");
 
-            ///
-            /// TODO: Костыль
-            /// У игрока не всегда сбрасывается исТриггер
             if (grabbable.TryGetComponent(out BaseSpell baseSpell))
+            {
+                return;
+            }
+            
+            if (grabbable.TryGetComponent(out Spell spell))
             {
                 return;
             }

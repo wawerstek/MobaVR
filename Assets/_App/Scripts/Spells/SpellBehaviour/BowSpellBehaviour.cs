@@ -23,10 +23,6 @@ namespace MobaVR
         protected override void OnStartCast(InputAction.CallbackContext context)
         {
             base.OnStartCast(context);
-            if (!m_PhotonView.IsMine)
-            {
-                return;
-            }
             OnStarted?.Invoke();
         }
 
@@ -60,11 +56,10 @@ namespace MobaVR
         protected override void OnCanceledCast(InputAction.CallbackContext context)
         {
             base.OnCanceledCast(context);
-            if (!m_PhotonView.IsMine)
+            if (IsPerformed())
             {
-                return;
+                Interrupt();
             }
-            Interrupt();
         }
 
         protected override void Interrupt()
@@ -79,6 +74,8 @@ namespace MobaVR
             {
                 m_Bow.Grabbable.DropItem(m_MainHandInputVR.Grabber);
             }
+            
+            WaitCooldown();
         }
 
         public override void Init(SpellHandler spellHandler, PlayerVR playerVR)

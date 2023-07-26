@@ -10,10 +10,8 @@ namespace MobaVR
     {
         [SerializeField] private BigShield m_ShieldPrefab;
         [SerializeField] private Transform m_SpawnPoint;
-        [SerializeField] private float m_Cooldown = 30f;
         [SerializeField] [ReadOnly] private bool m_IsPlaced = false;
 
-        private bool m_IsAvailable = true;
         private BigShield m_CurrentShield;
         private int m_Number = 1;
 
@@ -50,11 +48,10 @@ namespace MobaVR
 
             if (m_IsPerformed && m_CurrentShield != null)
             {
-                m_IsAvailable = false;
                 m_CurrentShield.Place();
                 m_IsPlaced = true;
-                
-                Invoke(nameof(SetAvailable), m_Cooldown);
+
+                WaitCooldown();
             }
 
             m_IsPerformed = false;
@@ -111,11 +108,6 @@ namespace MobaVR
                 shield.OnDestroySpell -= () => OnInitSpell(shield);
                 shield.OnDestroySpell -= () => OnDestroySpell(shield);
             }
-        }
-
-        private void SetAvailable()
-        {
-            m_IsAvailable = true;
         }
     }
 }

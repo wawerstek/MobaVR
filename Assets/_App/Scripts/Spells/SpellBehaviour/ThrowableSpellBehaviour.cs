@@ -75,6 +75,7 @@ namespace MobaVR
                 m_CurrentSpell = null;
             }
 
+            WaitCooldown();
             OnCompleted?.Invoke();
         }
 
@@ -129,6 +130,8 @@ namespace MobaVR
                 m_IsGrabbed = false;
                 m_IsThrown = true;
             }
+            
+            WaitCooldown();
         }
 
         private void OnInitSpell(ThrowableSpell throwableSpell)

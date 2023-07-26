@@ -25,7 +25,7 @@ namespace MobaVR
         protected override void OnEnable()
         {
             base.OnEnable();
-            if (m_Quiver != null)
+            if (m_PhotonView.IsMine && m_Quiver != null)
             {
                 m_Quiver.OnGrabberTriggerEnter += OnGrabberTriggerEnter;
                 m_Quiver.OnGrabberTriggerExit += OnGrabberTriggerExit;
@@ -35,7 +35,7 @@ namespace MobaVR
         protected override void OnDisable()
         {
             base.OnDisable();
-            if (m_Quiver != null)
+            if (m_PhotonView.IsMine && m_Quiver != null)
             {
                 m_Quiver.OnGrabberTriggerEnter -= OnGrabberTriggerEnter;
                 m_Quiver.OnGrabberTriggerExit -= OnGrabberTriggerExit;
@@ -94,7 +94,6 @@ namespace MobaVR
             
             m_IsPerformed = false;
 
-
             if (m_IsAttach)
             {
                 Release();
@@ -110,13 +109,14 @@ namespace MobaVR
             if (m_CurrentArrow != null)
             {
                 m_CurrentArrow.DestroySpell();
-
                 m_CurrentArrow = null;
+
                 m_IsPerformed = false;
                 m_IsAttach = false;
                 m_IsThrown = false;
             }
 
+            WaitCooldown();
             OnCompleted?.Invoke();
         }
         
@@ -125,13 +125,14 @@ namespace MobaVR
             if (m_CurrentArrow != null)
             {
                 //m_CurrentArrow.Release();
-
-                m_IsThrown = true;
                 m_CurrentArrow = null;
+
                 m_IsPerformed = false;
+                m_IsThrown = true;
                 m_IsAttach = false;
             }
             
+            WaitCooldown();
             OnCompleted?.Invoke();
         }
 

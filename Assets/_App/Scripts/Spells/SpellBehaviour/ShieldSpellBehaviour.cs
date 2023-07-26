@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -23,11 +23,6 @@ namespace MobaVR
         protected override void OnStartCast(InputAction.CallbackContext context)
         {
             base.OnStartCast(context);
-            if (!m_PhotonView.IsMine)
-            {
-                return;
-            }
-
             OnStarted?.Invoke();
         }
 
@@ -47,25 +42,21 @@ namespace MobaVR
         protected override void OnCanceledCast(InputAction.CallbackContext context)
         {
             base.OnCanceledCast(context);
-            if (!m_PhotonView.IsMine)
+            if (m_IsPerformed)
             {
-                return;
+                Interrupt();
+                WaitCooldown();
             }
-            
-            Interrupt();
+            //Interrupt();
         }
 
         protected override void Interrupt()
         {
             base.Interrupt();
-            if (!m_PhotonView.IsMine)
-            {
-                return;
-            }
-
             OnCompleted?.Invoke();
             m_IsPerformed = false;
             m_Shield.Show(false);
+            //WaitCooldown();
         }
     }
 }

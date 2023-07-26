@@ -17,6 +17,9 @@ namespace MobaVR
         [Header("Spell Info")]
         [SerializeField] protected string m_SpellName;
         [SerializeField] protected bool m_CanInterrupted = true;
+        [SerializeField] protected bool m_UseCooldown = false;
+        [SerializeField] protected float m_CooldownTime = 0f;
+
         [SerializeField] [ReadOnly] protected bool m_IsPerformed = false;
 
         [Header("Network")]
@@ -25,9 +28,11 @@ namespace MobaVR
         protected SpellHandler m_SpellsHandler;
         protected PlayerVR m_PlayerVR;
         protected bool m_IsInit = false;
+        protected bool m_IsAvailable = true;
 
         public string SpellName => m_SpellName;
         public bool IsInit => m_IsInit;
+        public bool IsAvailable => !m_UseCooldown || m_IsAvailable;
 
         public Action OnStarted;
         public Action OnPerformed;
@@ -63,9 +68,9 @@ namespace MobaVR
         protected virtual bool CanCast()
         {
             //return m_PlayerVR.WizardPlayer.PlayerState.StateSo.CanCast && m_PlayerVR.WizardPlayer.IsLife;
-            return m_IsInit &&
+            return IsInit &&
+                   IsAvailable &&
                    m_PhotonView.IsMine &&
-                   //m_PlayerVR.IsMine && 
                    m_PlayerVR.WizardPlayer.PlayerState.StateSo.CanCast &&
                    m_PlayerVR.WizardPlayer.IsLife;
         }
@@ -83,6 +88,24 @@ namespace MobaVR
             return false;
         }
 
+        protected virtual void WaitCooldown()
+        {
+            if (m_UseCooldown)
+            {
+                m_IsAvailable = false;
+                Invoke(nameof(SetAvailable), m_CooldownTime);
+            }
+            else
+            {
+                m_IsAvailable = true;
+            }
+        }
+
+        protected virtual void SetAvailable()
+        {
+            m_IsAvailable = true;
+        }
+
         #endregion
 
         #region Spell States
@@ -95,7 +118,7 @@ namespace MobaVR
             {
                 return false;
             }
-            
+
             if (m_CanInterrupted)
             {
                 Interrupt();
@@ -110,7 +133,7 @@ namespace MobaVR
             {
                 return;
             }
-            
+
             Interrupt();
         }
 
