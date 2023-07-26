@@ -8,18 +8,20 @@ namespace MobaVR
 {
     public class ArrowSpell : Spell
     {
-        [SerializeField] private Weapons.Bow.Arrow m_Arrow;
-        [SerializeField] private GameObject m_ExplosionFx;
-        [SerializeField] private TrailRenderer m_TrailRenderer;
-        [SerializeField] private Grabbable m_Grabbable;
-        [SerializeField] private PhotonTransformView m_PhotonTransformView;
-        [SerializeField] private Rigidbody m_Rigidbody;
-        [SerializeField] private float m_Damage = 10f;
-        [SerializeField] private float m_DestroyExplosion = 4f;
+        [SerializeField] protected Weapons.Bow.Arrow m_Arrow;
+        [SerializeField] protected GameObject m_ExplosionFx;
+        [SerializeField] protected TrailRenderer m_TrailRenderer;
+        [SerializeField] protected Grabbable m_Grabbable;
+        [SerializeField] protected PhotonTransformView m_PhotonTransformView;
+        [SerializeField] protected Rigidbody m_Rigidbody;
+        [SerializeField] protected Collider[] m_CollisionColliders;
+        [SerializeField] protected Collider[] m_TriggerColliders;
+        [SerializeField] protected float m_Damage = 10f;
+        [SerializeField] protected float m_DestroyExplosion = 4f;
 
-        private Bow m_Bow;
-        private bool m_IsDamaged = false;
-        private bool m_IsThrown = false;
+        protected Bow m_Bow;
+        protected bool m_IsDamaged = false;
+        protected bool m_IsThrown = false;
         
         public Weapons.Bow.Arrow Arrow => m_Arrow;
 
@@ -133,7 +135,7 @@ namespace MobaVR
         }
 
         [PunRPC]
-        private void RpcReleaseArrow(Vector3 position, Quaternion rotation, Vector3 force)
+        protected virtual void RpcReleaseArrow(Vector3 position, Quaternion rotation, Vector3 force)
         {
             if (m_Arrow != null)
             {
@@ -277,7 +279,7 @@ namespace MobaVR
             }
         }
 
-        protected void HandleCollision(Transform interactable)
+        protected virtual void HandleCollision(Transform interactable)
         {
             m_IsDamaged = true;
             //transform.parent = interactable;

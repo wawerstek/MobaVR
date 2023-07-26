@@ -16,6 +16,7 @@ namespace MobaVR.Weapons.Bow
         public bool Flying = false;
         public float ZVel = 0;
 
+        public bool IsEnableCollider = true;
         public Collider ShaftCollider;
         private AudioSource impactSound;
 
@@ -119,7 +120,8 @@ namespace MobaVR.Weapons.Bow
                 yield return new WaitForFixedUpdate();
             }
 
-            ShaftCollider.enabled = true;
+            //ShaftCollider.enabled = true;
+            ShaftCollider.enabled = IsEnableCollider;
         }
 
         private void OnCollisionEnter(Collision collision)

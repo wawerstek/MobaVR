@@ -24910,6 +24910,8 @@ MonoBehaviour:
   m_Grabbable: {fileID: 176820530429670245}
   m_PhotonTransformView: {fileID: 5451158174466636360}
   m_Rigidbody: {fileID: 7030444657866217273}
+  m_CollisionColliders: []
+  m_TriggerColliders: []
   m_Damage: 25
   m_DestroyExplosion: 4
 --- !u!114 &9195180885977805880
@@ -24926,6 +24928,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Flying: 0
   ZVel: 0
+  IsEnableCollider: 1
   ShaftCollider: {fileID: 7030444657866217275}
   ProjectileObject: {fileID: 7030444657866217277}
   OnAttach:
