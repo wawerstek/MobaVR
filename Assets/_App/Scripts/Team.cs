@@ -11,6 +11,7 @@ namespace MobaVR
         [SerializeField] private string m_TeamName = "Team";
         [SerializeField] private TeamType m_TeamType = TeamType.RED;
         [SerializeField] private int m_Score = 0;
+        [SerializeField] private int m_Kills = 0;
         [SerializeField] private List<PlayerVR> m_Players = new();
 
         public string Name => m_TeamName;
@@ -20,6 +21,11 @@ namespace MobaVR
         {
             get => m_Score;
             set => m_Score = value;
+        }
+        public int Kills
+        {
+            get => m_Kills;
+            set => m_Kills = value;
         }
 
         public void RemovePlayer(PlayerVR player)

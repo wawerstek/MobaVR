@@ -27,12 +27,14 @@ namespace MobaVR
 
         public override void Show()
         {
-            m_ScoreText.enabled = true;
+            m_ScoreText.gameObject.SetActive(true);
+            //m_ScoreText.enabled = true;
         }
 
         public override void Hide()
         {
-            m_ScoreText.enabled = false;
+            m_ScoreText.gameObject.SetActive(false);
+            //m_ScoreText.enabled = false;
         }
     }
 }

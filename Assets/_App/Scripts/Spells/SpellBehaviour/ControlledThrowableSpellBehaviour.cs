@@ -13,18 +13,25 @@ namespace MobaVR
         {
             base.OnEnable();
 
-            m_RedirectInput.action.started += OnStartRedirect;
-            m_RedirectInput.action.performed += OnPerformedRedirect;
-            m_RedirectInput.action.canceled += OnCanceledRedirect;
+            if (m_PhotonView.IsMine)
+            {
+
+                m_RedirectInput.action.started += OnStartRedirect;
+                m_RedirectInput.action.performed += OnPerformedRedirect;
+                m_RedirectInput.action.canceled += OnCanceledRedirect;
+            }
         }
 
         protected override void OnDisable()
         {
             base.OnDisable();
 
-            m_RedirectInput.action.started -= OnStartRedirect;
-            m_RedirectInput.action.performed -= OnPerformedRedirect;
-            m_RedirectInput.action.canceled -= OnCanceledRedirect;
+            if (m_PhotonView.IsMine)
+            {
+                m_RedirectInput.action.started -= OnStartRedirect;
+                m_RedirectInput.action.performed -= OnPerformedRedirect;
+                m_RedirectInput.action.canceled -= OnCanceledRedirect;
+            }
         }
 
         #endregion

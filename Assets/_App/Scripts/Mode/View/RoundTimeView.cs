@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
 using UnityEngine;
 
 namespace MobaVR
@@ -18,7 +19,7 @@ namespace MobaVR
             gameObject.SetActive(false);
             m_TimeText.enabled = false;
         }
-        
+
         public override void UpdateTime(float time)
         {
             if (time < 0)
@@ -26,7 +27,10 @@ namespace MobaVR
                 time = 0f;
             }
 
-            m_TimeText.text = $"{time:F1}";
+            TimeSpan timeSpan = TimeSpan.FromSeconds(time);
+            string timeString = timeSpan .ToString(@"mm\:ss");
+            m_TimeText.text = $"{timeString}";
+            //m_TimeText.text = $"{time:F1}";
         }
     }
 }

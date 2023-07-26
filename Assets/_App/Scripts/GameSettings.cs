@@ -12,6 +12,7 @@ namespace MobaVR
         [SerializeField] private bool m_UseVRUISystem = false;
         
         [SerializeField] private ClassicGameSession m_GameSession;
+        [SerializeField] private StateMachineSwitcher m_StateMachineSwitcher;
         [SerializeField] private Environment m_Environment;
 
         public GameObject _Call;
@@ -28,6 +29,11 @@ namespace MobaVR
             if (m_Environment == null)
             {
                 m_Environment = FindObjectOfType<Environment>();
+            }
+
+            if (m_StateMachineSwitcher == null)
+            {
+                m_StateMachineSwitcher = FindObjectOfType<StateMachineSwitcher>();
             }
             
             m_VRUISystem = FindObjectOfType<VRUISystem>();
@@ -152,6 +158,22 @@ namespace MobaVR
             if (m_GameSession != null)
             {
                 m_GameSession.DeactivatePvPMode();
+            }
+        }
+        
+        public void SetClassMode()
+        {
+            if (m_StateMachineSwitcher != null)
+            {
+                m_StateMachineSwitcher.SetClassMode();
+            }
+        }
+
+        public void SetTimerMode()
+        {
+            if (m_StateMachineSwitcher != null)
+            {
+                m_StateMachineSwitcher.SetTimerMode();
             }
         }
 

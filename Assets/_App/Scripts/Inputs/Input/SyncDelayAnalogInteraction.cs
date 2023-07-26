@@ -7,26 +7,51 @@ namespace MobaVR.Inputs
     /// </summary>
     public class SyncDelayAnalogInteraction : IInputInteraction
     {
-        public float Delay = 0.5f;
-        public float Duration = 0.5f;
-        public float Timeout = 1.0f;
+        public float HoldTime = 0.5f;
+        public float HoltTimeout = 1.0f;
 
-        private bool m_IsStartPerformed = false;
+        public float MaxSyncDuration = 0.5f;
+        public float SyncTimeout = 1.0f;
+
+        private double m_StartSyncTime = 0f;
+        private float m_StartHoldTime = 0f;
+
+        private bool m_IsStartSync = false;
+        private bool m_IsSync = false;
+        private bool m_IsStartHold = false;
+        private bool m_IsHold = false;
+
         private bool m_IsReleased = false;
         private float m_LastValue = 0f;
-        private double m_TimePressed = 0f;
+        //private bool m_IsStartPerformed = false;
+        //private double m_TimePressed = 0f;
 
         public void Process(ref InputInteractionContext context)
         {
             if (context.timerHasExpired)
             {
-                if (m_IsStartPerformed)
+                if (m_IsStartSync)
                 {
-                    context.PerformedAndStayPerformed();
+                    if (m_IsSync)
+                    {
+                        context.Canceled();
+                    }
                 }
-                else
+
+                if (m_IsStartHold)
                 {
-                    context.Canceled();
+                    m_IsStartHold = false;
+                    float holdValue = context.ComputeMagnitude();
+                    if (holdValue == 1f)
+                    {
+                        m_IsHold = true;
+                        context.PerformedAndStayPerformed();
+                    }
+                    else
+                    {
+                        m_IsHold = false;
+                        context.Canceled();
+                    }
                 }
 
                 //return;
@@ -40,9 +65,11 @@ namespace MobaVR.Inputs
                     if (waitingValue > 0f && m_IsReleased)
                     {
                         m_IsReleased = false;
-                        m_TimePressed = context.time;
+                        m_IsStartSync = true;
+                        m_StartSyncTime = context.time;
+                        //m_TimePressed = context.time;
                         context.Started();
-                        context.SetTimeout(Timeout);
+                        context.SetTimeout(SyncTimeout);
                     }
 
                     if (waitingValue == 0f)
@@ -53,19 +80,26 @@ namespace MobaVR.Inputs
                     break;
 
                 case InputActionPhase.Started:
-                    float startedValue = context.ComputeMagnitude();
-                    double deltaTime = context.time - m_TimePressed;
-
-                    if (deltaTime > Duration)
+                    if (m_IsStartSync)
                     {
-                        context.Canceled();
-                    }
+                        float startedValue = context.ComputeMagnitude();
+                        double syncDeltaTime = context.time - m_StartSyncTime;
 
-                    if (startedValue == 1f && deltaTime <= Duration)
-                    {
-                        m_IsStartPerformed = true;
-                        //context.PerformedAndStayPerformed();
-                        context.PerformedAndStayPerformed();
+                        if (syncDeltaTime > MaxSyncDuration)
+                        {
+                            context.Canceled();
+                        }
+
+                        if (startedValue == 1f && syncDeltaTime <= MaxSyncDuration)
+                        {
+                            m_IsStartSync = false;
+                            m_IsSync = true;
+                            m_IsStartHold = true;
+
+                            context.SetTimeout(HoldTime);
+                            //m_IsStartPerformed = true;
+                            //context.PerformedAndStayPerformed();
+                        }
                     }
 
                     break;

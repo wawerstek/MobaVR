@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using Photon.Pun;
 using UnityEngine;
 
@@ -28,8 +27,8 @@ namespace MobaVR.ClassicModeStateMachine
                 UpdatePlayers();
             }
 
-            m_Mode.ModeView.RoundTimeView.Show();
-            m_Mode.ModeView.RoundTimeView.UpdateTime(m_Time);
+            m_Mode.ModeView.PreRoundTimeView.Show();
+            m_Mode.ModeView.PreRoundTimeView.UpdateTime(m_Time);
             
             m_IsWaiting = true;
             m_CurrentTime = m_Time;
@@ -40,12 +39,13 @@ namespace MobaVR.ClassicModeStateMachine
             if (m_IsWaiting)
             {
                 m_CurrentTime -= Time.deltaTime;
-                m_Mode.ModeView.RoundTimeView.UpdateTime(m_CurrentTime);
+                m_Mode.ModeView.PreRoundTimeView.UpdateTime(m_CurrentTime);
                 
                 if (m_CurrentTime <= 0)
                 {
                     m_CurrentTime = 0f;
                     m_IsWaiting = false;
+                    m_Mode.PlayRound();
                     m_StateMachine.PlayRound();
                 }
             }
@@ -53,7 +53,7 @@ namespace MobaVR.ClassicModeStateMachine
 
         public override void Exit()
         {
-            m_Mode.ModeView.RoundTimeView.Hide();
+            m_Mode.ModeView.PreRoundTimeView.Hide();
         }
     }
 }

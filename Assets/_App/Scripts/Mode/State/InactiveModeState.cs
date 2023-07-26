@@ -16,9 +16,13 @@ namespace MobaVR.ClassicModeStateMachine
             }
 
             m_Mode.ModeView.BlueTeamScoreView.Hide();
+            m_Mode.ModeView.BlueTeamKillScoreView.Hide();
             m_Mode.ModeView.RedTeamScoreView.Hide();
+            m_Mode.ModeView.RedTeamKillScoreView.Hide();
             m_Mode.ModeView.RoundTimeView.Hide();
+            m_Mode.ModeView.PreRoundTimeView.Hide();
             m_Mode.ModeView.VictoryView.Hide();
+            m_Mode.ZoneManager.Hide();
         }
 
         public override void Update()

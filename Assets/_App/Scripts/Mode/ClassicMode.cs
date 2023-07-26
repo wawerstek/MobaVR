@@ -14,6 +14,7 @@ namespace MobaVR
         public BaseModeView ModeView => m_ModeView;
         public Team RedTeam => m_GameSession != null ? m_GameSession.RedTeam : null;
         public Team BlueTeam => m_GameSession != null ? m_GameSession.BlueTeam : null;
+        public ZoneManager ZoneManager => m_GameSession != null ? m_GameSession.ZoneManager : null;
         public List<PlayerVR> Players
         {
             get
@@ -71,6 +72,17 @@ namespace MobaVR
         public void CompleteMode()
         {
             m_StateMachine.CompleteMode();
+        }
+
+        public void SetStateMachine(StateMachine stateMachine)
+        {
+            if (m_StateMachine != null)
+            {
+                m_StateMachine.DeactivateMode();
+            }
+
+            m_StateMachine = stateMachine;
+            m_StateMachine.Init(this);
         }
     }
 }

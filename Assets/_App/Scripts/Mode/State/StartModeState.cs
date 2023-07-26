@@ -17,6 +17,10 @@ namespace MobaVR.ClassicModeStateMachine
 
         public override void Enter()
         {
+            m_Mode.ZoneManager.Hide();
+            m_Mode.ModeView.RedTeamScoreView.Hide();
+            m_Mode.ModeView.RedTeamKillScoreView.Hide();
+            
             m_Mode.BlueTeam.Score = 0;
             m_Mode.ModeView.BlueTeamScoreView.SetScore(0); //
             m_Mode.ModeView.BlueTeamScoreView.Show();

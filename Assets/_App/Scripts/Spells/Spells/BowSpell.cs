@@ -17,7 +17,7 @@ namespace MobaVR
         {
             base.OnValidate();
 
-            if (m_Colliders.Length == 0)
+            if (m_Colliders != null && m_Colliders.Length == 0)
             {
                 m_Colliders = GetComponents<Collider>();
             }
@@ -36,7 +36,7 @@ namespace MobaVR
             {
                 //m_Grabbable.enabled = false;
             }
-            
+
             foreach (Collider bowCollider in m_Colliders)
             {
                 //bowCollider.enabled = false;
