@@ -24593,11 +24593,12 @@ GameObject:
   - component: {fileID: 7030444657866217276}
   - component: {fileID: 3044090538862056153}
   - component: {fileID: 6863878821461790709}
-  - component: {fileID: 6957460461353727088}
+  - component: {fileID: 176820530429670245}
   - component: {fileID: -8109260450039748417}
   - component: {fileID: 4019626770689762863}
   - component: {fileID: 9195180885977805880}
   - component: {fileID: 6789367714692812020}
+  - component: {fileID: 5451158174466636360}
   - component: {fileID: 1913719201}
   m_Layer: 10
   m_Name: ArrowSpell
@@ -24807,7 +24808,7 @@ MonoBehaviour:
   VibrateFrequency: 0.3
   VibrateAmplitude: 0.4
   VibrateDuration: 0.2
---- !u!114 &6957460461353727088
+--- !u!114 &176820530429670245
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -24816,7 +24817,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7030444657866217279}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 998e65cd71651ad4cb6c2533f5dd49d6, type: 3}
+  m_Script: {fileID: 11500000, guid: 5cdea428d48e2bb488d33d5f75c39bb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   BeingHeld: 0
@@ -24906,7 +24907,8 @@ MonoBehaviour:
   m_Arrow: {fileID: 9195180885977805880}
   m_ExplosionFx: {fileID: 9088934936965729663}
   m_TrailRenderer: {fileID: 1013710282798398449}
-  m_Grabbable: {fileID: 6957460461353727088}
+  m_Grabbable: {fileID: 176820530429670245}
+  m_PhotonTransformView: {fileID: 5451158174466636360}
   m_Rigidbody: {fileID: 7030444657866217273}
   m_Damage: 25
   m_DestroyExplosion: 4
@@ -24948,10 +24950,26 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 6957460461353727088}
+  - {fileID: 5451158174466636360}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &5451158174466636360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7030444657866217279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 0
 --- !u!114 &1913719201
 MonoBehaviour:
   m_ObjectHideFlags: 0

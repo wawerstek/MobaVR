@@ -12,6 +12,7 @@ namespace MobaVR
         [SerializeField] private GameObject m_ExplosionFx;
         [SerializeField] private TrailRenderer m_TrailRenderer;
         [SerializeField] private Grabbable m_Grabbable;
+        [SerializeField] private PhotonTransformView m_PhotonTransformView;
         [SerializeField] private Rigidbody m_Rigidbody;
         [SerializeField] private float m_Damage = 10f;
         [SerializeField] private float m_DestroyExplosion = 4f;
@@ -38,6 +39,11 @@ namespace MobaVR
             if (m_Rigidbody == null)
             {
                 TryGetComponent(out m_Rigidbody);
+            }
+            
+            if (m_PhotonTransformView == null)
+            {
+                TryGetComponent(out m_PhotonTransformView);
             }
         }
 
@@ -113,7 +119,11 @@ namespace MobaVR
             if (arrow == m_Arrow)
             {
                 m_Grabbable.enabled = false;
-
+                if (m_PhotonTransformView != null)
+                {
+                    m_PhotonTransformView.enabled = false;
+                }
+                
                 photonView.RPC(nameof(RpcReleaseArrow), 
                                RpcTarget.AllBuffered,
                                m_Arrow.transform.position, 
@@ -127,6 +137,11 @@ namespace MobaVR
         {
             if (m_Arrow != null)
             {
+                if (m_PhotonTransformView != null)
+                {
+                    m_PhotonTransformView.enabled = false;
+                }
+                
                 if (!photonView.IsMine)
                 {
                     m_Arrow.transform.position = position;
