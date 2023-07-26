@@ -277,6 +277,11 @@ namespace MobaVR
 
         private void OnValidated(bool isGoodThrow)
         {
+            if (m_IsThrown)
+            {
+                return;
+            }
+            
             bool isSmall = false;
 
             if (m_IsDestroySmallSize)
