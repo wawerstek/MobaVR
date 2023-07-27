@@ -7,6 +7,7 @@ namespace MobaVR
     public class BigFireBreatheSpellBehaviour : InputSpellBehaviour
     {
         [SerializeField] private FireBreath m_FireBreath;
+        [SerializeField] private float m_Duration = 8f;
         [SerializeField] private bool m_CheckDistanceAngle = false;
         [SerializeField] private float m_MaxDistance = 2f;
         [SerializeField] private float m_MaxAngle = 120f;
@@ -55,27 +56,46 @@ namespace MobaVR
             
             m_IsPerformed = true;
             m_FireBreath.Show(true);
+            Invoke(nameof(Stop), m_Duration);
         }
 
         protected override void OnCanceledCast(InputAction.CallbackContext context)
         {
             base.OnCanceledCast(context);
-            Interrupt();
+            if (m_IsPerformed)
+            {
+                m_IsPerformed = false;
+                WaitCooldown();
+                Interrupt();
+            }
         }
 
         protected override void Interrupt()
         {
             base.Interrupt();
             
+            CancelInvoke(nameof(Stop));
             OnCompleted?.Invoke();
             m_IsPerformed = false;
             m_FireBreath.Show(false);
         }
+
+        private void Stop()
+        {
+            WaitCooldown();
+            Interrupt();
+        }
         
         private void Update()
         {
+            if (!m_IsPerformed)
+            {
+                return;
+            }
+            
             if (Distance > m_MaxDistance || Angle > m_MaxAngle)
             {
+                WaitCooldown();
                 Interrupt();
             }
         }

@@ -164,12 +164,14 @@ namespace MobaVR
             }
         }
 
+        /*
         public virtual void Init(WizardPlayer wizardPlayer, TeamType teamType)
         {
             m_Owner = wizardPlayer;
             m_TeamType = teamType;
             photonView.RPC(nameof(RpcInit), RpcTarget.All, teamType);
         }
+        */
 
         /*
         public virtual void Init(TeamType teamType)

@@ -149,12 +149,18 @@ namespace MobaVR
                 {
                     m_Arrow.transform.position = position;
                     m_Arrow.transform.rotation = rotation;
-                    //m_Arrow.ShootArrow(force);
                     
-                    m_Rigidbody.constraints = RigidbodyConstraints.None;
+                    foreach (Collider collisionCollider in m_CollisionColliders)
+                    {
+                        collisionCollider.enabled = false;
+                    }
                     m_Rigidbody.isKinematic = false;
-                    m_Rigidbody.useGravity = true;
-                    m_Rigidbody.AddForce(force, ForceMode.VelocityChange);
+                    m_Arrow.ShootArrow(force);
+                    
+                    //m_Rigidbody.constraints = RigidbodyConstraints.None;
+                    //m_Rigidbody.isKinematic = false;
+                    //m_Rigidbody.useGravity = true;
+                    //m_Rigidbody.AddForce(force, ForceMode.VelocityChange);
                 }
 
                 RpcRelease();

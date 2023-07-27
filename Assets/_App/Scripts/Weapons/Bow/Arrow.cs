@@ -15,7 +15,7 @@ namespace MobaVR.Weapons.Bow
         private Grabbable grab;
         public bool Flying = false;
         public float ZVel = 0;
-
+        public float TriggerDelay = 0.15f;
         public bool IsEnableCollider = true;
         public Collider ShaftCollider;
         private AudioSource impactSound;
@@ -111,7 +111,8 @@ namespace MobaVR.Weapons.Bow
                 }
             }
 
-            StartCoroutine(ReEnableCollider());
+            //StartCoroutine(ReEnableColliderFrame());
+            StartCoroutine(ReEnableColliderDelay());
             queueDestroy = StartCoroutine(QueueDestroy());
         }
 
@@ -125,7 +126,7 @@ namespace MobaVR.Weapons.Bow
             }
         }
 
-        private IEnumerator ReEnableCollider()
+        private IEnumerator ReEnableColliderFrame()
         {
             // Wait a few frames before re-enabling collider on bow shaft
             // This prevents the arrow from shooting ourselves, the bow, etc.
@@ -140,6 +141,13 @@ namespace MobaVR.Weapons.Bow
             //ShaftCollider.enabled = true;
             ShaftCollider.enabled = IsEnableCollider;
         }
+        
+        private IEnumerator ReEnableColliderDelay()
+        {
+            yield return new WaitForSeconds(TriggerDelay);
+            ShaftCollider.enabled = IsEnableCollider;
+        }
+
 
         private void OnCollisionEnter(Collision collision)
         {

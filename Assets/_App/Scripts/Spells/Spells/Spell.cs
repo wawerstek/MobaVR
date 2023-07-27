@@ -11,6 +11,7 @@ namespace MobaVR
 
         protected TeamType m_TeamType;
         protected WizardPlayer m_Owner;
+        protected int m_IdOwner = -1;
         protected bool m_IsDestroyed = false;
 
         public Action OnDestroySpell;
@@ -23,6 +24,7 @@ namespace MobaVR
             get => m_Owner;
             set => m_Owner = value;
         }
+        public int IdOwner => m_IdOwner;
 
         protected virtual void OnValidate()
         {
@@ -31,6 +33,41 @@ namespace MobaVR
                 TryGetComponent(out m_TeamItem);
             }
         }
+
+        #region Init
+
+        public virtual void Init(WizardPlayer wizardPlayer, TeamType teamType)
+        {
+            m_Owner = wizardPlayer;
+            m_TeamType = teamType;
+            photonView.RPC(nameof(RpcInit), RpcTarget.AllBuffered, teamType, m_Owner.photonView.Owner.ActorNumber);
+        }
+
+        [PunRPC]
+        public virtual void RpcInit(TeamType teamType, int idOwner)
+        {
+            if (!photonView.IsMine && idOwner >= 0)
+            {
+                WizardPlayer[] players = FindObjectsOfType<WizardPlayer>();
+                foreach (WizardPlayer wizardPlayer in players)
+                {
+                    if (wizardPlayer.photonView.Owner.ActorNumber == idOwner)
+                    {
+                        m_Owner = wizardPlayer;
+                        break;
+                    }
+                }
+            }
+            
+            m_TeamType = teamType;
+            if (m_TeamItem)
+            {
+                m_TeamItem.SetTeam(teamType);
+            }
+        }
+        
+        #endregion
+
 
         #region Destroy Spell
 

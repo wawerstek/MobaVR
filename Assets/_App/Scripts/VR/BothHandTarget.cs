@@ -1,8 +1,9 @@
+using Photon.Pun;
 using UnityEngine;
 
 namespace MobaVR
 {
-    public class BothHandTarget : MonoBehaviour
+    public class BothHandTarget : MonoBehaviourPun
     {
         [SerializeField] private InputVR m_InputVR;
         [SerializeField] private Transform m_LeftTarget;
@@ -10,11 +11,15 @@ namespace MobaVR
 
         private void Update()
         {
-            Vector3 position = (m_LeftTarget.position + m_RightTarget.position) / 2f;
-            Quaternion rotation = Quaternion.Lerp(m_LeftTarget.transform.rotation, m_RightTarget.transform.rotation, 0.5f);
+            if (photonView.IsMine)
+            {
+                Vector3 position = (m_LeftTarget.position + m_RightTarget.position) / 2f;
+                Quaternion rotation =
+                    Quaternion.Lerp(m_LeftTarget.transform.rotation, m_RightTarget.transform.rotation, 0.5f);
 
-            transform.position = position;
-            transform.rotation = rotation;
+                transform.position = position;
+                transform.rotation = rotation;
+            }
         }
 
         private void OnDrawGizmos()
