@@ -244,7 +244,7 @@ namespace MobaVR
         {
             InitThrow();
 
-            //if (m_PhotonView.IsMine)
+            if (!m_PhotonView.IsMine)
             {
                 m_Rigidbody.position = position;
                 m_Rigidbody.rotation = rotation;

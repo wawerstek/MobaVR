@@ -106,16 +106,18 @@ namespace MobaVR
 
         protected override void Interrupt()
         {
+            base.Interrupt();
+            
             if (m_CurrentArrow != null)
             {
                 m_CurrentArrow.DestroySpell();
                 m_CurrentArrow = null;
 
-                m_IsPerformed = false;
                 m_IsAttach = false;
                 m_IsThrown = false;
             }
 
+            m_IsPerformed = false;
             WaitCooldown();
             OnCompleted?.Invoke();
         }

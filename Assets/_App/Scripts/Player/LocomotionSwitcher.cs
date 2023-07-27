@@ -15,7 +15,6 @@ namespace MobaVR
         [SerializeField] private PlayerRotation m_PlayerRotation;
         [SerializeField] private SmoothLocomotion m_SmoothLocomotion;
         
-        
         private void Start()
         {
             SetLocomotion();

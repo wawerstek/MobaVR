@@ -10,6 +10,7 @@ namespace MobaVR
     {
         [SerializeField] protected Weapons.Bow.Arrow m_Arrow;
         [SerializeField] protected GameObject m_ExplosionFx;
+        [SerializeField] protected GameObject m_ExplosionPrefab;
         [SerializeField] protected TrailRenderer m_TrailRenderer;
         [SerializeField] protected Grabbable m_Grabbable;
         [SerializeField] protected PhotonTransformView m_PhotonTransformView;
@@ -82,7 +83,7 @@ namespace MobaVR
             }
         }
 
-        private void OnAttach(Bow bow)
+        protected virtual void OnAttach(Bow bow)
         {
             m_Bow = bow;
             m_Bow.OnReleaseArrow.AddListener(OnReleaseArrow);
@@ -150,6 +151,7 @@ namespace MobaVR
                     m_Arrow.transform.rotation = rotation;
                     //m_Arrow.ShootArrow(force);
                     
+                    m_Rigidbody.constraints = RigidbodyConstraints.None;
                     m_Rigidbody.isKinematic = false;
                     m_Rigidbody.useGravity = true;
                     m_Rigidbody.AddForce(force, ForceMode.VelocityChange);
@@ -193,11 +195,16 @@ namespace MobaVR
             }
         }
 
-        private void OnTriggerEnter(Collider other)
+        protected virtual void OnTriggerEnter(Collider other)
         {
-            if (other.transform == transform || m_IsDamaged)
+            if (other.transform == transform)
             {
                 return;
+            }
+            
+            if (m_IsDamaged)
+            {
+                //return;
             }
 
             if (!m_IsThrown)

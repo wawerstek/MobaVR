@@ -76,14 +76,18 @@ namespace MobaVR.Weapons.Bow
             }
         }
 
+        private Bow m_Bow;
+        
         public void AttachBow(Bow bow)
         {
+            m_Bow = bow;
             isAttach = true;
             OnAttach?.Invoke(bow);
         }
 
         public void ShootArrow(Vector3 shotForce)
         {
+            Debug.Log("SHOOOOOOOOOT");
             flightTime = 0f;
             Flying = true;
 
@@ -94,6 +98,19 @@ namespace MobaVR.Weapons.Bow
             rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
             rb.constraints = RigidbodyConstraints.None;
             rb.AddForce(shotForce, ForceMode.VelocityChange);
+            if (m_Bow != null)
+            {
+                Collider[] colliders = m_Bow.GetComponents<Collider>();
+
+                foreach (Collider bowCollider in colliders)
+                {
+                    //if (!bowCollider.isTrigger)
+                    {
+                        Physics.IgnoreCollision(bowCollider, ShaftCollider, true);
+                    }
+                }
+            }
+
             StartCoroutine(ReEnableCollider());
             queueDestroy = StartCoroutine(QueueDestroy());
         }

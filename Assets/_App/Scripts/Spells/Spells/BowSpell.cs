@@ -31,7 +31,7 @@ namespace MobaVR
         private void Awake()
         {
             m_BowModel.SetActive(false);
-
+            RpcShow(false);
             if (!photonView.IsMine)
             {
                 //m_Grabbable.enabled = false;
@@ -51,6 +51,7 @@ namespace MobaVR
         [PunRPC]
         private void RpcShow(bool isShow)
         {
+            m_Grabbable.enabled = isShow;
             m_BowModel.SetActive(isShow);
             foreach (Collider bowCollider in m_Colliders)
             {
