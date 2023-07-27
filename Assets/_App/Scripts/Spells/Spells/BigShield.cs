@@ -19,21 +19,6 @@ namespace MobaVR
             m_Slider.gameObject.SetActive(false);
         }
 
-        public virtual void Init(WizardPlayer wizardPlayer, TeamType teamType)
-        {
-            OnInitSpell?.Invoke();
-
-            m_Owner = wizardPlayer;
-            m_TeamType = teamType;
-            photonView.RPC(nameof(RpcInit), RpcTarget.All, teamType);
-        }
-
-        [PunRPC]
-        public virtual void RpcInit(TeamType teamType)
-        {
-            m_TeamItem.SetTeam(teamType);
-        }
-
         public void Prepare()
         {
             m_Slider.gameObject.SetActive(false);

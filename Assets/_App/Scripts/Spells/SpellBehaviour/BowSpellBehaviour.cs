@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace MobaVR
@@ -17,6 +18,14 @@ namespace MobaVR
         {
             base.OnDisable();
             m_Bow.gameObject.SetActive(false);
+        }
+
+        private void Start()
+        {
+            if (m_PhotonView.IsMine)
+            {
+                m_Bow.Init(m_PlayerVR.WizardPlayer, m_PlayerVR.WizardPlayer.TeamType);
+            }
         }
 
         protected override void OnStartCast(InputAction.CallbackContext context)

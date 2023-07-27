@@ -89,23 +89,6 @@ namespace MobaVR
             m_Bow.OnReleaseArrow.AddListener(OnReleaseArrow);
         }
 
-        public void Init(WizardPlayer wizardPlayer, TeamType teamType)
-        {
-            m_Owner = wizardPlayer;
-            m_TeamType = teamType;
-            
-            photonView.RPC(nameof(RpcInit), RpcTarget.All, teamType);
-        }
-
-        [PunRPC]
-        public virtual void RpcInit(TeamType teamType)
-        {
-            if (m_TeamItem != null)
-            {
-                m_TeamItem.SetTeam(teamType);
-            }
-        }
-
         public void Show(bool isShow)
         {
             photonView.RPC(nameof(RpcShow), RpcTarget.AllBuffered, isShow);

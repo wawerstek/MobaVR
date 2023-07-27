@@ -29,6 +29,14 @@ namespace MobaVR
             m_FireBreath.gameObject.SetActive(false);
         }
 
+        private void Start()
+        {
+            if (m_PhotonView.IsMine)
+            {
+                m_FireBreath.Init(m_PlayerVR.WizardPlayer, m_PlayerVR.Team.TeamType);
+            }
+        }
+
         protected override void OnStartCast(InputAction.CallbackContext context)
         {
             base.OnStartCast(context);

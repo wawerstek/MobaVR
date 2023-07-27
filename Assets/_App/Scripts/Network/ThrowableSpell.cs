@@ -181,11 +181,13 @@ namespace MobaVR
         }
         */
 
+        /*
         [PunRPC]
         public virtual void RpcInit(TeamType teamType)
         {
             m_TeamItem.SetTeam(teamType);
         }
+        */
 
         protected abstract float CalculateDamage();
 

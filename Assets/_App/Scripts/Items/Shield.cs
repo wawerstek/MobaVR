@@ -26,6 +26,7 @@ namespace MobaVR
         [SerializeField] [ReadOnly] protected float m_CurrentHealth = 1f;
 
         public bool IsLife => m_CurrentHealth > 0f;
+        public TeamType TeamType => m_TeamItem != null ? m_TeamItem.TeamType : TeamType.RED;
 
         protected virtual void Awake()
         {

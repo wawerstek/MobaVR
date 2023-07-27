@@ -13,12 +13,14 @@ namespace MobaVR
         protected WizardPlayer m_Owner;
         protected int m_IdOwner = -1;
         protected bool m_IsDestroyed = false;
+        protected bool m_IsInit = false;
 
         public Action OnDestroySpell;
         public Action OnInitSpell;
         //public Action OnThrown;
 
         public TeamItem Team => m_TeamItem;
+        public TeamType TeamType => m_TeamItem != null ? m_TeamItem.TeamType : TeamType.RED;
         public WizardPlayer Owner
         {
             get => m_Owner;
@@ -38,6 +40,8 @@ namespace MobaVR
 
         public virtual void Init(WizardPlayer wizardPlayer, TeamType teamType)
         {
+            OnInitSpell?.Invoke();
+
             m_Owner = wizardPlayer;
             m_TeamType = teamType;
             photonView.RPC(nameof(RpcInit), RpcTarget.AllBuffered, teamType, m_Owner.photonView.Owner.ActorNumber);
@@ -58,14 +62,14 @@ namespace MobaVR
                     }
                 }
             }
-            
+
             m_TeamType = teamType;
             if (m_TeamItem)
             {
                 m_TeamItem.SetTeam(teamType);
             }
         }
-        
+
         #endregion
 
 
@@ -83,9 +87,9 @@ namespace MobaVR
             {
                 return;
             }
-            
+
             m_IsDestroyed = true;
-            
+
             if (photonView.IsMine)
             {
                 gameObject.SetActive(false);
