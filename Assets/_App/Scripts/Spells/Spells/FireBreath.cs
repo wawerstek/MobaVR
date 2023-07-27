@@ -145,6 +145,11 @@ namespace MobaVR
                 Shield shield = other.GetComponentInParent<Shield>();
                 if (shield != null)
                 {
+                    if (shield.TeamType == m_TeamType)
+                    {
+                        return;
+                    }
+                    
                     if (photonView.IsMine)
                     {
                         shield.Hit(m_Damage);
