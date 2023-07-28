@@ -33,6 +33,8 @@ namespace MobaVR
         public string SpellName => m_SpellName;
         public bool IsInit => m_IsInit;
         public bool IsAvailable => !m_UseCooldown || m_IsAvailable;
+        public bool UseCooldown => m_UseCooldown;
+        public float CooldownTime => m_CooldownTime;
 
         public Action OnStarted;
         public Action OnPerformed;
