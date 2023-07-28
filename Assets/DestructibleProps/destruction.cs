@@ -5,9 +5,13 @@ using Photon.Realtime;
 
 public class destruction : MonoBehaviour {
 	public GameObject[] Chunks;
+	private Vector3[] originalPosition; // Переменная для сохранения позиции оригинального объекта
+	private Quaternion[] originalRotation; // Переменная для сохранения поворота оригинального объекта
+
 	public GameObject[] HidingObjs; //список объектов, которые будут скрыты после давки.
 	[Range(1,100)]
 	public int Health = 100;
+	private int ObjectHealth;
 	public float ExplosionForce = 200; //сила, приложенная к каждому фрагменту разбитого объекта.
 	public float ChunksRotation = 20; //сила вращения добавляется к каждому куску, когда он взрывается.
 	public float strength = 5; //Как легко объект меняется.
@@ -35,6 +39,9 @@ public class destruction : MonoBehaviour {
 				hidingObj.SetActive(true);
 			}
 		}
+
+		ObjectHealth = Health;
+
 	}
 
 	void OnCollisionEnter(Collision other){
@@ -81,6 +88,7 @@ public class destruction : MonoBehaviour {
 		if(FX){
 			FX.SetActive(true);
 		}
+
 		if(GetComponent<AudioSource>()){
 			GetComponent<AudioSource>().Play ();
 		}
@@ -96,24 +104,117 @@ public class destruction : MonoBehaviour {
 		{
 			GetComponent<Rigidbody>().isKinematic = true;
 		}
-		
-		foreach(GameObject chunk in Chunks){
 
 
+		// Инициализируем массивы с размером, равным количеству кусков
+		originalPosition = new Vector3[Chunks.Length];
+		originalRotation = new Quaternion[Chunks.Length];
 
+
+		// Пробегаемся по каждому куску
+		for (int i = 0; i < Chunks.Length; i++)
+		{
+			GameObject chunk = Chunks[i];
+
+			// Сохраняем позицию и поворот куска в массивы
+			originalPosition[i] = chunk.transform.position;
+			originalRotation[i] = chunk.transform.rotation;
 
 			chunk.SetActive(true);
 			chunk.GetComponent<Rigidbody>().AddRelativeForce(Vector3.forward * -ExplosionForce);
-			chunk.GetComponent<Rigidbody>().AddRelativeTorque(Vector3.forward * -ChunksRotation*Random.Range(-5f, 5f));
-			chunk.GetComponent<Rigidbody>().AddRelativeTorque(Vector3.right * -ChunksRotation*Random.Range(-5f, 5f));
+			chunk.GetComponent<Rigidbody>().AddRelativeTorque(Vector3.forward * -ChunksRotation * Random.Range(-5f, 5f));
+			chunk.GetComponent<Rigidbody>().AddRelativeTorque(Vector3.right * -ChunksRotation * Random.Range(-5f, 5f));
 		}
+
+
+
+		////пробегаемся по каждому куску
+		//foreach (GameObject chunk in Chunks){
+
+
+		//	// Сохраняем позицию и поворот оригинального объекта
+		//	originalPosition = transform.position;
+		//	originalRotation = transform.rotation;
+
+
+		//	chunk.SetActive(true);
+		//	chunk.GetComponent<Rigidbody>().AddRelativeForce(Vector3.forward * -ExplosionForce);
+		//	chunk.GetComponent<Rigidbody>().AddRelativeTorque(Vector3.forward * -ChunksRotation*Random.Range(-5f, 5f));
+		//	chunk.GetComponent<Rigidbody>().AddRelativeTorque(Vector3.right * -ChunksRotation*Random.Range(-5f, 5f));
+		//}
+
+
 		if(DestroyAftertime){
 			Invoke("DestructObject", time);
 		}
 	}
 
 	void DestructObject(){
-		Destroy(gameObject);
+
+
+
+		//Destroy(gameObject);
+
+		// Пробегаемся по каждому куску
+		for (int i = 0; i < Chunks.Length; i++)
+		{
+			GameObject chunk = Chunks[i];
+
+			// Восстанавливаем позицию и поворот куска из массивов originalPosition и originalRotation
+			chunk.transform.position = originalPosition[i];
+			chunk.transform.rotation = originalRotation[i];
+
+			// Выключаем кусок
+			chunk.SetActive(false);
+		}
+
 	}
+
+
+	private void OnDisable()
+	{
+
+		if (HidingObjs.Length != 0)
+		{
+			foreach (GameObject hidingObj in HidingObjs)
+			{
+				hidingObj.SetActive(true);
+			}
+		}
+
+		if (FX)
+		{
+			FX.SetActive(false);
+		}
+
+		//if (GetComponent<Renderer>())
+		//{
+		//	GetComponent<Renderer>().enabled = true;
+		//}
+
+		GetComponent<Collider>().enabled = true;
+
+		if (GetComponent<Rigidbody>())
+		{
+			GetComponent<Rigidbody>().isKinematic = false;
+		}
+
+		
+		if (Health <= 0)
+		{
+			photonView.RPC("ResetHealth", RpcTarget.All);
+		}
+
+		
+
+	}
+
+	[PunRPC]
+	public void ResetHealth()
+	{
+		Health = ObjectHealth;
+	
+	}
+
 
 }
