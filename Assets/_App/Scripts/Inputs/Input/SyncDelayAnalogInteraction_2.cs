@@ -5,7 +5,7 @@ namespace MobaVR.Inputs
     /// <summary>
     /// Одновременное нажатие клавиш
     /// </summary>
-    public class SyncDelayAnalogInteraction : IInputInteraction
+    public class SyncDelayAnalogInteraction_2 : IInputInteraction
     {
         public float HoldTime = 0.5f;
         public float HoltTimeout = 1.0f;
