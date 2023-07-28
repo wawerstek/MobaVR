@@ -1,3 +1,4 @@
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace MobaVR.Inputs
@@ -5,13 +6,13 @@ namespace MobaVR.Inputs
     public class SyncHoldInteraction : IInputInteraction
     {
         public float HoldTime = 0.5f;
-        public float HoltTimeout = 1.0f;
+        public float HoldTimeout = 1.0f;
 
         public float MaxSyncDuration = 0.5f;
         public float SyncTimeout = 1.0f;
 
         private double m_StartSyncTime = 0f;
-        private float m_StartHoldTime = 0f;
+        private double m_StartHoldTime = 0f;
 
         private bool m_IsStartSync = false;
         private bool m_IsSync = false;
@@ -25,6 +26,8 @@ namespace MobaVR.Inputs
 
         public void Process(ref InputInteractionContext context)
         {
+            Debug.Log("Sync BUTTONS 1: TimesHasExpired " + context.timerHasExpired + ", state = " + context.phase);
+
             if (context.timerHasExpired)
             {
                 if (m_IsStartSync)
@@ -34,22 +37,12 @@ namespace MobaVR.Inputs
 
                 if (m_IsStartHold)
                 {
-                    m_IsStartHold = false;
-                    float holdValue = context.ComputeMagnitude();
-                    if (holdValue == 1f)
-                    {
-                        m_IsHold = true;
-                        context.PerformedAndStayPerformed();
-                    }
-                    else
-                    {
-                        m_IsHold = false;
-                        context.Canceled();
-                    }
                 }
 
                 //return;
             }
+            
+            Debug.Log("Sync BUTTONS 2: TimesHasExpired " + context.timerHasExpired + ", state = " + context.phase);
 
             switch (context.phase)
             {
@@ -77,6 +70,14 @@ namespace MobaVR.Inputs
                         float startedValue = context.ComputeMagnitude();
                         double syncDeltaTime = context.time - m_StartSyncTime;
 
+                        if (startedValue == 0f)
+                        {
+                            m_IsStartSync = false;
+                            m_IsSync = false;
+                            m_IsReleased = true;
+                            context.Canceled();
+                        }
+
                         if (syncDeltaTime > MaxSyncDuration)
                         {
                             context.Canceled();
@@ -87,11 +88,42 @@ namespace MobaVR.Inputs
                             m_IsStartSync = false;
                             m_IsSync = true;
                             m_IsStartHold = true;
-
+                            m_StartHoldTime = context.time;
                             context.SetTimeout(HoldTime);
                             //m_IsStartPerformed = true;
                             //context.PerformedAndStayPerformed();
                         }
+
+                        break;
+                    }
+
+                    if (m_IsStartHold)
+                    {
+                        float startedValue = context.ComputeMagnitude();
+                        double holdDeltaTime = context.time - m_StartHoldTime;
+
+                        if (startedValue != 0f || holdDeltaTime < HoldTime)
+                        {
+                            m_IsStartSync = false;
+                            m_IsSync = false;
+                            m_IsStartHold = false;
+                            m_IsHold = false;
+
+                            context.Canceled();
+                        }
+
+                        if (startedValue == 1f && holdDeltaTime >= HoldTime)
+                        {
+                            m_IsStartSync = false;
+                            m_IsStartHold = false;
+                            m_IsSync = false;
+                            m_IsStartHold = false;
+
+                            m_IsHold = true;
+                            context.PerformedAndStayPerformed();
+                        }
+
+                        break;
                     }
 
                     break;
@@ -111,7 +143,17 @@ namespace MobaVR.Inputs
 
                     break;
             }
+            
+            Debug.Log("Sync BUTTONS 3: TimesHasExpired " + context.timerHasExpired + ", state = " + context.phase);
         }
+
+        private void Clear()
+        {
+            m_IsStartSync = false;
+            m_IsSync = true;
+            m_IsStartHold = true;
+        }
+
 
         public void Reset()
         {
