@@ -30,11 +30,13 @@ namespace MobaVR
         protected override void OnPerformedCast(InputAction.CallbackContext context)
         {
             base.OnPerformedCast(context);
-            if (!CanCast() || HasBlockingSpells() || HasBlockingInputs())
+            if (!CanCast() 
+                || HasBlockingSpells() 
+                || HasBlockingInputs())
             {
                 return;
             }
-
+            
             if (m_IsGrabbed)
             {
                 return;

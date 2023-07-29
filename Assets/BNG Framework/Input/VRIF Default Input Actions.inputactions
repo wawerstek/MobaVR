@@ -1485,18 +1485,54 @@
             "id": "2f25ddec-afe5-494f-9ce8-7adbc4697f11",
             "actions": [
                 {
-                    "name": "TriggerGrip_Analog",
-                    "type": "Value",
-                    "id": "1bde73ba-7a3b-4c64-afa8-d04e7178ecce",
-                    "expectedControlType": "",
+                    "name": "L_Trigger",
+                    "type": "Button",
+                    "id": "a3dd6089-4aa4-45dc-b782-f221c1256b8b",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "L_Grip",
+                    "type": "Button",
+                    "id": "ca365ded-7463-4039-b9fa-5b5a87167f1e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "L_Trigger_Delay",
+                    "type": "Button",
+                    "id": "67452b4b-f979-4a85-85a2-b68d2651867c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Delay(Delay=0.1)",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "L_Grip_Hold",
+                    "type": "Value",
+                    "id": "f4d79bba-9386-46e4-9b7a-d2e52f9bf1c4",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Hold(duration=0.1)",
                     "initialStateCheck": true
                 },
                 {
                     "name": "L_TriggerGrip_Analog_SyncHold",
                     "type": "Value",
                     "id": "153acaac-2225-4993-963e-617634cf5b0a",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "TriggerGrip_Analog",
+                    "type": "Value",
+                    "id": "1bde73ba-7a3b-4c64-afa8-d04e7178ecce",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -1530,15 +1566,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Trigger",
-                    "type": "Button",
-                    "id": "a3dd6089-4aa4-45dc-b782-f221c1256b8b",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Trigger_Press",
                     "type": "Button",
                     "id": "a1b668b1-30ac-4b5c-b23a-aefd5a7d367c",
@@ -1562,7 +1589,7 @@
                     "id": "a73d1af6-e3fb-4ef7-822b-449039b2a2f5",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Delay(Delay=0.12)",
+                    "interactions": "Delay(Delay=2)",
                     "initialStateCheck": false
                 },
                 {
@@ -1737,28 +1764,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "Grip_DoubleTap",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "f1b25bc6-de28-41c8-928c-6c3d2bda0fee",
-                    "path": "<XRController>{LeftHand}/triggerPressed",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Generic XR Controller",
-                    "action": "Trigger",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "01763cd5-7e29-4e7b-8a96-fcb6d8a6b594",
-                    "path": "<Keyboard>/c",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Trigger",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -2104,43 +2109,10 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "PC Two Buttons",
-                    "id": "c5c7222e-2b79-4d8d-b356-cc2911395e45",
-                    "path": "TwoAnalogButtons(pressPoint=0.5)",
-                    "interactions": "SyncHold(HoldTime=0.1,HoldTimeout=0.25,MaxSyncDuration=0.1,SyncTimeout=0.25)",
-                    "processors": "",
-                    "groups": "",
-                    "action": "L_TriggerGrip_Analog_SyncHold",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "analogTwo",
-                    "id": "4f8b8666-383e-4e4d-9ac6-5806b55274b5",
-                    "path": "<Keyboard>/c",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "L_TriggerGrip_Analog_SyncHold",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "analogOne",
-                    "id": "8807c4d1-e5cc-4e72-bca5-f9dd60e5c876",
-                    "path": "<Keyboard>/v",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "L_TriggerGrip_Analog_SyncHold",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "VR Two Buttons",
-                    "id": "3c2f3c8c-d3c7-4578-a0ae-0432d1ff799e",
+                    "name": "VR",
+                    "id": "d5484b48-b750-47c4-9652-08be023f3e09",
                     "path": "TwoAnalogButtons(pressPoint=0.4)",
-                    "interactions": "SyncHold(HoldTime=0,HoldTimeout=0.25,MaxSyncDuration=0.1,SyncTimeout=0.25)",
+                    "interactions": "SyncHold(HoldTime=0.1,HoldTimeout=0.2,MaxSyncDuration=0.1,SyncTimeout=0.2)",
                     "processors": "",
                     "groups": "",
                     "action": "L_TriggerGrip_Analog_SyncHold",
@@ -2149,7 +2121,7 @@
                 },
                 {
                     "name": "analogTwo",
-                    "id": "32fb4065-9ac8-4aa7-b25f-ff92e0ae5c26",
+                    "id": "a95a2532-d7aa-46b5-8994-a05bb009e9b4",
                     "path": "<XRController>{LeftHand}/trigger",
                     "interactions": "",
                     "processors": "",
@@ -2160,7 +2132,7 @@
                 },
                 {
                     "name": "analogOne",
-                    "id": "2a6f5a90-89b3-4b68-8062-a9d8a6de0fac",
+                    "id": "0f1bf96e-4fa2-4bff-b7ad-229706b6bd73",
                     "path": "<XRController>{LeftHand}/grip",
                     "interactions": "",
                     "processors": "",
@@ -2168,6 +2140,127 @@
                     "action": "L_TriggerGrip_Analog_SyncHold",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "PC",
+                    "id": "855b8874-1c8a-471c-aa36-8400692807e5",
+                    "path": "TwoButtons",
+                    "interactions": "SyncHold(HoldTime=0.1,HoldTimeout=0.2,MaxSyncDuration=0.1,SyncTimeout=0.2)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "L_TriggerGrip_Analog_SyncHold",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "buttonOne",
+                    "id": "74961159-69c6-448d-b8f7-424845a88264",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "L_TriggerGrip_Analog_SyncHold",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "buttonTwo",
+                    "id": "c615b92a-6da7-4587-8dbb-86f986c48a3f",
+                    "path": "<Keyboard>/v",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "L_TriggerGrip_Analog_SyncHold",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "cd452924-dae9-44d5-9b41-ad0304d52ee7",
+                    "path": "<XRController>{LeftHand}/triggerPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "L_Trigger_Delay",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0722d67d-035b-41f9-92d3-db4eb4411efc",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "L_Trigger_Delay",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3c54aa58-6d15-4881-965d-4b164f9541c8",
+                    "path": "<XRController>{LeftHand}/gripPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "L_Grip_Hold",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d76fd145-b695-408e-a433-dd644449e36f",
+                    "path": "<Keyboard>/v",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "L_Grip_Hold",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f1b25bc6-de28-41c8-928c-6c3d2bda0fee",
+                    "path": "<XRController>{LeftHand}/triggerPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "L_Trigger",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "01763cd5-7e29-4e7b-8a96-fcb6d8a6b594",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "L_Trigger",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "08cb2df0-4896-4207-b440-865f9042fab7",
+                    "path": "<XRController>{LeftHand}/gripPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "L_Grip",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e19c1cbf-cce9-4a44-b44e-0302d22a8acc",
+                    "path": "<Keyboard>/v",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "L_Grip",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -2176,18 +2269,54 @@
             "id": "57d8902c-ff8d-498d-8262-5d6d636d6693",
             "actions": [
                 {
-                    "name": "TriggerGrip_Analog",
+                    "name": "R_Trigger",
+                    "type": "Button",
+                    "id": "f7c8105f-af67-4d6e-b70c-281805dabf01",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "R_Grip",
+                    "type": "Button",
+                    "id": "a09bad0b-c30d-4860-b7f0-11c64eabbdbf",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "R_Trigger_Delay",
+                    "type": "Button",
+                    "id": "fade9fea-7655-458d-a665-e62f6bf50bee",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Delay(Delay=0.1)",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "R_Grip_Hold",
+                    "type": "Button",
+                    "id": "7db9ba14-e7a9-476a-9628-c737218e343c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Hold(duration=0.1)",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "R_TriggerGrip_Analog_SyncHold",
                     "type": "Value",
-                    "id": "9a481717-2c45-4f1c-a984-6c40b30abf80",
+                    "id": "7d7f725b-9580-4cca-81db-c556d1822d51",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
                 },
                 {
-                    "name": "R_TriggerGrip_Analog_SyncHold",
+                    "name": "TriggerGrip_Analog",
                     "type": "Value",
-                    "id": "7d7f725b-9580-4cca-81db-c556d1822d51",
+                    "id": "9a481717-2c45-4f1c-a984-6c40b30abf80",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -2669,6 +2798,28 @@
                     "isPartOfComposite": false
                 },
                 {
+                    "name": "",
+                    "id": "c834feea-dae4-4c45-8bf0-718ecb76059d",
+                    "path": "<XRController>{RightHand}/gripPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "R_Grip_Hold",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "15dbc609-092a-4dd9-a855-69d951980583",
+                    "path": "<Keyboard>/n",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "R_Grip_Hold",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
                     "name": "PC Two Buttons",
                     "id": "3d296ab7-68c8-48db-b3bc-0161976ea2d6",
                     "path": "TwoButtons",
@@ -2705,7 +2856,7 @@
                     "name": "VR Two Buttons",
                     "id": "335b2a64-f0c1-4403-a1bc-1283481ae2a1",
                     "path": "TwoAnalogButtons(pressPoint=0.4)",
-                    "interactions": "SyncHold(HoldTime=0.1,HoldTimeout=0.25,MaxSyncDuration=0.1,SyncTimeout=0.25)",
+                    "interactions": "SyncHold(HoldTime=0.1,HoldTimeout=0.2,MaxSyncDuration=0.1,SyncTimeout=0.2)",
                     "processors": "",
                     "groups": "",
                     "action": "R_TriggerGrip_Analog_SyncHold",
@@ -2733,6 +2884,72 @@
                     "action": "R_TriggerGrip_Analog_SyncHold",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "92c281d8-f81d-464f-b090-3447b9405eca",
+                    "path": "<XRController>{RightHand}/triggerPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "R_Trigger",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "207d0333-d649-4622-9e68-2d9010c0dff2",
+                    "path": "<Keyboard>/b",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "R_Trigger",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0127971b-98f0-4ca0-8d21-5393b8108271",
+                    "path": "<XRController>{RightHand}/gripPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "R_Grip",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "57ab3e17-abb8-4a0d-8b1d-1b3f2a83bfed",
+                    "path": "<Keyboard>/n",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "R_Grip",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "acdf5c4a-187a-4f8f-a2e7-11240f8464ce",
+                    "path": "<XRController>{RightHand}/triggerPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "R_Trigger_Delay",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cf572b5a-f1af-455c-b88f-cb963204fef7",
+                    "path": "<Keyboard>/b",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "R_Trigger_Delay",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -2968,61 +3185,6 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "PC Two Buttons",
-                    "id": "a5488ffe-0952-4654-b312-eea9658cf316",
-                    "path": "FourAnalogButtons",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "LR_TriggerGrip_Analog_SyncHold",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "analogOne",
-                    "id": "662ba184-7faf-44ec-9e3e-6ef2ed1ee91e",
-                    "path": "<Keyboard>/c",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "LR_TriggerGrip_Analog_SyncHold",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "analogTwo",
-                    "id": "c7cc641d-08a7-4921-9065-b44de917cbea",
-                    "path": "<Keyboard>/v",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "LR_TriggerGrip_Analog_SyncHold",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "analogThree",
-                    "id": "2a5b1dd5-d023-4ebc-bb8a-93cd6952beac",
-                    "path": "<Keyboard>/b",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "LR_TriggerGrip_Analog_SyncHold",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "analogFour",
-                    "id": "1a0dc200-b648-4bb9-8a0c-f54b860f678e",
-                    "path": "<Keyboard>/n",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "LR_TriggerGrip_Analog_SyncHold",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
                     "name": "VR Two Buttons",
                     "id": "5031c876-0860-4201-bd3e-14e4ef4acc95",
                     "path": "FourAnalogButtons(pressPoint=0.2)",
@@ -3073,6 +3235,39 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Generic XR Controller",
+                    "action": "LR_TriggerGrip_Analog_SyncHold",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Two Buttons",
+                    "id": "a482230f-8d48-436f-8581-6d039616b724",
+                    "path": "TwoButtons",
+                    "interactions": "SyncHold(HoldTime=0,HoldTimeout=0.2,MaxSyncDuration=0.12,SyncTimeout=0.2)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LR_TriggerGrip_Analog_SyncHold",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "buttonOne",
+                    "id": "919e3d38-0c01-4485-8349-3109461270f1",
+                    "path": "<Keyboard>/v",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LR_TriggerGrip_Analog_SyncHold",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "buttonTwo",
+                    "id": "795525fa-d4b9-4ee7-9055-afb260e911ec",
+                    "path": "<Keyboard>/b",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
                     "action": "LR_TriggerGrip_Analog_SyncHold",
                     "isComposite": false,
                     "isPartOfComposite": true

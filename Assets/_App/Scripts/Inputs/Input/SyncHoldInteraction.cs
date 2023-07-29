@@ -32,6 +32,11 @@ namespace MobaVR.Inputs
             {
                 if (m_IsStartSync)
                 {
+                    m_IsStartSync = false;
+                    m_IsStartHold = false;
+                    m_IsHold = false;
+                    m_IsSync = false;
+                    
                     context.Canceled();
                 }
 
@@ -48,18 +53,46 @@ namespace MobaVR.Inputs
             {
                 case InputActionPhase.Waiting:
                     float waitingValue = context.ComputeMagnitude();
+                    
+                    if (waitingValue == 1f && m_IsReleased)
+                    {
+                        m_IsReleased = false;
+                        
+                        m_IsStartSync = false;
+                        m_IsStartHold = true;
+                        m_IsSync = true;
+                        m_IsHold = false;
+
+                        m_StartHoldTime = context.time;
+                        context.Started();
+                        context.SetTimeout(HoldTime);
+                        break;
+                    }
+                    
                     if (waitingValue > 0f && m_IsReleased)
                     {
                         m_IsReleased = false;
+                        
                         m_IsStartSync = true;
+                        m_IsStartHold = false;
+                        m_IsHold = false;
+                        m_IsSync = false;
+
                         m_StartSyncTime = context.time;
                         context.Started();
                         context.SetTimeout(SyncTimeout);
+                        break;
                     }
 
                     if (waitingValue == 0f)
                     {
+                        m_IsStartSync = false;
+                        m_IsStartHold = false;
+                        m_IsHold = false;
+                        m_IsSync = false;
+
                         m_IsReleased = true;
+                        break;
                     }
 
                     break;
@@ -73,28 +106,39 @@ namespace MobaVR.Inputs
                         if (startedValue == 0f)
                         {
                             m_IsStartSync = false;
+                            m_IsStartHold = false;
+                            m_IsHold = false;
                             m_IsSync = false;
+                            
                             m_IsReleased = true;
                             context.Canceled();
+                            break;
                         }
 
                         if (syncDeltaTime > MaxSyncDuration)
                         {
+                            m_IsStartSync = false;
+                            m_IsStartHold = false;
+                            m_IsHold = false;
+                            m_IsSync = false;
+                            
                             context.Canceled();
+                            break;
                         }
 
-                        if (startedValue == 1f && syncDeltaTime <= MaxSyncDuration)
+                        if (startedValue == 1f 
+                            && syncDeltaTime <= MaxSyncDuration)
                         {
                             m_IsStartSync = false;
-                            m_IsSync = true;
                             m_IsStartHold = true;
+                            m_IsSync = true;
+                            m_IsHold = false;
+
                             m_StartHoldTime = context.time;
                             context.SetTimeout(HoldTime);
                             //m_IsStartPerformed = true;
                             //context.PerformedAndStayPerformed();
                         }
-
-                        break;
                     }
 
                     if (m_IsStartHold)
@@ -102,28 +146,26 @@ namespace MobaVR.Inputs
                         float startedValue = context.ComputeMagnitude();
                         double holdDeltaTime = context.time - m_StartHoldTime;
 
-                        if (startedValue != 0f || holdDeltaTime < HoldTime)
+                        if (startedValue != 1f)
                         {
                             m_IsStartSync = false;
-                            m_IsSync = false;
                             m_IsStartHold = false;
+                            m_IsSync = false;
                             m_IsHold = false;
 
                             context.Canceled();
+                            break;
                         }
-
+                        
                         if (startedValue == 1f && holdDeltaTime >= HoldTime)
                         {
                             m_IsStartSync = false;
                             m_IsStartHold = false;
                             m_IsSync = false;
-                            m_IsStartHold = false;
-
                             m_IsHold = true;
+                            
                             context.PerformedAndStayPerformed();
                         }
-
-                        break;
                     }
 
                     break;
@@ -138,9 +180,21 @@ namespace MobaVR.Inputs
                     float performedValue = context.ComputeMagnitude();
                     if (performedValue != 1)
                     {
+                        m_IsStartSync = false;
+                        m_IsStartHold = false;
+                        m_IsSync = false;
+                        m_IsHold = false;
+                        
                         context.Canceled();
                     }
 
+                    break;
+                
+                case InputActionPhase.Canceled:
+                    m_IsStartSync = false;
+                    m_IsStartHold = false;
+                    m_IsSync = false;
+                    m_IsHold = false;
                     break;
             }
             

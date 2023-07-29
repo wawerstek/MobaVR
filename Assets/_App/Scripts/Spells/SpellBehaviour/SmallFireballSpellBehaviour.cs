@@ -14,7 +14,10 @@ namespace MobaVR
         {
             base.OnPerformedCast(context);
 
-            if (!CanCast() || HasBlockingSpells())
+            if (!CanCast()
+                || HasBlockingSpells()
+                || HasBlockingInputs()
+               )
             {
                 return;
             }
@@ -44,7 +47,7 @@ namespace MobaVR
                     m_SmallFireBall = null;
                     OnCompleted?.Invoke();
                 };
-                
+
                 m_SmallFireBall.Init(m_PlayerVR.WizardPlayer, m_PlayerVR.TeamType);
             }
         }

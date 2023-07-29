@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using BNG;
 using Sirenix.OdinInspector;
 using Unity.XR.PXR;
@@ -16,8 +18,9 @@ namespace MobaVR
         private HandInputVR m_HandInputVR;
         private Grabbable m_Grabbable;
         private Grabbable m_TriggeredGrabbable;
-        private Grabber m_Grabber;
         private RemoteGrabber m_RemoteGrabber;
+
+        private bool m_IsSubscribed = false;
 
         #region Spells
 
@@ -37,9 +40,15 @@ namespace MobaVR
             Subscribe();
         }
 
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+            Subscribe();
+        }
+
         private void Subscribe()
         {
-            if (m_HandInputVR != null && m_PhotonView.IsMine)
+            if (m_HandInputVR != null && m_PhotonView.IsMine && !m_IsSubscribed)
             {
                 m_HandInputVR.RemoteGrabber.OnEnterGrabbableEvent.AddListener(OnRemoteEnter);
                 m_HandInputVR.RemoteGrabber.OnExitGrabbableEvent.AddListener(OnRemoteExit);
@@ -50,12 +59,14 @@ namespace MobaVR
                 m_HandInputVR.Grabber.GrabAction.action.started += OnStartCast;
                 m_HandInputVR.Grabber.GrabAction.action.performed += OnPerformedCast;
                 m_HandInputVR.Grabber.GrabAction.action.canceled += OnCanceledCast;
+
+                m_IsSubscribed = true;
             }
         }
 
         private void Unsubscribe()
         {
-            if (m_HandInputVR != null && m_PlayerVR != null && m_PlayerVR.IsMine)
+            if (m_HandInputVR != null && m_PhotonView.IsMine)
             {
                 m_HandInputVR.RemoteGrabber.OnEnterGrabbableEvent.RemoveListener(OnRemoteEnter);
                 m_HandInputVR.RemoteGrabber.OnExitGrabbableEvent.RemoveListener(OnRemoteExit);
@@ -66,6 +77,8 @@ namespace MobaVR
                 m_HandInputVR.Grabber.GrabAction.action.started -= OnStartCast;
                 m_HandInputVR.Grabber.GrabAction.action.performed -= OnPerformedCast;
                 m_HandInputVR.Grabber.GrabAction.action.canceled -= OnCanceledCast;
+
+                m_IsSubscribed = false;
             }
         }
 
@@ -83,6 +96,32 @@ namespace MobaVR
 
         #region Events
 
+        private bool IsValidRemoteGrabbables()
+        {
+            if (m_HandInputVR == null || m_HandInputVR.Grabber == null)
+            {
+                return false;
+            }
+
+            m_HandInputVR.Grabber.GrabsInTrigger.RemoveNullKeys();
+            List<Grabbable> grabbables = new();
+            grabbables.AddRange(m_HandInputVR.Grabber.GrabsInTrigger.ValidGrabbables.Values.ToList());
+            grabbables.AddRange(m_HandInputVR.Grabber.GrabsInTrigger.ValidRemoteGrabbables.Values.ToList());
+
+            if (grabbables.Count > 0)
+            {
+                foreach (Grabbable grabbable in grabbables)
+                {
+                    if (grabbable.gameObject.activeSelf && grabbable.enabled)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
         private void OnStartCast(InputAction.CallbackContext context)
         {
             Debug.Log($"{SpellName}: {nameof(OnStartCast)}: started");
@@ -92,7 +131,8 @@ namespace MobaVR
                 return;
             }
 
-            if (m_IsTriggered)
+            //if (m_IsTriggered)
+            if (IsValidRemoteGrabbables())
             {
                 m_IsPerformed = true;
             }
@@ -107,9 +147,14 @@ namespace MobaVR
                 return;
             }
 
-            if (m_IsTriggered)
+            if (IsValidRemoteGrabbables())
             {
                 m_IsPerformed = true;
+            }
+
+            //if (m_IsTriggered)
+            {
+                //m_IsPerformed = true;
             }
         }
 
@@ -128,12 +173,12 @@ namespace MobaVR
         private void OnRemoteEnter(Grabbable grabbable)
         {
             Debug.Log($"{SpellName}: {nameof(OnRemoteEnter)}: {grabbable}");
-       
+
             if (grabbable.TryGetComponent(out BaseSpell baseSpell))
             {
                 return;
             }
-            
+
             if (grabbable.TryGetComponent(out Spell spell))
             {
                 return;
@@ -175,7 +220,7 @@ namespace MobaVR
             {
                 return;
             }
-            
+
             if (grabbable.TryGetComponent(out Spell spell))
             {
                 return;

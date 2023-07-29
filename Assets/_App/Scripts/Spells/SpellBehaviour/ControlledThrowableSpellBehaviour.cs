@@ -46,7 +46,10 @@ namespace MobaVR
         {
             Debug.Log($"{SpellName}: {nameof(OnPerformedRedirect)}: performed");
 
-            if (!CanCast() || HasBlockingSpells() || HasBlockingInputs() || !m_IsThrown)
+            if (!CanCast() 
+                || HasBlockingSpells() 
+                //|| HasBlockingInputs() 
+                || !m_IsThrown)
             {
                 return;
             }
