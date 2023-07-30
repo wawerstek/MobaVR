@@ -232,9 +232,10 @@ namespace MobaVR
 
         protected override float CalculateDamage()
         {
-            float scaleFactor = m_ScaleFactor + m_VfxParent.transform.localScale.x;
-            float damage = m_DefaultDamage * scaleFactor;
-            return damage;
+            //float scaleFactor = m_ScaleFactor + m_VfxParent.transform.localScale.x;
+            //float damage = m_DefaultDamage * scaleFactor;
+            //return damage;
+            return m_DefaultDamage;
         }
 
         private void OnThrown()
@@ -246,7 +247,7 @@ namespace MobaVR
 
             m_IsThrown = true;
             
-            m_ScaleFactor = 2.5f;
+            //m_ScaleFactor = 2.5f;
             Invoke(nameof(DestroySpell), m_DestroyLifeTime);
 
             m_Ball.transform.parent = m_Trail.transform;
@@ -303,7 +304,7 @@ namespace MobaVR
         {
             if (!m_IsThrown)
             {
-                m_ScaleFactor = 1f;
+                //m_ScaleFactor = 1f;
             }
 
             m_IsThrown = true;
