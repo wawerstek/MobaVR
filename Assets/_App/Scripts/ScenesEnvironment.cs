@@ -13,12 +13,18 @@ namespace MobaVR
         [SerializeField] private Settings m_Settings;
         
         [Header("Maps")]
+        [SerializeField] private Scene m_SkyLandMap;
+        [SerializeField] private Scene m_SkyLandProps;
+        [SerializeField] private Scene m_MobaMap;
+        [SerializeField] private Scene m_LichMap;
+        [SerializeField] private Scene m_TavernMap;
+        /*
         [SerializeField] private SceneAsset m_SkyLandMap;
         [SerializeField] private SceneAsset m_SkyLandProps;
         [SerializeField] private SceneAsset m_MobaMap;
         [SerializeField] private SceneAsset m_LichMap;
         [SerializeField] private SceneAsset m_TavernMap;
-
+        */
         private string m_CurrentMap;
         private bool m_CanLoad = true;
         
