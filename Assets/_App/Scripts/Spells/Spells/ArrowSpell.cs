@@ -248,6 +248,12 @@ namespace MobaVR
                 {
                     if (shield.TeamType == m_TeamType)
                     {
+                        //return;
+                    }
+                    
+                    //TODO:Костыль, проверка стрелы
+                    if (shield.photonView.IsMine)
+                    {
                         return;
                     }
                     

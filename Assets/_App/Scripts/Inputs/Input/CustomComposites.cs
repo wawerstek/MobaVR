@@ -15,7 +15,7 @@ public class CustomComposites
         //InitEditor();
     }
 
-    //[UnityEngine.RuntimeInitializeOnLoadMethod(UnityEngine.RuntimeInitializeLoadType.SubsystemRegistration)]
+    [UnityEngine.RuntimeInitializeOnLoadMethod(UnityEngine.RuntimeInitializeLoadType.SubsystemRegistration)]
     public static void Init()
     {
         Debug.Log("CustomComposites INIT");

@@ -52,6 +52,8 @@ namespace MobaVR
 
         private void TriggerShield(Shield shield)
         {
+            //TODO:
+            //Умения не должны проходить через щит
             if (shield.TeamType == m_Spell.TeamType)
             {
                 return;

@@ -147,7 +147,7 @@ namespace MobaVR
                 {
                     if (shield.TeamType == m_TeamType)
                     {
-                        return;
+                        //return;
                     }
                     
                     if (photonView.IsMine)
