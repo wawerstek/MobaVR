@@ -90,25 +90,45 @@ namespace MobaVR
             Debug.Log($"{TAG}: OnSpellStarted: {spellBehaviour.SpellName}");
         }
 
-        private void OnSpellPerformed(SpellBehaviour spellBehaviour)
+        private void OnSpellPerformed(SpellBehaviour newSpellBehaviour)
         {
-            Debug.Log($"{TAG}: OnSpellPerformed: {spellBehaviour.SpellName}");
+            Debug.Log($"{TAG}: OnSpellPerformed: {newSpellBehaviour.SpellName}");
 
             /*
-            foreach (SpellBehaviour activeSpell in m_ActiveSpells)
-            {
-                activeSpell.TryInterrupt();
-            }
-            */
-
+            //Ok Variant
             for (var i = m_ActiveSpells.Count - 1; i >= 0; i--)
             {
                 SpellBehaviour activeSpell = m_ActiveSpells[i];
                 activeSpell.TryInterrupt();
             }
             
-
             m_ActiveSpells.Add(spellBehaviour);
+            */
+
+            bool canAdded = true;
+            for (var i = m_ActiveSpells.Count - 1; i >= 0; i--)
+            {
+                SpellBehaviour activeSpell = m_ActiveSpells[i];
+                if (activeSpell == newSpellBehaviour)
+                {
+                    canAdded = false;
+                    continue;
+                }
+
+                int activePriority = m_Spells.Find(map => map.SpellBehaviour == activeSpell).Priority;
+                int newPriority = m_Spells.Find(map => map.SpellBehaviour == newSpellBehaviour).Priority;
+                if (newPriority <= activePriority)
+                {
+                    continue;
+                }
+
+                activeSpell.TryInterrupt();
+            }
+
+            if (canAdded)
+            {
+                m_ActiveSpells.Add(newSpellBehaviour);
+            }
         }
 
         private void OnSpellCompleted(SpellBehaviour spellBehaviour)

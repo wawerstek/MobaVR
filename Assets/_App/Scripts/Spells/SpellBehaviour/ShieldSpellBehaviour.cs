@@ -35,6 +35,11 @@ namespace MobaVR
                 return;
             }
 
+            if (HasBlockingInputs())
+            {
+                return;
+            }
+
             OnPerformed?.Invoke();
             m_IsPerformed = true;
             m_Shield.Show(true);

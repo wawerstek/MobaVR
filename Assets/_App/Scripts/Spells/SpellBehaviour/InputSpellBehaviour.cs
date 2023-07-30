@@ -104,6 +104,11 @@ namespace MobaVR
             {
                 if (inputActionReference.action.inProgress)
                 {
+                    //return true;
+                }
+
+                if (inputActionReference.action.phase == InputActionPhase.Performed)
+                {
                     return true;
                 }
             }
