@@ -9,9 +9,11 @@ namespace MobaVR
     {
         [SerializeField] private ClassicGameSession m_GameSession;
         [SerializeField] private BaseModeView m_ModeView;
+        [SerializeField] private BaseEnvironmentMode m_Environment;
         [SerializeField] private StateMachine m_StateMachine;
 
         public BaseModeView ModeView => m_ModeView;
+        public BaseEnvironmentMode Environment => m_Environment;
         public Team RedTeam => m_GameSession != null ? m_GameSession.RedTeam : null;
         public Team BlueTeam => m_GameSession != null ? m_GameSession.BlueTeam : null;
         public ZoneManager ZoneManager => m_GameSession != null ? m_GameSession.ZoneManager : null;

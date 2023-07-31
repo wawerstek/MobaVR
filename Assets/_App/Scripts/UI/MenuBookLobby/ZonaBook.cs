@@ -28,6 +28,7 @@ public class ZonaBook : MonoBehaviour
     public float fogDensityTarget = 1f; // ������� �������� fog density
     public float transitionDuration = 1f; // ������������ �������� � ��������
 
+    private bool isFogCompleted = true;
     private bool isInTrigger = false; // ����, ����������� �� ���������� ������ ��������
     private float initialFogDensity; // ��������� �������� fog density
     private float transitionTimer = 0f; // ������ ��� ��������
@@ -48,6 +49,11 @@ public class ZonaBook : MonoBehaviour
 
     private void Update()
     {
+        if (isFogCompleted)
+        {
+            return;
+        }
+        
         if (isInTrigger)
         {
             // ���� � ��������, �������� ������ ������ fog density � �������� ��������
@@ -62,6 +68,8 @@ public class ZonaBook : MonoBehaviour
             {
                 // ��������� �������
                 RenderSettings.fogDensity = fogDensityTarget;
+
+                isFogCompleted = true;
             }
         }
         else
@@ -78,6 +86,8 @@ public class ZonaBook : MonoBehaviour
             {
                 // ��������� �������
                 RenderSettings.fogDensity = initialFogDensity;
+                
+                isFogCompleted = true;
             }
         }
     }
@@ -102,6 +112,7 @@ public class ZonaBook : MonoBehaviour
 
                 //��������� �����
                 isInTrigger = true;
+                isFogCompleted = false;
 
                 meshRenderer.SetActive(false);
                 objectToActivate.SetActive(true);
@@ -155,7 +166,7 @@ public class ZonaBook : MonoBehaviour
 
                 //��������� �����
                 isInTrigger = false;
-
+                isFogCompleted = false;
 
                 meshRenderer.SetActive(true);
                 objectToActivate.SetActive(false);

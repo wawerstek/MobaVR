@@ -146,6 +146,11 @@ namespace MobaVR
 
         public void Deactivate()
         {
+            if (!gameObject.activeSelf || photonView.ViewID <= 0)
+            {
+                return;
+            }
+            
             photonView.RPC(nameof(RpcDeactivate), RpcTarget.All);
         }
 

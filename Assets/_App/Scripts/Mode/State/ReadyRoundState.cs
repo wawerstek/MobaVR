@@ -25,6 +25,11 @@ namespace MobaVR.ClassicModeStateMachine
             if (PhotonNetwork.IsMasterClient)
             {
                 UpdatePlayers();
+                
+                if (m_Mode.Environment != null)
+                {
+                    m_Mode.Environment.ResetEnvironment();
+                }
             }
 
             m_Mode.ModeView.PreRoundTimeView.Show();

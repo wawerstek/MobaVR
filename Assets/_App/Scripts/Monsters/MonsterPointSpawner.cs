@@ -58,6 +58,11 @@ namespace MobaVR
             {
                 return;
             }
+
+            if (photonView.ViewID <= 0)
+            {
+                return;
+            }
             
             photonView.RPC(nameof(RpcClearMonsters), RpcTarget.AllBuffered, isDie);
         }
@@ -65,6 +70,11 @@ namespace MobaVR
         [PunRPC]
         private void RpcClearMonsters(bool isDie)
         {
+            if (!gameObject.activeSelf)
+            {
+                return;
+            }
+            
             CanSpawn = false;
 
             StopAllCoroutines();

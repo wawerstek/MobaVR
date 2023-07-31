@@ -91,7 +91,10 @@ namespace MobaVR
         private void OnDestroy()
         {
             CancelInvoke();
-            blinkCoroutine.Stop();
+            if (blinkCoroutine != null)
+            {
+                blinkCoroutine.Stop();
+            }
         }
 
         private void Initialize()

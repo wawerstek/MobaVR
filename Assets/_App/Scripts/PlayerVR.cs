@@ -111,6 +111,8 @@ namespace MobaVR
 
         private void Awake()
         {
+            DontDestroyOnLoad(gameObject);
+            
             if (m_InputVR != null)
             {
                 m_InputVR.gameObject.SetActive(photonView.IsMine);

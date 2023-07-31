@@ -8,8 +8,8 @@ using BNG;
 public class ServiseSkin : MonoBehaviour
 {
 
-    public GameObject targetObject; // GameObject, для которого нужно найти дочерние элементы
-    public Transform destinationParent; // Родительский элемент для созданных копий
+    public GameObject targetObject; // GameObject, пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    public Transform destinationParent; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
     
 
     private void Start()
@@ -19,7 +19,7 @@ public class ServiseSkin : MonoBehaviour
 
     private void CopyAllChildren()
     {
-        // Рекурсивно копируем все дочерние объекты
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         CopyChildren(targetObject.transform, destinationParent);
     }
 
@@ -27,16 +27,16 @@ public class ServiseSkin : MonoBehaviour
     {
         foreach (Transform child in source)
         {
-            // Создаем копию дочернего объекта
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             GameObject copiedChild = Instantiate(child.gameObject, parent);
-            copiedChild.transform.localPosition = Vector3.zero; // Сбрасываем локальную позицию
-            copiedChild.transform.localRotation = Quaternion.identity; // Сбрасываем локальный поворот
-            copiedChild.transform.localScale = Vector3.one; // Сбрасываем локальный масштаб
+            copiedChild.transform.localPosition = Vector3.zero; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+            copiedChild.transform.localRotation = Quaternion.identity; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+            copiedChild.transform.localScale = Vector3.one; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
-            // Рекурсивно копируем дочерние объекты этого объекта
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             CopyChildren(child, copiedChild.transform);
 
-            // Выключаем компонент VR IK
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ VR IK
             VRIK vrIK = copiedChild.GetComponent<VRIK>();
             if (vrIK != null)
             {
@@ -44,17 +44,18 @@ public class ServiseSkin : MonoBehaviour
             }
 
 
-            // Ищем объект "Hands" и включаем его, если найден
-            Transform handsObject = child.transform.Find("Hands");
+            // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ "Hands" пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ, пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+            Transform handsObject = copiedChild.transform.Find("Body/Base/Hands");
             if (handsObject != null)
             {
-                handsObject.gameObject.SetActive(false);
+                //handsObject.gameObject.SetActive(false);
+                handsObject.gameObject.SetActive(true);
             }
 
 
 
 
-            // Выключаем скопированный объект
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
             copiedChild.gameObject.SetActive(false);
 
         }
