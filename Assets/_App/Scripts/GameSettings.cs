@@ -14,6 +14,7 @@ namespace MobaVR
         [SerializeField] private ClassicGameSession m_GameSession;
         [SerializeField] private StateMachineSwitcher m_StateMachineSwitcher;
         [SerializeField] private Environment m_Environment;
+        [SerializeField] private ScenesEnvironment m_SceneEnvironment;
 
         public GameObject _Call;
 
@@ -29,6 +30,11 @@ namespace MobaVR
             if (m_Environment == null)
             {
                 m_Environment = FindObjectOfType<Environment>();
+            }
+            
+            if (m_SceneEnvironment == null)
+            {
+                m_SceneEnvironment = FindObjectOfType<ScenesEnvironment>();
             }
 
             if (m_StateMachineSwitcher == null)
@@ -103,6 +109,12 @@ namespace MobaVR
                     m_VRUISystem.enabled = !m_View.activeSelf;
                 }
             }
+        }
+
+        public void SetPhysicsCollision(bool isIgnore)
+        {
+            Physics.IgnoreLayerCollision(10, 21, isIgnore);
+            Physics.IgnoreLayerCollision(21, 10, isIgnore);
         }
 
         [UnityEngine.ContextMenu("SwitchTeam")]
@@ -213,35 +225,73 @@ namespace MobaVR
         ///
         public void ShowTavernMap()
         {
-            m_Environment.ShowTavernMap();
+            m_SceneEnvironment.ShowTavernMap();
         }
         
         public void ShowSkyLandMap()
         {
-            m_Environment.ShowSkyLandMap();
+            m_SceneEnvironment.ShowSkyLandMap();
         }
         
         public void ShowSkyLandWithPropMap()
         {
-            m_Environment.ShowSkyLandWithPropMap();
+            m_SceneEnvironment.ShowSkyLandWithPropMap();
         }
         
         public void ShowMobaMap()
         {
-            m_Environment.ShowMobaMap();
+            m_SceneEnvironment.ShowMobaMap();
         }
         
         public void ShowLichMap()
         {
-            m_Environment.ShowLichMap();
+            m_SceneEnvironment.ShowLichMap();
         }
         
         public void ShowDefaultPvPMap()
         {
-            m_Environment.ShowSkyLandMap();
+            m_SceneEnvironment.ShowSkyLandMap();
         }
         
         public void ShowDefaultPvEMap()
+        {
+            m_SceneEnvironment.ShowLichMap();
+        }
+        
+        ////
+        ///
+        ///
+        public void Local_ShowTavernMap()
+        {
+            m_Environment.ShowTavernMap();
+        }
+        
+        public void Local_ShowSkyLandMap()
+        {
+            m_Environment.ShowSkyLandMap();
+        }
+        
+        public void Local_ShowSkyLandWithPropMap()
+        {
+            m_Environment.ShowSkyLandWithPropMap();
+        }
+        
+        public void Local_ShowMobaMap()
+        {
+            m_Environment.ShowMobaMap();
+        }
+        
+        public void Local_ShowLichMap()
+        {
+            m_Environment.ShowLichMap();
+        }
+        
+        public void Local_ShowDefaultPvPMap()
+        {
+            m_Environment.ShowSkyLandMap();
+        }
+        
+        public void Local_ShowDefaultPvEMap()
         {
             m_Environment.ShowLichMap();
         }

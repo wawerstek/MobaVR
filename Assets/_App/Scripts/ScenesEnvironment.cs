@@ -19,6 +19,10 @@ namespace MobaVR
         [SerializeField] private string m_LichMap;
         [SerializeField] private string m_TavernMap;
 
+        [Header("Props")]
+        [SerializeField] private GameObject m_PvpProps;
+        [SerializeField] private GameObject m_PveProps;
+        
         [Header("Default Map")]
         [SerializeField] private bool m_IsLoadDefaultMap;
         [SerializeField] private string m_DefaultMap;
@@ -188,6 +192,7 @@ namespace MobaVR
             }
             else
             {
+                photonView.RPC(nameof(SetProps), RpcTarget.All, false, false);
                 RpcShowTavernMap();
             }
         }
@@ -197,6 +202,7 @@ namespace MobaVR
         {
             //LoadSceneAsync(m_TavernMap.name);
             LoadSceneAsync(m_TavernMap);
+            SetProps(false, false);
         }
 
         [ContextMenu("Show Sky Land")]
@@ -208,6 +214,7 @@ namespace MobaVR
             }
             else
             {
+                photonView.RPC(nameof(SetProps), RpcTarget.All, true, false);
                 RpcShowSkyLandMap();
             }
         }
@@ -217,6 +224,8 @@ namespace MobaVR
         {
             //LoadSceneAsync(m_SkyLandMap.name);
             LoadSceneAsync(m_SkyLandMap);
+            SetProps(true, false);
+
         }
 
         [ContextMenu("Show Sky Land Props")]
@@ -228,6 +237,7 @@ namespace MobaVR
             }
             else
             {
+                photonView.RPC(nameof(SetProps), RpcTarget.All, true, false);
                 RpcShowSkyLandWithPropMap();
             }
         }
@@ -237,6 +247,7 @@ namespace MobaVR
         {
             //LoadSceneAsync(m_SkyLandProps.name);
             LoadSceneAsync(m_SkyLandProps);
+            SetProps(true, false);
         }
 
         [ContextMenu("Show Moba")]
@@ -248,8 +259,16 @@ namespace MobaVR
             }
             else
             {
+                photonView.RPC(nameof(SetProps), RpcTarget.All, true, false);
                 RpcShowMobaMap();
             }
+        }
+        
+        [PunRPC]
+        public void SetProps(bool isPvp, bool isPve)
+        {
+            m_PvpProps.SetActive(isPvp);
+            m_PveProps.SetActive(isPve);
         }
         
         [PunRPC]
@@ -257,6 +276,7 @@ namespace MobaVR
         {
             //LoadSceneAsync(m_MobaMap.name);
             LoadSceneAsync(m_MobaMap);
+            SetProps(true, false);
         }
         
         [ContextMenu("Show Lich")]
@@ -268,6 +288,7 @@ namespace MobaVR
             }
             else
             {
+                photonView.RPC(nameof(SetProps), RpcTarget.All, false, true);
                 RpcShowLichMap();
             }
         }
@@ -275,7 +296,8 @@ namespace MobaVR
         [PunRPC]
         public void RpcShowLichMap()
         {
-            m_Settings.SetNight();
+            SetProps(false, true);
+            //m_Settings.SetNight();
             //LoadSceneAsync(m_LichMap.name);
             LoadSceneAsync(m_LichMap);
         }

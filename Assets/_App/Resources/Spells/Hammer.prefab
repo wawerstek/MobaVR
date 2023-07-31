@@ -15269,6 +15269,7 @@ GameObject:
   - component: {fileID: 2094475954465768569}
   - component: {fileID: 6727756966319884898}
   - component: {fileID: 2270474295357567928}
+  - component: {fileID: 2120245926072285390}
   m_Layer: 10
   m_Name: Hammer
   m_TagString: Untagged
@@ -15705,7 +15706,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_TeamItem: {fileID: 2270474295357567928}
   m_DestroyLifeTime: 20
-  m_DefaultDamage: 20
+  m_DefaultDamage: 10
   m_Force: 4000
   m_Throwable: {fileID: 868586108129769326}
   m_HammerMesh: {fileID: 2889683674648275624}
@@ -15774,6 +15775,19 @@ MonoBehaviour:
   m_BlueTeamThemeSo: {fileID: 11400000, guid: f0548a8be222d024394f7595294ade09, type: 2}
   m_ExplosionParticle: {fileID: 7485281838839858529}
   m_TrailRenderer: {fileID: 3810034775163697477}
+--- !u!114 &2120245926072285390
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5735091862285679153}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b05c15732aeb2db4b860eb9964bf3bc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Damage: 20
 --- !u!1 &5735091863404537185
 GameObject:
   m_ObjectHideFlags: 0

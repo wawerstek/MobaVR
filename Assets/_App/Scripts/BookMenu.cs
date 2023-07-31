@@ -19,5 +19,21 @@ namespace MobaVR
                 m_ClassicGameSession.SwitchRole(id);
             }
         }
+        
+        public void SetRedTeam()
+        {
+            if (m_ClassicGameSession != null)
+            {
+                m_ClassicGameSession.SetRedTeam();
+            }
+        }
+        
+        public void SetBlueTeam()
+        {
+            if (m_ClassicGameSession != null)
+            {
+                m_ClassicGameSession.SetBlueTeam();
+            }
+        }
     }
 }

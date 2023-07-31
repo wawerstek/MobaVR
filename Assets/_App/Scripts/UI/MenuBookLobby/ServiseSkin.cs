@@ -51,8 +51,12 @@ public class ServiseSkin : MonoBehaviour
                 //handsObject.gameObject.SetActive(false);
                 handsObject.gameObject.SetActive(true);
             }
-
-
+            
+            if (copiedChild.TryGetComponent(out Skin skin))
+            {
+                skin.SetVisibilityFace(true);
+                skin.SetVisibilityVR(true);
+            }
 
 
             // ��������� ������������� ������

@@ -76,7 +76,7 @@ namespace MobaVR
             {
                 skin.SetVisibilityLegs(isVisible);
             }
-            
+
             foreach (Skin skin in m_DeadSkins)
             {
                 skin.SetVisibilityLegs(isVisible);
@@ -90,7 +90,7 @@ namespace MobaVR
             {
                 skin.SetVisibilityFace(isVisible);
             }
-            
+
             foreach (Skin skin in m_DeadSkins)
             {
                 skin.SetVisibilityFace(isVisible);
@@ -104,7 +104,7 @@ namespace MobaVR
             {
                 skin.SetVisibilityVR(isVisible);
             }
-            
+
             foreach (Skin skin in m_DeadSkins)
             {
                 skin.SetVisibilityVR(isVisible);
@@ -118,7 +118,7 @@ namespace MobaVR
             {
                 skin.SetVisibilityBody(isVisible);
             }
-            
+
             foreach (Skin skin in m_DeadSkins)
             {
                 skin.SetVisibilityBody(isVisible);
@@ -165,6 +165,12 @@ namespace MobaVR
         {
             if (m_PhotonView != null)
             {
+                if (m_PhotonView.IsMine)
+                {
+                    SetVisibilityVR(false);
+                    SetVisibilityFace(false);
+                }
+
                 m_PhotonView.RPC(nameof(RpcSetAliveSkin), RpcTarget.AllBuffered, position);
             }
         }
@@ -188,7 +194,7 @@ namespace MobaVR
             TeamType teamType = m_PlayerVR != null ? m_PlayerVR.TeamType : TeamType.RED;
             m_AliveActiveSkin.ActivateSkin(teamType);
         }
-        
+
         public void SetAliveSkin(string idSkin)
         {
             if (m_PhotonView != null)
