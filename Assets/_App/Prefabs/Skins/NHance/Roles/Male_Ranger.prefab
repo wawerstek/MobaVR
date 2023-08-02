@@ -518,6 +518,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1535639567350251483}
   - component: {fileID: 6619770449228270731}
+  - component: {fileID: 5071159761096273669}
+  - component: {fileID: 3088944247272038154}
+  - component: {fileID: 3276716889382557423}
+  - component: {fileID: 5667499759450523101}
   m_Layer: 0
   m_Name: Quiver_NewbieArcher
   m_TagString: Untagged
@@ -594,6 +598,65 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.008172885, y: -0.000081792474, z: 0.0029230714}
     m_Extent: {x: 0.04095435, y: 0.09356198, z: 0.41029584}
   m_DirtyAABB: 0
+--- !u!54 &5071159761096273669
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1861121565228537115}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
+--- !u!65 &3088944247272038154
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1861121565228537115}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.8, y: 2, z: 5}
+  m_Center: {x: 0.09, y: 0, z: 0}
+--- !u!114 &3276716889382557423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1861121565228537115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06e3da980ff6727488a532d0873c6d18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TeamType: 0
+  m_RedMaterial:
+  - {fileID: 2100000, guid: a968e1371f4d4826a52701e7307db065, type: 2}
+  m_BlueMaterial:
+  - {fileID: 2100000, guid: 0c3f79b4f4f84401a061fac87b98676f, type: 2}
+  m_Renderer: {fileID: 6619770449228270731}
+--- !u!114 &5667499759450523101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1861121565228537115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82294abb9520442daeb6fafeb8c38ac2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2004478618761923555
 GameObject:
   m_ObjectHideFlags: 0
@@ -1991,6 +2054,7 @@ MonoBehaviour:
   - {fileID: 8174188087199883151}
   - {fileID: 3376179892100194116}
   - {fileID: 3139368270681886485}
+  - {fileID: 3276716889382557423}
   m_Renderers:
   - {fileID: 5778691263653657894}
   - {fileID: 6994236974291550896}
@@ -2038,21 +2102,7 @@ MonoBehaviour:
   - {fileID: 89727666259369179}
   - {fileID: 5107829259075402773}
   - {fileID: 1561075501516207823}
-  - {fileID: 7763432968735708075}
-  - {fileID: 3831061499189559763}
-  - {fileID: 495094192452876224}
-  - {fileID: 595627630351038512}
-  - {fileID: 1730375642381623231}
-  - {fileID: 2516255734076817746}
   - {fileID: 7840321887194348848}
-  - {fileID: 4346603306632512140}
-  - {fileID: 5122694729899826548}
-  - {fileID: 3471009839801584188}
-  - {fileID: 5965773675882757928}
-  - {fileID: 1688120021815769017}
-  - {fileID: 4515919370637713960}
-  - {fileID: 2182699064823685038}
-  - {fileID: 3462171209259054519}
   - {fileID: 9214578696827562705}
   - {fileID: 343223828369651771}
   m_BodyRenderers: []
