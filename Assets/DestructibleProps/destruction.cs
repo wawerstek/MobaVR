@@ -26,6 +26,19 @@ public class destruction : MonoBehaviour
     public float AutoDestTime = 2; //Время автоматического уничтожения (отсчитывается от начала игры).
     PhotonView photonView;
 
+    public AudioClip[] sounds;
+
+    private AudioSource audioSource;
+
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
+
+
+
+
+
     void Start()
     {
         photonView = GetComponent<PhotonView>();
@@ -105,10 +118,13 @@ public class destruction : MonoBehaviour
             FX.SetActive(true);
         }
 
-        if (GetComponent<AudioSource>())
-        {
-            GetComponent<AudioSource>().Play();
-        }
+        PlayRandomSound();
+
+
+        //if (GetComponent<AudioSource>())
+        //{
+        //    GetComponent<AudioSource>().Play();
+        //}
 
         if (GetComponent<Renderer>())
         {
@@ -240,4 +256,20 @@ public class destruction : MonoBehaviour
     {
         Health = ObjectHealth;
     }
+
+    public void PlayRandomSound()
+    {
+        if (sounds.Length > 0)
+        {
+            // Генерируем случайный индекс для выбора случайного звука из массива
+            int randomIndex = Random.Range(0, sounds.Length);
+
+            // Воспроизводим звук, соответствующий случайному индексу
+            AudioClip soundToPlay = sounds[randomIndex];
+            audioSource.PlayOneShot(soundToPlay);
+        }
+
+    }
+
+
 }
