@@ -259,7 +259,7 @@ public class destruction : MonoBehaviour
 
     public void PlayRandomSound()
     {
-        if (sounds.Length > 0)
+        if (sounds != null && sounds.Length > 0)
         {
             // Генерируем случайный индекс для выбора случайного звука из массива
             int randomIndex = Random.Range(0, sounds.Length);
