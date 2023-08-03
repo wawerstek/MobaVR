@@ -10,7 +10,7 @@ public class destruction : MonoBehaviour
     private Quaternion[] originalRotation; // Переменная для сохранения поворота оригинального объекта
 
     public GameObject[] HidingObjs; //список объектов, которые будут скрыты после давки.
-    [Range(1, 100)]
+    [Range(1, 1000)]
     public int Health = 100;
     private int ObjectHealth;
     public float ExplosionForce = 200; //сила, приложенная к каждому фрагменту разбитого объекта.
