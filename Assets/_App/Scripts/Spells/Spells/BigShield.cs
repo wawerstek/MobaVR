@@ -11,6 +11,7 @@ namespace MobaVR
         [SerializeField] private Renderer m_Renderer;
         [SerializeField] private Collider m_Collider;
         [SerializeField] private SliderManager m_Slider;
+        [SerializeField] private float m_PlaceAlpha = 0.25f;
 
         private void Awake()
         {
@@ -27,7 +28,7 @@ namespace MobaVR
             m_Collider.enabled = false;
 
             Color color = m_Renderer.material.color;
-            color.a = 0.05f;
+            color.a = 0.1f;
             m_Renderer.material.color = color;
         }
 
@@ -45,7 +46,7 @@ namespace MobaVR
             m_Collider.enabled = true;
 
             Color color = m_Renderer.material.color;
-            color.a = 0.6f;
+            color.a = m_PlaceAlpha;
             m_Renderer.material.color = color;
 
             m_Slider.gameObject.SetActive(true);
