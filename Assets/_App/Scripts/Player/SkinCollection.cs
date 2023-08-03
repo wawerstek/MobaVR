@@ -11,6 +11,7 @@ namespace MobaVR
         [Header("Wizard")]
         [SerializeField] private PlayerVR m_PlayerVR;
         [SerializeField] private PhotonView m_PhotonView;
+        [SerializeField] private bool m_IsHideVR = true;
 
         [FormerlySerializedAs("m_Skins")]
         [Header("Skins")]
@@ -165,7 +166,7 @@ namespace MobaVR
         {
             if (m_PhotonView != null)
             {
-                if (m_PhotonView.IsMine)
+                if (m_PhotonView.IsMine && m_IsHideVR)
                 {
                     SetVisibilityVR(false);
                     SetVisibilityFace(false);

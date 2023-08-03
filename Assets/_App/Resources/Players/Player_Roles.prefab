@@ -539,6 +539,7 @@ MonoBehaviour:
   m_TeamType: 0
   m_PlayerVR: {fileID: 7702456167165704557}
   m_PhotonView: {fileID: 2665836695976200390}
+  m_IsHideVR: 0
   m_AliveSkins:
   - {fileID: 5601038411415341152}
   - {fileID: 1320528075267492486}
@@ -14000,6 +14001,11 @@ PrefabInstance:
       propertyPath: solver.spine.headTarget
       value: 
       objectReference: {fileID: 993696329630948250}
+    - target: {fileID: 5168145441461217942, guid: a6ac4bc6765a57b48b78da9a237482ed,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6493224547065393930, guid: a6ac4bc6765a57b48b78da9a237482ed,
         type: 3}
       propertyPath: m_HeadVrTarget
@@ -15830,11 +15836,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Male_Defender
-      objectReference: {fileID: 0}
-    - target: {fileID: 6376068621829532375, guid: 16ce0b2e5adf50646b28118971bd6185,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 16ce0b2e5adf50646b28118971bd6185, type: 3}
