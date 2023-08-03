@@ -7,6 +7,8 @@ public class DieView : MonoBehaviour
 {
     [SerializeField] private WizardPlayer wizardPlayer;
 
+    public GameObject TextDie;
+
     private void OnEnable()
     {
         wizardPlayer.OnDie += OnDie;
@@ -21,12 +23,12 @@ public class DieView : MonoBehaviour
 
     private void OnDie()
     {
-        
+        TextDie.SetActive(true);
     }
 
     private void OnReborn()
     {
-
+        TextDie.SetActive(false);
     }
 
     void Start()
