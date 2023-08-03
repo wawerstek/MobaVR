@@ -14287,6 +14287,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 8283413741057670200}
+    - target: {fileID: 4076086951332582956, guid: aa1480eb39466114796b80e249970ae0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4155226469371015431, guid: aa1480eb39466114796b80e249970ae0,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -14297,6 +14302,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 7702456167165704557}
+    - target: {fileID: 4681841189579193748, guid: aa1480eb39466114796b80e249970ae0,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.05
+      objectReference: {fileID: 0}
     - target: {fileID: 4905577982633349493, guid: aa1480eb39466114796b80e249970ae0,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -14477,7 +14487,8 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 7702456167165704558}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8387214801851569266, guid: aa1480eb39466114796b80e249970ae0, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: aa1480eb39466114796b80e249970ae0, type: 3}
 --- !u!4 &1261346771359000727 stripped
 Transform:
@@ -14485,9 +14496,9 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1753731875142792428}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &2204174971240722753 stripped
+--- !u!1 &2362044156280496832 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 486473061620925869, guid: aa1480eb39466114796b80e249970ae0,
+  m_CorrespondingSourceObject: {fileID: 4076086951332582956, guid: aa1480eb39466114796b80e249970ae0,
     type: 3}
   m_PrefabInstance: {fileID: 1753731875142792428}
   m_PrefabAsset: {fileID: 0}
@@ -14594,7 +14605,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wizardPlayer: {fileID: 7702456167165704558}
-  TextDie: {fileID: 2204174971240722753}
+  TextDie: {fileID: 2362044156280496832}
+  sounds:
+  - {fileID: 8300000, guid: f3d6c0967ace4de4280ec0872f38dbf6, type: 3}
+  - {fileID: 8300000, guid: e72042f262d19e14187110e0677f57f2, type: 3}
+  - {fileID: 8300000, guid: 9d7e91fef4345e8479f9472b2e26aa6c, type: 3}
+  - {fileID: 8300000, guid: 80efe3b3af4c6f340894049498bf1cbd, type: 3}
+  - {fileID: 8300000, guid: 0ed0251a99a51e94782c65304a9693d7, type: 3}
 --- !u!4 &5423203715246313598 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5986857112221754514, guid: aa1480eb39466114796b80e249970ae0,
