@@ -190,7 +190,7 @@ namespace MobaVR.Weapons.Bow
             bool doStick = true;
             if (zVel > 0.02f && !rb.isKinematic)
             {
-                Damageable d = collision.gameObject.GetComponent<Damageable>();
+                BngDamageable d = collision.gameObject.GetComponent<BngDamageable>();
                 if (d)
                 {
                     d.DealDamage(arrowDamage, collision.GetContact(0).point, collision.GetContact(0).normal, true,

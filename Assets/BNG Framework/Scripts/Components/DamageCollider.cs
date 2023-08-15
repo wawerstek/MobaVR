@@ -42,14 +42,14 @@ namespace BNG {
         /// </summary>
         public float CollisionDamage = 5;
 
-        Damageable thisDamageable;
+        BngDamageable thisDamageable;
 
         private void Start() {
             if (ColliderRigidbody == null) {
                 ColliderRigidbody = GetComponent<Rigidbody>();
             }
 
-            thisDamageable = GetComponent<Damageable>();
+            thisDamageable = GetComponent<BngDamageable>();
         }
 
         private void OnCollisionEnter(Collision collision) {
@@ -68,7 +68,7 @@ namespace BNG {
             if (LastDamageForce >= MinForce) {
 
                 // Can we damage what we hit?
-                Damageable d = collision.gameObject.GetComponent<Damageable>();
+                BngDamageable d = collision.gameObject.GetComponent<BngDamageable>();
                 if (d) {
                     d.DealDamage(Damage, collision.GetContact(0).point, collision.GetContact(0).normal, true, gameObject, collision.gameObject);
                 }

@@ -37,7 +37,7 @@ namespace BNG {
 
                 // Apply Damage
                 if (ExplosionDamage > 0) {
-                    Damageable damageable = hit.GetComponent<Damageable>();
+                    BngDamageable damageable = hit.GetComponent<BngDamageable>();
                     if (damageable) {
                         
                         if(hit.GetComponent<Explosive>() != null) {
@@ -71,7 +71,7 @@ namespace BNG {
             yield return null;
         }
 
-        IEnumerator dealDelayedDamaged(Damageable damageable, float delayTime) {
+        IEnumerator dealDelayedDamaged(BngDamageable damageable, float delayTime) {
             yield return new WaitForSeconds(delayTime);
 
             damageable.DealDamage(ExplosionDamage);

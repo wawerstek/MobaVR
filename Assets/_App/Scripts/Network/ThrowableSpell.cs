@@ -103,7 +103,7 @@ namespace MobaVR
                     {
                         return;
                     }
-                    
+
                     if (wizardPlayer.photonView.Owner.ActorNumber == photonView.Owner.ActorNumber)
                     {
                         return;
@@ -123,7 +123,7 @@ namespace MobaVR
                     {
                         return;
                     }
-                             
+
                     if (damagePlayer.WizardPlayer.photonView.Owner.ActorNumber == photonView.Owner.ActorNumber)
                     {
                         return;
@@ -146,7 +146,7 @@ namespace MobaVR
                         {
                             //return;
                         }
-                        
+
                         if (photonView.IsMine)
                         {
                             shield.Hit(this, CalculateDamage());

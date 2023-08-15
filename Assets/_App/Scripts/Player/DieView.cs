@@ -9,6 +9,16 @@ public class DieView : MonoBehaviour
 
     public GameObject TextDie;
 
+
+    public AudioClip[] sounds;
+
+    private AudioSource audioSource;
+
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
+
     private void OnEnable()
     {
         wizardPlayer.OnDie += OnDie;
@@ -23,6 +33,7 @@ public class DieView : MonoBehaviour
 
     private void OnDie()
     {
+        PlayRandomSound();
         TextDie.SetActive(true);
     }
 
@@ -40,4 +51,20 @@ public class DieView : MonoBehaviour
     {
         
     }
+
+
+    public void PlayRandomSound()
+    {
+        if (sounds.Length > 0)
+        {
+            // Генерируем случайный индекс для выбора случайного звука из массива
+            int randomIndex = Random.Range(0, sounds.Length);
+
+            // Воспроизводим звук, соответствующий случайному индексу
+            AudioClip soundToPlay = sounds[randomIndex];
+            audioSource.PlayOneShot(soundToPlay);
+        }
+
+    }
+
 }

@@ -59,7 +59,7 @@ namespace BNG {
             DoHitFX(hitPosition, hitNormal, collision.collider);
 
             // Damage if possible
-            Damageable d = collision.collider.GetComponent<Damageable>();
+            BngDamageable d = collision.collider.GetComponent<BngDamageable>();
             if (d) {
                 d.DealDamage(Damage, hitPosition, normal, true, gameObject, collision.collider.gameObject);
 
