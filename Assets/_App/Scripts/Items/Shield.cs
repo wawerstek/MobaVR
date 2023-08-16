@@ -74,17 +74,27 @@ namespace MobaVR
         }
 
         [ContextMenu("Hit")]
-        public virtual void Hit()
+        protected virtual void Hit()
         {
             photonView.RPC(nameof(RpcHit), RpcTarget.All, 1f);
         }
 
-        public virtual void Hit(float damage)
+        public virtual void Hit(HitData hitData)
+        {
+            if (hitData.TeamType == TeamType)
+            {
+                return;
+            }
+            
+            RpcHit(hitData.Amount);
+        }
+
+        protected virtual void Hit(float damage)
         {
             photonView.RPC(nameof(RpcHit), RpcTarget.All, damage);
         }
 
-        public virtual void Hit(ThrowableSpell fireball, float damage)
+        protected virtual void Hit(ThrowableSpell fireball, float damage)
         {
             if ((fireball.Team.IsRed && m_TeamItem.IsRed)
                 || (!fireball.Team.IsRed && !m_TeamItem.IsRed))
@@ -102,7 +112,7 @@ namespace MobaVR
         }
 
         [PunRPC]
-        public virtual void RpcHit(float damage)
+        protected virtual void RpcHit(float damage)
         {
             if (IsLife)
             {
@@ -121,7 +131,7 @@ namespace MobaVR
         }
 
         [ContextMenu("Die")]
-        public virtual void Die()
+        protected virtual void Die()
         {
             if (!IsLife)
             {

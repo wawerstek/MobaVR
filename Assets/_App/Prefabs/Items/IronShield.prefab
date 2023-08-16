@@ -11,7 +11,9 @@ GameObject:
   - component: {fileID: 148277194731219044}
   - component: {fileID: 8182633719713912646}
   - component: {fileID: 4859293738653145728}
+  - component: {fileID: 682897276156863020}
   - component: {fileID: 3552943985594570548}
+  - component: {fileID: 8797424478799743014}
   m_Layer: 0
   m_Name: IronShield
   m_TagString: Item
@@ -52,9 +54,12 @@ MonoBehaviour:
   m_Health: 15
   m_CooldownTime: 5
   m_ScaleDuration: 0.5
+  m_TimeView: {fileID: 0}
   m_TeamItem: {fileID: 4859293738653145728}
   m_Shield: {fileID: 1045520090547111144}
-  m_Collider: {fileID: 5268960405145848414}
+  m_Collider: {fileID: 682897276156863020}
+  m_View: {fileID: 0}
+  m_CurrentHealth: 1
   m_Renderer: {fileID: 1457693128312552107}
 --- !u!114 &4859293738653145728
 MonoBehaviour:
@@ -72,6 +77,19 @@ MonoBehaviour:
   m_RedTeamThemeSo: {fileID: 11400000, guid: d9a75f2ca82451b4ab0684d0945f04a2, type: 2}
   m_BlueTeamThemeSo: {fileID: 11400000, guid: f0548a8be222d024394f7595294ade09, type: 2}
   m_Renderer: {fileID: 1457693128312552107}
+--- !u!65 &682897276156863020
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 148277194731219047}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.04, y: 0.5, z: 0.5}
+  m_Center: {x: -0.04, y: -0.025, z: 0}
 --- !u!114 &3552943985594570548
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94,6 +112,39 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &8797424478799743014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 148277194731219047}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0225251665a48b494c8a6bd938224e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnHit:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8182633719713912646}
+        m_TargetAssemblyTypeName: MobaVR.Shield, Assembly-CSharp
+        m_MethodName: Hit
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnDie:
+    m_PersistentCalls:
+      m_Calls: []
+  OnReborn:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1045520090547111144
 GameObject:
   m_ObjectHideFlags: 0
@@ -331,14 +382,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7159135735474620622}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0.03489949, w: 0.99939084}
+  m_LocalPosition: {x: -0.0021092996, y: -0.002652639, z: 0.00000021703907}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2627568255509692589}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 4}
 --- !u!64 &5268960405145848414
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -348,7 +399,7 @@ MeshCollider:
   m_GameObject: {fileID: 7159135735474620622}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   m_Convex: 1
   m_CookingOptions: 30

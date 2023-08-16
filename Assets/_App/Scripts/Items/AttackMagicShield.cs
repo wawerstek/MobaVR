@@ -173,7 +173,8 @@ namespace MobaVR
                     Shield shield = other.GetComponentInParent<Shield>();
                     if (shield != null)
                     {
-                        shield.Hit(1f);
+                        // TODO: Attack Shield
+                        //shield.Hit(1f);
                     }
                 }
                 
@@ -245,7 +246,7 @@ namespace MobaVR
         }
 
         [PunRPC]
-        public override void RpcHit(float damage)
+        protected override void RpcHit(float damage)
         {
             if (!m_IsThrown)
             {
@@ -255,7 +256,7 @@ namespace MobaVR
         }
 
         [ContextMenu("Die")]
-        public override void Die()
+        protected override void Die()
         {
             base.Die();
         }

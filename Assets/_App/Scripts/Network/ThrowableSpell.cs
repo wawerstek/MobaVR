@@ -106,65 +106,11 @@ namespace MobaVR
                     TeamType = TeamType
                 };
                 
-                /*if (other.CompareTag("RemotePlayer") && other.transform.TryGetComponent(out WizardPlayer wizardPlayer))
-                {
-                    if (wizardPlayer == Owner)
-                    {
-                        return;
-                    }
-
-                    if (wizardPlayer.photonView.Owner.ActorNumber == photonView.Owner.ActorNumber)
-                    {
-                        return;
-                    }
-
-                    if (photonView.IsMine)
-                    {
-                        //wizardPlayer.Hit(this, CalculateDamage());
-                        wizardPlayer.Hit(hitData);
-                    }
-
-                    HandleCollision(other.transform);
-                }*/
-                
                 if (other.transform.TryGetComponent(out Damageable damageable))
                 {
-                    /*
-                    if (damageable.photonView.Owner.ActorNumber == photonView.Owner.ActorNumber)
-                    {
-                        return;
-                    }
-                    */
-
                     if (photonView.IsMine)
                     {
-                        //wizardPlayer.Hit(this, CalculateDamage());
                         damageable.Hit(hitData);
-                    }
-
-                    HandleCollision(other.transform);
-                }
-
-                if (other.CompareTag("LifeCollider") && other.transform.TryGetComponent(out HitCollider damagePlayer))
-                {
-                    if (damagePlayer.WizardPlayer == Owner)
-                    {
-                        return;
-                    }
-
-                    if (damagePlayer.WizardPlayer.photonView.Owner.ActorNumber == photonView.Owner.ActorNumber)
-                    {
-                        return;
-                    }
-
-                    if (photonView.IsMine)
-                    {
-                        //TODO: DAMAGEABLE
-                        //damagePlayer.WizardPlayer.Hit(this, CalculateDamage());
-                        
-                        
-                        
-                        //damagePlayer.WizardPlayer.Hit(hitData);
                     }
 
                     HandleCollision(other.transform);
@@ -172,6 +118,7 @@ namespace MobaVR
 
                 if (other.CompareTag("Item"))
                 {
+                    /*
                     Shield shield = other.GetComponentInParent<Shield>();
                     if (shield != null)
                     {
@@ -187,6 +134,7 @@ namespace MobaVR
 
                         HandleCollision(other.transform);
                     }
+                    */
 
                     //TODO: Перенести логику в класс БигШит
                     if (other.TryGetComponent(out BigShield bigShield))

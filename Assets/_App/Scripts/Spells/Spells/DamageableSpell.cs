@@ -67,7 +67,8 @@ namespace MobaVR
 
             if (photonView.IsMine)
             {
-                shield.Hit(m_Damage);
+                //TODO: DAMAGE
+                //shield.Hit(m_Damage);
             }
 
             OnShieldTriggerEnter?.Invoke(shield);

@@ -951,13 +951,23 @@ namespace MobaVR
         //public void Hit(HitData hitData)
         protected void Hit(HitData hitData)
         {
+            if (hitData.PlayerVR != null && hitData.PlayerVR.WizardPlayer == this)
+            {
+                return;
+            }
+
             if (hitData.Player.ActorNumber == photonView.Owner.ActorNumber)
             {
                 return;
             }
-            
-            if ((hitData.TeamType ==TeamType.RED && m_Teammate.IsRed)
-                || (hitData.TeamType ==TeamType.BLUE && !m_Teammate.IsRed))
+
+            if (hitData.TeamType == m_Teammate.TeamType)
+            {
+                return;
+            }
+
+            if ((hitData.TeamType == TeamType.RED && m_Teammate.IsRed)
+                || (hitData.TeamType == TeamType.BLUE && !m_Teammate.IsRed))
             {
                 return;
             }
@@ -966,7 +976,7 @@ namespace MobaVR
             {
                 return;
             }
-            
+
             RpcHit_Player(hitData.Amount);
         }
 

@@ -107,67 +107,23 @@ namespace MobaVR
                 PlayerVR = Owner.PlayerVR,
                 TeamType = TeamType
             };
-            
+
             /*
-            if (other.CompareTag("RemotePlayer") && other.transform.TryGetComponent(out WizardPlayer wizardPlayer))
+            if (other.CompareTag("RemotePlayer")
+                || other.CompareTag("LifeCollider")
+                || other.CompareTag("Item")
+                || other.CompareTag("Enemy"))
             {
-                if (wizardPlayer == Owner)
-                {
-                    return;
-                }
-
-                if (wizardPlayer.photonView.Owner.ActorNumber == photonView.Owner.ActorNumber)
-                {
-                    return;
-                }
-
-                if (photonView.IsMine)
-                {
-                    //wizardPlayer.Hit(m_Damage);
-                    wizardPlayer.Hit(hitData);
-                }
+                //TODO
             }
             */
             
             if (other.transform.TryGetComponent(out Damageable damageable))
             {
-                /*
-                if (damageable.photonView.Owner.ActorNumber == photonView.Owner.ActorNumber)
-                {
-                    return;
-                }
-                */
-
                 if (photonView.IsMine)
                 {
                     //wizardPlayer.Hit(this, CalculateDamage());
                     damageable.Hit(hitData);
-                }
-            }
-
-
-            if (other.CompareTag("LifeCollider") && other.transform.TryGetComponent(out HitCollider damagePlayer))
-            {
-                if (damagePlayer.WizardPlayer == Owner)
-                {
-                    return;
-                }
-
-                if (damagePlayer.WizardPlayer.photonView.Owner.ActorNumber == photonView.Owner.ActorNumber)
-                {
-                    return;
-                }
-
-                if (damagePlayer.WizardPlayer.TeamType == m_TeamItem.TeamType)
-                {
-                    return;
-                }
-
-                if (photonView.IsMine)
-                {
-                    //damagePlayer.WizardPlayer.Hit(m_Damage);
-                    //TODO: DAMAGE
-                    //damagePlayer.WizardPlayer.Hit(hitData);
                 }
             }
 
@@ -181,10 +137,12 @@ namespace MobaVR
                         //return;
                     }
                     
+                    /*
                     if (photonView.IsMine)
                     {
                         shield.Hit(m_Damage);
                     }
+                    */
                 }
 
                 if (other.TryGetComponent(out BigShield bigShield))

@@ -75,14 +75,14 @@ namespace MobaVR
         }
 
         [PunRPC]
-        public override void RpcHit(float damage)
+        protected override void RpcHit(float damage)
         {
             damage = 1f;
             base.RpcHit(damage);
         }
 
         [ContextMenu("Die")]
-        public override void Die()
+        protected override void Die()
         {
             base.Die();
         }

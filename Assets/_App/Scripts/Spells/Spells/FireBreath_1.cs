@@ -163,6 +163,7 @@ namespace MobaVR
 
             if (other.CompareTag("Item"))
             {
+                /*
                 Shield shield = other.GetComponentInParent<Shield>();
                 if (shield != null)
                 {
@@ -171,6 +172,7 @@ namespace MobaVR
                         shield.Hit(m_Damage);
                     }
                 }
+                */
 
                 if (other.TryGetComponent(out BigShield bigShield))
                 {

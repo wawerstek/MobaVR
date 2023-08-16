@@ -8,7 +8,7 @@ namespace MobaVR
     public class HitCollider : Damageable
     {
         [SerializeField] private WizardPlayer m_WizardPlayer;
-        [SerializeField] private CharacterDamageable m_ParentDamageable;
+        [SerializeField] private NetworkDamageable m_ParentDamageable;
         [SerializeField] private Collider m_Collider;
 
         public Action OnHit;
@@ -29,7 +29,7 @@ namespace MobaVR
 
             if (m_ParentDamageable == null)
             {
-                m_ParentDamageable = GetComponentInParent<CharacterDamageable>();
+                m_ParentDamageable = GetComponentInParent<NetworkDamageable>();
             }
         }
         

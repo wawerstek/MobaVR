@@ -60,12 +60,15 @@ namespace MobaVR
                 }
                 */
                 
+                HitData hitData = new HitData()
+                {
+                    TeamType = TeamType.OTHER,
+                    PhotonOwner = photonView,
+                    Amount = m_Damage
+                };
+                
                 if ((other.transform.TryGetComponent(out Damageable damageable)))
                 {
-                    HitData hitData = new HitData()
-                    {
-                        Amount = m_Damage
-                    };
                     damageable.Hit(hitData);
                     //Hide();
                 }
@@ -76,15 +79,18 @@ namespace MobaVR
                     //Hide();
                 }
 
+                /*
                 if (other.CompareTag("Item"))
                 {
                     Shield shield = other.GetComponentInParent<Shield>();
                     if (shield != null)
                     {
-                        shield.Hit(1f);
+                        shield.Hit(hitData);
+                        //shield.Hit(1f);
                         //Hide();
                     }
                 }
+                */
                 
                 Hide();
             }

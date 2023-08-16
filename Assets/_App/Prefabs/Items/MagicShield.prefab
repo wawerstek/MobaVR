@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 4247183444678281463}
   - component: {fileID: 2067478328087889722}
   - component: {fileID: 2637631884919630691}
+  - component: {fileID: 2855977160460341187}
   m_Layer: 0
   m_Name: MagicShield
   m_TagString: Item
@@ -139,6 +140,8 @@ MonoBehaviour:
   m_TeamItem: {fileID: 4247183444678281463}
   m_Shield: {fileID: 7087443854195981070}
   m_Collider: {fileID: 2067478328087889722}
+  m_View: {fileID: 0}
+  m_CurrentHealth: 1
   m_AuraRenderer: {fileID: 7087443854401501263}
   m_BackgroundRenderer: {fileID: 7087443852451118099}
   m_Particle: {fileID: 7087443853352170509}
@@ -197,6 +200,39 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &2855977160460341187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7087443852525899370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0225251665a48b494c8a6bd938224e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnHit:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4069081361274914472}
+        m_TargetAssemblyTypeName: MobaVR.Shield, Assembly-CSharp
+        m_MethodName: Hit
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnDie:
+    m_PersistentCalls:
+      m_Calls: []
+  OnReborn:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &7087443853352170498
 GameObject:
   m_ObjectHideFlags: 0
