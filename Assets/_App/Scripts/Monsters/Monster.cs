@@ -292,15 +292,31 @@ namespace MobaVR
         {
             if (m_IsAttacking)
             {
+                HitData hitData = new HitData()
+                {
+                    Amount = m_Damage
+                };
+                
+                
+                /*
                 if (other.TryGetComponent(out WizardPlayer wizardPlayer))
                 {
-                    wizardPlayer.Hit(Damage);
+                    //wizardPlayer.Hit(Damage);
+                    wizardPlayer.Hit(hitData);
                     m_Weapon.SetEnabled(false);
+                }
+                */
+                
+                if (other.transform.TryGetComponent(out Damageable damageable))
+                {
+                    damageable.Hit(hitData);
                 }
 
                 if (other.TryGetComponent(out HitCollider damagePlayer))
                 {
-                    damagePlayer.WizardPlayer.Hit(Damage);
+                    //damagePlayer.WizardPlayer.Hit(Damage);
+                    //TODO: DAMAGE
+                    //damagePlayer.WizardPlayer.Hit(hitData);
                     m_Weapon.SetEnabled(false);
                 }
             }

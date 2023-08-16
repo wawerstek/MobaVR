@@ -3,6 +3,7 @@ namespace MobaVR
     public enum TeamType
     {
         RED,
-        BLUE
+        BLUE,
+        OTHER
     }
 }

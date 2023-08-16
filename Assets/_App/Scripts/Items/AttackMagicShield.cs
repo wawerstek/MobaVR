@@ -136,14 +136,31 @@ namespace MobaVR
                     }
                 }
 
-                if (other.CompareTag("Player") && other.transform.TryGetComponent(out WizardPlayer wizardPlayer))
+                /*if (other.CompareTag("Player") && other.transform.TryGetComponent(out WizardPlayer wizardPlayer))
                 {
                     if (wizardPlayer == m_WizardPlayer)
                     {
                         return;
                     }
 
-                    wizardPlayer.Hit(m_Damage * m_CurrentHealth);
+                    HitData hitData = new HitData()
+                    {
+                        Amount = m_Damage * m_CurrentHealth
+                    };
+                    
+                    //wizardPlayer.Hit(m_Damage * m_CurrentHealth);
+                    wizardPlayer.Hit(hitData);
+                }*/
+                
+                if (other.transform.TryGetComponent(out Damageable damageable))
+                {
+                    HitData hitData = new HitData()
+                    {
+                        Amount = m_Damage * m_CurrentHealth
+                    };
+                    
+                    //wizardPlayer.Hit(m_Damage * m_CurrentHealth);
+                    damageable.Hit(hitData);
                 }
 
                 if (other.TryGetComponent(out IHit hit))

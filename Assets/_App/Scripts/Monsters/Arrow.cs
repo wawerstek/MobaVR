@@ -51,10 +51,22 @@ namespace MobaVR
                     return;
                 }
                 
+                /*
                 if ((other.CompareTag("Player")||other.CompareTag("RemotePlayer"))
                     && other.transform.TryGetComponent(out WizardPlayer wizardPlayer))
                 {
                     wizardPlayer.Hit(m_Damage);
+                    //Hide();
+                }
+                */
+                
+                if ((other.transform.TryGetComponent(out Damageable damageable)))
+                {
+                    HitData hitData = new HitData()
+                    {
+                        Amount = m_Damage
+                    };
+                    damageable.Hit(hitData);
                     //Hide();
                 }
                 

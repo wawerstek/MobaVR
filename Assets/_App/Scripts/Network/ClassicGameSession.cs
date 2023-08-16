@@ -36,8 +36,10 @@ namespace MobaVR
 
         private void Awake()
         {
+            //TODO: 
+            PhotonCustomHitData.Register();
             #if !UNITY_EDITOR
-                        CustomComposites.Init();
+                CustomComposites.Init();
             #endif
         }
 

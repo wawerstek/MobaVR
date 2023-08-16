@@ -98,7 +98,17 @@ namespace MobaVR
             {
                 return;
             }
-
+            
+            HitData hitData = new HitData()
+            {
+                Amount = m_Damage,
+                Player = PhotonNetwork.LocalPlayer,
+                PhotonOwner = photonView,
+                PlayerVR = Owner.PlayerVR,
+                TeamType = TeamType
+            };
+            
+            /*
             if (other.CompareTag("RemotePlayer") && other.transform.TryGetComponent(out WizardPlayer wizardPlayer))
             {
                 if (wizardPlayer == Owner)
@@ -113,9 +123,28 @@ namespace MobaVR
 
                 if (photonView.IsMine)
                 {
-                    wizardPlayer.Hit(m_Damage);
+                    //wizardPlayer.Hit(m_Damage);
+                    wizardPlayer.Hit(hitData);
                 }
             }
+            */
+            
+            if (other.transform.TryGetComponent(out Damageable damageable))
+            {
+                /*
+                if (damageable.photonView.Owner.ActorNumber == photonView.Owner.ActorNumber)
+                {
+                    return;
+                }
+                */
+
+                if (photonView.IsMine)
+                {
+                    //wizardPlayer.Hit(this, CalculateDamage());
+                    damageable.Hit(hitData);
+                }
+            }
+
 
             if (other.CompareTag("LifeCollider") && other.transform.TryGetComponent(out HitCollider damagePlayer))
             {
@@ -136,7 +165,9 @@ namespace MobaVR
 
                 if (photonView.IsMine)
                 {
-                    damagePlayer.WizardPlayer.Hit(m_Damage);
+                    //damagePlayer.WizardPlayer.Hit(m_Damage);
+                    //TODO: DAMAGE
+                    //damagePlayer.WizardPlayer.Hit(hitData);
                 }
             }
 

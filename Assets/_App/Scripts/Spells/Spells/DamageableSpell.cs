@@ -44,7 +44,13 @@ namespace MobaVR
 
             if (photonView.IsMine)
             {
-                wizardPlayer.Hit(m_Damage);
+                HitData hitData = new HitData()
+                {
+                    Amount = m_Damage
+                };
+                //wizardPlayer.Hit(m_Damage);
+                //TODO: DAMAGE
+                //wizardPlayer.Hit(hitData);
             }
 
             OnPlayerTriggerEnter?.Invoke(wizardPlayer);

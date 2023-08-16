@@ -1,39 +1,39 @@
-﻿using Photon.Pun;
+﻿using System;
+using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
-using Vector3 = System.Numerics.Vector3;
 
 namespace MobaVR
 {
-    public struct HitData
+    [Serializable]
+    public class HitData
     {
         #region Hit
 
-        public HitActionType Action;
-        public float Amount;
-        public bool IsCritical;
-        public bool IsFatal;
-        public Vector3 Position;
-        public Vector3 Normal;
-        public Vector3 Direction;
+        public HitActionType Action = HitActionType.Damage;
+        public float Amount = 0;
+        public Vector3 Position = Vector3.zero;
 
         #endregion
 
         #region Team
 
-        public TeamType TeamType;
+        public TeamType TeamType = TeamType.OTHER;
 
         #endregion
-        
+
         #region Owner Source
 
+        public PlayerVR PlayerVR;
+        public Player Player;
         public bool IsMine;
-        public int PhotonId;
-        public string PlayerId;
-        public Transform Source;
-        public Transform Owner;
-        public PhotonView PhotonView;
+        public PhotonView PhotonOwner;
+        //public Transform Source;
+        //public Transform Owner;
         //public PlayerRef InstigatorRef;
 
         #endregion
+
+
     }
 }

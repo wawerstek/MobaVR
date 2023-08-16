@@ -97,7 +97,16 @@ namespace MobaVR
 
             if (m_IsThrown)
             {
-                if (other.CompareTag("RemotePlayer") && other.transform.TryGetComponent(out WizardPlayer wizardPlayer))
+                HitData hitData = new HitData()
+                {
+                    Amount = CalculateDamage(),
+                    Player = PhotonNetwork.LocalPlayer,
+                    PhotonOwner = photonView,
+                    PlayerVR = Owner.PlayerVR,
+                    TeamType = TeamType
+                };
+                
+                /*if (other.CompareTag("RemotePlayer") && other.transform.TryGetComponent(out WizardPlayer wizardPlayer))
                 {
                     if (wizardPlayer == Owner)
                     {
@@ -111,7 +120,26 @@ namespace MobaVR
 
                     if (photonView.IsMine)
                     {
-                        wizardPlayer.Hit(this, CalculateDamage());
+                        //wizardPlayer.Hit(this, CalculateDamage());
+                        wizardPlayer.Hit(hitData);
+                    }
+
+                    HandleCollision(other.transform);
+                }*/
+                
+                if (other.transform.TryGetComponent(out Damageable damageable))
+                {
+                    /*
+                    if (damageable.photonView.Owner.ActorNumber == photonView.Owner.ActorNumber)
+                    {
+                        return;
+                    }
+                    */
+
+                    if (photonView.IsMine)
+                    {
+                        //wizardPlayer.Hit(this, CalculateDamage());
+                        damageable.Hit(hitData);
                     }
 
                     HandleCollision(other.transform);
@@ -131,7 +159,12 @@ namespace MobaVR
 
                     if (photonView.IsMine)
                     {
-                        damagePlayer.WizardPlayer.Hit(this, CalculateDamage());
+                        //TODO: DAMAGEABLE
+                        //damagePlayer.WizardPlayer.Hit(this, CalculateDamage());
+                        
+                        
+                        
+                        //damagePlayer.WizardPlayer.Hit(hitData);
                     }
 
                     HandleCollision(other.transform);

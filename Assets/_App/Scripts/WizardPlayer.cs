@@ -133,6 +133,7 @@ namespace MobaVR
         }
         public PlayerMode PlayerState => m_State;
         public PlayerStateSO CurrentPlayerState => m_State.StateSo;
+        public PlayerVR PlayerVR => m_PlayerVR;
         public InputVR InputVR => m_PlayerVR.InputVR;
         public bool IsLife => m_CurrentHealth > 0;
         public TeamType TeamType
@@ -895,11 +896,11 @@ namespace MobaVR
         [ContextMenu("Reborn")]
         public void Reborn()
         {
-            photonView.RPC(nameof(RpcReborn), RpcTarget.AllBuffered);
+            photonView.RPC(nameof(RpcReborn_Player), RpcTarget.AllBuffered);
         }
 
         [PunRPC]
-        private void RpcReborn()
+        private void RpcReborn_Player()
         {
             m_CurrentHealth = m_MaxHp;
             //m_Collider.enabled = true;
@@ -920,11 +921,11 @@ namespace MobaVR
 
         public void RestoreHp()
         {
-            photonView.RPC(nameof(RpcRestoreHp), RpcTarget.AllBuffered);
+            photonView.RPC(nameof(RpcRestoreHp_Player), RpcTarget.AllBuffered);
         }
 
         [PunRPC]
-        private void RpcRestoreHp()
+        private void RpcRestoreHp_Player()
         {
             m_CurrentHealth = m_MaxHp;
 
@@ -947,12 +948,36 @@ namespace MobaVR
             Hit(250f);
         }
 
-        public void Hit(float damage)
+        //public void Hit(HitData hitData)
+        protected void Hit(HitData hitData)
         {
-            photonView.RPC(nameof(RpcHit), RpcTarget.All, damage);
+            if (hitData.Player.ActorNumber == photonView.Owner.ActorNumber)
+            {
+                return;
+            }
+            
+            if ((hitData.TeamType ==TeamType.RED && m_Teammate.IsRed)
+                || (hitData.TeamType ==TeamType.BLUE && !m_Teammate.IsRed))
+            {
+                return;
+            }
+
+            if (!m_State.StateSo.CanGetDamageFromEnemyPlayers)
+            {
+                return;
+            }
+            
+            RpcHit_Player(hitData.Amount);
         }
 
-        public void Hit(ThrowableSpell fireball, float damage)
+        //public void Hit(float damage)
+        private void Hit(float damage)
+        {
+            photonView.RPC(nameof(RpcHit_Player), RpcTarget.All, damage);
+        }
+
+        //public void Hit(ThrowableSpell fireball, float damage)
+        private void Hit(ThrowableSpell fireball, float damage)
         {
             if ((fireball.Team.IsRed && m_Teammate.IsRed)
                 || (!fireball.Team.IsRed && !m_Teammate.IsRed))
@@ -965,11 +990,11 @@ namespace MobaVR
                 return;
             }
 
-            photonView.RPC(nameof(RpcHit), RpcTarget.All, damage);
+            photonView.RPC(nameof(RpcHit_Player), RpcTarget.All, damage);
         }
 
         [PunRPC]
-        private void RpcHit(float damage)
+        private void RpcHit_Player(float damage)
         {
             if (!m_State.StateSo.CanGetDamage)
             {
