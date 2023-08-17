@@ -163,9 +163,9 @@ namespace MobaVR
                     damageable.Hit(hitData);
                 }
 
-                if (other.TryGetComponent(out IHit hit))
+                if (other.TryGetComponent(out IExploding hit))
                 {
-                    hit.RpcHit(m_Damage * m_CurrentHealth);
+                    //hit.RpcHit(m_Damage * m_CurrentHealth);
                 }
 
                 if (other.CompareTag("Item"))

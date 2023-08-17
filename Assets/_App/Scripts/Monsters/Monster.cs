@@ -14,7 +14,7 @@ namespace MobaVR
 {
     public partial class Monster : MonoBehaviourPunCallbacks,
                                    IMonsterAnimatorListener,
-                                   IHit
+                                   IExploding
     {
         #region Dependencies
 
@@ -294,9 +294,10 @@ namespace MobaVR
             {
                 HitData hitData = new HitData()
                 {
-                    Amount = m_Damage
+                    Amount = m_Damage,
+                    TeamType = TeamType.OTHER,
+                    PhotonOwner = photonView
                 };
-                
                 
                 /*
                 if (other.TryGetComponent(out WizardPlayer wizardPlayer))
@@ -564,13 +565,18 @@ namespace MobaVR
 
         #region Hit
 
+        public void Hit(HitData hitData)
+        {
+            RpcHit_Monster(hitData.Amount);
+        }
+/*
         public void RpcHit(float damage)
         {
             photonView.RPC(nameof(RpcRpcHit), RpcTarget.All, damage);
         }
-
+*/
         [PunRPC]
-        protected void RpcRpcHit(float damage)
+        protected void RpcHit_Monster(float damage)
         {
             if (IsLife)
             {
@@ -582,11 +588,11 @@ namespace MobaVR
 
         public void Die()
         {
-            photonView.RPC(nameof(RpcDie), RpcTarget.All);
+            photonView.RPC(nameof(RpcDie_Monster), RpcTarget.All);
         }
 
         [PunRPC]
-        protected void RpcDie()
+        protected void RpcDie_Monster()
         {
             //Destroy(m_Rigidbody);
             ToggleRagDolls(true);
@@ -614,12 +620,12 @@ namespace MobaVR
                                               modifier);
                 */
 
-                photonView.RPC(nameof(RpcExplode), RpcTarget.All, explosionForce, position, radius, modifier);
+                photonView.RPC(nameof(RpcExplode_Monster), RpcTarget.All, explosionForce, position, radius, modifier);
             }
         }
 
         [PunRPC]
-        protected void RpcExplode(float explosionForce, Vector3 position, float radius, float modifier)
+        protected void RpcExplode_Monster(float explosionForce, Vector3 position, float radius, float modifier)
         {
             foreach (Rigidbody childRigidbody in m_ChildRigidbodies)
             {

@@ -13,7 +13,7 @@ namespace MobaVR
 
         public Action OnHit;
 
-        public WizardPlayer WizardPlayer => m_WizardPlayer;
+        //public WizardPlayer WizardPlayer => m_WizardPlayer;
 
         private void InitComponents()
         {

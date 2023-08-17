@@ -2,10 +2,10 @@
 
 namespace MobaVR
 {
-    public interface IHit
+    public interface IExploding
     {
-        public void RpcHit(float damage);
-        public void Die();
+        //public void RpcHit(float damage);
+        //public void Die();
 
         public void Explode(float explosionForce,
                             Vector3 position,

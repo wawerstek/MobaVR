@@ -16,7 +16,7 @@ namespace MobaVR
         public UnityEvent<WizardPlayer> OnPlayerTriggerEnter;
         public UnityEvent<Shield> OnShieldTriggerEnter;
         public UnityEvent<BigShield> OnBigShieldTriggerEnter;
-        public UnityEvent<IHit> OnHittableTriggerEnter;
+        public UnityEvent<IExploding> OnHittableTriggerEnter;
 
         private void Awake()
         {
@@ -84,14 +84,14 @@ namespace MobaVR
             OnBigShieldTriggerEnter?.Invoke(shield);
         }
 
-        private void TriggerEnemy(IHit hit)
+        private void TriggerEnemy(IExploding exploding)
         {
             if (photonView.IsMine)
             {
-                hit.RpcHit(m_Damage);
+                //hit.RpcHit(m_Damage);
             }
 
-            OnHittableTriggerEnter?.Invoke(hit);
+            OnHittableTriggerEnter?.Invoke(exploding);
         }
 
         private void OnTriggerEnter(Collider other)
@@ -113,7 +113,7 @@ namespace MobaVR
             if (other.CompareTag("LifeCollider")
                 && other.transform.TryGetComponent(out HitCollider damagePlayer))
             {
-                TriggerPlayer(damagePlayer.WizardPlayer);
+                //TriggerPlayer(damagePlayer.WizardPlayer);
                 OnSpellTriggerEnter?.Invoke(other);
                 return;
             }
@@ -141,7 +141,7 @@ namespace MobaVR
             }
 
             if (other.CompareTag("Enemy")
-                && other.TryGetComponent(out IHit hitEnemy))
+                && other.TryGetComponent(out IExploding hitEnemy))
             {
                 TriggerEnemy(hitEnemy);
                 OnSpellTriggerEnter?.Invoke(other);

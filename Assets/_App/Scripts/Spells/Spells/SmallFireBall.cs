@@ -51,9 +51,9 @@ namespace MobaVR
         {
             if (photonView.IsMine)
             {
-                if (interactable.TryGetComponent(out IHit hitEnemy))
+                if (interactable.TryGetComponent(out IExploding hitEnemy))
                 {
-                    hitEnemy.RpcHit(CalculateDamage() * m_KMonsterDamage);
+                    //hitEnemy.RpcHit(CalculateDamage() * m_KMonsterDamage);
                 }
 
                 //photonView.RPC(nameof(RpcDestroyBall), RpcTarget.All);

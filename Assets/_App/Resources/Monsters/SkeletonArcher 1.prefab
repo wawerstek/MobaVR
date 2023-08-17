@@ -487,6 +487,7 @@ GameObject:
   - component: {fileID: 4416012648919080084}
   - component: {fileID: 4416012648919080085}
   - component: {fileID: 5102510610403529140}
+  - component: {fileID: 6277124995169163602}
   m_Layer: 11
   m_Name: SkeletonArcher 1
   m_TagString: Enemy
@@ -757,6 +758,39 @@ MonoBehaviour:
   _showReticle: 1
   _useCustomReticle: 1
   m_CustomReticle: {fileID: 6439582074986411670}
+--- !u!114 &6277124995169163602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 798137429811982015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0225251665a48b494c8a6bd938224e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnHit:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1236024482058739132}
+        m_TargetAssemblyTypeName: MobaVR.Monster, Assembly-CSharp
+        m_MethodName: Hit
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnDie:
+    m_PersistentCalls:
+      m_Calls: []
+  OnReborn:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &984965783007979433
 GameObject:
   m_ObjectHideFlags: 0
@@ -1057,6 +1091,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8eee5c583696374d831e879744877f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_ParentDamageable: {fileID: 6277124995169163602}
   m_Monster: {fileID: 1236024482058739132}
   m_Collider: {fileID: 4348273763067402656}
 --- !u!1 &1498685988219580148

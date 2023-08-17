@@ -956,7 +956,7 @@ namespace MobaVR
                 return;
             }
 
-            if (hitData.Player.ActorNumber == photonView.Owner.ActorNumber)
+            if (hitData.Player != null && hitData.Player.ActorNumber == photonView.Owner.ActorNumber)
             {
                 return;
             }
@@ -972,7 +972,7 @@ namespace MobaVR
                 return;
             }
 
-            if (!m_State.StateSo.CanGetDamageFromEnemyPlayers)
+            if (hitData.TeamType != TeamType.OTHER && !m_State.StateSo.CanGetDamageFromEnemyPlayers)
             {
                 return;
             }

@@ -153,9 +153,9 @@ namespace MobaVR
                                                              QueryTriggerInteraction.Collide);
                 foreach (Collider enemy in colliders)
                 {
-                    if (enemy.TryGetComponent(out IHit hitEnemy))
+                    if (enemy.TryGetComponent(out IExploding hitEnemy))
                     {
-                        hitEnemy.RpcHit(CalculateDamage());
+                        //hitEnemy.RpcHit(CalculateDamage());
                         hitEnemy.Explode(m_ExplosionForce,
                                          transform.position,
                                          m_ExplosionForceRadius,

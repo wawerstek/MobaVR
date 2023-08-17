@@ -153,14 +153,6 @@ namespace MobaVR
                     }
                 }
             }
-
-            if (other.CompareTag("Enemy") && other.TryGetComponent(out IHit hitEnemy))
-            {
-                if (photonView.IsMine)
-                {
-                    hitEnemy.RpcHit(m_Damage);
-                }
-            }
         }
 
         [PunRPC]

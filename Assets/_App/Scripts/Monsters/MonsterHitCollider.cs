@@ -1,34 +1,36 @@
 using System;
+using Photon.Pun;
 using UnityEngine;
 
 namespace MobaVR
 {
-    //public class MonsterPelvis : MonoBehaviour, IHit
-    public class MonsterPelvis : Damageable, IExploding
+    public class MonsterHitCollider : Damageable
     {
         [SerializeField] private NetworkDamageable m_ParentDamageable;
-        [SerializeField] private Monster m_Monster;
         [SerializeField] private Collider m_Collider;
 
-        private void Awake()
+        private void InitComponents()
         {
+            if (m_Collider == null)
+            {
+                m_Collider = GetComponent<Collider>();
+            }
+
             if (m_ParentDamageable == null)
             {
                 m_ParentDamageable = GetComponentInParent<NetworkDamageable>();
             }
         }
-
-        public void SetEnabled(bool isEnable)
-        {
-            m_Collider.enabled = isEnable;
-        }
         
-        /*
-        public void RpcHit(float damage)
+        private void OnValidate()
         {
-            m_Monster.RpcHit(damage);
+            InitComponents();
         }
-        */
+
+        private void Awake()
+        {
+            InitComponents();
+        }
 
         public override void Hit(HitData hitData)
         {
@@ -44,11 +46,6 @@ namespace MobaVR
 
         public override void Reborn()
         {
-        }
-
-        public void Explode(float explosionForce, Vector3 position, float radius, float modifier)
-        {
-            m_Monster.Explode(explosionForce, position, radius, modifier);
         }
     }
 }

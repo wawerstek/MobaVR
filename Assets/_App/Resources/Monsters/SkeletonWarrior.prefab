@@ -2645,6 +2645,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8eee5c583696374d831e879744877f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_ParentDamageable: {fileID: 2837084311629980404}
   m_Monster: {fileID: 4962086018193584251}
   m_Collider: {fileID: 762214955618281811}
 --- !u!1 &3662431080086577209
@@ -4159,6 +4160,7 @@ GameObject:
   - component: {fileID: 1790132236222975944}
   - component: {fileID: 8252713454839431761}
   - component: {fileID: 8252713454839431760}
+  - component: {fileID: 2837084311629980404}
   m_Layer: 11
   m_Name: SkeletonWarrior
   m_TagString: Enemy
@@ -4415,6 +4417,39 @@ MonoBehaviour:
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
+--- !u!114 &2837084311629980404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4962086018193584250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0225251665a48b494c8a6bd938224e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnHit:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4962086018193584251}
+        m_TargetAssemblyTypeName: MobaVR.Monster, Assembly-CSharp
+        m_MethodName: Hit
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnDie:
+    m_PersistentCalls:
+      m_Calls: []
+  OnReborn:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &5001087907894060497
 GameObject:
   m_ObjectHideFlags: 0

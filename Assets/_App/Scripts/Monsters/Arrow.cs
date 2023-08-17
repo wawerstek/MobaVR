@@ -73,12 +73,6 @@ namespace MobaVR
                     //Hide();
                 }
                 
-                if (other.CompareTag("Enemy") && other.transform.TryGetComponent(out IHit iHit))
-                {
-                    iHit.RpcHit(m_Damage);
-                    //Hide();
-                }
-
                 /*
                 if (other.CompareTag("Item"))
                 {

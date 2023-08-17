@@ -38,10 +38,22 @@ namespace MetaConference
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.TryGetComponent(out IHit hit))
+            if (other.CompareTag("Enemy"))
             {
-                hit.RpcHit(m_Damage);
-                hit.Explode(m_ExplosionForce, m_ExplosionPoint.position, m_ExplosionRadius, m_ExplosionModifier);
+                if (other.TryGetComponent(out Damageable damageable))
+                {
+                    HitData hitData = new HitData()
+                    {
+                        Amount = m_Damage,
+                        TeamType = TeamType.OTHER,
+                    };
+                    damageable.Hit(hitData);
+                }
+
+                if (other.TryGetComponent(out IExploding hit))
+                {
+                    hit.Explode(m_ExplosionForce, m_ExplosionPoint.position, m_ExplosionRadius, m_ExplosionModifier);
+                }
             }
         }
     }

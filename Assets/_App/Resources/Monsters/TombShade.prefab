@@ -3798,6 +3798,7 @@ GameObject:
   - component: {fileID: 491166688329428383}
   - component: {fileID: 5635595898679589355}
   - component: {fileID: -7065002223360263926}
+  - component: {fileID: 156706080111938466}
   m_Layer: 11
   m_Name: TombShade
   m_TagString: Enemy
@@ -4075,6 +4076,39 @@ MonoBehaviour:
   _showReticle: 1
   _useCustomReticle: 1
   m_CustomReticle: {fileID: 4330486079475129705}
+--- !u!114 &156706080111938466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3498065838638342069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0225251665a48b494c8a6bd938224e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnHit:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3498065838638342068}
+        m_TargetAssemblyTypeName: MobaVR.Monster, Assembly-CSharp
+        m_MethodName: Hit
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnDie:
+    m_PersistentCalls:
+      m_Calls: []
+  OnReborn:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &3546919927064436728
 GameObject:
   m_ObjectHideFlags: 0
@@ -5635,6 +5669,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8eee5c583696374d831e879744877f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_ParentDamageable: {fileID: 156706080111938466}
   m_Monster: {fileID: 3498065838638342068}
   m_Collider: {fileID: 6822997763783269064}
 --- !u!1 &6892690197272370004

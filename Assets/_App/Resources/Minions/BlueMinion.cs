@@ -10,7 +10,7 @@ using UnityEngine.AI;
 
 namespace MobaVR
 {
-    public class BlueMinion : MonoBehaviour, IHit
+    public class BlueMinion : MonoBehaviour, IExploding
     {
         [SerializeField] private Transform m_DestinationPoint;
         [SerializeField] private NavMeshAgent m_NavMeshAgent;

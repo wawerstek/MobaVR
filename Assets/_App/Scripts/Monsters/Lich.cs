@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace MobaVR
 {
-    public class Lich : MonoBehaviourPunCallbacks, IHit
+    public class Lich : MonoBehaviourPunCallbacks, IExploding
     {
         #region Dependencies
 
@@ -171,10 +171,17 @@ namespace MobaVR
 
         #region Hit
 
+        public void Hit(HitData hitData)
+        {
+            RpcRpcHit(hitData.Amount);
+        }
+
+        /*
         public void RpcHit(float damage)
         {
             photonView.RPC(nameof(RpcRpcHit), RpcTarget.All, damage);
         }
+        */
 
         [PunRPC]
         private void RpcRpcHit(float damage)

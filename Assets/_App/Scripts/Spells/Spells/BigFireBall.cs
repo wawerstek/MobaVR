@@ -182,11 +182,11 @@ namespace MobaVR
                 foreach (Collider enemy in colliders)
                 {
                     //if (enemy.CompareTag("Enemy") && enemy.TryGetComponent(out IHit hitEnemy))
-                    if (enemy.TryGetComponent(out IHit hitEnemy))
+                    if (enemy.TryGetComponent(out IExploding hitEnemy))
                     {
                         //hitEnemy.Die();
                         //hitEnemy.RpcHit(1f);
-                        hitEnemy.RpcHit(CalculateDamage());
+                        //hitEnemy.RpcHit(CalculateDamage());
 
                         //TODO: работает только один раз
                         hitEnemy.Explode(m_ExplosionForce,

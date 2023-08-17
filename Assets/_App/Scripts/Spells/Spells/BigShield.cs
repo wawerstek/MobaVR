@@ -95,5 +95,10 @@ namespace MobaVR
                 return;
             }
         }
+
+        public void Hit(HitData hitData)
+        {
+            
+        }
     }
 }

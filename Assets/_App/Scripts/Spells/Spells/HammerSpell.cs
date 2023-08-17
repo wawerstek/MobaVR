@@ -60,14 +60,6 @@ namespace MobaVR
         
         protected override void HandleCollision(Transform interactable)
         {
-            if (photonView.IsMine)
-            {
-                if (interactable.CompareTag("Enemy") && interactable.TryGetComponent(out IHit hitEnemy))
-                {
-                    hitEnemy.RpcHit(CalculateDamage());
-                }
-            }
-
             RpcDestroyThrowable();
         }
 
