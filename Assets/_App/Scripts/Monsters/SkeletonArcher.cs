@@ -30,7 +30,8 @@ namespace MobaVR
         {
             if (m_Wizard != null && m_Wizard.IsLife)
             {
-                Vector3 target = m_Wizard.transform.position;
+                //Vector3 target = m_Wizard.transform.position;
+                Vector3 target = m_Wizard.PointPlayer.position;
                 target.y += 0.2f;
                 if (m_UseMissing)
                 {

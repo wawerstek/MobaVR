@@ -171,7 +171,6 @@ namespace MobaVR
         protected override void HandleCollision(Transform interactable)
         {
             //Explode(interactable);
-
             if (photonView.IsMine)
             {
                 Collider[] colliders = Physics.OverlapSphere(transform.position,
@@ -181,56 +180,14 @@ namespace MobaVR
                                                              QueryTriggerInteraction.Collide);
                 foreach (Collider enemy in colliders)
                 {
-                    //if (enemy.CompareTag("Enemy") && enemy.TryGetComponent(out IHit hitEnemy))
-                    if (enemy.TryGetComponent(out IExploding hitEnemy))
+                    if (enemy.CompareTag("Enemy") && enemy.TryGetComponent(out IExploding hitEnemy))
                     {
-                        //hitEnemy.Die();
-                        //hitEnemy.RpcHit(1f);
-                        //hitEnemy.RpcHit(CalculateDamage());
-
                         //TODO: работает только один раз
                         hitEnemy.Explode(m_ExplosionForce,
                                          transform.position,
                                          m_ExplosionForceRadius,
                                          m_ExplosionModifier);
                     }
-
-                    //Расскоментить, рабочий вариант
-                    /*
-                    if (enemy.TryGetComponent(out Rigidbody rigidbody))
-                    {
-                        if (!rigidbody.isKinematic)
-                        {
-                            rigidbody.AddExplosionForce(m_ExplosionForce,
-                                                        transform.position,
-                                                        m_ExplosionForceRadius,
-                                                        m_ExplosionModifier);
-                        }
-                    }
-                    */
-
-                    /*
-                    if (enemy.TryGetComponent(out Animator animator))
-                    {
-                        animator.enabled = false;
-                        //Destroy(animator.gameObject, 5f);
-                    }
-
-                    var anim = enemy.GetComponentInParent<Animator>();
-                    if (anim != null)
-                    {
-                        anim.enabled = false;
-                        //Destroy(anim.gameObject, 5f);
-                    }
-
-                    if (enemy.TryGetComponent(out Rigidbody rigidbody))
-                    {
-                        rigidbody.AddExplosionForce(m_ExplosionForce, 
-                                                    transform.position, 
-                                                    m_ExplosionForceRadius,
-                                                    m_ExplosionModifier);
-                    }
-                    */
                 }
 
                 photonView.RPC(nameof(RpcDestroyBall), RpcTarget.All);

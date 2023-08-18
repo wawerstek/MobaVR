@@ -308,9 +308,11 @@ namespace MobaVR
                 }
                 */
                 
+                //if (other.CompareTag("LifeCollider") && other.transform.TryGetComponent(out Damageable damageable))
                 if (other.transform.TryGetComponent(out Damageable damageable))
                 {
                     damageable.Hit(hitData);
+                    m_Weapon.SetEnabled(false);
                 }
 
                 if (other.TryGetComponent(out HitCollider damagePlayer))

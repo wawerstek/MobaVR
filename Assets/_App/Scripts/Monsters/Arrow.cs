@@ -73,19 +73,6 @@ namespace MobaVR
                     //Hide();
                 }
                 
-                /*
-                if (other.CompareTag("Item"))
-                {
-                    Shield shield = other.GetComponentInParent<Shield>();
-                    if (shield != null)
-                    {
-                        shield.Hit(hitData);
-                        //shield.Hit(1f);
-                        //Hide();
-                    }
-                }
-                */
-                
                 Hide();
             }
         }

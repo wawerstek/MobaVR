@@ -99,15 +99,6 @@ namespace MobaVR
                 return;
             }
             
-            HitData hitData = new HitData()
-            {
-                Amount = m_Damage,
-                Player = PhotonNetwork.LocalPlayer,
-                PhotonOwner = photonView,
-                PlayerVR = Owner.PlayerVR,
-                TeamType = TeamType
-            };
-
             /*
             if (other.CompareTag("RemotePlayer")
                 || other.CompareTag("LifeCollider")
@@ -118,39 +109,28 @@ namespace MobaVR
             }
             */
             
+            HitData hitData = new HitData()
+            {
+                Amount = m_Damage,
+                Player = PhotonNetwork.LocalPlayer,
+                PhotonOwner = photonView,
+                PlayerVR = Owner.PlayerVR,
+                TeamType = TeamType
+            };
+
             if (other.transform.TryGetComponent(out Damageable damageable))
             {
                 if (photonView.IsMine)
                 {
-                    //wizardPlayer.Hit(this, CalculateDamage());
                     damageable.Hit(hitData);
                 }
             }
 
-            if (other.CompareTag("Item"))
+            if (other.CompareTag("Item") && other.TryGetComponent(out BigShield bigShield))
             {
-                Shield shield = other.GetComponentInParent<Shield>();
-                if (shield != null)
+                if (bigShield.Team.TeamType != m_TeamType)
                 {
-                    if (shield.TeamType == m_TeamType)
-                    {
-                        //return;
-                    }
-                    
-                    /*
-                    if (photonView.IsMine)
-                    {
-                        shield.Hit(m_Damage);
-                    }
-                    */
-                }
-
-                if (other.TryGetComponent(out BigShield bigShield))
-                {
-                    if (bigShield.Team.TeamType != m_TeamType)
-                    {
-                        //HandleCollision(other.transform);
-                    }
+                    //HandleCollision(other.transform);
                 }
             }
         }

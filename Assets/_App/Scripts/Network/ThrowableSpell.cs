@@ -97,17 +97,17 @@ namespace MobaVR
 
             if (m_IsThrown)
             {
-                HitData hitData = new HitData()
-                {
-                    Amount = CalculateDamage(),
-                    Player = PhotonNetwork.LocalPlayer,
-                    PhotonOwner = photonView,
-                    PlayerVR = Owner.PlayerVR,
-                    TeamType = TeamType
-                };
-                
                 if (other.transform.TryGetComponent(out Damageable damageable))
                 {
+                    HitData hitData = new HitData()
+                    {
+                        Amount = CalculateDamage(),
+                        Player = PhotonNetwork.LocalPlayer,
+                        PhotonOwner = photonView,
+                        PlayerVR = Owner.PlayerVR,
+                        TeamType = TeamType
+                    };
+
                     if (photonView.IsMine)
                     {
                         damageable.Hit(hitData);
@@ -116,37 +116,13 @@ namespace MobaVR
                     HandleCollision(other.transform);
                 }
 
-                if (other.CompareTag("Item"))
+                if (other.CompareTag("Item") && other.TryGetComponent(out BigShield bigShield))
                 {
-                    /*
-                    Shield shield = other.GetComponentInParent<Shield>();
-                    if (shield != null)
+                    if (bigShield.Team.TeamType != m_TeamType)
                     {
-                        if (shield.TeamType == m_TeamType)
-                        {
-                            //return;
-                        }
-
-                        if (photonView.IsMine)
-                        {
-                            shield.Hit(this, CalculateDamage());
-                        }
-
                         HandleCollision(other.transform);
                     }
-                    */
-
-                    //TODO: Перенести логику в класс БигШит
-                    if (other.TryGetComponent(out BigShield bigShield))
-                    {
-                        if (bigShield.Team.TeamType != m_TeamType)
-                        {
-                            HandleCollision(other.transform);
-                        }
-                    }
                 }
-
-                //InteractBall(other.transform);
             }
         }
 
