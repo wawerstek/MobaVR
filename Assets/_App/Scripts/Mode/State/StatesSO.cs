@@ -9,20 +9,20 @@ namespace MobaVR.ClassicModeStateMachine
     public class StatesSO : ScriptableObject
     {
         [Header("States")]
-        [SerializeField] private ModeState<ClassicMode> m_InitModeState;
-        [SerializeField] private ModeState<ClassicMode> m_InactiveModeState;
-        [SerializeField] private ModeState<ClassicMode> m_StartModeState;
-        [SerializeField] private ModeState<ClassicMode> m_ReadyRoundState;
-        [SerializeField] private ModeState<ClassicMode> m_PlayRoundState;
-        [SerializeField] private ModeState<ClassicMode> m_CompleteRoundState;
-        [SerializeField] private ModeState<ClassicMode> m_CompleteModeState;
+        [SerializeField] private ModeState m_InitModeState;
+        [SerializeField] private ModeState m_InactiveModeState;
+        [SerializeField] private ModeState m_StartModeState;
+        [SerializeField] private ModeState m_ReadyRoundState;
+        [SerializeField] private ModeState m_PlayRoundState;
+        [SerializeField] private ModeState m_CompleteRoundState;
+        [SerializeField] private ModeState m_CompleteModeState;
 
-        public ModeState<ClassicMode> InitModeState => m_InitModeState;
-        public ModeState<ClassicMode> InactiveModeState => m_InactiveModeState;
-        public ModeState<ClassicMode> StartModeState => m_StartModeState;
-        public ModeState<ClassicMode> ReadyRoundState => m_ReadyRoundState;
-        public ModeState<ClassicMode> PlayRoundState => m_PlayRoundState;
-        public ModeState<ClassicMode> CompleteRoundState => m_CompleteRoundState;
-        public ModeState<ClassicMode> CompleteModeState => m_CompleteModeState;
+        public ModeState InitModeState => m_InitModeState;
+        public ModeState InactiveModeState => m_InactiveModeState;
+        public ModeState StartModeState => m_StartModeState;
+        public ModeState ReadyRoundState => m_ReadyRoundState;
+        public ModeState PlayRoundState => m_PlayRoundState;
+        public ModeState CompleteRoundState => m_CompleteRoundState;
+        public ModeState CompleteModeState => m_CompleteModeState;
     }
 }

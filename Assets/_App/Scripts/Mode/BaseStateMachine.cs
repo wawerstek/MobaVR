@@ -6,34 +6,34 @@ using UnityEngine;
 namespace MobaVR
 {
     [Serializable]
-    public class BaseStateMachine<T> : MonoBehaviourPun, IClassicModeState where T : GameMode<T>
+    public class BaseStateMachine : MonoBehaviourPun, IClassicModeState
     {
         [Header("States")]
-        [SerializeField] protected ModeState<T> m_InitModeState;
-        [SerializeField] protected ModeState<T> m_InactiveModeState;
-        [SerializeField] protected ModeState<T> m_StartModeState;
-        [SerializeField] protected ModeState<T> m_ReadyRoundState;
-        [SerializeField] protected ModeState<T> m_PlayRoundState;
-        [SerializeField] protected ModeState<T> m_CompleteRoundState;
-        [SerializeField] protected ModeState<T> m_CompleteModeState;
+        [SerializeField] protected ModeState m_InitModeState;
+        [SerializeField] protected ModeState m_InactiveModeState;
+        [SerializeField] protected ModeState m_StartModeState;
+        [SerializeField] protected ModeState m_ReadyRoundState;
+        [SerializeField] protected ModeState m_PlayRoundState;
+        [SerializeField] protected ModeState m_CompleteRoundState;
+        [SerializeField] protected ModeState m_CompleteModeState;
 
         [Header("Current State")]
         [SerializeField] protected bool m_IsInitOnAwake = true;
         [SerializeField] protected ClassicModeState m_ModeState = ClassicModeState.MODE_INACTIVE;
-        [SerializeField] protected ModeState<T> m_CurrentState;
+        [SerializeField] protected ModeState m_CurrentState;
 
         protected ClassicMode m_Mode;
 
-        public event Action<ModeState<T>> OnStateChanged;
+        public event Action<ModeState> OnStateChanged;
 
-        public ModeState<T> CurrentState => m_CurrentState;
-        public ModeState<T> InactiveModeState => m_InactiveModeState;
-        public ModeState<T> InitModeState => m_InitModeState;
-        public ModeState<T> StartModeState => m_StartModeState;
-        public ModeState<T> ReadyRoundState => m_ReadyRoundState;
-        public ModeState<T> PlayRoundState => m_PlayRoundState;
-        public ModeState<T> CompleteRoundState => m_CompleteRoundState;
-        public ModeState<T> CompleteModeState => m_CompleteModeState;
+        public ModeState CurrentState => m_CurrentState;
+        public ModeState InactiveModeState => m_InactiveModeState;
+        public ModeState InitModeState => m_InitModeState;
+        public ModeState StartModeState => m_StartModeState;
+        public ModeState ReadyRoundState => m_ReadyRoundState;
+        public ModeState PlayRoundState => m_PlayRoundState;
+        public ModeState CompleteRoundState => m_CompleteRoundState;
+        public ModeState CompleteModeState => m_CompleteModeState;
         public ClassicModeState ModeState => m_ModeState;
         public ClassicMode Mode => m_Mode;
 
@@ -52,15 +52,15 @@ namespace MobaVR
             }
         }
 
-        public void Init(T mode)
+        public void Init(GameMode mode)
         {
-            m_InitModeState.Init(mode, this);
-            m_InactiveModeState.Init(mode, this);
-            m_StartModeState.Init(mode, this);
-            m_ReadyRoundState.Init(mode, this);
-            m_PlayRoundState.Init(mode, this);
-            m_CompleteRoundState.Init(mode, this);
-            m_CompleteModeState.Init(mode, this);
+            m_InitModeState.Init(mode);
+            m_InactiveModeState.Init(mode);
+            m_StartModeState.Init(mode);
+            m_ReadyRoundState.Init(mode);
+            m_PlayRoundState.Init(mode);
+            m_CompleteRoundState.Init(mode);
+            m_CompleteModeState.Init(mode);
 
             if (m_IsInitOnAwake)
             {
@@ -69,7 +69,7 @@ namespace MobaVR
             }
         }
 
-        public void SetState(ModeState<T> nextState)
+        public void SetState(ModeState nextState)
         {
             if (CurrentState != null)
             {

@@ -14,10 +14,9 @@ namespace MobaVR
 
         [Header("Modes")]
         [FormerlySerializedAs("m_Mode")]
-        [SerializeField] private ClassicMode m_ClassicMode;
+        [SerializeField] private GameMode m_ClassicMode;
         [SerializeField] private LichGame m_LichMode;
         [SerializeField] private Environment m_Environment;
-        [SerializeField] private ZoneManager m_ZoneManager;
 
         [Header("Player")]
         [SerializeField] private BasePlayerSpawner<PlayerVR> m_PlayerSpawner;
@@ -32,7 +31,6 @@ namespace MobaVR
         public Team RedTeam => m_RedTeam;
         public Team BlueTeam => m_BlueTeam;
         public bool IsPvPMode => m_IsPvPMode;
-        public ZoneManager ZoneManager => m_ZoneManager;
 
         private void Awake()
         {

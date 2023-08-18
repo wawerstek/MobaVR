@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using Photon.Pun;
+﻿using MobaVR.Content;
 using UnityEngine;
 
 namespace MobaVR
 {
-    public class ClassicMode : GameMode<ClassicMode>
+    public class ClassicMode : GameMode
     {
-        [SerializeField] private BaseModeView m_ModeView;
-        [SerializeField] private BaseEnvironmentMode m_Environment;
+        [SerializeField] private ClassicModeContent m_Content;
 
-        public BaseModeView ModeView => m_ModeView;
-        public BaseEnvironmentMode Environment => m_Environment;
-        public ZoneManager ZoneManager => m_GameSession != null ? m_GameSession.ZoneManager : null;
-
+        public ClassicModeContent Content => m_Content;
 
         private void Awake()
         {

@@ -5,15 +5,15 @@ using UnityEngine;
 
 namespace MobaVR
 {
-    public abstract class GameMode<T>: MonoBehaviourPun where T : GameMode<T>
+    public abstract class GameMode : MonoBehaviourPun
     {
         [SerializeField] protected ClassicGameSession m_GameSession;
         //[SerializeField] protected StateMachine m_StateMachine;
-        [SerializeField] protected BaseStateMachine<T> m_StateMachine;
+        [SerializeField] protected BaseStateMachine m_StateMachine;
 
         public Team RedTeam => m_GameSession != null ? m_GameSession.RedTeam : null;
         public Team BlueTeam => m_GameSession != null ? m_GameSession.BlueTeam : null;
-
+        public BaseStateMachine StateMachine => m_StateMachine;
         public List<PlayerVR> Players
         {
             get
@@ -33,7 +33,6 @@ namespace MobaVR
 
         public void InitMode()
         {
-            //m_StateMachine.SetState(m_StateMachine.InitModeState);
             m_StateMachine.InitMode();
         }
 
@@ -67,7 +66,6 @@ namespace MobaVR
             m_StateMachine.CompleteMode();
         }
 
-        /*
         public void SetStateMachine(StateMachine stateMachine)
         {
             if (m_StateMachine != null)
@@ -80,9 +78,8 @@ namespace MobaVR
 
             InitStateMachine();
         }
-        */
 
-
+        /*
         public void SetStateMachine(BaseStateMachine<T> stateMachine)
         {
             if (m_StateMachine != null)
@@ -95,6 +92,7 @@ namespace MobaVR
 
             InitStateMachine();
         }
+        */
 
         public abstract void InitStateMachine();
     }

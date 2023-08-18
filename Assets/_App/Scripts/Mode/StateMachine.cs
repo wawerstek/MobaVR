@@ -6,7 +6,7 @@ using UnityEngine;
 namespace MobaVR
 {
     [Serializable]
-    public class StateMachine : BaseStateMachine<ClassicMode>
+    public class StateMachine : BaseStateMachine
     {
 
     }

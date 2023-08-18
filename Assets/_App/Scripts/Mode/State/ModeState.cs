@@ -4,17 +4,17 @@ using UnityEngine;
 namespace MobaVR.ClassicModeStateMachine
 {
     [Serializable]
-    public abstract class ModeState<T> : ScriptableObject, IState where T : GameMode<T>
+    public abstract class ModeState : ScriptableObject, IState
     {
         [SerializeField] protected PlayerStateSO m_PlayerState;
 
-        protected T m_Mode;
-        protected BaseStateMachine<T> m_StateMachine;
+        protected GameMode m_Mode;
+        protected BaseStateMachine m_StateMachine;
 
-        public virtual void Init(T mode, BaseStateMachine<T> stateMachine)
+        public virtual void Init(GameMode mode)
         {
             m_Mode = mode;
-            m_StateMachine = stateMachine;
+            m_StateMachine = mode.StateMachine;
         }
 
         #region Players
