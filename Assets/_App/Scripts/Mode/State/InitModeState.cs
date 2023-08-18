@@ -6,7 +6,7 @@ namespace MobaVR.ClassicModeStateMachine
 {
     [Serializable]
     [CreateAssetMenu(menuName = "API/Classic Mode State/Init Mode State")]
-    public class InitModeState : ModeState
+    public class InitModeState : ModeState<ClassicMode>
     {
         public override void Enter()
         {

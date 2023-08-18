@@ -6,7 +6,7 @@ namespace MobaVR.ClassicModeStateMachine
 {
     [Serializable]
     [CreateAssetMenu(menuName = "API/Classic Mode State/Play Timer Round State")]
-    public class TimerPlayRoundState : ModeState
+    public class TimerPlayRoundState : ModeState<ClassicMode>
     {
         [SerializeField] private float m_Time = 3f;
         [SerializeField] private bool m_IsSumKills = true;

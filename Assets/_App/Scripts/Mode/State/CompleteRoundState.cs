@@ -6,7 +6,7 @@ namespace MobaVR.ClassicModeStateMachine
 {
     [Serializable]
     [CreateAssetMenu(menuName = "API/Classic Mode State/Complete Round State")]
-    public class CompleteRoundState : ModeState
+    public class CompleteRoundState : ModeState<ClassicMode>
     {
         [SerializeField] private float m_WinScore = 5;
 

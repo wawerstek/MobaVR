@@ -6,7 +6,7 @@ namespace MobaVR.ClassicModeStateMachine
 {
     [Serializable]
     [CreateAssetMenu(menuName = "API/Classic Mode State/Start Mode State")]
-    public class StartModeState : ModeState
+    public class StartModeState : ModeState<ClassicMode>
     {
         protected override void UpdatePlayer(PlayerVR player)
         {

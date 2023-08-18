@@ -6,7 +6,7 @@ namespace MobaVR.ClassicModeStateMachine
 {
     [Serializable]
     [CreateAssetMenu(menuName = "API/Classic Mode State/Ready Round State")]
-    public class ReadyRoundState : ModeState
+    public class ReadyRoundState : ModeState<ClassicMode>
     {
         [SerializeField] private float m_Time = 3f;
         private float m_CurrentTime;
