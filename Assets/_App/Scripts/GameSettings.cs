@@ -147,6 +147,34 @@ namespace MobaVR
             _Call.GetComponent<Calibration>().calibr = false;
         }
         
+        #region Game Mode
+
+        public void StartMode()
+        {
+            if (m_GameSession != null)
+            {
+                m_GameSession.StartMode();
+            }
+        }
+
+        public void CompleteMode()
+        {
+            if (m_GameSession != null)
+            {
+                m_GameSession.CompleteMode();
+            }
+        }
+
+        public void DeactivateMode()
+        {
+            if (m_GameSession != null)
+            {
+                m_GameSession.DeactivateMode();
+            }
+        }
+        
+        #endregion
+        
         #region PvP Mode
 
         public void StartPvPMode()

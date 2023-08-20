@@ -10,8 +10,6 @@ namespace MobaVR
 {
     public class ScenesEnvironment : MonoBehaviourPun
     {
-        [SerializeField] private Settings m_Settings;
-        
         [Header("Maps")]
         [SerializeField] private string m_SkyLandMap;
         [SerializeField] private string m_SkyLandProps;
@@ -19,10 +17,6 @@ namespace MobaVR
         [SerializeField] private string m_LichMap;
         [SerializeField] private string m_TavernMap;
 
-        [Header("Props")]
-        [SerializeField] private GameObject m_PvpProps;
-        [SerializeField] private GameObject m_PveProps;
-        
         [Header("Default Map")]
         [SerializeField] private bool m_IsLoadDefaultMap;
         [SerializeField] private string m_DefaultMap;
@@ -267,8 +261,8 @@ namespace MobaVR
         [PunRPC]
         public void SetProps(bool isPvp, bool isPve)
         {
-            m_PvpProps.SetActive(isPvp);
-            m_PveProps.SetActive(isPve);
+            //m_PvpProps.SetActive(isPvp);
+            //m_PveProps.SetActive(isPve);
         }
         
         [PunRPC]

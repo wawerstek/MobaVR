@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
 
@@ -29,6 +28,21 @@ namespace MobaVR
 
                 return players;
             }
+        }
+
+        protected virtual void Awake()
+        {
+            if (m_GameSession == null)
+            {
+                m_GameSession = FindObjectOfType<ClassicGameSession>();
+            }
+
+            /*
+            if (m_GameSession != null)
+            {
+                m_GameSession.Mode = this;
+            }
+            */
         }
 
         public void InitMode()

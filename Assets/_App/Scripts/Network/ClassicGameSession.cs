@@ -3,6 +3,7 @@ using MetaConference;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 
 namespace MobaVR
@@ -16,9 +17,9 @@ namespace MobaVR
         [FormerlySerializedAs("m_Mode")]
         //[SerializeField] private GameMode m_ClassicMode;
         [SerializeField] private GameMode m_Mode;
-        [SerializeField] private PveMode m_LichMode;
+        //[SerializeField] private PveMode m_LichMode;
         //[SerializeField] private LichGame m_LichMode;
-        [SerializeField] private Environment m_Environment;
+        //[SerializeField] private Environment m_Environment;
 
         [Header("Player")]
         [SerializeField] private BasePlayerSpawner<PlayerVR> m_PlayerSpawner;
@@ -33,6 +34,26 @@ namespace MobaVR
         public Team RedTeam => m_RedTeam;
         public Team BlueTeam => m_BlueTeam;
         public bool IsPvPMode => m_IsPvPMode;
+        public GameMode Mode
+        {
+            get => m_Mode;
+            set => m_Mode = value;
+        }
+
+        public override void OnEnable()
+        {
+            base.OnEnable();
+            SceneManager.sceneLoaded += OnSceneLoaded;
+            SceneManager.sceneUnloaded += OnSceneUnloaded;
+        }
+
+
+        public override void OnDisable()
+        {
+            base.OnDisable();
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+            SceneManager.sceneUnloaded -= OnSceneUnloaded;
+        }
 
         private void Awake()
         {
@@ -50,6 +71,24 @@ namespace MobaVR
             Invoke(nameof(InitPlayer), 2f);
             //Invoke(nameof(InitMode), 3f);
         }
+
+        #region Scenes
+
+        private void OnSceneUnloaded(Scene arg0)
+        {
+            if (m_Mode != null)
+            {
+                m_Mode.CompleteMode();
+                m_Mode = null;
+            }
+        }
+
+        private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
+        {
+            m_Mode = FindObjectOfType<GameMode>();
+        }
+
+        #endregion
 
         #region Player and Team
 
@@ -138,17 +177,53 @@ namespace MobaVR
 
         #endregion
 
-        #region Base Mode
+        #region Game Mode
 
         private void InitMode()
         {
-            //m_ClassicMode.InitMode();
-            m_Mode.DeactivateMode();
+            if (m_Mode != null)
+            {
+                m_Mode.InitMode();
+            }
+        }
+
+        public void DeactivateMode()
+        {
+            if (!PhotonNetwork.IsMasterClient)
+            {
+                return;
+            }
+            
+            if (m_Mode != null)
+            {
+                m_Mode.DeactivateMode();
+            }
         }
 
         public void StartMode()
         {
-            m_Mode.StartMode();
+            if (!PhotonNetwork.IsMasterClient)
+            {
+                return;
+            }
+            
+            if (m_Mode != null)
+            {
+                m_Mode.StartMode();
+            }
+        }
+
+        public void CompleteMode()
+        {
+            if (!PhotonNetwork.IsMasterClient)
+            {
+                return;
+            }
+            
+            if (m_Mode != null)
+            {
+                m_Mode.CompleteMode();
+            }
         }
 
         #endregion
@@ -164,8 +239,8 @@ namespace MobaVR
 
             if (!m_IsPvPMode)
             {
-                m_LichMode.CompleteMode();
-                m_Environment.ShowDefaultPvPMap();
+                //m_LichMode.CompleteMode();
+                //m_Environment.ShowDefaultPvPMap();
             }
 
             m_IsPvPMode = true;
@@ -206,11 +281,11 @@ namespace MobaVR
             if (m_IsPvPMode)
             {
                 m_Mode.DeactivateMode();
-                m_Environment.ShowDefaultPvEMap();
+                //m_Environment.ShowDefaultPvEMap();
             }
 
             m_IsPvPMode = false;
-            m_LichMode.StartMode();
+            //m_LichMode.StartMode();
         }
 
         public void CompletePvEMode()
@@ -220,14 +295,14 @@ namespace MobaVR
                 return;
             }
 
-            m_LichMode.CompleteMode();
+            //m_LichMode.CompleteMode();
         }
 
         private void ResetModes()
         {
-            m_LichMode.CompleteMode();
+            //m_LichMode.CompleteMode();
             m_Mode.DeactivateMode();
-            m_Environment.ShowDefaultPvPMap();
+            //m_Environment.ShowDefaultPvPMap();
             m_IsPvPMode = true;
         }
 

@@ -9,8 +9,9 @@ namespace MobaVR
 
         public ClassicModeContent Content => m_Content;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             InitStateMachine();
         }
 
