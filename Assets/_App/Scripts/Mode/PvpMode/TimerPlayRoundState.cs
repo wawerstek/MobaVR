@@ -128,6 +128,7 @@ namespace MobaVR.ClassicModeStateMachine.PVP
             m_Content.ModeView.RoundTimeView.Hide();
             m_Content.ZoneManager.Hide();
 
+            /*
             foreach (PlayerVR player in m_Mode.RedTeam.Players)
             {
                 player.WizardPlayer.OnDie -= OnDieRedPlayer;
@@ -135,6 +136,13 @@ namespace MobaVR.ClassicModeStateMachine.PVP
 
             foreach (PlayerVR player in m_Mode.BlueTeam.Players)
             {
+                player.WizardPlayer.OnDie -= OnDieBluePlayer;
+            }
+            */
+
+            foreach (PlayerVR player in m_Mode.Players)
+            {
+                player.WizardPlayer.OnDie -= OnDieRedPlayer;
                 player.WizardPlayer.OnDie -= OnDieBluePlayer;
             }
         }
