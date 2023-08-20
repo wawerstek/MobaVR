@@ -1,7 +1,4 @@
 using System;
-using MobaVR.ClassicModeStateMachine;
-using Photon.Pun;
-using UnityEngine;
 
 namespace MobaVR
 {

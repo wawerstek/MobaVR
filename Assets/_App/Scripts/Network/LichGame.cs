@@ -9,7 +9,7 @@ namespace MobaVR
     enum LichGameState
     {
         NONE,
-        ACTIVE,
+        ACTIVE, 
         STOP,
         GAME_OVER
     }

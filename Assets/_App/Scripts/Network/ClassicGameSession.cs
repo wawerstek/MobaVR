@@ -14,8 +14,10 @@ namespace MobaVR
 
         [Header("Modes")]
         [FormerlySerializedAs("m_Mode")]
-        [SerializeField] private GameMode m_ClassicMode;
-        [SerializeField] private LichGame m_LichMode;
+        //[SerializeField] private GameMode m_ClassicMode;
+        [SerializeField] private GameMode m_Mode;
+        [SerializeField] private PveMode m_LichMode;
+        //[SerializeField] private LichGame m_LichMode;
         [SerializeField] private Environment m_Environment;
 
         [Header("Player")]
@@ -141,12 +143,12 @@ namespace MobaVR
         private void InitMode()
         {
             //m_ClassicMode.InitMode();
-            m_ClassicMode.DeactivateMode();
+            m_Mode.DeactivateMode();
         }
 
         public void StartMode()
         {
-            m_ClassicMode.StartMode();
+            m_Mode.StartMode();
         }
 
         #endregion
@@ -162,12 +164,12 @@ namespace MobaVR
 
             if (!m_IsPvPMode)
             {
-                m_LichMode.StopGame();
+                m_LichMode.CompleteMode();
                 m_Environment.ShowDefaultPvPMap();
             }
 
             m_IsPvPMode = true;
-            m_ClassicMode.StartMode();
+            m_Mode.StartMode();
         }
 
         public void CompletePvPMode()
@@ -177,7 +179,7 @@ namespace MobaVR
                 return;
             }
 
-            m_ClassicMode.CompleteMode();
+            m_Mode.CompleteMode();
         }
 
         public void DeactivatePvPMode()
@@ -187,7 +189,7 @@ namespace MobaVR
                 return;
             }
 
-            m_ClassicMode.DeactivateMode();
+            m_Mode.DeactivateMode();
         }
 
         #endregion
@@ -203,12 +205,12 @@ namespace MobaVR
 
             if (m_IsPvPMode)
             {
-                m_ClassicMode.DeactivateMode();
+                m_Mode.DeactivateMode();
                 m_Environment.ShowDefaultPvEMap();
             }
 
             m_IsPvPMode = false;
-            m_LichMode.StartGame();
+            m_LichMode.StartMode();
         }
 
         public void CompletePvEMode()
@@ -218,13 +220,13 @@ namespace MobaVR
                 return;
             }
 
-            m_LichMode.StopGame();
+            m_LichMode.CompleteMode();
         }
 
         private void ResetModes()
         {
-            m_LichMode.StopGame();
-            m_ClassicMode.DeactivateMode();
+            m_LichMode.CompleteMode();
+            m_Mode.DeactivateMode();
             m_Environment.ShowDefaultPvPMap();
             m_IsPvPMode = true;
         }

@@ -1,4 +1,5 @@
 ﻿using MobaVR.ClassicModeStateMachine;
+using MobaVR.ClassicModeStateMachine.PVP;
 using MobaVR.Content;
 
 namespace MobaVR
@@ -10,7 +11,10 @@ namespace MobaVR
         public override void Init(GameMode mode)
         {
             base.Init(mode);
-            mode.TryGetComponent(out m_Content);
+            if (!mode.TryGetComponent(out m_Content))
+            {
+                m_Content = FindObjectOfType<ClassicModeContent>();
+            }
         }
     }
 }

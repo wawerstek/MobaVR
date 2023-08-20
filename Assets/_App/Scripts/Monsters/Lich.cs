@@ -12,7 +12,7 @@ namespace MobaVR
         #region Dependencies
 
         [Header("Dependencies")]
-        [SerializeField] private LichGame m_LichGame;
+        //[SerializeField] private LichGame m_LichGame;
         [SerializeField] private MonsterView m_MonsterView;
         [SerializeField] private DamageNumberView m_DamageNumber;
 
@@ -85,7 +85,7 @@ namespace MobaVR
         private void Awake()
         {
             m_MeshRenderers = GetComponentsInChildren<Renderer>();
-            RpcDeactivate();
+            RpcDeactivate_Monster();
             //Init();
         }
 
@@ -96,7 +96,7 @@ namespace MobaVR
                 //if (IsLife && !m_IsActive)
                 if (!m_IsActive)
                 {
-                    m_LichGame.StartGame();
+                    //m_LichGame.StartGame();
                 }
             }
         }
@@ -105,11 +105,11 @@ namespace MobaVR
 
         public void Init()
         {
-            photonView.RPC(nameof(RpcInit), RpcTarget.All);
+            photonView.RPC(nameof(RpcInit_Monster), RpcTarget.All);
         }
 
         [PunRPC]
-        public void RpcInit()
+        public void RpcInit_Monster()
         {
             m_CurrentHealth = m_Health;
             m_CanGetDamage = false;
@@ -123,11 +123,11 @@ namespace MobaVR
 
         public void Activate()
         {
-            photonView.RPC(nameof(RpcActivate), RpcTarget.All);
+            photonView.RPC(nameof(RpcActivate_Monster), RpcTarget.All);
         }
 
         [PunRPC]
-        public void RpcActivate()
+        public void RpcActivate_Monster()
         {
             m_CurrentHealth = m_Health;
             UpdateHealth();
@@ -151,11 +151,11 @@ namespace MobaVR
                 return;
             }
             
-            photonView.RPC(nameof(RpcDeactivate), RpcTarget.All);
+            photonView.RPC(nameof(RpcDeactivate_Monster), RpcTarget.All);
         }
 
         [PunRPC]
-        public void RpcDeactivate()
+        public void RpcDeactivate_Monster()
         {
             m_IsActive = false;
             
@@ -173,7 +173,7 @@ namespace MobaVR
 
         public void Hit(HitData hitData)
         {
-            RpcRpcHit(hitData.Amount);
+            RpcRpcHit_Monster(hitData.Amount);
         }
 
         /*
@@ -184,7 +184,7 @@ namespace MobaVR
         */
 
         [PunRPC]
-        private void RpcRpcHit(float damage)
+        private void RpcRpcHit_Monster(float damage)
         {
             if (IsLife)
             {
@@ -195,11 +195,11 @@ namespace MobaVR
 
         public void Die()
         {
-            photonView.RPC(nameof(RpcDie), RpcTarget.All);
+            photonView.RPC(nameof(RpcDie_Monster), RpcTarget.All);
         }
 
         [PunRPC]
-        private void RpcDie()
+        private void RpcDie_Monster()
         {
             Die(true);
         }
@@ -261,7 +261,7 @@ namespace MobaVR
 
             Dissolve();
 
-            m_LichGame.SetGameOver();
+            //m_LichGame.SetGameOver();
         }
 
         private void UpdateHealth()

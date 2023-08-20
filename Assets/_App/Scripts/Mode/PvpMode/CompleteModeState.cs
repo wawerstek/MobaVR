@@ -2,7 +2,7 @@
 using Photon.Pun;
 using UnityEngine;
 
-namespace MobaVR.ClassicModeStateMachine
+namespace MobaVR.ClassicModeStateMachine.PVP
 {
     [Serializable]
     [CreateAssetMenu(menuName = "API/Classic Mode State/Complete Mode State")]
