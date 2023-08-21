@@ -21,11 +21,15 @@ namespace MobaVR
         [Header("Dependencies")]
         //[SerializeField] private Transform m_Target;
         [SerializeField] protected MonsterPelvis m_MonsterPelvis;
-        [SerializeField] protected WizardPlayer m_Wizard;
         [SerializeField] protected MonsterView m_MonsterView;
         [SerializeField] protected DamageNumberView m_DamageNumber;
         [SerializeField] protected MonsterWeapon m_Weapon;
         [SerializeField] protected Treasure m_Treasure;
+
+        [Header("Targets")]
+        [SerializeField] protected TargetType m_TargetType = TargetType.PLAYER;
+        [SerializeField] protected WizardPlayer m_Wizard;
+        [SerializeField] protected Tower m_Tower;
 
         #endregion
 
@@ -94,6 +98,11 @@ namespace MobaVR
         public float CurrentHealth => m_CurrentHealth;
         public bool IsAttacking => m_IsAttacking;
         public bool IsLife => m_CurrentHealth > 0f;
+        public TargetType TargetType
+        {
+            get => m_TargetType;
+            set => m_TargetType = value;
+        }
 
         public MonsterState CurrentState
         {
@@ -188,7 +197,7 @@ namespace MobaVR
         {
             m_ChildRigidbodies.AddRange(m_Root.GetComponentsInChildren<Rigidbody>());
             m_ChildColliders.AddRange(m_Root.GetComponentsInChildren<Collider>());
-            
+
             /*
             foreach (Rigidbody rigidbody in m_ChildRigidbodies)
             {
@@ -220,20 +229,46 @@ namespace MobaVR
                 return;
             }
 
-            if (m_Wizard == null ||
-                (m_Wizard != null && !m_Wizard.IsLife))
+            if (m_TargetType == TargetType.PLAYER)
             {
-                FindTarget();
-                DeactivateNavAgent();
-                return;
+                if (m_Wizard == null ||
+                    (m_Wizard != null && !m_Wizard.IsLife))
+                {
+                    FindPlayerTarget();
+                    DeactivateNavAgent();
+                    return;
+                }
             }
+
+            if (m_TargetType == TargetType.TOWER)
+            {
+                if (m_Tower == null ||
+                    (m_Tower != null && !m_Tower.IsLife))
+                {
+                    FindTowerTarget();
+                    DeactivateNavAgent();
+                    return;
+                }
+            }
+
 
             if (IsLife
                 && CurrentState != MonsterState.NOT_ACTIVE
                 && CurrentState != MonsterState.DEATH)
             {
                 //float distance = Vector3.Distance(m_Wizard.transform.position, transform.position);
-                float distance = Vector3.Distance(m_Wizard.PointPlayer.position, transform.position);
+
+                float distance = 1000f;
+                if (m_TargetType == TargetType.PLAYER)
+                {
+                    Vector3.Distance(m_Wizard.PointPlayer.position, transform.position);
+                }
+
+                if (m_TargetType == TargetType.TOWER)
+                {
+                    Vector3.Distance(m_Tower.transform.position, transform.position);
+                }
+
                 if (distance < m_AttackRange)
                 {
                     if (m_CanAttack)
@@ -260,9 +295,39 @@ namespace MobaVR
             }
         }
 
+        #region Tower Target
+
+        public void SetTowerTarget(Tower tower)
+        {
+            SetTowerTarget(tower.photonView.ViewID);
+        }
+
+        public void SetTowerTarget(int idPhotonTarget)
+        {
+            photonView.RPC(nameof(RpcSetTowerTarget), RpcTarget.AllBuffered, idPhotonTarget);
+        }
+
+        private void FindTowerTarget()
+        {
+            m_Tower = null;
+            m_Tower = FindObjectOfType<Tower>();
+        }
+
+        [PunRPC]
+        private void RpcSetTowerTarget(int idPhotonTarget)
+        {
+            PhotonView towerPhotonView = PhotonView.Find(idPhotonTarget);
+            if (towerPhotonView != null)
+            {
+                m_Tower = towerPhotonView.GetComponent<Tower>();
+            }
+        }
+
+        #endregion
+
         #region Wizard Target
 
-        private void FindTarget()
+        private void FindPlayerTarget()
         {
             m_Wizard = null;
 
@@ -298,7 +363,7 @@ namespace MobaVR
                     TeamType = TeamType.OTHER,
                     PhotonOwner = photonView
                 };
-                
+
                 /*
                 if (other.TryGetComponent(out WizardPlayer wizardPlayer))
                 {
@@ -307,7 +372,7 @@ namespace MobaVR
                     m_Weapon.SetEnabled(false);
                 }
                 */
-                
+
                 //if (other.CompareTag("LifeCollider") && other.transform.TryGetComponent(out Damageable damageable))
                 if (other.transform.TryGetComponent(out Damageable damageable))
                 {
@@ -380,24 +445,31 @@ namespace MobaVR
             m_Animator.SetTrigger(m_HashIdle);
             m_CurrentHashAttack = m_HashAttack;
 
-            if (m_NavMeshAgent != null && m_Wizard != null)
+            if (m_NavMeshAgent != null && m_TargetType == TargetType.PLAYER && m_Wizard != null)
             {
                 m_NavMeshAgent.updateRotation = true;
                 m_NavMeshAgent.stoppingDistance = m_AttackRange;
                 //m_NavMeshAgent.destination = m_Wizard.transform.position;
                 m_NavMeshAgent.destination = m_Wizard.PointPlayer.transform.position;
 
-                /*
-                Vector3 targetPosition = new Vector3(
-                    m_Wizard.transform.position.x,
-                    transform.position.y,
-                    m_Wizard.transform.position.z);
-                */
-                
                 Vector3 targetPosition = new Vector3(
                     m_Wizard.PointPlayer.transform.position.x,
                     transform.position.y,
                     m_Wizard.PointPlayer.transform.position.z);
+
+                transform.LookAt(targetPosition);
+            }
+
+            if (m_NavMeshAgent != null && m_TargetType == TargetType.TOWER && m_Tower != null)
+            {
+                m_NavMeshAgent.updateRotation = true;
+                m_NavMeshAgent.stoppingDistance = m_AttackRange;
+                m_NavMeshAgent.destination = m_Tower.transform.position;
+
+                Vector3 targetPosition = new Vector3(
+                    m_Tower.transform.position.x,
+                    transform.position.y,
+                    m_Tower.transform.position.z);
 
                 transform.LookAt(targetPosition);
             }
@@ -523,7 +595,16 @@ namespace MobaVR
 
             m_NavMeshAgent.isStopped = false;
             //m_NavMeshAgent.destination = m_Wizard.transform.position;
-            m_NavMeshAgent.destination = m_Wizard.PointPlayer.transform.position;
+            if (m_TargetType == TargetType.PLAYER)
+            {
+                m_NavMeshAgent.destination = m_Wizard.PointPlayer.transform.position;
+            }
+
+            if (m_TargetType == TargetType.TOWER)
+            {
+                m_NavMeshAgent.destination = m_Tower.transform.position;
+            }
+
             //m_CurrentForwardSpeed = m_NavMeshAgent.velocity.magnitude / m_NavMeshAgent.speed;
             m_CurrentForwardSpeed = m_NavMeshAgent.velocity.magnitude;
             m_Animator.SetFloat(m_HashForwardSpeed, m_CurrentForwardSpeed);
@@ -532,7 +613,18 @@ namespace MobaVR
         private void Rotate()
         {
             //Vector3 targetPosition = m_Wizard.transform.position;
-            Vector3 targetPosition = m_Wizard.PointPlayer.transform.position;
+            Vector3 targetPosition = Vector3.zero;
+
+            if (m_TargetType == TargetType.PLAYER)
+            {
+                targetPosition = m_Wizard.PointPlayer.transform.position;
+            }
+
+            if (m_TargetType == TargetType.TOWER)
+            {
+                targetPosition = m_Tower.transform.position;
+            }
+
             targetPosition.y = 0f;
 
             Vector3 currentPosition = transform.position;
@@ -571,12 +663,13 @@ namespace MobaVR
         {
             RpcHit_Monster(hitData.Amount);
         }
-/*
-        public void RpcHit(float damage)
-        {
-            photonView.RPC(nameof(RpcRpcHit), RpcTarget.All, damage);
-        }
-*/
+
+        /*
+                public void RpcHit(float damage)
+                {
+                    photonView.RPC(nameof(RpcRpcHit), RpcTarget.All, damage);
+                }
+        */
         [PunRPC]
         protected void RpcHit_Monster(float damage)
         {

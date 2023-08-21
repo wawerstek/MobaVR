@@ -19,6 +19,14 @@ namespace MobaVR
         public float DelayBetweenMaxMonster = 4f;
         public bool CanSpawn = false;
 
+        [SerializeField] protected TargetType m_TargetType = TargetType.PLAYER;
+        
+        public TargetType TargetType
+        {
+            get => m_TargetType;
+            set => m_TargetType = value;
+        }
+        
         private void Start()
         {
             //RpcGenerateMonsters();
@@ -180,6 +188,7 @@ namespace MobaVR
                                           transform.position,
                                           Quaternion.Euler(0,180,0));
             Monster monster = monsterGameObject.GetComponent<Monster>();
+            monster.TargetType = m_TargetType;
             //monster.transform.localPosition = Vector3.zero;
             monster.OnInit = () => { monster.Activate(); };
             monster.OnDeath = () =>
