@@ -39,12 +39,12 @@ namespace MobaVR
 
         protected void OnStartRedirect(InputAction.CallbackContext context)
         {
-            Debug.Log($"{SpellName}: {nameof(OnStartRedirect)}: started");
+            AppDebug.Log($"{SpellName}: {nameof(OnStartRedirect)}: started");
         }
 
         protected void OnPerformedRedirect(InputAction.CallbackContext context)
         {
-            Debug.Log($"{SpellName}: {nameof(OnPerformedRedirect)}: performed");
+            AppDebug.Log($"{SpellName}: {nameof(OnPerformedRedirect)}: performed");
 
             if (!CanCast() 
                 || HasBlockingSpells() 
@@ -67,7 +67,7 @@ namespace MobaVR
 
         protected void OnCanceledRedirect(InputAction.CallbackContext context)
         {
-            Debug.Log($"{SpellName}: {nameof(OnCanceledRedirect)}: canceled");
+            AppDebug.Log($"{SpellName}: {nameof(OnCanceledRedirect)}: canceled");
         }
 
         #endregion

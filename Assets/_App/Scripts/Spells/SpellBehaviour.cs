@@ -1,4 +1,6 @@
-﻿using System;
+﻿#define UNITY_EDITOR
+
+using System;
 using System.Collections.Generic;
 using Photon.Pun;
 using Sirenix.OdinInspector;
@@ -141,7 +143,7 @@ namespace MobaVR
 
         protected virtual void Interrupt()
         {
-            Debug.Log($"{SpellName}: Interrupt");
+            AppDebug.Log($"{TAG}: {SpellName}: Interrupt");
         }
 
         #endregion

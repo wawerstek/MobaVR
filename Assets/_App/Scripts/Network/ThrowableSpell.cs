@@ -1,6 +1,4 @@
-﻿using System;
-using MobaVR.Base;
-using Photon.Pun;
+﻿using Photon.Pun;
 using UnityEngine;
 
 namespace MobaVR
@@ -70,8 +68,6 @@ namespace MobaVR
             {
                 //return;
             }
-
-            Debug.Log($"ThrowableSpell: Collision: " + collision.gameObject.name);
 
             if (m_IsThrown && !collision.transform.CompareTag("RemotePlayer"))
             {

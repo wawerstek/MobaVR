@@ -58,25 +58,5 @@ namespace MobaVR
                 bowCollider.enabled = isShow;
             }
         }
-
-        private void OnTriggerEnter(Collider other)
-        {
-            Debug.Log("Fdf123123d");
-        }
-
-        private void OnTriggerStay(Collider other)
-        {
-            Debug.Log("Fdfdsfsdf123123d");
-        }
-
-        private void OnCollisionEnter(Collision collision)
-        {
-            Debug.Log("Fdfd");
-        }
-
-        private void OnCollisionStay(Collision collisionInfo)
-        {
-            Debug.Log("Fdfdsadsafdsfsdffsdf123123d");
-        }
     }
 }

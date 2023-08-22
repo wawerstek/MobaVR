@@ -1,4 +1,5 @@
-﻿using System;
+﻿#define UNITY_EDITOR
+
 using System.Collections.Generic;
 using System.Linq;
 using BNG;
@@ -124,7 +125,7 @@ namespace MobaVR
 
         private void OnStartCast(InputAction.CallbackContext context)
         {
-            Debug.Log($"{SpellName}: {nameof(OnStartCast)}: started");
+            AppDebug.Log($"{SpellName}: {nameof(OnStartCast)}: started");
 
             if (!CanCast() || HasBlockingSpells())
             {
@@ -140,7 +141,7 @@ namespace MobaVR
 
         private void OnPerformedCast(InputAction.CallbackContext context)
         {
-            Debug.Log($"{SpellName}: {nameof(OnPerformedCast)}: performed");
+            AppDebug.Log($"{SpellName}: {nameof(OnPerformedCast)}: performed");
 
             if (!CanCast() || HasBlockingSpells())
             {
@@ -160,7 +161,7 @@ namespace MobaVR
 
         private void OnCanceledCast(InputAction.CallbackContext context)
         {
-            Debug.Log($"{SpellName}: {nameof(OnCanceledCast)}: canceled");
+            AppDebug.Log($"{SpellName}: {nameof(OnCanceledCast)}: canceled");
             //if (!m_IsPickuped)
             {
                 m_IsPerformed = false;
@@ -172,7 +173,7 @@ namespace MobaVR
         /// У игрока не всегда сбрасывается исТриггер
         private void OnRemoteEnter(Grabbable grabbable)
         {
-            Debug.Log($"{SpellName}: {nameof(OnRemoteEnter)}: {grabbable}");
+            AppDebug.Log($"{SpellName}: {nameof(OnRemoteEnter)}: {grabbable}");
 
             if (grabbable.TryGetComponent(out BaseSpell baseSpell))
             {
@@ -190,7 +191,7 @@ namespace MobaVR
 
         private void OnRemoteExit(Grabbable grabbable)
         {
-            Debug.Log($"{SpellName}: {nameof(OnRemoteExit)}: {grabbable}");
+            AppDebug.Log($"{SpellName}: {nameof(OnRemoteExit)}: {grabbable}");
 
             if (grabbable.TryGetComponent(out BaseSpell baseSpell))
             {
@@ -214,7 +215,7 @@ namespace MobaVR
         /// У игрока не всегда сбрасывается исТриггер
         private void OnGrab(Grabbable grabbable)
         {
-            Debug.Log($"{SpellName}: {nameof(OnGrab)}: {grabbable}");
+            AppDebug.Log($"{SpellName}: {nameof(OnGrab)}: {grabbable}");
 
             if (grabbable.TryGetComponent(out BaseSpell baseSpell))
             {
@@ -233,7 +234,7 @@ namespace MobaVR
 
         private void OnRelease(Grabbable grabbable)
         {
-            Debug.Log($"{SpellName}: {nameof(OnRelease)}: {grabbable}");
+            AppDebug.Log($"{SpellName}: {nameof(OnRelease)}: {grabbable}");
 
             m_Grabbable = null;
             m_IsPerformed = false;

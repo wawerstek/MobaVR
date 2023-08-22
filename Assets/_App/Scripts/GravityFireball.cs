@@ -68,7 +68,7 @@ namespace MobaVR
 
                 m_Rigidbody.velocity += gravity;
 
-                Debug.Log($"{TAG}: velocity: {m_Rigidbody.velocity}, y = {m_VerticalVelocity}");
+                AppDebug.Log($"{TAG}: velocity: {m_Rigidbody.velocity}, y = {m_VerticalVelocity}");
             }
         }
     }

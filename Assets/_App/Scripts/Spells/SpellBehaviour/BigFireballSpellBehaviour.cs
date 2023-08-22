@@ -1,4 +1,5 @@
-﻿using System;
+﻿#define UNITY_EDITOR
+
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -54,9 +55,7 @@ namespace MobaVR
 
 
             //TODO
-            Debug.Log($"{SpellName}: {nameof(OnPerformedCast)}: PERFORMED = 1");
             OnPerformed?.Invoke();
-            Debug.Log($"{SpellName}: {nameof(OnPerformedCast)}: PERFORMED = 2");
             m_IsPerformed = true;
             m_IsThrown = false;
 
@@ -77,12 +76,12 @@ namespace MobaVR
 
         protected void OnStartRedirect(InputAction.CallbackContext context)
         {
-            Debug.Log($"{SpellName}: {nameof(OnStartRedirect)}: started");
+            AppDebug.Log($"{SpellName}: {nameof(OnStartRedirect)}: started");
         }
 
         protected void OnPerformedRedirect(InputAction.CallbackContext context)
         {
-            Debug.Log($"{SpellName}: {nameof(OnPerformedRedirect)}: performed");
+            AppDebug.Log($"{SpellName}: {nameof(OnPerformedRedirect)}: performed");
 
             if (!CanCast() || HasBlockingSpells() || !m_IsThrown)
             {
@@ -102,7 +101,7 @@ namespace MobaVR
 
         protected void OnCanceledRedirect(InputAction.CallbackContext context)
         {
-            Debug.Log($"{SpellName}: {nameof(OnCanceledRedirect)}: canceled");
+            AppDebug.Log($"{SpellName}: {nameof(OnCanceledRedirect)}: canceled");
         }
 
         protected override void Interrupt()
@@ -136,13 +135,9 @@ namespace MobaVR
 
         private void CreateFireball(Transform point)
         {
-            Debug.Log($"{SpellName}: {nameof(CreateFireball)}: CreateFireball = 1");
-
             GameObject networkFireball = PhotonNetwork.Instantiate($"Spells/{m_BigFireballPrefab.name}",
                                                                    point.position,
                                                                    point.rotation);
-
-            Debug.Log($"{SpellName}: {nameof(CreateFireball)}: CreateFireball = 2");
             
             if (networkFireball.TryGetComponent(out BigFireBall fireBall))
             {
@@ -151,8 +146,6 @@ namespace MobaVR
                 string fireballName = $"{m_BigFireballPrefab.name}_{handName}_{m_Number}";
                 networkFireball.name = fireballName;
 
-                Debug.Log($"{SpellName}: {nameof(CreateFireball)}: CreateFireball = 3");
-                
                 Transform fireBallTransform = fireBall.transform;
                 fireBallTransform.parent = point.transform;
                 fireBallTransform.localPosition = Vector3.zero;
@@ -164,15 +157,11 @@ namespace MobaVR
 
                 m_IsThrown = false;
                 m_CurrentFireBall = fireBall;
-                
-                Debug.Log($"{SpellName}: {nameof(CreateFireball)}: CreateFireball = 4");
             }
         }
 
         private void ThrowFireball()
         {
-            Debug.Log("1 ThrowFireball: fb: " + m_CurrentFireBall);
-
             if (m_CurrentFireBall != null)
             {
                 m_IsThrown = true;
@@ -197,20 +186,8 @@ namespace MobaVR
             if (m_CurrentFireBall == fireBall)
             {
                 //m_CurrentFireBall = null;
-                Debug.Log($"CurrentFireball == fireball OK; {m_CurrentFireBall.name}; {fireBall.name}");
                 m_IsPerformed = false;
                 OnCompleted?.Invoke();
-            }
-            else
-            {
-                if (m_CurrentFireBall != null)
-                {
-                    Debug.Log($"CurrentFireball == fireball FALSE; {m_CurrentFireBall.name}; {fireBall.name}");
-                }
-                else
-                {
-                    Debug.Log($"CurrentFireball == fireball FALSE; NULL; {fireBall.name}");
-                }
             }
         }
 

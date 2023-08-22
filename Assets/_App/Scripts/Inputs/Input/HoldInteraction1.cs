@@ -56,10 +56,8 @@ namespace UnityEngine.InputSystem.Interactions
         /// <inheritdoc />
         public void Process(ref InputInteractionContext context)
         {
-            Debug.Log("Hold Interaction 1: Process");
             if (context.timerHasExpired)
             {
-                Debug.Log("Hold Interaction 1: timerHasExpired");
                 context.PerformedAndStayPerformed();
                 return;
             }
@@ -67,11 +65,8 @@ namespace UnityEngine.InputSystem.Interactions
             switch (context.phase)
             {
                 case InputActionPhase.Waiting:
-                    Debug.Log("Hold Interaction 1: Waiting 1");
                     if (context.ControlIsActuated(pressPointOrDefault))
                     {
-                        Debug.Log("Hold Interaction 1: Waiting 2");
-
                         m_TimePressed = context.time;
 
                         context.Started();
@@ -84,19 +79,13 @@ namespace UnityEngine.InputSystem.Interactions
                     // If we've reached our hold time threshold, perform the hold.
                     // We do this regardless of what state the control changed to.
 
-                    Debug.Log("Hold Interaction 1: Started 1");
-
                     if (context.time - m_TimePressed >= durationOrDefault)
                     {
-                        Debug.Log("Hold Interaction 1: Started 2");
-
                         context.PerformedAndStayPerformed();
                     }
 
                     if (!context.ControlIsActuated())
                     {
-                        Debug.Log("Hold Interaction 1: Started 3");
-
                         // Control is no longer actuated so we're done.
                         context.Canceled();
                     }
@@ -104,12 +93,8 @@ namespace UnityEngine.InputSystem.Interactions
                     break;
 
                 case InputActionPhase.Performed:
-                    Debug.Log("Hold Interaction 1: Performed 1");
-
                     if (!context.ControlIsActuated(pressPointOrDefault))
                     {
-                        Debug.Log("Hold Interaction 1: Performed 2");
-
                         context.Canceled();
                     }
 

@@ -1,3 +1,4 @@
+#define UNITY_EDITOR
 using System;
 using System.Collections.Generic;
 using BNG;
@@ -246,12 +247,12 @@ namespace MobaVR
 
             #region Attack big fireballs
 
-            m_LeftGrabInput.action.started += context => { Debug.Log($"{TAG}: LeftGrab: started"); };
-            m_RightGrabInput.action.started += context => { Debug.Log($"{TAG}: RightGrab: started"); };
+            m_LeftGrabInput.action.started += context => { AppDebug.Log($"{TAG}: LeftGrab: started"); };
+            m_RightGrabInput.action.started += context => { AppDebug.Log($"{TAG}: RightGrab: started"); };
 
             m_LeftGrabInput.action.performed += context =>
             {
-                Debug.Log($"{TAG}: LeftGrab: performed");
+                AppDebug.Log($"{TAG}: LeftGrab: performed");
 
                 if (!m_State.StateSo.CanCast)
                 {
@@ -276,7 +277,7 @@ namespace MobaVR
 
             m_RightGrabInput.action.performed += context =>
             {
-                Debug.Log($"{TAG}: RightGrab: performed");
+                AppDebug.Log($"{TAG}: RightGrab: performed");
 
                 if (!m_State.StateSo.CanCast)
                 {
@@ -302,7 +303,7 @@ namespace MobaVR
 
             m_RightGrabInput.action.canceled += context =>
             {
-                Debug.Log($"{TAG}: RightGrab: canceled");
+                AppDebug.Log($"{TAG}: RightGrab: canceled");
 
                 if (!m_State.StateSo.CanCast)
                 {
@@ -317,7 +318,7 @@ namespace MobaVR
 
             m_LeftGrabInput.action.canceled += context =>
             {
-                Debug.Log($"{TAG}: LeftGrab: canceled");
+                AppDebug.Log($"{TAG}: LeftGrab: canceled");
 
                 if (!m_State.StateSo.CanCast)
                 {
@@ -338,7 +339,7 @@ namespace MobaVR
             
             m_LeftGrabDoubleTapInput.action.performed += context =>
             {
-                Debug.Log($"{TAG}: LeftGrabDoubleTapInput: performed");
+                AppDebug.Log($"{TAG}: LeftGrabDoubleTapInput: performed");
 
                 if (!m_State.StateSo.CanCast)
                 {
@@ -361,7 +362,7 @@ namespace MobaVR
 
             m_RightGrabDoubleTapInput.action.performed += context =>
             {
-                Debug.Log($"{TAG}: RightGrabDoubleTapInput: performed");
+                AppDebug.Log($"{TAG}: RightGrabDoubleTapInput: performed");
 
                 if (!m_State.StateSo.CanCast)
                 {
@@ -384,7 +385,7 @@ namespace MobaVR
 
             m_LeftGrabDoubleTapInput.action.canceled += context =>
             {
-                Debug.Log($"{TAG}: LeftGrabDoubleTapInput: canceled");
+                AppDebug.Log($"{TAG}: LeftGrabDoubleTapInput: canceled");
 
                 if (!m_State.StateSo.CanCast)
                 {
@@ -400,7 +401,7 @@ namespace MobaVR
 
             m_RightGrabDoubleTapInput.action.canceled += context =>
             {
-                Debug.Log($"{TAG}: RightGrabDoubleTapInput: canceled");
+                AppDebug.Log($"{TAG}: RightGrabDoubleTapInput: canceled");
 
                 if (!m_State.StateSo.CanCast)
                 {
@@ -420,12 +421,12 @@ namespace MobaVR
 
             #region Attack small fireballs or use shield
 
-            m_RightActivateInput.action.started += context => { Debug.Log($"{TAG}: RightActivate: started"); };
-            m_LeftActivateInput.action.started += context => { Debug.Log($"{TAG}: LeftActivate: started"); };
+            m_RightActivateInput.action.started += context => { AppDebug.Log($"{TAG}: RightActivate: started"); };
+            m_LeftActivateInput.action.started += context => { AppDebug.Log($"{TAG}: LeftActivate: started"); };
 
             m_LeftActivateInput.action.performed += context =>
             {
-                Debug.Log($"{TAG}: LeftActivate: performed");
+                AppDebug.Log($"{TAG}: LeftActivate: performed");
 
                 if (!m_State.StateSo.CanCast)
                 {
@@ -478,7 +479,7 @@ namespace MobaVR
 
             m_RightActivateInput.action.performed += context =>
             {
-                Debug.Log($"{TAG}: RightActivate: performed");
+                AppDebug.Log($"{TAG}: RightActivate: performed");
 
                 if (!m_State.StateSo.CanCast)
                 {
@@ -532,7 +533,7 @@ namespace MobaVR
 
             m_LeftActivateInput.action.canceled += context =>
             {
-                Debug.Log($"{TAG}: LeftActivate: canceled");
+                AppDebug.Log($"{TAG}: LeftActivate: canceled");
 
                 /*
                 if (m_UseLeftShield)
@@ -553,7 +554,7 @@ namespace MobaVR
 
             m_RightActivateInput.action.canceled += context =>
             {
-                Debug.Log($"{TAG}: RightActivate: canceled");
+                AppDebug.Log($"{TAG}: RightActivate: canceled");
 
                 /*
                 if (m_UseRightShield)
@@ -626,7 +627,7 @@ namespace MobaVR
             //TODO
             m_HealthInput.action.performed += context =>
             {
-                Debug.Log($"{TAG}: HealthButton: performed");
+                AppDebug.Log($"{TAG}: HealthButton: performed");
                 RestoreHp();
                 transform.position = Vector3.zero;
                 transform.rotation = Quaternion.identity;

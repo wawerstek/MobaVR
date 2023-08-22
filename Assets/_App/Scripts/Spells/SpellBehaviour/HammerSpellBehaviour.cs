@@ -1,6 +1,6 @@
-﻿using System;
+﻿#define UNITY_EDITOR
+
 using Photon.Pun;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -69,12 +69,12 @@ namespace MobaVR
 
         protected void OnStartRedirect(InputAction.CallbackContext context)
         {
-            Debug.Log($"{TAG}: {nameof(OnStartRedirect)}: started");
+            AppDebug.Log($"{TAG}: {nameof(OnStartRedirect)}: started");
         }
 
         protected void OnPerformedRedirect(InputAction.CallbackContext context)
         {
-            Debug.Log($"{TAG}: {nameof(OnPerformedRedirect)}: performed");
+            AppDebug.Log($"{TAG}: {nameof(OnPerformedRedirect)}: performed");
 
             if (!CanCast() || HasBlockingSpells() || !m_IsThrown)
             {
@@ -96,7 +96,7 @@ namespace MobaVR
 
         protected void OnCanceledRedirect(InputAction.CallbackContext context)
         {
-            Debug.Log($"{TAG}: {nameof(OnCanceledRedirect)}: canceled");
+            AppDebug.Log($"{TAG}: {nameof(OnCanceledRedirect)}: canceled");
         }
 
         protected override void Interrupt()
@@ -203,20 +203,8 @@ namespace MobaVR
             if (m_CurrentHammer == fireBall)
             {
                 //m_CurrentFireBall = null;
-                Debug.Log($"CurrentFireball == fireball OK; {m_CurrentHammer.name}; {fireBall.name}");
                 m_IsPerformed = false;
                 OnCompleted?.Invoke();
-            }
-            else
-            {
-                if (m_CurrentHammer != null)
-                {
-                    Debug.Log($"CurrentFireball == fireball FALSE; {m_CurrentHammer.name}; {fireBall.name}");
-                }
-                else
-                {
-                    Debug.Log($"CurrentFireball == fireball FALSE; NULL; {fireBall.name}");
-                }
             }
         }
 

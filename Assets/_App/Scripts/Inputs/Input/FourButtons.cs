@@ -30,8 +30,6 @@ public class FourButtons : InputBindingComposite<float>
         float valueButton4 = context.ReadValue<float>(buttonFour);
 
         var value = (valueButton1 + valueButton2 + valueButton3 + valueButton4) / 4f;
-        Debug.Log("FourButtons: " + value);
-        Debug.Log($"FourButtons Values: {valueButton1}, {valueButton2}, {valueButton3}, {valueButton4}");
         
         return value;
     }

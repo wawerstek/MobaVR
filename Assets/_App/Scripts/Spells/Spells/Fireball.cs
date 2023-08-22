@@ -310,24 +310,5 @@ namespace MobaVR
             m_IsThrown = true;
             m_ProjectileFx.SetActive(true);
         }
-
-        protected override void Update()
-        {
-            base.Update();
-            Debug.Log($"Update Fireball Position = {transform.position}");
-            if (transform.position == Vector3.zero)
-            {
-                Debug.Log($"Update Fireball Position ZERO = {transform.position}");
-            }
-        }
-
-        private void FixedUpdate()
-        {
-            Debug.Log($"Fixed Fireball Position = {transform.position}");
-            if (transform.position == Vector3.zero)
-            {
-                Debug.Log($"Fixed Fireball Position ZERO = {transform.position}");
-            }
-        }
     }
 }

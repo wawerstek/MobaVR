@@ -1,6 +1,6 @@
+#define UNITY_EDITOR
 using System.Collections.Generic;
 using System.Linq;
-using Photon.Pun;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -17,7 +17,7 @@ namespace MobaVR
         [SerializeField] [ReadOnly] private List<SpellBehaviour> m_ActiveSpells = new();
 
         private bool m_IsInit = false;
-        
+
         public List<SpellMap> Spells => m_Spells;
         public List<SpellBehaviour> SpellBehaviours => m_Spells.Select(map => map.SpellBehaviour).Distinct().ToList();
         public List<SpellBehaviour> ActiveSpells => m_ActiveSpells;
@@ -65,12 +65,12 @@ namespace MobaVR
                 return;
             }
             */
-            
+
             if (m_PlayerVR == null || !m_PlayerVR.IsMine)
             {
                 return;
             }
-            
+
             foreach (SpellMap spellMap in m_Spells)
             {
                 SpellBehaviour spellBehaviour = spellMap.SpellBehaviour;
@@ -78,7 +78,7 @@ namespace MobaVR
                 spellBehaviour.OnStarted += () => { OnSpellStarted(spellBehaviour); };
                 spellBehaviour.OnPerformed += () => { OnSpellPerformed(spellBehaviour); };
                 spellBehaviour.OnCompleted += () => { OnSpellCompleted(spellBehaviour); };
-                
+
                 spellBehaviour.Init(this, m_PlayerVR);
             }
 
@@ -87,12 +87,12 @@ namespace MobaVR
 
         private void OnSpellStarted(SpellBehaviour spellBehaviour)
         {
-            Debug.Log($"{TAG}: OnSpellStarted: {spellBehaviour.SpellName}");
+            AppDebug.Log($"{TAG}: OnSpellStarted: {spellBehaviour.SpellName}");
         }
 
         private void OnSpellPerformed(SpellBehaviour newSpellBehaviour)
         {
-            Debug.Log($"{TAG}: OnSpellPerformed: {newSpellBehaviour.SpellName}");
+            AppDebug.Log($"{TAG}: OnSpellPerformed: {newSpellBehaviour.SpellName}");
 
             /*
             //Ok Variant
@@ -133,7 +133,7 @@ namespace MobaVR
 
         private void OnSpellCompleted(SpellBehaviour spellBehaviour)
         {
-            Debug.Log($"{TAG}: OnSpellCompleted: {spellBehaviour.SpellName}");
+            AppDebug.Log($"{TAG}: OnSpellCompleted: {spellBehaviour.SpellName}");
 
             //int position = m_ActiveSpells.FindIndex(behaviour => spellBehaviour.SpellName.Equals(behaviour.SpellName));
             int position = m_ActiveSpells.IndexOf(spellBehaviour);
@@ -147,7 +147,7 @@ namespace MobaVR
         {
             foreach (SpellMap spellMap in m_Spells)
             {
-                Debug.Log($"{spellMap.SpellBehaviour.name}: isPerformed: {spellMap.SpellBehaviour.IsPerformed()}");
+                AppDebug.Log($"{spellMap.SpellBehaviour.name}: isPerformed: {spellMap.SpellBehaviour.IsPerformed()}");
                 //$"isPressed: {spellMap.SpellBehaviour.IsPressed()}, " +
                 //$"inProcess: {spellMap.SpellBehaviour.IsInProgress()}"
             }

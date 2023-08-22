@@ -133,10 +133,12 @@ namespace MobaVR
             _sampledPreviousPosition = currentPosition;
             _sampledPreviousRotation = currentRotation;
 
+            /*
             Debug.Log($"ThrowHandler Sample: {newSample}");
             Debug.Log($"ThrowHandler: positionDelta: {positionDelta}; deltaRotation: {deltaRotation}; angularDelta: {angularDelta}");
             Debug.Log($"ThrowHandler: currentPosition: {currentPosition}; currentRotation: {currentRotation}; euler: {currentRotation.eulerAngles}\n" +
                       $"velocity: {velocity}; angularVelocity: {angularVelocity}");
+            */
             
             ClearOldSamples();
             if (OnSampleRecorded != null)

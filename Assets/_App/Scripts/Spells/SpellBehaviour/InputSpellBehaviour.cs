@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿#define UNITY_EDITOR
+
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -71,17 +73,17 @@ namespace MobaVR
 
         protected virtual void OnStartCast(InputAction.CallbackContext context)
         {
-            Debug.Log($"{SpellName}: {nameof(OnStartCast)}: started");
+            AppDebug.Log($"{SpellName}: {nameof(OnStartCast)}: started");
         }
 
         protected virtual void OnPerformedCast(InputAction.CallbackContext context)
         {
-            Debug.Log($"{SpellName}: {nameof(OnPerformedCast)}: performed");
+            AppDebug.Log($"{SpellName}: {nameof(OnPerformedCast)}: performed");
         }
 
         protected virtual void OnCanceledCast(InputAction.CallbackContext context)
         {
-            Debug.Log($"{SpellName}: {nameof(OnCanceledCast)}: canceled");
+            AppDebug.Log($"{SpellName}: {nameof(OnCanceledCast)}: canceled");
         }
 
         #endregion

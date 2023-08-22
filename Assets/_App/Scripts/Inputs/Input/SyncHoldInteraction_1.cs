@@ -26,8 +26,6 @@ namespace MobaVR.Inputs
 
         public void Process(ref InputInteractionContext context)
         {
-            Debug.Log("Sync BUTTONS 1: TimesHasExpired " + context.timerHasExpired + ", state = " + context.phase);
-
             if (context.timerHasExpired)
             {
                 if (m_IsStartSync)
@@ -46,8 +44,6 @@ namespace MobaVR.Inputs
 
                 //return;
             }
-            
-            Debug.Log("Sync BUTTONS 2: TimesHasExpired " + context.timerHasExpired + ", state = " + context.phase);
 
             switch (context.phase)
             {
@@ -197,8 +193,6 @@ namespace MobaVR.Inputs
                     m_IsHold = false;
                     break;
             }
-            
-            Debug.Log("Sync BUTTONS 3: TimesHasExpired " + context.timerHasExpired + ", state = " + context.phase);
         }
 
         private void Clear()

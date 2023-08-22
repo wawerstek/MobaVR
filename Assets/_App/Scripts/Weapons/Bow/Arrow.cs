@@ -87,7 +87,6 @@ namespace MobaVR.Weapons.Bow
 
         public void ShootArrow(Vector3 shotForce)
         {
-            Debug.Log("SHOOOOOOOOOT");
             flightTime = 0f;
             Flying = true;
 
