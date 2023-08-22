@@ -1,9 +1,7 @@
-using System;
 using System.Collections;
-using MobaVR;
 using UnityEngine;
 
-namespace MetaConference
+namespace MobaVR
 {
     public class Trap : MonoBehaviour
     {

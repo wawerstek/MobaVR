@@ -20,6 +20,11 @@ namespace MobaVR.ClassicModeStateMachine.Tower
             {
                 pointSpawner.GenerateMonsters();
             }
+            
+            foreach (Trap trap in m_Content.Traps)
+            {
+                trap.enabled = true;
+            }
         }
 
         public override void Update()
@@ -29,7 +34,15 @@ namespace MobaVR.ClassicModeStateMachine.Tower
                 return;
             }
 
+            /*
             if (!m_Content.Lich.IsLife)
+            {
+                m_Mode.CompleteRound();
+                return;
+            }
+            */
+            
+            if (!m_Content.Tower.IsLife)
             {
                 m_Mode.CompleteRound();
                 return;

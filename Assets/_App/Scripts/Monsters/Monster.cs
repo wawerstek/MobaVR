@@ -261,12 +261,12 @@ namespace MobaVR
                 float distance = 1000f;
                 if (m_TargetType == TargetType.PLAYER)
                 {
-                    Vector3.Distance(m_Wizard.PointPlayer.position, transform.position);
+                    distance = Vector3.Distance(m_Wizard.PointPlayer.position, transform.position);
                 }
 
                 if (m_TargetType == TargetType.TOWER)
                 {
-                    Vector3.Distance(m_Tower.transform.position, transform.position);
+                    distance = Vector3.Distance(m_Tower.transform.position, transform.position);
                 }
 
                 if (distance < m_AttackRange)

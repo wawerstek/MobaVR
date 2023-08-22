@@ -16,6 +16,8 @@ namespace MobaVR.ClassicModeStateMachine.Tower
 
         public override void Enter()
         {
+            m_Content.Tower.Restore();
+            
             if (PhotonNetwork.IsMasterClient)
             {
                 UpdatePlayers();

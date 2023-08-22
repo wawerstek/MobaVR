@@ -25,6 +25,11 @@ namespace MobaVR.ClassicModeStateMachine.Tower
                     pointSpawner.ClearMonsters();
                 }
             }
+
+            foreach (Trap trap in m_Content.Traps)
+            {
+                trap.enabled = false;
+            }
         }
 
         public override void Update()

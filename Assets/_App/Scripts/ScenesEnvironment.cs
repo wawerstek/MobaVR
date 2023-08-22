@@ -15,7 +15,9 @@ namespace MobaVR
         [SerializeField] private string m_SkyLandProps;
         [SerializeField] private string m_MobaMap;
         [SerializeField] private string m_LichMap;
+        [SerializeField] private string m_NecropolisMap;
         [SerializeField] private string m_TavernMap;
+        [SerializeField] private string m_TowerMap = "Tower";
 
         [Header("Default Map")]
         [SerializeField] private bool m_IsLoadDefaultMap;
@@ -296,6 +298,44 @@ namespace MobaVR
             LoadSceneAsync(m_LichMap);
         }
         
+        [ContextMenu("Show Necropolis")]
+        public void ShowNecropolisMap()
+        {
+            if (!PhotonNetwork.AutomaticallySyncScene)
+            {
+                photonView.RPC(nameof(RpcShowLichMap), RpcTarget.All);
+            }
+            else
+            {
+                RpcShowNecropolisMap();
+            }
+        }
+        
+        [PunRPC]
+        public void RpcShowNecropolisMap()
+        {
+            LoadSceneAsync(m_NecropolisMap);
+        }
+        
+        [ContextMenu("Show Tower")]
+        public void ShowTowerMap()
+        {
+            if (!PhotonNetwork.AutomaticallySyncScene)
+            {
+                photonView.RPC(nameof(RpcShowTower), RpcTarget.All);
+            }
+            else
+            {
+                RpcShowTower();
+            }
+        }
+        
+        [PunRPC]
+        public void RpcShowTower()
+        {
+            LoadSceneAsync(m_TowerMap);
+        }
+
         public void ShowDefaultPvPMap()
         {
             ShowSkyLandMap();

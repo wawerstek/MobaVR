@@ -56,6 +56,7 @@ MonoBehaviour:
   DelayBetweenMonster: 10
   DelayBetweenMaxMonster: 5
   CanSpawn: 0
+  m_TargetType: 2
 --- !u!114 &580165162
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -310,6 +311,7 @@ MonoBehaviour:
   DelayBetweenMonster: 10
   DelayBetweenMaxMonster: 5
   CanSpawn: 0
+  m_TargetType: 2
 --- !u!114 &5617906811897442341
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -594,7 +596,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 5367280331350571877}
   - {fileID: 5617906813974836845}
   - {fileID: 5617906812612293155}
   - {fileID: 5617906813132712964}
@@ -1293,6 +1294,7 @@ MonoBehaviour:
   DelayBetweenMonster: 20
   DelayBetweenMaxMonster: 10
   CanSpawn: 0
+  m_TargetType: 2
 --- !u!114 &5617906812164537335
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1371,6 +1373,7 @@ MonoBehaviour:
   DelayBetweenMonster: 10
   DelayBetweenMaxMonster: 5
   CanSpawn: 0
+  m_TargetType: 2
 --- !u!114 &5617906812185454356
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1879,6 +1882,7 @@ MonoBehaviour:
   DelayBetweenMonster: 10
   DelayBetweenMaxMonster: 5
   CanSpawn: 0
+  m_TargetType: 2
 --- !u!114 &5617906812390580666
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2102,7 +2106,7 @@ Transform:
   - {fileID: 5617906813268035855}
   - {fileID: 5617906812023599198}
   m_Father: {fileID: 5617906811921278362}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5617906812616130047
 GameObject:
@@ -2212,6 +2216,7 @@ MonoBehaviour:
   DelayBetweenMonster: 10
   DelayBetweenMaxMonster: 5
   CanSpawn: 0
+  m_TargetType: 2
 --- !u!114 &5617906812696895609
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2391,6 +2396,7 @@ MonoBehaviour:
   DelayBetweenMonster: 10
   DelayBetweenMaxMonster: 5
   CanSpawn: 0
+  m_TargetType: 2
 --- !u!114 &5617906812714472035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2578,14 +2584,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b7ed681547b43a0aea476a3b49c96f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Settings: {fileID: 5617906813138625506}
   m_SkyLandMap: SkyArena
   m_SkyLandProps: SkyArena_Props
   m_MobaMap: Moba
   m_LichMap: Tomb
   m_TavernMap: Tavern
-  m_PvpProps: {fileID: 5617906812612293154}
-  m_PveProps: {fileID: 5617906813132712967}
   m_IsLoadDefaultMap: 0
   m_DefaultMap: SkyArena
   OnShow:
@@ -2643,8 +2646,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_NetworkSession: {fileID: 5617906812933837678}
   m_Mode: {fileID: 5617906811902780580}
-  m_LichMode: {fileID: 1360946275106747658}
-  m_Environment: {fileID: 5617906811933229507}
   m_PlayerSpawner: {fileID: 5617906813493985716}
   m_RedTeam: {fileID: 5617906813671758763}
   m_BlueTeam: {fileID: 5617906812608575728}
@@ -2827,6 +2828,7 @@ MonoBehaviour:
   DelayBetweenMonster: 10
   DelayBetweenMaxMonster: 5
   CanSpawn: 0
+  m_TargetType: 2
 --- !u!114 &5617906812915598870
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3466,7 +3468,7 @@ Transform:
   m_Children:
   - {fileID: 5617906812390110443}
   m_Father: {fileID: 5617906811921278362}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5617906813190020354
 GameObject:
@@ -3717,6 +3719,7 @@ MonoBehaviour:
   DelayBetweenMonster: 10
   DelayBetweenMaxMonster: 5
   CanSpawn: 0
+  m_TargetType: 2
 --- !u!114 &5617906813273110222
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4572,6 +4575,7 @@ MonoBehaviour:
   DelayBetweenMonster: 20
   DelayBetweenMaxMonster: 10
   CanSpawn: 0
+  m_TargetType: 2
 --- !u!114 &5617906813706131584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5363,7 +5367,7 @@ Transform:
   m_Children:
   - {fileID: 5617906811985559709}
   m_Father: {fileID: 5617906811921278362}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5617906813976317023
 GameObject:
@@ -7327,86 +7331,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4367362870695974, guid: fc21a7fc71fbfc34cab28782de9e07e8,
     type: 3}
   m_PrefabInstance: {fileID: 5617906813034759826}
-  m_PrefabAsset: {fileID: 0}
---- !u!1001 &5617906813076380814
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 5617906811921278362}
-    m_Modifications:
-    - target: {fileID: -8679921383154817045, guid: 2cbf29d1d9a537b4b84465dc98d834a2,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 2cbf29d1d9a537b4b84465dc98d834a2,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 2cbf29d1d9a537b4b84465dc98d834a2,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 2cbf29d1d9a537b4b84465dc98d834a2,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 2cbf29d1d9a537b4b84465dc98d834a2,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 2cbf29d1d9a537b4b84465dc98d834a2,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 2cbf29d1d9a537b4b84465dc98d834a2,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 2cbf29d1d9a537b4b84465dc98d834a2,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 2cbf29d1d9a537b4b84465dc98d834a2,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: -90
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 2cbf29d1d9a537b4b84465dc98d834a2,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 2cbf29d1d9a537b4b84465dc98d834a2,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: 2cbf29d1d9a537b4b84465dc98d834a2,
-        type: 3}
-      propertyPath: m_Name
-      value: VRMaket30sm
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: 2cbf29d1d9a537b4b84465dc98d834a2,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 2cbf29d1d9a537b4b84465dc98d834a2, type: 3}
---- !u!4 &5367280331350571877 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2cbf29d1d9a537b4b84465dc98d834a2,
-    type: 3}
-  m_PrefabInstance: {fileID: 5617906813076380814}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5617906813081542485
 PrefabInstance:

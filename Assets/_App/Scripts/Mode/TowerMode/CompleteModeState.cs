@@ -31,6 +31,15 @@ namespace MobaVR.ClassicModeStateMachine.Tower
                 }
             }
 
+            if (m_Content.Tower.IsLife)
+            {
+                //TODO: WIN
+            }
+            else
+            {
+                //TODO: LOSE
+            }
+
             if (m_Content.Lich.IsLife)
             {
                 //TODO: WIN

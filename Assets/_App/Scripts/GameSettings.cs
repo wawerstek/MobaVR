@@ -275,6 +275,16 @@ namespace MobaVR
         {
             m_SceneEnvironment.ShowLichMap();
         }
+
+        public void ShowNecropolisMap()
+        {
+            m_SceneEnvironment.ShowNecropolisMap();
+        }
+        
+        public void ShowTowerMap()
+        {
+            m_SceneEnvironment.ShowTowerMap();
+        }
         
         public void ShowDefaultPvPMap()
         {
