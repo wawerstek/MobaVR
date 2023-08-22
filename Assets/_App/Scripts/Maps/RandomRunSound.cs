@@ -4,33 +4,43 @@ using UnityEngine;
 
 public class RandomRunSound : MonoBehaviour
 {
-    public AudioClip[] sounds;
 
+    public AudioClip[] songs;
     private AudioSource audioSource;
+    private int currentSongIndex = 0;
 
-    private void Awake()
+    private void Start()
     {
         audioSource = GetComponent<AudioSource>();
-    }
-
-
-    private void OnEnable()
-    {
-        PlayRandomSound();
-    }
-
-    public void PlayRandomSound()
-    {
-        if (sounds.Length > 0)
+        if (songs.Length > 0)
         {
-            // √енерируем случайный индекс дл€ выбора случайного звука из массива
-            int randomIndex = Random.Range(0, sounds.Length);
-
-            // ¬оспроизводим звук, соответствующий случайному индексу
-            AudioClip soundToPlay = sounds[randomIndex];
-            audioSource.PlayOneShot(soundToPlay);
+            PlayNextSong();
         }
-
     }
 
+    private void PlayNextSong()
+    {
+        // ¬оспроизводим звук из массива по текущему индексу
+        AudioClip soundToPlay = songs[currentSongIndex];
+        audioSource.clip = soundToPlay;
+        audioSource.Play();
+
+        // ќбновл€ем текущий индекс песни дл€ следующего воспроизведени€
+        currentSongIndex++;
+
+        // ≈сли текущий индекс превышает размер массива, сбрасываем его к начальному значению
+        if (currentSongIndex >= songs.Length)
+        {
+            currentSongIndex = 0;
+        }
+    }
+
+    private void Update()
+    {
+        // ѕровер€ем, закончилась ли текуща€ песн€, и запускаем следующую
+        if (!audioSource.isPlaying)
+        {
+            PlayNextSong();
+        }
+    }
 }

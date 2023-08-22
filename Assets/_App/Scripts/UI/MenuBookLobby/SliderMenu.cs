@@ -6,17 +6,22 @@ using UnityEngine.UI;
 
 public class SliderMenu : MonoBehaviour
 {
-    public GameObject descriptionPanel;
-    public Text descriptionText;
 
     public AudioClip hoverSound;
     public AudioClip clickSound;
 
     public Button[] characterButtons;
 
-    public string[] descriptions;
-
     public Vector3[] originalScales;
+
+
+    public GameObject MenuClass;
+    public GameObject MenuName;
+    public GameObject MenuHands;
+    public GameObject MenuGoTir;
+
+    public Text HandsLeftRight;
+   
 
     private void Start()
     {
@@ -52,33 +57,54 @@ public class SliderMenu : MonoBehaviour
     {
         // Воспроизводим звук нажатия
         PlaySound(clickSound);
+    
 
-        // Скрываем все описания персонажей и показываем описание выбранного персонажа
-        for (int i = 0; i < characterButtons.Length; i++)
-        {
-            if (i == buttonIndex)
-            {
-                characterButtons[i].transform.localScale = originalScales[i] * 0.8f;
-                descriptionPanel.SetActive(true);
-                descriptionText.text = GetCharacterDescription(buttonIndex);
-            }
-            else
-            {
-                characterButtons[i].transform.localScale = originalScales[i];
-            }
-        }
     }
 
 
 
     public void NextClick()
     {
-        // Воспроизводим звук нажатия
+        
         PlaySound(clickSound);
-
-      
+        MenuClass.SetActive(false);
+        MenuName.SetActive(true);
+        MenuHands.SetActive(false);
+        MenuGoTir.SetActive(false);
+       
     }
 
+
+    public void NextClickName()
+    {
+        //Тут можно добавить функцию присвоения имени игроку
+        PlaySound(clickSound);
+        MenuClass.SetActive(false);
+        MenuName.SetActive(false);
+        MenuHands.SetActive(true);
+        MenuGoTir.SetActive(false);
+    }
+
+    public void NextClickHands()
+    {
+        
+        PlaySound(clickSound);
+        MenuClass.SetActive(false);
+        MenuName.SetActive(false);
+        MenuHands.SetActive(false);
+        MenuGoTir.SetActive(true);
+    }  
+    
+    
+    public void RessetMenu()
+    {
+        
+        PlaySound(clickSound);
+        MenuClass.SetActive(true);
+        MenuName.SetActive(false);
+        MenuHands.SetActive(false);
+        MenuGoTir.SetActive(false);
+    }
 
     public void Red_team_Click()
     {
@@ -93,27 +119,27 @@ public class SliderMenu : MonoBehaviour
         // Воспроизводим звук нажатия
         PlaySound(clickSound);
 
-
     }
 
 
-
-    private string GetCharacterDescription(int buttonIndex)
+    public void LeftHands()
     {
-        // Возвращает описание персонажа по индексу кнопки (здесь может быть ваша логика описания)
-       //descriptions[] = {
-       //     "Рыцарь: сильный и храбрый воин.",
-       //     "Друид: мудрый и могущественный заклинатель.",
-       //     "Бог огня: сущность огня и страсти."
-       // };
 
-        if (buttonIndex >= 0 && buttonIndex < descriptions.Length)
-        {
-            return descriptions[buttonIndex];
-        }
+        PlaySound(clickSound);
+        HandsLeftRight.text = "Ты Левша";
 
-        return "Описание персонажа недоступно.";
+    }   
+    
+    public void RightHands()
+    {
+
+        PlaySound(clickSound);
+        HandsLeftRight.text = "Ты Правша";
+
     }
+
+
+
 
     private void PlaySound(AudioClip sound)
     {

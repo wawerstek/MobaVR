@@ -9,17 +9,18 @@ public class MenuBookLobby : MonoBehaviour
     public Text outputText;
     public TextData[] textElements;
     public ZonaBook zonaBook;
-    public AudioClip clickSound;
+    public SaveInfoClass _SaveInfoClass;
+
+    public GameObject VideoKurok;
+
 
     public void OnButtonClick(string buttonId)
     {
+        VideoKurok.SetActive(false);
         foreach (TextData textData in textElements)
         {
             if (textData.id == buttonId)
             {
-                // Воспроизводим звук нажатия
-                PlaySound(clickSound);
-
 
                 titleText.text = textData.title; // заголовок
                 outputText.text = textData.text; // Текст
@@ -27,18 +28,10 @@ public class MenuBookLobby : MonoBehaviour
                 //отправляем значение ИД персонажа в скрипт, который визуально меняет его скин на книге
                 zonaBook.targetID = textData.id;
                 zonaBook.UpdateTargetID(textData.id);
+                //сохраняем данные о выбранном классе игрока
+                _SaveInfoClass.targetID = textData.id;
                 break;
             }
-        }
-    }
-
-
-    private void PlaySound(AudioClip sound)
-    {
-        // Воспроизведение звука
-        if (sound != null)
-        {
-            AudioSource.PlayClipAtPoint(sound, Camera.main.transform.position);
         }
     }
 
@@ -51,5 +44,6 @@ public class TextData
 {
     public string id;
     public string title;
+    [TextArea(10, 10)]
     public string text;
 }
