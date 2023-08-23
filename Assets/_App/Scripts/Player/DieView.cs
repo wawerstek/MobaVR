@@ -57,10 +57,10 @@ public class DieView : MonoBehaviour
     {
         if (sounds.Length > 0)
         {
-            // Генерируем случайный индекс для выбора случайного звука из массива
+            // ���������� ��������� ������ ��� ������ ���������� ����� �� �������
             int randomIndex = Random.Range(0, sounds.Length);
 
-            // Воспроизводим звук, соответствующий случайному индексу
+            // ������������� ����, ��������������� ���������� �������
             AudioClip soundToPlay = sounds[randomIndex];
             audioSource.PlayOneShot(soundToPlay);
         }

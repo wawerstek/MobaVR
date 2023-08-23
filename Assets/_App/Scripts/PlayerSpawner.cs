@@ -7,11 +7,12 @@ namespace MobaVR
     {
         [SerializeField] private InputVR m_InputVR;
         [SerializeField] private PlayerVR m_PlayerPrefab;
+        public GameObject localPlayer;
 
         public override PlayerVR SpawnPlayer(Team team)
         {
             string prefabName = $"Players/{m_PlayerPrefab.name}";
-            GameObject localPlayer = PhotonNetwork.Instantiate(prefabName, Vector3.zero, Quaternion.identity);
+            localPlayer = PhotonNetwork.Instantiate(prefabName, Vector3.zero, Quaternion.identity);
 
             localPlayer.name += "_" + Random.Range(1, 1000);
 
