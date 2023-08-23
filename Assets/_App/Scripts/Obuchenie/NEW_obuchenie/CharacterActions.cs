@@ -173,13 +173,7 @@ public class CharacterActions : MonoBehaviour
                 
                 // Воспроизводим главный звук и анимацию задания.
                 PlaySoundAndAnimation(step.mainTaskSound, step.mainTaskAnimation);
-                
-                /*// Если есть звук, ждем его завершения.
-                if (step.mainTaskSound)
-                {
-                    yield return new WaitForSeconds(step.mainTaskSound.length);
-                    step.mainTaskSoundRun = true;//говорим, что звук основной проигрался
-                }*/
+
                 
                 if (step.mainTaskSound)
                 {
@@ -191,7 +185,7 @@ public class CharacterActions : MonoBehaviour
                         yield return new WaitUntil(() => continueTutorial);
                     }
     
-                    hasPlayedMainTaskSound = true;
+                   
                 }
 
                 
@@ -226,6 +220,14 @@ public class CharacterActions : MonoBehaviour
                 {
                     // Ждем установленное время.
                     yield return new WaitForSeconds(waitingTime);
+                    // Если есть условие для прерывания ожидания, выполнить прерывание.
+                    if (playerApproached)
+                    {
+                        playerApproached = false; // Игрок далеко
+                        yield return null; // Сразу завершить текущую итерацию корутины
+                        continue; // Пропустить остальной код и начать следующую итерацию цикла
+                    }
+                    
 
                     int randomSoundIndex = GetRandomSoundIndex(step.waitingForTaskCompletionSounds.Length);
 
