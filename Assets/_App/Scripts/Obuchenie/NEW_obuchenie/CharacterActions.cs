@@ -18,7 +18,8 @@ public class CharacterActions : MonoBehaviour
     public AudioSource audioSource;
     private Animator animator;
     private float waitingTimeStart = 1.0f;
-
+    private bool playerApproached = false;//проверяем дошёл ли игрок до персонажа
+    
     // Массив шагов обучения.
     public TutorialStep[] tutorialSteps;
 
@@ -41,6 +42,7 @@ public class CharacterActions : MonoBehaviour
     [System.Serializable]
     public class TutorialStep
     {
+        public int NomerUroka;
         public string description; // Описание шага.
         public AudioClip startSound; // Звук при старте шага.
         public string startAnimation; // Анимация при старте шага.
@@ -72,9 +74,19 @@ public class CharacterActions : MonoBehaviour
     // Метод вызывается при активации объекта.
     void OnEnable()
     {
+        //сохраняем данные
+        SaveTutorialStepsData();
         // Запускаем обучение.
         StartTutorial();
     }
+   
+    void OnDisable()
+    {
+        currentStepIndex = 0;
+        LoadTutorialStepsData();
+       
+    }
+    
 
     // Метод запуска обучения.
     public void StartTutorial()
@@ -157,6 +169,7 @@ public class CharacterActions : MonoBehaviour
             if (Vector3.Distance(transform.position, playerTransform.position) <= maxDistanceToPlayer && !hasPlayedMainTaskSound && !audioSource.isPlaying)
             {
                 step.layerGoPersRun = true;//игрок дошёл до персонажа
+                playerApproached = true; // Игрок подошёл
                 
                 // Воспроизводим главный звук и анимацию задания.
                 PlaySoundAndAnimation(step.mainTaskSound, step.mainTaskAnimation);
@@ -185,11 +198,22 @@ public class CharacterActions : MonoBehaviour
                
                 hasPlayedMainTaskSound = true;
             }
+            
             // Если игрок далеко и есть звуки ожидания игрока.
             else if(Vector3.Distance(transform.position, playerTransform.position) > maxDistanceToPlayer && step.waitingForPlayerSounds.Length > 0 && !hasPlayedMainTaskSound)
             {
+                
                 // Ждем установленное время.
                 yield return new WaitForSeconds(waitingTime);
+                // Если есть условие для прерывания ожидания, выполнить прерывание.
+                if (playerApproached)
+                {
+                    playerApproached = false; // Игрок далеко
+                    yield return null; // Сразу завершить текущую итерацию корутины
+                    continue; // Пропустить остальной код и начать следующую итерацию цикла
+                }
+                
+                
                 int randomSoundIndex = GetRandomSoundIndex(step.waitingForPlayerSounds.Length);
                 int randomAnimationIndex = GetRandomAnimationIndex(step.waitingForPlayerAnimations.Length);
 
@@ -360,5 +384,32 @@ public class CharacterActions : MonoBehaviour
     {
         continueTutorial = true;
     }
+    
+    //методы сохранения изначальных значений переменных
+    public void SaveTutorialStepsData()
+    {
+        for (int i = 0; i < tutorialSteps.Length; i++)
+        {
+            PlayerPrefs.SetInt($"TutorialStep_{i}_startSoundRun", tutorialSteps[i].startSoundRun ? 1 : 0);
+            PlayerPrefs.SetInt($"TutorialStep_{i}_targetPointRun", tutorialSteps[i].targetPointRun ? 1 : 0);
+            PlayerPrefs.SetInt($"TutorialStep_{i}_layerGoPersRun", tutorialSteps[i].layerGoPersRun ? 1 : 0);
+            PlayerPrefs.SetInt($"TutorialStep_{i}_mainTaskSoundRun", tutorialSteps[i].mainTaskSoundRun ? 1 : 0);
+            PlayerPrefs.SetInt($"TutorialStep_{i}_isTaskCompleted", tutorialSteps[i].isTaskCompleted ? 1 : 0);
+        }
+        PlayerPrefs.Save();
+    }
+
+    public void LoadTutorialStepsData()
+    {
+        for (int i = 0; i < tutorialSteps.Length; i++)
+        {
+            tutorialSteps[i].startSoundRun = PlayerPrefs.GetInt($"TutorialStep_{i}_startSoundRun", 0) == 1;
+            tutorialSteps[i].targetPointRun = PlayerPrefs.GetInt($"TutorialStep_{i}_targetPointRun", 0) == 1;
+            tutorialSteps[i].layerGoPersRun = PlayerPrefs.GetInt($"TutorialStep_{i}_layerGoPersRun", 0) == 1;
+            tutorialSteps[i].mainTaskSoundRun = PlayerPrefs.GetInt($"TutorialStep_{i}_mainTaskSoundRun", 0) == 1;
+            tutorialSteps[i].isTaskCompleted = PlayerPrefs.GetInt($"TutorialStep_{i}_isTaskCompleted", 0) == 1;
+        }
+    }
+    
     
 }

@@ -11,11 +11,11 @@ public class Wizard_obuchenie : MonoBehaviour
         public AudioClip SoundTutorial;
         public string animTutorial;
         public ControllerBinding Button = ControllerBinding.LeftGrip;
-        public bool test;
+        public bool test = false;
         public bool autoStop;
         [HideInInspector] public bool isPlaying;
     }
-
+	public int NomerUroka;
     public SaveInfoClass _SaveInfoClass;// получаем класс ирока
     public string ID;//вводим класс игрока, который будем сравнивать с полученным
     private CharacterActions characterActions; // Ссылка на ваш скрипт CharacterActions
@@ -24,12 +24,11 @@ public class Wizard_obuchenie : MonoBehaviour
     private int currentLesson = 0;
     private bool RunUrok0;
     private bool timerStarted = false;
-    private float timerDuration = 4f;
+    private float timerDuration = 2f;
     
     private void Start()
     {
         RunUrok0=false;
-
         characterActions = GetComponent<CharacterActions>();
         audioSource = GetComponent<AudioSource>(); // Получаем компонент аудиосоурс
         // Отключаем все баннеры уроков в начале
@@ -38,13 +37,24 @@ public class Wizard_obuchenie : MonoBehaviour
             lesson.BannerTutorial.SetActive(false);
         }
     }
+    
+    void OnEnable()
+    {
+        currentLesson = 0;
+        RunUrok0=false;
+        foreach (var lesson in lessons)
+        {
+            lesson.BannerTutorial.SetActive(false);
+        }
+
+    }
 
     private void Update()
     {
 
         if (ID == _SaveInfoClass.targetID)
         {
-            if (characterActions && characterActions.tutorialSteps[2].mainTaskSoundRun && !RunUrok0)
+            if (characterActions && characterActions.tutorialSteps[NomerUroka].mainTaskSoundRun && !RunUrok0)
                     {
                         if (currentLesson < lessons.Length && !lessons[currentLesson].isPlaying)
                         {
@@ -62,13 +72,13 @@ public class Wizard_obuchenie : MonoBehaviour
                             if (currentLessonObj.autoStop)
                             {
                                
-                                Debug.Log("Запускаем звук");
+                               // Debug.Log("Запускаем звук");
                                 StartCoroutine(StartEndLessonAuto());
                             }
                             else if (!timerStarted)
                             {
                                 timerStarted = true;
-                                Debug.Log("Запускаем ожидание");
+                               // Debug.Log("Запускаем ожидание");
                                 StartCoroutine(StartEndLessonTimer());
                             }
                         }
@@ -87,17 +97,17 @@ public class Wizard_obuchenie : MonoBehaviour
         Lesson lesson = lessons[lessonIndex];
         lesson.isPlaying = true;
         
-        Debug.Log("Включаем баннер");
+       // Debug.Log("Включаем баннер");
         lesson.BannerTutorial.SetActive(true);
         
-        Debug.Log("Запускаем аниматор");
+       // Debug.Log("Запускаем аниматор");
         Animator anim = this.gameObject.GetComponent<Animator>();
         if (anim != null)
         {
             anim.SetBool(lesson.animTutorial, true);
         }
 
-        Debug.Log("Включаем звук");
+       // Debug.Log("Включаем звук");
         PlaySound(lesson.SoundTutorial);
     }
 
@@ -108,7 +118,7 @@ public class Wizard_obuchenie : MonoBehaviour
            
             audioSource.clip = soundClip;
             audioSource.Play();
-            Debug.Log("Звук включен");
+           // Debug.Log("Звук включен");
         }
     }
 
@@ -142,7 +152,8 @@ public class Wizard_obuchenie : MonoBehaviour
         else
         {
             // Уроки закончились, вызываем завершающую функцию
-            Debug.Log("Уроки кончились");
+          // Debug.Log("Уроки кончились");
+
             characterActions.OnTutorialsCompleted();
         }
     }
@@ -150,7 +161,7 @@ public class Wizard_obuchenie : MonoBehaviour
     private IEnumerator StartEndLessonTimer()
     {
         yield return new WaitForSeconds(timerDuration);
-        Debug.Log("4 секунды прошло");
+       // Debug.Log("4 секунды прошло");
         // Здесь можно запустить EndLesson()
         EndLesson();
     }    
