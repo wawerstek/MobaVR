@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using BNG;
 using Sirenix.OdinInspector;
-using Unity.XR.PXR;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,7 +11,7 @@ namespace MobaVR
 {
     public class PickupSpellBehaviour : SpellBehaviour
     {
-        [SerializeField] private HandType m_HandType;
+        [SerializeField] protected SpellHandType m_HandType = SpellHandType.RIGHT_HAND;
         [SerializeField] [ReadOnly] private bool m_IsTriggered = false;
         [SerializeField] [ReadOnly] private bool m_IsPickuped = false;
 
@@ -30,10 +29,10 @@ namespace MobaVR
             base.Init(spellHandler, playerVR);
             switch (m_HandType)
             {
-                case HandType.HandLeft:
+                case SpellHandType.LEFT_HAND:
                     m_HandInputVR = playerVR.InputVR.LefHandInputVR;
                     break;
-                case HandType.HandRight:
+                case SpellHandType.RIGHT_HAND:
                     m_HandInputVR = playerVR.InputVR.RightHandInputVR;
                     break;
             }
