@@ -25,6 +25,8 @@ namespace MobaVR
         [SerializeField] protected DamageNumberView m_DamageNumber;
         [SerializeField] protected MonsterWeapon m_Weapon;
         [SerializeField] protected Treasure m_Treasure;
+        //[SerializeField] protected Material m_Material;
+        [SerializeField] protected List<Material> m_UniqMaterials;
 
         [Header("Targets")]
         [SerializeField] protected TargetType m_TargetType = TargetType.PLAYER;
@@ -89,6 +91,7 @@ namespace MobaVR
         private List<Rigidbody> m_ChildRigidbodies = new();
         private List<Collider> m_ChildColliders = new();
         private List<Renderer> m_MeshRenderers = new();
+        private List<Material> m_CopyUniqMaterials = new();
 
         #endregion
 
@@ -171,6 +174,22 @@ namespace MobaVR
             {
                 TryGetComponent(out m_NavMeshObstacle);
             }
+
+            /*
+            if (m_Material == null)
+            {
+                Renderer meshRenderer = GetComponentInChildren<Renderer>();
+                if (meshRenderer != null)
+                {
+                    m_Material = meshRenderer.material;
+                }
+            }
+            */
+
+            if (m_UniqMaterials != null && m_UniqMaterials.Count == 0)
+            {
+                InitUniqMaterials();
+            }
         }
 
         //TODO
@@ -206,7 +225,7 @@ namespace MobaVR
             }
             */
 
-            m_MeshRenderers.AddRange(GetComponentsInChildren<Renderer>());
+            InitRenderer();
 
             ToggleRagDolls(false);
             Appear();
@@ -834,6 +853,59 @@ namespace MobaVR
             m_Treasure.Generate(transform.position);
         }
 
+        protected void InitUniqMaterials()
+        {
+            List<Renderer> meshRenderers = new();
+            meshRenderers.AddRange(GetComponentsInChildren<Renderer>());
+            
+            foreach (Renderer meshRenderer in meshRenderers)
+            {
+                if (!m_UniqMaterials.Contains(meshRenderer.sharedMaterial))
+                {
+                    m_UniqMaterials.Add(meshRenderer.sharedMaterial);
+                }
+            }
+
+        }
+        
+        protected virtual void InitRenderer()
+        {
+            foreach (Material uniqMaterial in m_UniqMaterials)
+            {
+                m_CopyUniqMaterials.Add(new Material(uniqMaterial));
+            }
+            
+            m_MeshRenderers.AddRange(GetComponentsInChildren<Renderer>());
+            foreach (Renderer meshRenderer in m_MeshRenderers)
+            {
+                foreach (Material uniqMaterial in m_CopyUniqMaterials)
+                {
+                    if (meshRenderer.sharedMaterial.name.Equals(uniqMaterial.name))
+                    {
+                        meshRenderer.sharedMaterial = uniqMaterial;
+                        break;
+                    }
+                }
+            }
+            
+            /*
+            foreach (Renderer meshRenderer in m_MeshRenderers)
+            {
+                if (!m_UniqMaterials.Contains(meshRenderer.material))
+                {
+                    m_UniqMaterials.Add(meshRenderer.sharedMaterial);
+                }
+            }
+            */
+            
+            /*
+            foreach (Renderer meshRenderer in m_MeshRenderers)
+            {
+                meshRenderer.material = m_Material;
+            }
+            */
+        }
+
         protected virtual void Dissolve()
         {
             float clip = 0f;
@@ -841,10 +913,20 @@ namespace MobaVR
                 .To(() => clip, x => clip = x, 1f, 2f)
                 .OnUpdate(() =>
                 {
+                    //Dissolve(m_Material, clip);
+                    
+                    //foreach (Material material in m_UniqMaterials)
+                    foreach (Material material in m_CopyUniqMaterials)
+                    {
+                        Dissolve(material, clip);
+                    }
+                    
+                    /*
                     foreach (Renderer meshRenderer in m_MeshRenderers)
                     {
                         Dissolve(meshRenderer.material, clip);
                     }
+                    */
                 })
                 .OnComplete(() =>
                 {
@@ -862,19 +944,34 @@ namespace MobaVR
         protected virtual void Appear()
         {
             float clip = 1f;
+            //Dissolve(m_Material, 1f);
+            //foreach (Material material in m_UniqMaterials)
+            foreach (Material material in m_CopyUniqMaterials)
+            {
+                Dissolve(material, 1f);
+            }
+            /*
             foreach (Renderer meshRenderer in m_MeshRenderers)
             {
                 Dissolve(meshRenderer.material, 1f);
             }
+            */
 
             DOTween
                 .To(() => clip, x => clip = x, 0f, 2f)
                 .OnUpdate(() =>
                 {
+                    //foreach (Material material in m_UniqMaterials)
+                    foreach (Material material in m_CopyUniqMaterials)
+                    {
+                        Dissolve(material, clip);
+                    }
+                    /*
                     foreach (Renderer meshRenderer in m_MeshRenderers)
                     {
                         Dissolve(meshRenderer.material, clip);
                     }
+                    */
                 })
                 .OnComplete(() => { });
         }

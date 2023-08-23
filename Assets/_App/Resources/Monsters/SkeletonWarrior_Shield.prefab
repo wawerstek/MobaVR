@@ -113,7 +113,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1386611186005896051
 Transform:
   m_ObjectHideFlags: 0
@@ -188,6 +188,26 @@ PrefabInstance:
       propertyPath: m_Weapon
       value: 
       objectReference: {fileID: 7216569326132718186}
+    - target: {fileID: 4962086018193584251, guid: 82784b70eeacef0499d2000760171a3a,
+        type: 3}
+      propertyPath: m_UniqMaterials.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4962086018193584251, guid: 82784b70eeacef0499d2000760171a3a,
+        type: 3}
+      propertyPath: m_UniqMaterials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 1d3c46be9c361a746a8496292a3cc8bb, type: 2}
+    - target: {fileID: 4962086018193584251, guid: 82784b70eeacef0499d2000760171a3a,
+        type: 3}
+      propertyPath: m_UniqMaterials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6801cfb0c5f82e247a0528c8421da003, type: 2}
+    - target: {fileID: 4962086018193584251, guid: 82784b70eeacef0499d2000760171a3a,
+        type: 3}
+      propertyPath: m_UniqMaterials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: bd6a4741ce9c9c7408245b658bcbf08e, type: 2}
     - target: {fileID: 7281922349307548726, guid: 82784b70eeacef0499d2000760171a3a,
         type: 3}
       propertyPath: m_UseRandomMeshes
