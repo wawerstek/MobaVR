@@ -4226,7 +4226,9 @@ MonoBehaviour:
   m_DamageNumber: {fileID: 5808846143826990040}
   m_Weapon: {fileID: 2333121884592881251}
   m_Treasure: {fileID: 3852093359664299019}
-  m_Material: {fileID: 2100000, guid: bd6a4741ce9c9c7408245b658bcbf08e, type: 2}
+  m_UniqMaterials:
+  - {fileID: 2100000, guid: 6801cfb0c5f82e247a0528c8421da003, type: 2}
+  - {fileID: 2100000, guid: bd6a4741ce9c9c7408245b658bcbf08e, type: 2}
   m_TargetType: 2
   m_Wizard: {fileID: 0}
   m_Tower: {fileID: 0}
@@ -4244,7 +4246,7 @@ MonoBehaviour:
   m_CurrentForwardSpeed: 0
   m_AttackRange: 3
   m_AttackCooldown: 0.5
-  m_KForce: 0.8
+  m_KForce: 0.4
   m_DestroyTime: 5
 --- !u!114 &7281922349307548726
 MonoBehaviour:

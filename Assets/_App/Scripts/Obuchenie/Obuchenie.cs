@@ -31,26 +31,30 @@ public class Obuchenie : MonoBehaviour
             if (InputBridge.Instance.GetControllerBindingValue(Button_Obuch) || Test)
             {
 
-                //��� �� ������������� ����
-
-                //������� ��������
-               
-
-                // ������� ������ � ������ "CenterEyeAnchor" � ����������� ��� ���������� Player
-                Player = GameObject.Find("CenterEyeAnchor");
-
-                // ���� ������ ������, ������ Point �������� �������� ��� Player
-                if (Player != null)
-                {
-                    RessetPlayerPoint();
-                }
-                
-                Personag.SetActive(true);
-                ObuchenieRun = true;
-
+               RunTutorial();
             }
         }
 
+    }
+    
+    [ContextMenu("RunTutorial")]
+    public void RunTutorial(){
+              //��� �� ������������� ����
+    
+                    //������� ��������
+                   
+    
+                    // ������� ������ � ������ "CenterEyeAnchor" � ����������� ��� ���������� Player
+                    Player = GameObject.Find("CenterEyeAnchor");
+    
+                    // ���� ������ ������, ������ Point �������� �������� ��� Player
+                    if (Player != null)
+                    {
+                        RessetPlayerPoint();
+                    }
+                    
+                    Personag.SetActive(true);
+                    ObuchenieRun = true;
     }
 
 

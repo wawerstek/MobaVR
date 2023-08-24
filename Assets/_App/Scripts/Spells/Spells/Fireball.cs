@@ -41,6 +41,7 @@ namespace MobaVR
 
         [Space]
         [Header("Destroy Time")]
+        [SerializeField] private float m_DestroyProjectile = 1.0f;
         [SerializeField] private float m_DestroyExplosion = 4.0f;
         [SerializeField] private float m_DestroyChildren = 2.0f;
 
@@ -179,6 +180,10 @@ namespace MobaVR
             }
             
             Destroy(m_Ball.gameObject);
+
+            m_ProjectileFx.transform.parent = null;
+            Destroy(m_ProjectileFx, m_DestroyProjectile);
+            
             m_ExplosionFx.SetActive(true);
             m_ExplosionFx.transform.parent = null;
 
