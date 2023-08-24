@@ -37,9 +37,27 @@ public class Urok_03 : MonoBehaviour
 
     private void Start()
     {
-        if (spawnerReference.localPlayer != null)
+        //if (spawnerReference.localPlayer != null)
         {
-            PlayerVR playerScript = spawnerReference.localPlayer.GetComponent<PlayerVR>();
+            PlayerVR playerScript = null;
+
+            
+            PlayerVR[] players = FindObjectsOfType<PlayerVR>();
+            foreach (PlayerVR playerVR in players)
+            {
+                if (playerVR.photonView.IsMine)
+                {
+                    playerScript = playerVR;
+                    break;
+                }
+            }
+
+            if (playerScript == null)
+            {
+                playerScript = spawnerReference.localPlayer.GetComponent<PlayerVR>();
+            }
+            
+            
             if (playerScript != null)
             {
                 if (playerScript.TeamType == TeamType.RED)

@@ -152,13 +152,16 @@ public class CharacterActions : MonoBehaviour
             if (audioSource.isPlaying)
             {
                 yield return new WaitWhile(() => audioSource.isPlaying);
-                    //говорим, что первый урок пройден
-                if (currentStepIndex == 0)
-                {
-                    step.isTaskCompleted = true;
-                }
+          
             }
 
+            
+            //говорим, что первый урок пройден
+            if (currentStepIndex == 0)
+            {
+                step.isTaskCompleted = true;
+            }
+            
             // Ждем установленное время. 1 сек
             yield return new WaitForSeconds(waitingTimeStart);
             

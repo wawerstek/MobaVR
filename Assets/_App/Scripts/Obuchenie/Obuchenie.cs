@@ -26,19 +26,33 @@ public class Obuchenie : MonoBehaviour
     {
         if (ObuchenieRun == false)
         {
-
             //���� ������ �� ������
             if (InputBridge.Instance.GetControllerBindingValue(Button_Obuch) || Test)
             {
-
                RunTutorial();
+               return;
             }
         }
 
+        if (ObuchenieRun == true)
+        {
+            if (InputBridge.Instance.GetControllerBindingValue(Button_Obuch))
+            {
+                StopTutorial();
+            }
+        }
+    }
+
+    [ContextMenu("StopTutorial")]
+    public void StopTutorial()
+    {
+            ObuchenieRun = false;
+            Personag.SetActive(false);
     }
     
     [ContextMenu("RunTutorial")]
     public void RunTutorial(){
+        
               //��� �� ������������� ����
     
                     //������� ��������

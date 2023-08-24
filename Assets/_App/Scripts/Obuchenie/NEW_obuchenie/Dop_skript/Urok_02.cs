@@ -24,9 +24,25 @@ public class Urok_02 : MonoBehaviour
     private void Start()
     {
         //poluchaem komandu.
-        if (spawnerReference.localPlayer != null)
+        //if (spawnerReference.localPlayer != null)
+        PlayerVR playerScript = null;
+        
         {
-            PlayerVR playerScript = spawnerReference.localPlayer.GetComponent<PlayerVR>();
+            PlayerVR[] players = FindObjectsOfType<PlayerVR>();
+            foreach (PlayerVR playerVR in players)
+            {
+                if (playerVR.photonView.IsMine)
+                {
+                    playerScript = playerVR;
+                    break;
+                }
+            }
+
+            if (playerScript == null)
+            {
+                playerScript = spawnerReference.localPlayer.GetComponent<PlayerVR>();
+            }
+
             if (playerScript != null)
             {
                 //team = playerScript.m_Teammate;
