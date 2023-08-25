@@ -5,7 +5,7 @@ namespace MobaVR.Content
 {
     public class TowerModeContent : MonoBehaviour
     {
-        [SerializeField] private BaseModeView m_ModeView;
+        [SerializeField] private TowerModeView m_ModeView;
 
         [Header("Tower")]
         [SerializeField] private List<Trap> m_Traps = new List<Trap>();
@@ -19,7 +19,7 @@ namespace MobaVR.Content
         private bool m_IsVictory = true;
         private int m_CurrentWave = 0;
 
-        public BaseModeView ModeView => m_ModeView;
+        public TowerModeView ModeView => m_ModeView;
         public List<MonsterPointSpawner> Spawners => m_Spawners;
         public List<Trap> Traps => m_Traps;
         public Lich Lich => m_Lich;
