@@ -47,7 +47,7 @@ namespace MobaVR.ClassicModeStateMachine.Tower
 
         private void OnPlayerDie()
         {
-            if (m_IsPlay)
+            if (!m_IsPlay)
             {
                 return;
             }

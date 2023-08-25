@@ -30,6 +30,15 @@ namespace MobaVR.ClassicModeStateMachine.Tower
             {
                 trap.enabled = false;
             }
+            
+            m_Content.ModeView.BlueTeamScoreView.Hide();
+            m_Content.ModeView.BlueTeamKillScoreView.Hide();
+            m_Content.ModeView.RedTeamScoreView.Hide();
+            m_Content.ModeView.RedTeamKillScoreView.Hide();
+            m_Content.ModeView.RoundTimeView.Hide();
+            m_Content.ModeView.PreRoundTimeView.Hide();
+            m_Content.ModeView.VictoryView.Hide();
+            m_Content.ModeView.LoseView.Hide();
 
             m_Content.CurrentWave = 0;
         }

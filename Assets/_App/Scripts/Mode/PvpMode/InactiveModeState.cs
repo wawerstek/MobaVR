@@ -22,6 +22,7 @@ namespace MobaVR.ClassicModeStateMachine.PVP
             m_Content.ModeView.RoundTimeView.Hide();
             m_Content.ModeView.PreRoundTimeView.Hide();
             m_Content.ModeView.VictoryView.Hide();
+            //m_Content.ModeView.LoseView.Hide();
             m_Content.ZoneManager.Hide();
         }
 

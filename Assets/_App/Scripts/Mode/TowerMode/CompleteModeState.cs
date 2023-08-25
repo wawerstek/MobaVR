@@ -33,11 +33,11 @@ namespace MobaVR.ClassicModeStateMachine.Tower
 
             if (m_Content.IsVictory)
             {
-                //TODO: Lose
+                m_Content.ModeView.VictoryView.Show();
             }
             else
             {
-                //TODO: Win
+                m_Content.ModeView.LoseView.Show();
             }
         }
 
