@@ -24,29 +24,20 @@ namespace MobaVR.ClassicModeStateMachine.Tower
                 {
                     m_Content.Lich.Deactivate();
                 }
-                
+
                 foreach (MonsterPointSpawner pointSpawner in m_Content.Spawners)
                 {
                     pointSpawner.ClearMonsters();
                 }
             }
 
-            if (m_Content.Tower.IsLife)
+            if (m_Content.IsVictory)
             {
-                //TODO: WIN
+                //TODO: Lose
             }
             else
             {
-                //TODO: LOSE
-            }
-
-            if (m_Content.Lich.IsLife)
-            {
-                //TODO: WIN
-            }
-            else
-            {
-                //TODO: LOSE
+                //TODO: Win
             }
         }
 

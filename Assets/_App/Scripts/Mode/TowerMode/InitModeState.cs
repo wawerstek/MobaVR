@@ -30,6 +30,8 @@ namespace MobaVR.ClassicModeStateMachine.Tower
             {
                 trap.enabled = false;
             }
+
+            m_Content.CurrentWave = 0;
         }
 
         public override void Update()

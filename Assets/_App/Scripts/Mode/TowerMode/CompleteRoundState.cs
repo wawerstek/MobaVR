@@ -12,17 +12,26 @@ namespace MobaVR.ClassicModeStateMachine.Tower
         {
             if (PhotonNetwork.IsMasterClient)
             {
-                if (m_Content.Lich.IsLife)
-                {
-                    m_Content.Lich.Deactivate();
-                }
-                
                 foreach (MonsterPointSpawner pointSpawner in m_Content.Spawners)
                 {
                     pointSpawner.ClearMonsters();
                 }
                 
-                m_Mode.CompleteMode();
+                if (!m_Content.IsVictory)
+                {
+                    m_Mode.CompleteMode();
+                    return;
+                }
+                
+                m_Content.CurrentWave++;
+                if (m_Content.CurrentWave < m_Content.Waves.Count)
+                {
+                    m_Mode.ReadyRound();
+                }
+                else
+                {
+                    m_Mode.CompleteMode();
+                }
             }
         }
 

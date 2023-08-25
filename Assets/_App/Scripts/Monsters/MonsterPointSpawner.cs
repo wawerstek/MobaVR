@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
+using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
 namespace MobaVR
@@ -13,13 +14,21 @@ namespace MobaVR
         [SerializeField] private List<Monster> m_MonsterPrefabs = new List<Monster>();
         [SerializeField] private List<string> m_MonsterPaths = new List<string>();
         [SerializeField] private ParticleSystem m_CreatedEffect;
+        [SerializeField] protected TargetType m_TargetType = TargetType.PLAYER;
 
+        public int MaxTotalCountMonster = -1;
         public int MaxCountMonster = -1;
         public float DelayBetweenMonster = 10f;
         public float DelayBetweenMaxMonster = 4f;
         public bool CanSpawn = false;
 
-        [SerializeField] protected TargetType m_TargetType = TargetType.PLAYER;
+        private int m_CurrentTotalCount = 0;
+
+        public Action<Monster> OnMonsterInit;  
+        public Action<Monster> OnMonsterDie;
+        public Action OnCountLimit;
+        public Action OnTotalLimit;
+        public Action<bool> OnStateChange;
         
         public TargetType TargetType
         {
@@ -30,6 +39,7 @@ namespace MobaVR
         private void Start()
         {
             //RpcGenerateMonsters();
+            m_CurrentTotalCount = 0;
         }
 
         public void GenerateMonsters()
@@ -62,6 +72,8 @@ namespace MobaVR
         //public void ClearMonsters(bool isDie = false)
         public void ClearMonsters(bool isDie = true)
         {
+            m_CurrentTotalCount = 0;
+            
             if (!gameObject.activeSelf)
             {
                 return;
@@ -82,7 +94,8 @@ namespace MobaVR
             {
                 return;
             }
-            
+
+            m_CurrentTotalCount = 0;
             CanSpawn = false;
 
             StopAllCoroutines();
@@ -128,6 +141,28 @@ namespace MobaVR
 
         public bool TryGenerateMonster()
         {
+            /*
+            if (MaxCountMonster == -1 || MaxTotalCountMonster == -1)
+            {
+                SpawnMonster();
+                return true;
+            }
+            */
+
+            if (MaxTotalCountMonster != -1 && m_CurrentTotalCount >= MaxTotalCountMonster)
+            {
+                return false;
+            }
+
+            if (MaxCountMonster != -1 && MonsterControllers.Count >= MaxCountMonster)
+            {
+                return false;
+            }
+            
+            SpawnMonster();
+            return true;
+            
+            /*
             if (MaxCountMonster == -1 || MonsterControllers.Count < MaxCountMonster)
             {
                 SpawnMonster();
@@ -137,6 +172,7 @@ namespace MobaVR
             {
                 return false;
             }
+            */
         }
 
         private IEnumerator GenerateMonsterWave(float delayBetweenMonster)
@@ -181,6 +217,8 @@ namespace MobaVR
                 return;
             }
 
+            m_CurrentTotalCount++;
+            
             int randomMonster = Random.Range(0, m_MonsterPrefabs.Count);
             //Monster monsterController = Instantiate(m_MonsterPrefabs[randomMonster], transform) as Monster;
             GameObject monsterGameObject =
@@ -190,9 +228,14 @@ namespace MobaVR
             Monster monster = monsterGameObject.GetComponent<Monster>();
             monster.TargetType = m_TargetType;
             //monster.transform.localPosition = Vector3.zero;
-            monster.OnInit = () => { monster.Activate(); };
+            monster.OnInit = () =>
+            {
+                OnMonsterInit?.Invoke(monster);
+                monster.Activate();
+            };
             monster.OnDeath = () =>
             {
+                OnMonsterDie?.Invoke(monster);
                 MonsterControllers.Remove(monster);
                 //GenerateMonster();
 
