@@ -46,6 +46,18 @@ namespace MobaVR
             }
         }
 
+        private void OnEnable()
+        {
+            m_PlayerVR.WizardPlayer.OnDie += OnDie;
+            m_PlayerVR.WizardPlayer.OnReborn += OnReborn;
+        }
+
+        private void OnDisable()
+        {
+            m_PlayerVR.WizardPlayer.OnDie -= OnDie;
+            m_PlayerVR.WizardPlayer.OnReborn -= OnReborn;
+        }
+
         private void Awake()
         {
             Clear();
@@ -247,7 +259,9 @@ namespace MobaVR
         {
             if (m_AliveActiveSkin != null)
             {
-                m_AliveActiveSkin.DeactivateSkin();
+                //TODO:
+                //m_AliveActiveSkin.DeactivateSkin();
+                m_AliveActiveSkin.SetDieSkin();
             }
 
             if (m_DeadActiveSkin != null)
@@ -294,6 +308,24 @@ namespace MobaVR
             if (m_AliveActiveSkin != null)
             {
                 m_AliveActiveSkin.SetTeam(teamType);
+            }
+        }
+        
+        private void OnDie()
+        {
+            if (m_PhotonView.IsMine && m_IsHideVR)
+            {
+                SetVisibilityVR(true);
+                SetVisibilityFace(true);
+            }
+        }
+
+        private void OnReborn()
+        {
+            if (m_PhotonView.IsMine && m_IsHideVR)
+            {
+                SetVisibilityVR(false);
+                SetVisibilityFace(false);
             }
         }
 

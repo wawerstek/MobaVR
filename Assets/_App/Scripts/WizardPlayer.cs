@@ -42,6 +42,7 @@ namespace MobaVR
         [SerializeField] private Collider m_Collider;
         [SerializeField] [ReadOnly] private List<HitCollider> m_Colliders = new();
         [SerializeField] private Transform m_PlayerPoint;
+        [SerializeField] private bool m_SetDisableOnDie = false;
 
         /// <summary>
         /// TODO: input for Oculus and Pico
@@ -1025,7 +1026,10 @@ namespace MobaVR
 
                 foreach (HitCollider damagePlayer in m_Colliders)
                 {
-                    damagePlayer.GetComponent<Collider>().enabled = false;
+                    if (m_SetDisableOnDie)
+                    {
+                        damagePlayer.GetComponent<Collider>().enabled = false;
+                    }
                 }
 
                 ResetSpells();

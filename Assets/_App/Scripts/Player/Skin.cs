@@ -21,6 +21,7 @@ namespace MobaVR
         [SerializeField] private List<SkinItem> m_TeamRenderers = new();
 
         [Header("Renderers")]
+        [SerializeField] private bool m_SetInactiveOnDie = true;
         [SerializeField] private List<Renderer> m_Renderers = new();
         [SerializeField] private List<Renderer> m_LegRenderers = new();
         [SerializeField] private List<Renderer> m_FaceRenderers = new();
@@ -31,7 +32,8 @@ namespace MobaVR
         [Header("Events")]
         public UnityEvent OnActivated;
         public UnityEvent OnDeactivated;
-        
+        public UnityEvent OnDie;
+
         private string[] m_LegNames = new[]
         {
             "leg",
@@ -59,7 +61,7 @@ namespace MobaVR
         }
 
         #region Find Renderers
-        
+
         [ContextMenu("FindArmature")]
         private void FindArmature()
         {
@@ -112,7 +114,7 @@ namespace MobaVR
             {
                 m_FaceRenderers.AddRange(face.GetComponentsInChildren<Renderer>(true));
             }
-            
+
             Transform customization = transform.Find("Customization");
             if (customization != null)
             {
@@ -207,17 +209,27 @@ namespace MobaVR
         {
             gameObject.SetActive(true);
             SetTeam(teamType);
-            
+
             OnActivated?.Invoke();
         }
 
         public void DeactivateSkin()
         {
             gameObject.SetActive(false);
-            
             OnDeactivated?.Invoke();
         }
+        
+        public void SetDieSkin()
+        {
+            if (m_SetInactiveOnDie)
+            {
+                gameObject.SetActive(false);
 
+            }
+
+            OnDie?.Invoke();
+        }
+        
         #endregion
     }
 }
