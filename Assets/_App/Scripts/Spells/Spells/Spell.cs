@@ -16,6 +16,7 @@ namespace MobaVR
         protected bool m_IsInit = false;
 
         public Action OnDestroySpell;
+        public Action OnHit;
         public Action OnInitSpell;
         //public Action OnThrown;
 

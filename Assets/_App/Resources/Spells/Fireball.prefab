@@ -19626,6 +19626,7 @@ GameObject:
   - component: {fileID: 9188032268869581275}
   - component: {fileID: 129987473065859420}
   - component: {fileID: 5539838930902219004}
+  - component: {fileID: 2232404247254351010}
   - component: {fileID: 2864111511535391836}
   - component: {fileID: 6762492436249963837}
   - component: {fileID: 1125431837953816194}
@@ -19994,6 +19995,26 @@ MonoBehaviour:
   m_Grabbable: {fileID: 1125431837953816194}
   m_CollisionCollider: {fileID: 1759997014084853414}
   m_TriggerCollider: {fileID: 3318618810848601281}
+--- !u!114 &2232404247254351010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3318618810848601306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba8939a245014918b9fe257ad42eee4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_UseExplosionWave: 1
+  m_ExplosionLayers:
+    serializedVersion: 2
+    m_Bits: 2561
+  m_ExplosionCollisionRadius: 2
+  m_ExplosionForce: 200
+  m_ExplosionForceRadius: 2
+  m_ExplosionModifier: 1
 --- !u!114 &2864111511535391836
 MonoBehaviour:
   m_ObjectHideFlags: 0
