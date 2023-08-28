@@ -12,6 +12,7 @@ namespace MobaVR
         [SerializeField] private bool m_UseVRUISystem = false;
         
         [SerializeField] private ClassicGameSession m_GameSession;
+        [SerializeField] private SessionSettings m_SessionSettings;
         [SerializeField] private StateMachineSwitcher m_StateMachineSwitcher;
         [SerializeField] private Environment m_Environment;
         [SerializeField] private ScenesEnvironment m_SceneEnvironment;
@@ -40,6 +41,11 @@ namespace MobaVR
             if (m_StateMachineSwitcher == null)
             {
                 m_StateMachineSwitcher = FindObjectOfType<StateMachineSwitcher>();
+            }
+
+            if (m_SessionSettings == null)
+            {
+                m_SessionSettings = FindObjectOfType<SessionSettings>();
             }
             
             m_VRUISystem = FindObjectOfType<VRUISystem>();
@@ -140,6 +146,26 @@ namespace MobaVR
             {
                 m_GameSession.SetBlueTeam();
             }
+        }
+
+        public void ActivateRagdolls()
+        {
+            if (m_SessionSettings == null)
+            {
+                return;
+            }
+            
+            m_SessionSettings.ActivateRagdolls();
+        }
+        
+        public void DeactivateRagdolls()
+        {
+            if (m_SessionSettings == null)
+            {
+                return;
+            }
+            
+            m_SessionSettings.DeactivateRagdolls();
         }
 
         public void ClearCal()

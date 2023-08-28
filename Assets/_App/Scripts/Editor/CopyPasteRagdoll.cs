@@ -37,6 +37,17 @@ public class CopyPasteRagdoll
                         {
                             EditorUtility.CopySerialized(mainCollider, copyCollider);
                         }
+                        
+                        if (copyRigidbody.TryGetComponent(out CharacterJoint copyCharacterJoint)
+                            && mainRigidbody.TryGetComponent(out CharacterJoint mainCharacterJoint))
+                        {
+                            Rigidbody connectedBody = copyCharacterJoint.connectedBody;
+                            EditorUtility.CopySerialized(mainCharacterJoint, copyCharacterJoint);
+                            if (connectedBody != null)
+                            {
+                                copyCharacterJoint.connectedBody = connectedBody;
+                            }
+                        }
 
                         EditorUtility.CopySerialized(mainRigidbody, copyRigidbody);
 

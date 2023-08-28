@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace MobaVR
@@ -37,7 +38,7 @@ namespace MobaVR
             }
         }
 
-        private void OnDestroySpell()
+        private void Explode()
         {
             Collider[] colliders = Physics.OverlapSphere(transform.position,
                                                          //m_ExplosionCollisionRadius,
@@ -50,8 +51,13 @@ namespace MobaVR
                 if (hit.TryGetComponent(out HitCollider hitCollider)
                     && hit.TryGetComponent(out Rigidbody hitRigidbody))
                 {
-                    if (!hitRigidbody.isKinematic)
+                    //if (!hitRigidbody.isKinematic)
                     {
+                        if (m_UseSpecifiedNames && !m_BoneNames.Contains(hitRigidbody.name))
+                        {
+                            continue;
+                        }
+
                         hitRigidbody.AddExplosionForce(m_ExplosionForce,
                                                        transform.position,
                                                        m_ExplosionForceRadius,
@@ -59,7 +65,7 @@ namespace MobaVR
                     }
                 }
             }
-            
+
             /*
             foreach (Collider enemy in colliders)
             {
@@ -75,6 +81,22 @@ namespace MobaVR
 
             Explode(interactable);
             */
+        }
+
+        [SerializeField] private float m_Delay = 0.1f;
+        [SerializeField] private bool m_UseSpecifiedNames = true;
+        [SerializeField] private List<string> m_BoneNames = new List<string>();
+
+        private void OnDestroySpell()
+        {
+            if (m_Delay > 0)
+            {
+                Invoke(nameof(Explode), m_Delay);
+            }
+            else
+            {
+                Explode();
+            }
         }
     }
 }

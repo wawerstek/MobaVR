@@ -13,6 +13,7 @@ namespace MobaVR
 
         private WizardPlayer m_Wizard;
         private Animator m_Animator;
+        private EyeAnimationHandler m_EyeAnimationHandler;
         private VRIK m_Vrik;
         private List<Rigidbody> m_ChildRigidbodies = new();
         private List<Collider> m_ChildColliders = new();
@@ -49,6 +50,7 @@ namespace MobaVR
             m_Wizard = GetComponentInParent<WizardPlayer>();
             m_Vrik = GetComponent<VRIK>();
             m_Animator = GetComponent<Animator>();
+            m_EyeAnimationHandler = GetComponent<EyeAnimationHandler>();
             m_ChildRigidbodies.AddRange(m_Root.GetComponentsInChildren<Rigidbody>());
             m_ChildColliders.AddRange(m_Root.GetComponentsInChildren<Collider>());
         }
@@ -61,30 +63,43 @@ namespace MobaVR
             }
         }
 
+        [ContextMenu("OnDie")]
         private void OnDie()
         {
             m_IsDie = true;
             gameObject.SetActive(true);
             
             Invoke(nameof(Hide), m_HideTimeout);
-            SetRagDoll(true);
+            m_Animator.enabled = false;
+            //m_Vrik.enabled = false;
+            //m_Animator.SetTrigger("Die");
+            Invoke(nameof(ActivateRagDoll), 0.1f);
+            //etRagDoll(true);
         }
 
+        [ContextMenu("OnReborn")]
         private void OnReborn()
         {
             CancelInvoke(nameof(Hide));
+            m_Animator.SetTrigger("Reborn");
             m_IsDie = false;
             gameObject.SetActive(true);
             SetRagDoll(false);
+        }
+
+        private void ActivateRagDoll()
+        {
+            SetRagDoll(true);
         }
 
         private void SetRagDoll(bool useRagDoll)
         {
             //m_BodyCollider.isTrigger = useRagDoll;
             gameObject.SetActive(true);
-            
-            m_Animator.enabled = !useRagDoll;
+
+            m_EyeAnimationHandler.enabled = !useRagDoll;
             m_Vrik.enabled = !useRagDoll;
+            m_Animator.enabled = !useRagDoll;
 
             foreach (Rigidbody childRigidbody in m_ChildRigidbodies)
             {

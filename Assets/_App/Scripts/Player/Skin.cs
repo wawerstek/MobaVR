@@ -27,6 +27,7 @@ namespace MobaVR
         [SerializeField] private List<Renderer> m_FaceRenderers = new();
         [SerializeField] private List<Renderer> m_BodyRenderers = new();
         [SerializeField] private List<Renderer> m_HiddenVrRenderers = new();
+        [SerializeField] private List<Renderer> m_DieRenderers = new();
 
         [Space]
         [Header("Events")]
@@ -58,6 +59,12 @@ namespace MobaVR
             //FindAllRenderers();
             //FindLegs();
             //FindFace();
+        }
+
+        public bool SetInactiveOnDie
+        {
+            get => m_SetInactiveOnDie;
+            set => m_SetInactiveOnDie = value;
         }
 
         #region Find Renderers
@@ -186,6 +193,15 @@ namespace MobaVR
         public void SetVisibilityBody(bool isVisible = false)
         {
             foreach (Renderer meshRenderer in m_BodyRenderers)
+            {
+                meshRenderer.gameObject.SetActive(isVisible);
+            }
+        }
+        
+        [ContextMenu("SetVisibilityDie")]
+        public void SetVisibilityDieRenderers(bool isVisible = false)
+        {
+            foreach (Renderer meshRenderer in m_DieRenderers)
             {
                 meshRenderer.gameObject.SetActive(isVisible);
             }

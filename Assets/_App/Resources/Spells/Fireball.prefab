@@ -20011,10 +20011,14 @@ MonoBehaviour:
   m_ExplosionLayers:
     serializedVersion: 2
     m_Bits: 2561
-  m_ExplosionCollisionRadius: 2
-  m_ExplosionForce: 200
-  m_ExplosionForceRadius: 2
+  m_ExplosionCollisionRadius: 1
+  m_ExplosionForce: 500
+  m_ExplosionForceRadius: 4
   m_ExplosionModifier: 1
+  m_Delay: 0.05
+  m_UseSpecifiedNames: 1
+  m_BoneNames:
+  - Pelvis
 --- !u!114 &2864111511535391836
 MonoBehaviour:
   m_ObjectHideFlags: 0

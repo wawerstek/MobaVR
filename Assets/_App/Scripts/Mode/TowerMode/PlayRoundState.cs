@@ -27,7 +27,7 @@ namespace MobaVR.ClassicModeStateMachine.Tower
             m_CurrentMonsterCount++;
             string monsterCountMessage = $"{m_CurrentMonsterCount} / {m_MonsterCount}";
             m_Content.ModeView.MonsterCountView.UpdateText(monsterCountMessage);
-            
+
             if (m_CurrentMonsterCount >= m_MonsterCount)
             {
                 m_IsPlay = false;
@@ -80,35 +80,33 @@ namespace MobaVR.ClassicModeStateMachine.Tower
 
                 m_Content.Tower.OnDie.AddListener(OnTowerDie);
 
-            }
-            foreach (MonsterPointSpawner pointSpawner in m_Content.Spawners)
-            {
-                pointSpawner.OnMonsterDie += OnMonsterDie;
-            }
-            
-            m_MonsterCount = 0;
-            if (m_Content.CurrentWave < m_Content.Waves.Count)
-            {
-                MonsterWave monsterWave = m_Content.Waves[m_Content.CurrentWave];
-                foreach (MonsterPointWave pointSpawner in monsterWave.Points)
+                foreach (MonsterPointSpawner pointSpawner in m_Content.Spawners)
                 {
-                    if (pointSpawner.CanSpawn)
+                    pointSpawner.OnMonsterDie += OnMonsterDie;
+                }
+
+                m_MonsterCount = 0;
+                if (m_Content.CurrentWave < m_Content.Waves.Count)
+                {
+                    MonsterWave monsterWave = m_Content.Waves[m_Content.CurrentWave];
+                    foreach (MonsterPointWave pointSpawner in monsterWave.Points)
                     {
-                        m_MonsterCount += pointSpawner.MaxTotalCountMonster;
-                        if (PhotonNetwork.IsMasterClient)
+                        if (pointSpawner.CanSpawn)
                         {
+                            m_MonsterCount += pointSpawner.MaxTotalCountMonster;
                             pointSpawner.Init();
                             pointSpawner.PointSpawner.GenerateMonsters();
                         }
                     }
                 }
-            }
-            else
-            {
-                if (PhotonNetwork.IsMasterClient)
+                else
                 {
                     m_Mode.CompleteRound();
                 }
+
+                string monsterCountMessage = $"0 / {m_MonsterCount}";
+                m_Content.ModeView.MonsterCountView.Show();
+                m_Content.ModeView.MonsterCountView.UpdateText(monsterCountMessage);
             }
 
             foreach (Trap trap in m_Content.Traps)
@@ -118,8 +116,6 @@ namespace MobaVR.ClassicModeStateMachine.Tower
 
             m_IsPlay = true;
             m_Content.ModeView.MonsterCountView.Show();
-            string monsterCountMessage = $"{m_CurrentMonsterCount} / {m_MonsterCount}";
-            m_Content.ModeView.MonsterCountView.UpdateText(monsterCountMessage);
         }
 
 
@@ -131,12 +127,12 @@ namespace MobaVR.ClassicModeStateMachine.Tower
         {
             m_IsPlay = false;
             m_Content.ModeView.MonsterCountView.Hide();
-            
+
             foreach (MonsterPointSpawner pointSpawner in m_Content.Spawners)
             {
                 pointSpawner.OnMonsterDie -= OnMonsterDie;
             }
-            
+
             if (!PhotonNetwork.IsMasterClient)
             {
                 return;

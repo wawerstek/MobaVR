@@ -137,6 +137,21 @@ namespace MobaVR
                 skin.SetVisibilityBody(isVisible);
             }
         }
+        
+        [ContextMenu("SetVisibilityDie")]
+        public void SetVisibilityDie(bool isVisible = false)
+        {
+            foreach (Skin skin in m_AliveSkins)
+            {
+                skin.SetVisibilityDieRenderers(isVisible);
+            }
+            /*
+            foreach (Skin skin in m_DeadSkins)
+            {
+                skin.SetVisibilityDieRenderers(isVisible);
+            }
+            */
+        }
 
         #endregion
 
@@ -261,6 +276,7 @@ namespace MobaVR
             {
                 //TODO:
                 //m_AliveActiveSkin.DeactivateSkin();
+                SetVisibilityDie(true);
                 m_AliveActiveSkin.SetDieSkin();
             }
 
@@ -299,6 +315,7 @@ namespace MobaVR
             }
 
             TeamType teamType = m_PlayerVR != null ? m_PlayerVR.TeamType : TeamType.RED;
+            SetVisibilityDie(false);
             m_AliveActiveSkin.ActivateSkin(teamType);
         }
 
