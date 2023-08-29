@@ -33,17 +33,13 @@ public class ZonaBook : MonoBehaviour
     private float transitionTimer = 0f; // ?????? ??? ????????
 
 
-
-
     private void Start()
     {
         // ???????? ????????? AudioSource ?? ???????? ??????? ??? ??? ???????? ????????
         audioSource = GetComponent<AudioSource>();
         // ????????? ????????? ???????? fog density
         initialFogDensity = RenderSettings.fogDensity;
-
     }
-
 
 
     private void Update()
@@ -52,7 +48,7 @@ public class ZonaBook : MonoBehaviour
         {
             return;
         }
-        
+
         if (isInTrigger)
         {
             // ???? ? ????????, ???????? ?????? ?????? fog density ? ???????? ????????
@@ -85,13 +81,11 @@ public class ZonaBook : MonoBehaviour
             {
                 // ????????? ???????
                 RenderSettings.fogDensity = initialFogDensity;
-                
+
                 isFogCompleted = true;
             }
         }
     }
-
-
 
 
     private void OnTriggerEnter(Collider other)
@@ -101,12 +95,10 @@ public class ZonaBook : MonoBehaviour
             playerCount++;
             if (playerCount == 1)
             {
-
                 // ????????????? ???? ??? ????? ? ?????????
                 if (soundOnEnter != null)
                 {
                     audioSource.PlayOneShot(soundOnEnter);
-
                 }
 
                 //????????? ?????
@@ -119,7 +111,6 @@ public class ZonaBook : MonoBehaviour
                 Book.SetActive(false);
 
 
-               
                 int childCount = other.transform.childCount;
                 childObjects = new GameObject[childCount];
 
@@ -143,8 +134,6 @@ public class ZonaBook : MonoBehaviour
                 }
 
                 UpdateTargetID(targetID);
-
-
             }
         }
     }
@@ -160,7 +149,6 @@ public class ZonaBook : MonoBehaviour
                 if (soundOnExit != null)
                 {
                     audioSource.PlayOneShot(soundOnExit);
-                    
                 }
 
                 //????????? ?????
@@ -196,7 +184,6 @@ public class ZonaBook : MonoBehaviour
                 }
 
 
-
                 //// ????????? ???????? ??????? ?? destinationParent ??????? ? other
                 //foreach (Transform child in destinationParent)
                 //{
@@ -206,9 +193,8 @@ public class ZonaBook : MonoBehaviour
                 //    child.localScale = Vector3.one;
                 //    child.gameObject.SetActive(false);
                 //}
-
             }
-        }  
+        }
     }
 
     public void UpdateTargetID(string newTargetID)
@@ -225,12 +211,18 @@ public class ZonaBook : MonoBehaviour
                 skin.gameObject.SetActive(false);
             }
 
+            /*
+            SkinRagdoll skinRagdoll = child.GetComponentInChildren<SkinRagdoll>();
+            if (skinRagdoll != null)
+            {
+                skinRagdoll.gameObject.SetActive(false);
+            }
+            */
+
             if (skin != null && skin.ID == targetID)
             {
                 skin.gameObject.SetActive(true);
             }
         }
     }
-
-
 }

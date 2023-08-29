@@ -348,8 +348,10 @@ public class CharacterActions : MonoBehaviour
     //стопорим звук
     public void StopAllSounds()
     {
-        audioSource.Stop();
-
+        if (audioSource != null)
+        {
+            audioSource.Stop();
+        }
     }
     
     //в этой функции мы безопасно применяем параметру значение true

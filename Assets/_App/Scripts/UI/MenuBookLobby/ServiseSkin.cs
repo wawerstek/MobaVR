@@ -37,6 +37,12 @@ public class ServiseSkin : MonoBehaviour
             CopyChildren(child, copiedChild.transform);
 
             // ��������� ��������� VR IK
+            SkinRagdoll skinRagdoll = copiedChild.GetComponent<SkinRagdoll>();
+            if (skinRagdoll != null)
+            {
+                skinRagdoll.enabled = false;
+            }
+            
             VRIK vrIK = copiedChild.GetComponent<VRIK>();
             if (vrIK != null)
             {

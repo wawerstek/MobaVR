@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
 namespace MobaVR.Content
 {
-    public class TowerModeContent : MonoBehaviour
+    public class TowerModeContent : MonoBehaviourPun
     {
         [SerializeField] private TowerModeView m_ModeView;
 
@@ -28,7 +29,11 @@ namespace MobaVR.Content
         public bool IsVictory
         {
             get => m_IsVictory;
-            set => m_IsVictory = value;
+            set
+            {
+                m_IsVictory = value;
+                photonView.RPC(nameof(RpcSetVictory), RpcTarget.All, IsVictory);
+            }
         }
         public int CurrentWave
         {
@@ -37,5 +42,11 @@ namespace MobaVR.Content
         }
         public bool HasCurrentWave => m_CurrentWave < m_Waves.Count;
         public bool HasNextWave => m_CurrentWave < m_Waves.Count;
+
+        [PunRPC]
+        public void RpcSetVictory(bool isVictory)
+        {
+            m_IsVictory = isVictory;
+        }
     }
 }

@@ -47,7 +47,9 @@ namespace MobaVR
         {
             base.OnPerformedCast(context);
 
-            if (!CanCast() || HasBlockingSpells())
+            if (!CanCast() 
+                || HasBlockingSpells()
+                || !m_IsAvailable)
             {
                 return;
             }

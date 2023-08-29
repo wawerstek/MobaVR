@@ -229,6 +229,11 @@ namespace MobaVR
         
         public void SetClassMode()
         {
+         if (m_StateMachineSwitcher == null)
+                    {
+                        m_StateMachineSwitcher = FindObjectOfType<StateMachineSwitcher>();
+                    }
+        
             if (m_StateMachineSwitcher != null)
             {
                 m_StateMachineSwitcher.SetClassMode();
@@ -237,6 +242,11 @@ namespace MobaVR
 
         public void SetTimerMode()
         {
+         if (m_StateMachineSwitcher == null)
+                    {
+                        m_StateMachineSwitcher = FindObjectOfType<StateMachineSwitcher>();
+                    }
+        
             if (m_StateMachineSwitcher != null)
             {
                 m_StateMachineSwitcher.SetTimerMode();

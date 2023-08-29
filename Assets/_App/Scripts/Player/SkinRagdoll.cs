@@ -15,12 +15,13 @@ namespace MobaVR
         private Animator m_Animator;
         private EyeAnimationHandler m_EyeAnimationHandler;
         private VRIK m_Vrik;
+        private List<HitCollider> m_HitColliders = new();
         private List<Rigidbody> m_ChildRigidbodies = new();
         private List<Collider> m_ChildColliders = new();
 
 
         private bool m_IsDie = false;
-        
+
         private void OnEnable()
         {
             if (m_Wizard != null)
@@ -28,9 +29,9 @@ namespace MobaVR
                 m_Wizard.OnDie += OnDie;
                 m_Wizard.OnReborn += OnReborn;
             }
-            
+
             //TODO: Костыль
-            if (m_IsDisableOnEnable && m_Wizard.IsLife)
+            if (m_Wizard != null && m_IsDisableOnEnable && m_Wizard.IsLife)
             {
                 OnReborn();
             }
@@ -51,8 +52,20 @@ namespace MobaVR
             m_Vrik = GetComponent<VRIK>();
             m_Animator = GetComponent<Animator>();
             m_EyeAnimationHandler = GetComponent<EyeAnimationHandler>();
-            m_ChildRigidbodies.AddRange(m_Root.GetComponentsInChildren<Rigidbody>());
-            m_ChildColliders.AddRange(m_Root.GetComponentsInChildren<Collider>());
+
+            m_HitColliders.AddRange(m_Root.GetComponentsInChildren<HitCollider>());
+            foreach (HitCollider hitCollider in m_HitColliders)
+            {
+                if (hitCollider.TryGetComponent(out Rigidbody childRigidbody))
+                {
+                    m_ChildRigidbodies.Add(childRigidbody);
+                }
+
+                if (hitCollider.TryGetComponent(out Collider childCollider))
+                {
+                    m_ChildColliders.Add(childCollider);
+                }
+            }
         }
 
         private void Hide()
@@ -68,7 +81,7 @@ namespace MobaVR
         {
             m_IsDie = true;
             gameObject.SetActive(true);
-            
+
             Invoke(nameof(Hide), m_HideTimeout);
             m_Animator.enabled = false;
             //m_Vrik.enabled = false;
