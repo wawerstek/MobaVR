@@ -8,8 +8,10 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: ZMOBA_Tree_D_1
-  m_Shader: {fileID: 10704, guid: 0000000000000000f000000000000000, type: 0}
-  m_ValidKeywords: []
+  m_Shader: {fileID: 4800000, guid: cfb094dd9161c1043bcbb11a89abe58f, type: 3}
+  m_ValidKeywords:
+  - _ALPHATEST_ON
+  - _NORMALMAP
   m_InvalidKeywords:
   - _AD_CUTOUT_GEOMETRIC_COUNT_ONE
   - _AD_CUTOUT_GEOMETRIC_TYPE_NONE
@@ -21,12 +23,12 @@ Material:
   - _AD_GLOBAL_CONTROL_ID_NONE
   - _AD_STATE_DISABLED
   - _BLENDMODE_BLEND
-  - _NORMALMAP
   m_LightmapFlags: 6
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
+  m_CustomRenderQueue: 2450
+  stringTagMap:
+    RenderType: TransparentCutout
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
@@ -260,7 +262,7 @@ Material:
     - _LightingEnabled: 1
     - _MetChannel: 3
     - _Metallic: 0
-    - _Mode: 0
+    - _Mode: 1
     - _NormalAmount: 2
     - _OVERRIDE_FOG_COLOR: 0
     - _Occlusion: 0

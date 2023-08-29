@@ -13,6 +13,8 @@ public class Obuchenie : MonoBehaviour
     public GameObject Personag;
     public GameObject Point;
     public GameObject Player;
+    private float inputStartTime;
+    private bool waitingForInput = false;
 
     // Start is called before the first frame update
     void Start()
@@ -24,60 +26,52 @@ public class Obuchenie : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (ObuchenieRun == false)
-        {
-            //���� ������ �� ������
-            if (InputBridge.Instance.GetControllerBindingValue(Button_Obuch) || Test)
+      
+            if (waitingForInput)
             {
-               RunTutorial();
-               return;
+                if (Time.time - inputStartTime >= 4.0f)
+                {
+                    RunTutorial();
+                    waitingForInput = false;
+                }
             }
-        }
-
-        if (ObuchenieRun == true)
-        {
-            if (InputBridge.Instance.GetControllerBindingValue(Button_Obuch))
+            else if (InputBridge.Instance.GetControllerBindingValue(Button_Obuch) || Test)
             {
-                StopTutorial();
+                waitingForInput = true;
+                inputStartTime = Time.time;
             }
-        }
+            else
+            {
+                inputStartTime = 0f;
+            }
+     
     }
 
-    [ContextMenu("StopTutorial")]
-    public void StopTutorial()
-    {
-            ObuchenieRun = false;
-            Personag.SetActive(false);
-    }
-    
+
     [ContextMenu("RunTutorial")]
     public void RunTutorial(){
         
-              //��� �� ������������� ����
+                    ObuchenieRun = false;
+                    Personag.SetActive(false);
     
-                    //������� ��������
-                   
-    
-                    // ������� ������ � ������ "CenterEyeAnchor" � ����������� ��� ���������� Player
                     Player = GameObject.Find("CenterEyeAnchor");
-    
-                    // ���� ������ ������, ������ Point �������� �������� ��� Player
+                    
                     if (Player != null)
                     {
                         RessetPlayerPoint();
                     }
                     
                     Personag.SetActive(true);
-                    ObuchenieRun = true;
+                        //     ObuchenieRun = true;
     }
 
 
-    //���������� ����� �� ������� ����� �������� �� ������
+    //точка перемещается на плеера
     public void RessetPlayerPoint()
     {
         Point.transform.SetParent(Player.transform);
 
-        // ���� �� ����� ������, ����� ��������� ���������� Point ���� (0,0,0) ������������ Player
+        
         Point.transform.localPosition = Vector3.zero;
     }
 
