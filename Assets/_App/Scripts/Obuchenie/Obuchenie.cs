@@ -15,6 +15,8 @@ public class Obuchenie : MonoBehaviour
     public GameObject Player;
     private float inputStartTime;
     private bool waitingForInput = false;
+    public SliderMenu Book01; 
+    public SliderMenu Book02; 
 
     // Start is called before the first frame update
     void Start()
@@ -27,21 +29,23 @@ public class Obuchenie : MonoBehaviour
     void Update()
     {
       
-            if (waitingForInput)
+            if (waitingForInput || Test)
             {
-                if (Time.time - inputStartTime >= 4.0f)
+                if (Time.time - inputStartTime >= 4.0f || Test)
                 {
                     RunTutorial();
                     waitingForInput = false;
+                    Test = false;
                 }
             }
-            else if (InputBridge.Instance.GetControllerBindingValue(Button_Obuch) || Test)
+            else if (InputBridge.Instance.GetControllerBindingValue(Button_Obuch))
             {
                 waitingForInput = true;
                 inputStartTime = Time.time;
             }
             else
             {
+                waitingForInput = false;
                 inputStartTime = 0f;
             }
      
@@ -60,9 +64,10 @@ public class Obuchenie : MonoBehaviour
                     {
                         RessetPlayerPoint();
                     }
-                    
+                    Personag.transform.localPosition = Vector3.zero;
                     Personag.SetActive(true);
-                        //     ObuchenieRun = true;
+                    CallResetMenu();
+                    //     ObuchenieRun = true;
     }
 
 
@@ -70,9 +75,18 @@ public class Obuchenie : MonoBehaviour
     public void RessetPlayerPoint()
     {
         Point.transform.SetParent(Player.transform);
-
-        
         Point.transform.localPosition = Vector3.zero;
     }
+    
+    //обнуляем книгу
+    public void CallResetMenu()
+    {
+        if (Book01 != null && Book02 != null)
+        {
+            Book01.RessetMenu();
+            Book02.RessetMenu();
+        }
+    }
+    
 
 }

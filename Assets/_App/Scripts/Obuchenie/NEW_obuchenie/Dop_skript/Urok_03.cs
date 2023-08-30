@@ -6,18 +6,19 @@ using BNG;
 
 public class Urok_03 : MonoBehaviour
 {
-    [System.Serializable]
+   [System.Serializable]
     public class SoundEntry
     {
         public string soundName;
         public AudioClip soundClip;
     }
 
-    public SaveInfoClass _SaveInfoClass;//tut poluchaem klass igroka
+    public TargetRes targetsManage;
+    
+    public SaveInfoClass _SaveInfoClass;//тут получаем класс игрока
     public SoundEntry[] soundEntries; // Массив для записей звука
     public string ID; // Переменная ID для идентификации звука
 
-    public GameObject[] objectsToCheck;
 
     [SerializeField]
     private Transform targetRed;
@@ -29,61 +30,86 @@ public class Urok_03 : MonoBehaviour
 
     public PlayerSpawner spawnerReference;  // Скрипт, на котором находится наш персонаж
     public string team;
+    
+    //команда выбрана
+    public bool RunTeamTarget =false;//команда выбрана
+    public bool RunTargets =false;//включаем мишени
+    public bool FinishTargets =false;//если мишени отключены
 
-    private void Awake()
+    private void OnEnable()
     {
+        //находим скрипт с уроками
         characterActions = GetComponent<CharacterActions>();
-    }
+            //говорим, что команда не выбрана
+        RunTeamTarget =false;
+        RunTargets =false;
+        
+        //говорим, что плеер скрипт сейчас ноль
+        PlayerVR playerScript = null;
 
-    private void Start()
-    {
-        //if (spawnerReference.localPlayer != null)
+        //ищем плеер скрипт, если он наш, то берём его в работу
+        PlayerVR[] players = FindObjectsOfType<PlayerVR>();
+        foreach (PlayerVR playerVR in players)
         {
-            PlayerVR playerScript = null;
-
-            
-            PlayerVR[] players = FindObjectsOfType<PlayerVR>();
-            foreach (PlayerVR playerVR in players)
+            if (playerVR.photonView.IsMine)
             {
-                if (playerVR.photonView.IsMine)
-                {
-                    playerScript = playerVR;
-                    break;
-                }
+                playerScript = playerVR;
+                break;
+            }
+        }
+
+        
+        if (playerScript == null)
+        {
+            playerScript = spawnerReference.localPlayer.GetComponent<PlayerVR>();
+        }
+            
+        //получаем команду
+        if (playerScript != null)
+        {
+            if (playerScript.TeamType == TeamType.RED)
+            {
+                team = "RED";
             }
 
-            if (playerScript == null)
+            if (playerScript.TeamType == TeamType.BLUE)
             {
-                playerScript = spawnerReference.localPlayer.GetComponent<PlayerVR>();
-            }
-            
-            
-            if (playerScript != null)
-            {
-                if (playerScript.TeamType == TeamType.RED)
-                {
-                    team = "RED";
-                }
-
-                if (playerScript.TeamType == TeamType.BLUE)
-                {
-                    team = "BLUE";
-                }
+                team = "BLUE";
             }
         }
     }
-
+    
     private void Update()
     {
-        if (characterActions.CurrentStepIndex == 2)
+        //если у нас сейчас идёт 3-й уроки
+        if (characterActions.CurrentStepIndex == 2 && !RunTeamTarget)
         {
-            CheckObjects();
+            //отправляем игрока к тиру, в зависимости от команды
             SetTargetPointBasedOnTeam();
+                //присваиваем класс игрока к переменной ID
             ID = _SaveInfoClass.targetID;
+        }  
+        
+        //если у нас сейчас идёт 3-й уроки у него сыгран основной звук
+        if (characterActions.CurrentStepIndex == 2 && characterActions.tutorialSteps[2].mainTaskSoundRun)
+        {
+            //включим мишени, даже если они ещё не выключены все
+            if (!RunTargets)
+            {
+                //говорим восстановить все мишени
+                targetsManage.EnableTargetsImmediately();
+                //мишени включены
+                RunTargets =true;
+            }
+            
+            //проверяем мишени
+            CheckObjects();
+
         }
         AssignSoundByID();
     }
 
+    //отправляем точки в переменные скрипта обучения
     private void SetTargetPointBasedOnTeam()
     {
         if (team == "RED")
@@ -94,42 +120,39 @@ public class Urok_03 : MonoBehaviour
         {
             characterActions.tutorialSteps[characterActions.CurrentStepIndex].targetPoint = targetBlue;
         }
+        
+        //путь указан и команда выбрана
+        RunTeamTarget = true;
     }
 
+    //проверяем есть ли мишени
     void CheckObjects()
     {
-        bool allDisabled = true;
-        foreach (GameObject obj in objectsToCheck)
-        {
-            if (obj.activeInHierarchy)
-            {
-                allDisabled = false;
-                break;
-            }
-        }
+        //если все объекты подбиты, завершаем урок
+        FinishTargets = targetsManage.allTargetsDisabled;
 
-        if (allDisabled)
+        if (FinishTargets)
         {
-            Debug.Log("Все объекты выключены");
+            FinishTargets = false;
             FinishUrok03();
-            StartCoroutine(EnableObjectsAfterDelay(20f));
         }
+           
+
     }
+    
 
-    IEnumerator EnableObjectsAfterDelay(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-
-        foreach (GameObject obj in objectsToCheck)
-        {
-            obj.SetActive(true);
-        }
-    }
-
+    //урок закончен
     public void FinishUrok03()
     {
         if (characterActions.tutorialSteps.Length > 2)
         {
+            //обнуляем точки, для следующего запуска
+            characterActions.tutorialSteps[characterActions.CurrentStepIndex].targetPoint = null;
+            
+            //обнуляем звук
+            characterActions.tutorialSteps[characterActions.CurrentStepIndex].mainTaskSound = null;
+            
+            //говорим, что урок пройдён.
             characterActions.tutorialSteps[2].isTaskCompleted = true;
         }
     }
@@ -141,7 +164,6 @@ public class Urok_03 : MonoBehaviour
         // Если сейчас идёт не второй урок, выйти из функции
         if(characterActions.CurrentStepIndex != 2)
         {
-          
             return;
         }
         
