@@ -25,6 +25,40 @@ namespace MobaVR
             SetRagdoll(false);
         }
         
+        [ContextMenu("SetEmptyType")]
+        public void SetEmptyType()
+        {
+            SetDieBehaviour(OnDieBehaviourType.NONE);
+        }
+        
+        [ContextMenu("SetAnimType")]
+        public void SetAnimType()
+        {
+            SetDieBehaviour(OnDieBehaviourType.ANIM);
+        }
+        
+        [ContextMenu("SetRagDollType")]
+        public void SetRagDollType()
+        {
+            SetDieBehaviour(OnDieBehaviourType.RAGDOLL);
+        }
+
+        public void SetDieBehaviour(OnDieBehaviourType dieBehaviourType)
+        {
+            if (m_SkinCollection == null)
+            {
+                return;
+            }
+
+            foreach (Skin skin in m_SkinCollection.AliveSkins)
+            {
+                if (skin.TryGetComponent(out OnDieHandler dieHandler))
+                {
+                    dieHandler.OnDieType = dieBehaviourType;
+                }
+            }
+        }
+        
         public void SetRagdoll(bool useRagdoll)
         {
             if (m_SkinCollection == null)

@@ -41,10 +41,11 @@ namespace MobaVR
 
         public virtual void Init(WizardPlayer wizardPlayer, TeamType teamType)
         {
-            OnInitSpell?.Invoke();
-
             m_Owner = wizardPlayer;
             m_TeamType = teamType;
+            
+            OnInitSpell?.Invoke();
+            
             photonView.RPC(nameof(RpcInit), RpcTarget.AllBuffered, teamType, m_Owner.photonView.Owner.ActorNumber);
         }
 

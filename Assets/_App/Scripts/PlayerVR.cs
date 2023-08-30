@@ -64,6 +64,7 @@ namespace MobaVR
         public Team Team => m_Team;
         public PlayerMode PlayerMode => m_PlayerMode;
         public WizardPlayer WizardPlayer => m_WizardPlayer;
+        public SkinCollection SkinCollection => m_SkinCollection;
 
         public Action<PlayerVR> OnDestroyPlayer;
         public Action<PlayerVR> OnInitPlayer;

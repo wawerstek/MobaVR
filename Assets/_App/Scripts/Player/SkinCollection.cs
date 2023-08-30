@@ -25,6 +25,7 @@ namespace MobaVR
         private int m_DeadSkinPosition = 0;
 
         public List<Skin> AliveSkins => m_AliveSkins;
+        public Skin AliveActiveSkin => m_AliveActiveSkin;
 
         #region MonoBehaviour
 

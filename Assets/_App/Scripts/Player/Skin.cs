@@ -52,6 +52,8 @@ namespace MobaVR
             "teeth",
         };
 
+        public Transform Armature => m_Armature;
+
         private void OnValidate()
         {
             //FindArmature();
