@@ -6,6 +6,8 @@ using BNG;
 
 public class Urok_02 : MonoBehaviour
 {
+    //скрипт получения команды игрока и указание где книга.
+    
     [SerializeField]
     private Transform targetRed; // Точка для команды "RED"
 
@@ -16,14 +18,16 @@ public class Urok_02 : MonoBehaviour
 
     public PlayerSpawner spawnerReference;  //Skript na kotorom visit nash personazh
     public string team; //tip komandy
-    private void Awake()
+    //команда выбрана
+    public bool RunTeamTarget =false;
+    
+    private void OnEnable()
     {
+        //находим компонент с уроками
         characterActions = GetComponent<CharacterActions>();
-    }
-
-    private void Start()
-    {
-        //poluchaem komandu.
+        RunTeamTarget =false;
+        
+        //Получаем команду
         //if (spawnerReference.localPlayer != null)
         PlayerVR playerScript = null;
         
@@ -60,21 +64,21 @@ public class Urok_02 : MonoBehaviour
 
             }
         }
+                
     }
-
+    
     private void Update()
     {
         // Проверка на второй шаг обучения
-        if(characterActions.CurrentStepIndex == 1)
+        if(characterActions.CurrentStepIndex == 1 && !RunTeamTarget)
         {
             SetTargetPointBasedOnTeam();
         }
     }
 
+    //отправляем позиции в зависимости от команды персонаж топает к кинге
     private void SetTargetPointBasedOnTeam()
     {
-        
-
         if (team == "RED")
         {
             characterActions.tutorialSteps[characterActions.CurrentStepIndex].targetPoint = targetRed;
@@ -83,15 +87,19 @@ public class Urok_02 : MonoBehaviour
         {
             characterActions.tutorialSteps[characterActions.CurrentStepIndex].targetPoint = targetBlue;
         }
+        //путь указан и команда выбрана
+        RunTeamTarget = true;
+        
     }
     
-    
+    //это вызывается из книги. потом она сбивается.
     public void FinishUrok02()
     {
         if(characterActions.tutorialSteps.Length > 1) // проверка, чтобы убедиться, что у нас есть хотя бы один шаг обучения
         {
+            //обнуляем переменную, чтобы использовать скрипт повторно
+            characterActions.tutorialSteps[characterActions.CurrentStepIndex].targetPoint = null;
             characterActions.tutorialSteps[1].isTaskCompleted = true;
-            
         }
     }
     

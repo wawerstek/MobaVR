@@ -72,6 +72,8 @@ public class Defender_obuchenie : MonoBehaviour
             
                         if (InputBridge.Instance.GetControllerBindingValue(currentLessonObj.Button) || currentLessonObj.test || currentLessonObj.autoStop)
                         {
+                            currentLessonObj.test = false;
+                            
                             if (currentLessonObj.autoStop)
                             {
                                
@@ -80,6 +82,7 @@ public class Defender_obuchenie : MonoBehaviour
                             }
                             else if (!timerStarted)
                             {
+                                currentLessonObj.test = false;
                                 timerStarted = true;
                                // Debug.Log("Запускаем ожидание");
                                 StartCoroutine(StartEndLessonTimer());

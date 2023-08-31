@@ -14,7 +14,7 @@ public class EndTutorialHandler : MonoBehaviour
 
     private AudioSource audioSource;
 
-    private void Awake()
+    private void OnEnable()
     {
         // Включаем объекты из массива при старте
         foreach (GameObject obj in objectsToDisable)

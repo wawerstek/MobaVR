@@ -13,6 +13,10 @@ public class Obuchenie : MonoBehaviour
     public GameObject Personag;
     public GameObject Point;
     public GameObject Player;
+    private float inputStartTime;
+    private bool waitingForInput = false;
+    public SliderMenu Book01; 
+    public SliderMenu Book02; 
 
     // Start is called before the first frame update
     void Start()
@@ -24,61 +28,65 @@ public class Obuchenie : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (ObuchenieRun == false)
-        {
-            //���� ������ �� ������
-            if (InputBridge.Instance.GetControllerBindingValue(Button_Obuch) || Test)
+      
+            if (waitingForInput || Test)
             {
-               RunTutorial();
-               return;
+                if (Time.time - inputStartTime >= 4.0f || Test)
+                {
+                    RunTutorial();
+                    waitingForInput = false;
+                    Test = false;
+                }
             }
-        }
-
-        if (ObuchenieRun == true)
-        {
-            if (InputBridge.Instance.GetControllerBindingValue(Button_Obuch))
+            else if (InputBridge.Instance.GetControllerBindingValue(Button_Obuch))
             {
-                StopTutorial();
+                waitingForInput = true;
+                inputStartTime = Time.time;
             }
-        }
+            else
+            {
+                waitingForInput = false;
+                inputStartTime = 0f;
+            }
+     
     }
 
-    [ContextMenu("StopTutorial")]
-    public void StopTutorial()
-    {
-            ObuchenieRun = false;
-            Personag.SetActive(false);
-    }
-    
+
     [ContextMenu("RunTutorial")]
     public void RunTutorial(){
         
-              //��� �� ������������� ����
+                    ObuchenieRun = false;
+                    Personag.SetActive(false);
     
-                    //������� ��������
-                   
-    
-                    // ������� ������ � ������ "CenterEyeAnchor" � ����������� ��� ���������� Player
                     Player = GameObject.Find("CenterEyeAnchor");
-    
-                    // ���� ������ ������, ������ Point �������� �������� ��� Player
+                    
                     if (Player != null)
                     {
                         RessetPlayerPoint();
                     }
-                    
+                    Personag.transform.localPosition = Vector3.zero;
                     Personag.SetActive(true);
-                    ObuchenieRun = true;
+                    CallResetMenu();
+                    //     ObuchenieRun = true;
     }
 
 
-    //���������� ����� �� ������� ����� �������� �� ������
+    //точка перемещается на плеера
     public void RessetPlayerPoint()
     {
         Point.transform.SetParent(Player.transform);
-
-        // ���� �� ����� ������, ����� ��������� ���������� Point ���� (0,0,0) ������������ Player
         Point.transform.localPosition = Vector3.zero;
     }
+    
+    //обнуляем книгу
+    public void CallResetMenu()
+    {
+        if (Book01 != null && Book02 != null)
+        {
+            Book01.RessetMenu();
+            Book02.RessetMenu();
+        }
+    }
+    
 
 }

@@ -4,7 +4,8 @@ using System.Collections;
 public class CharacterActions : MonoBehaviour
 {
     // Ссылка на Transform игрока.
-    public Transform playerTransform;
+    public Transform playerTransform; 
+   
 
     // Время ожидания перед следующим действием.
     public float waitingTime = 3.0f;
@@ -74,6 +75,7 @@ public class CharacterActions : MonoBehaviour
     // Метод вызывается при активации объекта.
     void OnEnable()
     {
+        
         //сохраняем данные
         SaveTutorialStepsData();
         // Запускаем обучение.
@@ -82,9 +84,16 @@ public class CharacterActions : MonoBehaviour
    
     void OnDisable()
     {
+        lastPlayedSoundIndex = -1;
+        
         currentStepIndex = 0;
+        
+        if (audioSource != null)
+        {
+            audioSource.Stop();
+            audioSource.clip = null;
+        }
         LoadTutorialStepsData();
-       
     }
     
 
@@ -101,22 +110,36 @@ public class CharacterActions : MonoBehaviour
     // Корутина выполнения шага обучения.
     public IEnumerator ExecuteStep(TutorialStep step)
     {
-        // Воспроизводим звук и анимацию начала шага.
-        PlaySoundAndAnimation(step.startSound, step.startAnimation);
-
-        // Если есть звук, ждем его завершения.
+        //Debug.Log("Шаг: ");
+        
+        // Если есть звук, , включаем его и ждем его завершения.
         if (step.startSound)
         {
+            //Debug.Log("Звук есть, запускаем корутину  PlaySoundAndAnimation и отправляем в неё звук из урока номер: ");
+            
+            // Воспроизводим звук и анимацию начала шага. передаёт в функцию  PlaySoundAndAnimation звук и анимацию
+            PlaySoundAndAnimation(step.startSound, step.startAnimation);
+            
+           // Debug.Log("Ждём пока воспроизводится звук");
+            //стоит до тех пор, пока звук не воспроизведётся
             yield return new WaitForSeconds(step.startSound.length);
+            
+           // Debug.Log("Звук воспроизвелся");
+            
             step.startSoundRun = true; //флаг, что звук проигран, можно использовать в других скриптах
+        }
+        else
+        {
+           // Debug.Log("Звука нет");
         }
 
         // Если есть целевая точка, двигаемся к ней.
         if (step.targetPoint)
         {
+            //отправляем игрока к точке
             mover.MoveToPoint(step.targetPoint.position);
         
-           //Debug.Log("Останавливаем корутину которая управляет поворотами перса");
+           //Останавливаем корутину которая управляет поворотами перса
             if(_rotateCoroutine != null) 
             {
                 StopCoroutine(_rotateCoroutine);
@@ -127,7 +150,7 @@ public class CharacterActions : MonoBehaviour
             yield return new WaitWhile(() => !mover.HasReachedDestination());
             step.targetPointRun = true;//персонаж дошёл до точки
             
-           // Debug.Log("Запускаем корутину которая управляет поворотами перса");
+           //Запускаем корутину которая управляет поворотами перса
             _rotateCoroutine = RotateTowardsPlayerRoutine();
             StartCoroutine(_rotateCoroutine);
         }
@@ -141,7 +164,7 @@ public class CharacterActions : MonoBehaviour
     private IEnumerator WaitForPlayerRoutine(TutorialStep step)
     {
         
-        
+        //главный звук ещё не воспроизвелся
         bool hasPlayedMainTaskSound = false;
 
         // Цикл продолжается, пока задание не выполнено.
@@ -152,57 +175,54 @@ public class CharacterActions : MonoBehaviour
             if (audioSource.isPlaying)
             {
                 yield return new WaitWhile(() => audioSource.isPlaying);
-          
             }
 
             
-            //говорим, что первый урок пройден
-            if (currentStepIndex == 0)
-            {
-                step.isTaskCompleted = true;
-            }
+            
+          
             
             // Ждем установленное время. 1 сек
             yield return new WaitForSeconds(waitingTimeStart);
             
-
-            
+            #region далее идут условися первое: если игрок дошёл и главный звук ещё не воспроизвелся, второй если игрок далеко, и есть звуки ожидания.
+            //далее идут условися первое: если игрок дошёл и главный звук ещё не воспроизвелся, второй если игрок далеко, и есть звуки ожидания.
 
             // Если игрок находится в пределах допустимого расстояния и главный звук задания еще не воспроизводился.
             if (Vector3.Distance(transform.position, playerTransform.position) <= maxDistanceToPlayer && !hasPlayedMainTaskSound && !audioSource.isPlaying)
             {
-                step.layerGoPersRun = true;//игрок дошёл до персонажа
-                playerApproached = true; // Игрок подошёл
+                step.layerGoPersRun = true; //игрок дошёл до персонажа
+                playerApproached = true; //Игрок подошёл
                 
-                // Воспроизводим главный звук и анимацию задания.
-                PlaySoundAndAnimation(step.mainTaskSound, step.mainTaskAnimation);
                 
-                /*// Если есть звук, ждем его завершения.
+                //если есть звук основной 
                 if (step.mainTaskSound)
                 {
+                    // Воспроизводим главный звук и анимацию задания.
+                    PlaySoundAndAnimation(step.mainTaskSound, step.mainTaskAnimation);
+                        //ждём пока воспроизводится звук
                     yield return new WaitForSeconds(step.mainTaskSound.length);
-                    step.mainTaskSoundRun = true;//говорим, что звук основной проигрался
-                }*/
-                
-                if (step.mainTaskSound)
-                {
-                    yield return new WaitForSeconds(step.mainTaskSound.length);
+                        //говорим, что главный звук воспроизвёлся
                     step.mainTaskSoundRun = true;
     
                     if (step.stopUrok) // Проверяем, нужно ли остановить урок
                     {
                         yield return new WaitUntil(() => continueTutorial);
                     }
-    
-                    hasPlayedMainTaskSound = true;
+                    
                 }
 
-                
-               
+                //основной звук отыгран, вне зависимости был он или нет.
                 hasPlayedMainTaskSound = true;
+                
+                //говорим, что первый урок пройден
+                if (currentStepIndex == 0)
+                {
+                    step.isTaskCompleted = true;
+                }
+                
             }
             
-            // Если игрок далеко и есть звуки ожидания игрока.
+            // Если игрок далеко и есть звуки ожидания игрока и главный звук не воспроизвёлся
             else if(Vector3.Distance(transform.position, playerTransform.position) > maxDistanceToPlayer && step.waitingForPlayerSounds.Length > 0 && !hasPlayedMainTaskSound)
             {
                 
@@ -216,28 +236,36 @@ public class CharacterActions : MonoBehaviour
                     continue; // Пропустить остальной код и начать следующую итерацию цикла
                 }
                 
-                
+                //генерирование рандомного звука и анимации из всех предоставленных в массивах
                 int randomSoundIndex = GetRandomSoundIndex(step.waitingForPlayerSounds.Length);
                 int randomAnimationIndex = GetRandomAnimationIndex(step.waitingForPlayerAnimations.Length);
 
+                    //воспроизводим звук и анимацию
                      PlaySoundAndAnimation(step.waitingForPlayerSounds[randomSoundIndex], step.waitingForPlayerAnimations[randomAnimationIndex]);
             }
 
-
-                // Если есть звуки ожидания завершения задания, воспроизводим их.
+            #endregion
+            
+            
+            
+                // Если есть звуки ожидания завершения задания, и главный звук был воспроизведён, и урок не окончен
                 if (step.waitingForTaskCompletionSounds.Length > 0 && hasPlayedMainTaskSound && !step.isTaskCompleted)
                 {
                     // Ждем установленное время.
                     yield return new WaitForSeconds(waitingTime);
-
+                        //делаем индекс рандомный для звука
                     int randomSoundIndex = GetRandomSoundIndex(step.waitingForTaskCompletionSounds.Length);
 
-                    // Проверьте, что массив не пустой и индекс находится в пределах допустимого диапазона.
+                    // Проверьте, что массив не пустой и индекс находится в пределах допустимого диапазона и звук не воспроизводится
                     if (step.waitingForTaskCompletionSounds.Length > 0 && randomSoundIndex < step.waitingForTaskCompletionSounds.Length &&  !audioSource.isPlaying) 
                     {
+                        
+                        //воспроизводит звук рандомный один раз
                         audioSource.PlayOneShot(step.waitingForTaskCompletionSounds[randomSoundIndex]);
                         
+                            //делает рандомный индекс для анимации
                         int randomAnimationIndex = GetRandomAnimationIndex(step.waitingForTaskCompletionAnimations.Length);
+                        
                         // Точно такая же проверка для массива анимаций.
                         if (step.waitingForTaskCompletionAnimations.Length > 0 && randomAnimationIndex < step.waitingForTaskCompletionAnimations.Length && !string.IsNullOrEmpty(step.waitingForTaskCompletionAnimations[randomAnimationIndex])) 
                         {
@@ -282,18 +310,27 @@ public class CharacterActions : MonoBehaviour
     // Метод воспроизводит звук и анимацию рандомную
     private void PlaySoundAndAnimation(AudioClip sound, string animationParameter)
     {
-        if (sound && !audioSource.isPlaying)
+        // Debug.Log("Корутина включилась");
+        
+        //если у нас есть звук и он не проигрывается
+        if (sound)
         {
+           // Debug.Log("есть звук, воспроизводим его один раз");
             audioSource.PlayOneShot(sound);
 
+           // Debug.Log("Хотим воспроизвести анимацию");
             // Воспроизводим анимацию, только если у нас есть соответствующий параметр для этого звука
             if (!string.IsNullOrEmpty(animationParameter))
             {
+               // Debug.Log("Воспроизводим анимацию, она есть");
                 SetAnimationParameter(animationParameter, true);
+                
                 // Останавливаем анимацию, когда звук закончит играть
                 StartCoroutine(StopAnimationWhenSoundStops(sound.length, animationParameter));
             }
         }
+       
+        
     }
 
 

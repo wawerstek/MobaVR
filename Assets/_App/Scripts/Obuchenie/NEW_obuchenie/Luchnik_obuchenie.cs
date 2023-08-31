@@ -49,8 +49,9 @@ public class Luchnik_obuchenie : MonoBehaviour
         {
             lesson.BannerTutorial.SetActive(false);
         }
-
     }
+    
+    
     
     private void Update()
     {
@@ -70,18 +71,20 @@ public class Luchnik_obuchenie : MonoBehaviour
                     {
                         Lesson currentLessonObj = lessons[currentLesson];
             
+                        //нажатием кнопки, мы заканчиваем урок
                         if (InputBridge.Instance.GetControllerBindingValue(currentLessonObj.Button) || currentLessonObj.test || currentLessonObj.autoStop)
                         {
+                           //если стоит авто стоп труе, то автоматически переходит к следующему уроку
                             if (currentLessonObj.autoStop)
                             {
-                               
-                                Debug.Log("Запускаем звук");
+                                // Debug.Log("Запускаем звук");
                                 StartCoroutine(StartEndLessonAuto());
                             }
                             else if (!timerStarted)
                             {
+                                currentLessonObj.test = false;
                                 timerStarted = true;
-                                Debug.Log("Запускаем ожидание");
+                               // Debug.Log("Запускаем ожидание");
                                 StartCoroutine(StartEndLessonTimer());
                             }
                         }
@@ -100,17 +103,17 @@ public class Luchnik_obuchenie : MonoBehaviour
         Lesson lesson = lessons[lessonIndex];
         lesson.isPlaying = true;
         
-        Debug.Log("Включаем баннер");
+       // Debug.Log("Включаем баннер");
         lesson.BannerTutorial.SetActive(true);
         
-        Debug.Log("Запускаем аниматор");
+       // Debug.Log("Запускаем аниматор");
         Animator anim = this.gameObject.GetComponent<Animator>();
         if (anim != null)
         {
             anim.SetBool(lesson.animTutorial, true);
         }
 
-        Debug.Log("Включаем звук");
+       // Debug.Log("Включаем звук");
         PlaySound(lesson.SoundTutorial);
     }
 
@@ -121,7 +124,7 @@ public class Luchnik_obuchenie : MonoBehaviour
            
             audioSource.clip = soundClip;
             audioSource.Play();
-            Debug.Log("Звук включен");
+           // Debug.Log("Звук включен");
         }
     }
 
@@ -143,6 +146,8 @@ public class Luchnik_obuchenie : MonoBehaviour
         lesson.BannerTutorial.SetActive(false);
         lesson.isPlaying = false;
 
+       
+        
         // Переходим к следующему уроку
         currentLesson++;
 

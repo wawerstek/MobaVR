@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class RessetMenu : MonoBehaviour
 {
-    public GameObject objectToActivate; // Объект, который вы хотите активировать через инспектор
+    public GameObject objectToActivate; // пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
     void Start()
     {
-        // При старте скрипта начнем корутину
+        // пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         StartCoroutine(ActivateAfterDelay());
     }
 
     private IEnumerator ActivateAfterDelay()
     {
-        yield return new WaitForSeconds(5); // Ждем 5 секунд
-        objectToActivate.SetActive(true);   // Активируем объект
+        yield return new WaitForSeconds(45); // пїЅпїЅпїЅпїЅ 5 пїЅпїЅпїЅпїЅпїЅпїЅ
+        objectToActivate.SetActive(true);   // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
     }
 }

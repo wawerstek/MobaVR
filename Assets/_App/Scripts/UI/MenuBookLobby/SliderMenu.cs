@@ -21,11 +21,12 @@ public class SliderMenu : MonoBehaviour
     public GameObject MenuGoTir;
 
     public Text HandsLeftRight;
-   
+    private AudioSource audioSource;
 
     private void Start()
     {
-        // Находим все кнопки и сохраняем их оригинальные размеры
+        audioSource = GetComponent<AudioSource>();
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         //characterButtons = GetComponentsInChildren<Button>();
 
         originalScales = new Vector3[characterButtons.Length];
@@ -37,10 +38,10 @@ public class SliderMenu : MonoBehaviour
 
     public void OnCharacterButtonEnter(int buttonIndex)
     {
-        // Увеличиваем размер кнопки при наведении
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         characterButtons[buttonIndex].transform.localScale = originalScales[buttonIndex] * 1.2f;
 
-        // Воспроизводим звук наведения
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         PlaySound(hoverSound);
     }
 
@@ -49,13 +50,13 @@ public class SliderMenu : MonoBehaviour
 
     public void OnCharacterButtonExit(int buttonIndex)
     {
-        // Возвращаем кнопке оригинальный размер
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         characterButtons[buttonIndex].transform.localScale = originalScales[buttonIndex];
     }
 
     public void OnCharacterButtonClick(int buttonIndex)
     {
-        // Воспроизводим звук нажатия
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         PlaySound(clickSound);
     
 
@@ -77,7 +78,7 @@ public class SliderMenu : MonoBehaviour
 
     public void NextClickName()
     {
-        //Тут можно добавить функцию присвоения имени игроку
+        //пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         PlaySound(clickSound);
         MenuClass.SetActive(false);
         MenuName.SetActive(false);
@@ -100,6 +101,11 @@ public class SliderMenu : MonoBehaviour
     {
         
         PlaySound(clickSound);
+        if (audioSource != null)
+        {
+            audioSource.Stop();
+            audioSource.clip = null;
+        }
         MenuClass.SetActive(true);
         MenuName.SetActive(false);
         MenuHands.SetActive(false);
@@ -108,7 +114,7 @@ public class SliderMenu : MonoBehaviour
 
     public void Red_team_Click()
     {
-        // Воспроизводим звук нажатия
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         PlaySound(clickSound);
 
 
@@ -116,7 +122,7 @@ public class SliderMenu : MonoBehaviour
 
     public void Blue_team_Click()
     {
-        // Воспроизводим звук нажатия
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         PlaySound(clickSound);
 
     }
@@ -126,7 +132,7 @@ public class SliderMenu : MonoBehaviour
     {
 
         PlaySound(clickSound);
-        HandsLeftRight.text = "Ты Левша";
+        HandsLeftRight.text = "пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ";
 
     }   
     
@@ -134,7 +140,7 @@ public class SliderMenu : MonoBehaviour
     {
 
         PlaySound(clickSound);
-        HandsLeftRight.text = "Ты Правша";
+        HandsLeftRight.text = "пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ";
 
     }
 
@@ -143,7 +149,7 @@ public class SliderMenu : MonoBehaviour
 
     private void PlaySound(AudioClip sound)
     {
-        // Воспроизведение звука
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
         if (sound != null)
         {
             AudioSource.PlayClipAtPoint(sound, Camera.main.transform.position);

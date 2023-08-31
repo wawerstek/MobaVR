@@ -80,6 +80,7 @@ public class Shit_obuchenie : MonoBehaviour
                     }
                     else if (!timerStarted)
                     {
+                        currentLessonObj.test = false;
                         timerStarted = true;
                         //Debug.Log("Запускаем ожидание");
                         StartCoroutine(StartEndLessonTimer());
