@@ -33,5 +33,46 @@ namespace MobaVR
                 skinRagdollSwitcher.SetRagdoll(useRagdoll);
             }
         }
+
+
+        public void SetEmptyType()
+        {
+            if (!PhotonNetwork.IsMasterClient)
+            {
+                return;
+            }
+
+            photonView.RPC(nameof(RpcSetDieBehaviour), RpcTarget.All, OnDieBehaviourType.NONE);
+        }
+
+        public void SetAnimType()
+        {
+            if (!PhotonNetwork.IsMasterClient)
+            {
+                return;
+            }
+            
+            photonView.RPC(nameof(RpcSetDieBehaviour), RpcTarget.All, OnDieBehaviourType.ANIM);
+        }
+
+        public void SetRagDollType()
+        {
+            if (!PhotonNetwork.IsMasterClient)
+            {
+                return;
+            }
+
+            photonView.RPC(nameof(RpcSetDieBehaviour), RpcTarget.All, OnDieBehaviourType.RAGDOLL);
+        }
+
+        [PunRPC]
+        public void RpcSetDieBehaviour(OnDieBehaviourType dieBehaviourType)
+        {
+            SkinRagdollSwitcher[] ragdollSwitchers = FindObjectsOfType<SkinRagdollSwitcher>();
+            foreach (SkinRagdollSwitcher skinRagdollSwitcher in ragdollSwitchers)
+            {
+                skinRagdollSwitcher.SetDieBehaviour(dieBehaviourType);
+            }
+        }
     }
 }

@@ -10,7 +10,7 @@ namespace MobaVR
         [SerializeField] private GameObject m_View;
         [SerializeField] private Canvas m_Canvas;
         [SerializeField] private bool m_UseVRUISystem = false;
-        
+
         [SerializeField] private ClassicGameSession m_GameSession;
         [SerializeField] private SessionSettings m_SessionSettings;
         [SerializeField] private StateMachineSwitcher m_StateMachineSwitcher;
@@ -27,12 +27,12 @@ namespace MobaVR
             {
                 m_GameSession = FindObjectOfType<ClassicGameSession>();
             }
-            
+
             if (m_Environment == null)
             {
                 m_Environment = FindObjectOfType<Environment>();
             }
-            
+
             if (m_SceneEnvironment == null)
             {
                 m_SceneEnvironment = FindObjectOfType<ScenesEnvironment>();
@@ -47,7 +47,7 @@ namespace MobaVR
             {
                 m_SessionSettings = FindObjectOfType<SessionSettings>();
             }
-            
+
             m_VRUISystem = FindObjectOfType<VRUISystem>();
             /*
                         if (Application.isEditor || Application.platform == RuntimePlatform.WindowsPlayer)
@@ -154,25 +154,55 @@ namespace MobaVR
             {
                 return;
             }
-            
+
             m_SessionSettings.ActivateRagdolls();
         }
-        
+
         public void DeactivateRagdolls()
         {
             if (m_SessionSettings == null)
             {
                 return;
             }
-            
+
             m_SessionSettings.DeactivateRagdolls();
+        }
+
+        public void SetEmptyType()
+        {
+            if (m_SessionSettings == null)
+            {
+                return;
+            }
+
+            m_SessionSettings.SetEmptyType();
+        }
+
+        public void SetAnimType()
+        {
+            if (m_SessionSettings == null)
+            {
+                return;
+            }
+
+            m_SessionSettings.SetAnimType();
+        }
+
+        public void SetRagDollType()
+        {
+            if (m_SessionSettings == null)
+            {
+                return;
+            }
+
+            m_SessionSettings.SetRagDollType();
         }
 
         public void ClearCal()
         {
             _Call.GetComponent<Calibration>().calibr = false;
         }
-        
+
         #region Game Mode
 
         public void StartMode()
@@ -198,9 +228,9 @@ namespace MobaVR
                 m_GameSession.DeactivateMode();
             }
         }
-        
+
         #endregion
-        
+
         #region PvP Mode
 
         public void StartPvPMode()
@@ -226,14 +256,14 @@ namespace MobaVR
                 m_GameSession.DeactivatePvPMode();
             }
         }
-        
+
         public void SetClassMode()
         {
-         if (m_StateMachineSwitcher == null)
-                    {
-                        m_StateMachineSwitcher = FindObjectOfType<StateMachineSwitcher>();
-                    }
-        
+            if (m_StateMachineSwitcher == null)
+            {
+                m_StateMachineSwitcher = FindObjectOfType<StateMachineSwitcher>();
+            }
+
             if (m_StateMachineSwitcher != null)
             {
                 m_StateMachineSwitcher.SetClassMode();
@@ -242,11 +272,11 @@ namespace MobaVR
 
         public void SetTimerMode()
         {
-         if (m_StateMachineSwitcher == null)
-                    {
-                        m_StateMachineSwitcher = FindObjectOfType<StateMachineSwitcher>();
-                    }
-        
+            if (m_StateMachineSwitcher == null)
+            {
+                m_StateMachineSwitcher = FindObjectOfType<StateMachineSwitcher>();
+            }
+
             if (m_StateMachineSwitcher != null)
             {
                 m_StateMachineSwitcher.SetTimerMode();
@@ -272,7 +302,7 @@ namespace MobaVR
                 m_GameSession.CompletePvEMode();
             }
         }
-        
+
         public void SetMasterClient()
         {
             if (m_GameSession != null)
@@ -282,8 +312,8 @@ namespace MobaVR
         }
 
         #endregion
-        
-        
+
+
         ////
         ///
         ///
@@ -291,22 +321,22 @@ namespace MobaVR
         {
             m_SceneEnvironment.ShowTavernMap();
         }
-        
+
         public void ShowSkyLandMap()
         {
             m_SceneEnvironment.ShowSkyLandMap();
         }
-        
+
         public void ShowSkyLandWithPropMap()
         {
             m_SceneEnvironment.ShowSkyLandWithPropMap();
         }
-        
+
         public void ShowMobaMap()
         {
             m_SceneEnvironment.ShowMobaMap();
         }
-        
+
         public void ShowLichMap()
         {
             m_SceneEnvironment.ShowLichMap();
@@ -316,22 +346,22 @@ namespace MobaVR
         {
             m_SceneEnvironment.ShowNecropolisMap();
         }
-        
+
         public void ShowTowerMap()
         {
             m_SceneEnvironment.ShowTowerMap();
         }
-        
+
         public void ShowDefaultPvPMap()
         {
             m_SceneEnvironment.ShowSkyLandMap();
         }
-        
+
         public void ShowDefaultPvEMap()
         {
             m_SceneEnvironment.ShowLichMap();
         }
-        
+
         ////
         ///
         ///
@@ -339,32 +369,32 @@ namespace MobaVR
         {
             m_Environment.ShowTavernMap();
         }
-        
+
         public void Local_ShowSkyLandMap()
         {
             m_Environment.ShowSkyLandMap();
         }
-        
+
         public void Local_ShowSkyLandWithPropMap()
         {
             m_Environment.ShowSkyLandWithPropMap();
         }
-        
+
         public void Local_ShowMobaMap()
         {
             m_Environment.ShowMobaMap();
         }
-        
+
         public void Local_ShowLichMap()
         {
             m_Environment.ShowLichMap();
         }
-        
+
         public void Local_ShowDefaultPvPMap()
         {
             m_Environment.ShowSkyLandMap();
         }
-        
+
         public void Local_ShowDefaultPvEMap()
         {
             m_Environment.ShowLichMap();

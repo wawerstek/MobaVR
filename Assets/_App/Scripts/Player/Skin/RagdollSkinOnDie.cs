@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace MobaVR
@@ -83,18 +82,24 @@ namespace MobaVR
             m_EyeAnimationHandler.enabled = !useRagDoll;
             m_Vrik.enabled = !useRagDoll;
             m_Animator.enabled = !useRagDoll;
-
-            foreach (Rigidbody childRigidbody in m_ChildRigidbodies)
-            {
-                childRigidbody.isKinematic = !useRagDoll;
-                childRigidbody.useGravity = useRagDoll;
-                childRigidbody.velocity = Vector3.zero;
-                childRigidbody.angularVelocity = Vector3.zero;
-            }
-
+            
             foreach (Collider childCollider in m_ChildColliders)
             {
                 childCollider.isTrigger = !useRagDoll;
+            }
+
+            foreach (Rigidbody childRigidbody in m_ChildRigidbodies)
+            {
+                childRigidbody.ResetInertiaTensor();
+                childRigidbody.velocity = Vector3.zero;
+                childRigidbody.angularVelocity = Vector3.zero;
+                
+                childRigidbody.isKinematic = !useRagDoll;
+                childRigidbody.useGravity = useRagDoll;
+                
+                childRigidbody.ResetInertiaTensor();
+                childRigidbody.velocity = Vector3.zero;
+                childRigidbody.angularVelocity = Vector3.zero;
             }
         }
     }

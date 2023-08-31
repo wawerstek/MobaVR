@@ -18,6 +18,7 @@ namespace MobaVR
         public Action OnDestroySpell;
         public Action OnHit;
         public Action OnInitSpell;
+        public Action OnRpcInitSpell;
         //public Action OnThrown;
 
         public TeamItem Team => m_TeamItem;
@@ -70,6 +71,8 @@ namespace MobaVR
             {
                 m_TeamItem.SetTeam(teamType);
             }
+            
+            OnRpcInitSpell?.Invoke();
         }
 
         #endregion

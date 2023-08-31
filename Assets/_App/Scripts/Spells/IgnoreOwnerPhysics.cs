@@ -13,7 +13,8 @@ namespace MobaVR
         {
             if (m_Spell != null)
             {
-                m_Spell.OnInitSpell += OnInitSpell;
+                //m_Spell.OnInitSpell += OnInitSpell;
+                m_Spell.OnRpcInitSpell += OnInitSpell;
             }
         }
 
@@ -21,16 +22,19 @@ namespace MobaVR
         {
             if (m_Spell != null)
             {
-                m_Spell.OnInitSpell -= OnInitSpell;
+                //m_Spell.OnInitSpell -= OnInitSpell;
+                m_Spell.OnRpcInitSpell -= OnInitSpell;
             }
         }
 
         private void Awake()
         {
+            /*
             if (!photonView.IsMine)
             {
                 return;
             }
+            */
             
             m_Spell = GetComponent<Spell>();
             m_Colliders = GetComponents<Collider>();
