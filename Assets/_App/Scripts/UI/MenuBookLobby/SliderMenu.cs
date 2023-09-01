@@ -132,7 +132,7 @@ public class SliderMenu : MonoBehaviour
     {
 
         PlaySound(clickSound);
-        HandsLeftRight.text = "�� �����";
+        HandsLeftRight.text = "Левая рука";
 
     }   
     
@@ -140,7 +140,7 @@ public class SliderMenu : MonoBehaviour
     {
 
         PlaySound(clickSound);
-        HandsLeftRight.text = "�� ������";
+        HandsLeftRight.text = "Правая рука";
 
     }
 

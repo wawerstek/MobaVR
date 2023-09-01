@@ -2,17 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using BNG;
+using UnityEngine.TextCore.Text;
 
 
 public class Obuchenie : MonoBehaviour
 {
 
-    public ControllerBinding Button_Obuch = ControllerBinding.BButton; //�������
+    public ControllerBinding Button_Obuch = ControllerBinding.BButton; //кнопка B
+    public ControllerBinding Button_Obuch_A = ControllerBinding.AButton; //кнопка A
     public bool ObuchenieRun;
     public bool Test = false;
     public GameObject Personag;
     public GameObject Point;
     public GameObject Player;
+    private float requiredHoldTime = 5f; // Время удержания в секундах
+    private float buttonHoldTimer = 0f;//для таймера
+    
+    private bool isButtonCalibrPressed = false;
+    private bool isButtonCalibrBPressed = false;
+    
     private float inputStartTime;
     private bool waitingForInput = false;
     public SliderMenu Book01; 
@@ -28,26 +36,43 @@ public class Obuchenie : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-      
-            if (waitingForInput || Test)
+        if (InputBridge.Instance.GetControllerBindingValue(Button_Obuch) &&
+            InputBridge.Instance.GetControllerBindingValue(Button_Obuch_A))
+        {
+            isButtonCalibrPressed = true;
+        }
+        else
+        {
+            isButtonCalibrPressed = false;
+            ObuchenieRun = false;
+        }
+
+
+        //сли зажато 2 клавиши
+        if (isButtonCalibrPressed && ObuchenieRun == false)
+        {
+            buttonHoldTimer += Time.deltaTime;
+                    
+            // Проверка, достигнуто ли требуемое время удержания
+            if (buttonHoldTimer >= requiredHoldTime)
             {
-                if (Time.time - inputStartTime >= 4.0f || Test)
-                {
-                    RunTutorial();
-                    waitingForInput = false;
-                    Test = false;
-                }
+                RunTutorial();
+                ObuchenieRun = true;
             }
-            else if (InputBridge.Instance.GetControllerBindingValue(Button_Obuch))
+            
+        }
+        else
+        {
+            buttonHoldTimer = 0f; // Обнуляем таймер
+        }
+        
+        
+            if (Test)
             {
-                waitingForInput = true;
-                inputStartTime = Time.time;
+                RunTutorial();
+                Test = false;
             }
-            else
-            {
-                waitingForInput = false;
-                inputStartTime = 0f;
-            }
+           
      
     }
 

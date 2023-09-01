@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -9450,7 +9450,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8320362180693419115}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 3.331, y: 14.656001, z: -102.52601}
 --- !u!114 &1080671001781298471
 MonoBehaviour:
@@ -15349,6 +15349,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Green Gloves Right
       objectReference: {fileID: 0}
+    - target: {fileID: 7561735844013006471, guid: c2ba382097f06114c8ca184c7f00afaf,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7601612243377398142, guid: c2ba382097f06114c8ca184c7f00afaf,
         type: 3}
       propertyPath: m_Layer
@@ -20102,7 +20107,7 @@ Transform:
   - {fileID: 5148716642908031298}
   - {fileID: 1989293052011552305}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!81 &2683195716797288976
 AudioListener:
@@ -25263,7 +25268,7 @@ Transform:
   m_Children:
   - {fileID: 5608841286799216553}
   m_Father: {fileID: 8320362180693419115}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3422399947578410070
 GameObject:
@@ -28948,7 +28953,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3880885646573286586
 Transform:
   m_ObjectHideFlags: 0
@@ -29504,7 +29509,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8320362180693419115}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3966781999138708937
 GameObject:
@@ -33568,7 +33573,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8320362180693419115}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: -15, y: 0, z: 0}
 --- !u!4 &4549592579233886903
 Transform:
@@ -41391,6 +41396,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1281
   ParentGrabber: {fileID: 6969157712653424863}
+  OnEnterGrabbableEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnExitGrabbableEvent:
+    m_PersistentCalls:
+      m_Calls: []
   ShowGizmos: 1
 --- !u!1 &5629437627840137646
 GameObject:
@@ -41665,7 +41676,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8320362180693419115}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5633142964456498345
 GameObject:
@@ -49582,7 +49593,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &6754194929022803174
 GameObject:
   m_ObjectHideFlags: 0
@@ -50976,7 +50987,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8320362180693419115}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!153 &6969157712653424889
 ConfigurableJoint:
@@ -53048,6 +53059,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Green Gloves Left
+      objectReference: {fileID: 0}
+    - target: {fileID: 246384007524380218, guid: 79777ae0bfe4829409a6a8db9a83b871,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 585613497604486272, guid: 79777ae0bfe4829409a6a8db9a83b871,
         type: 3}
@@ -57118,12 +57134,12 @@ RectTransform:
   - {fileID: 15975214172415924}
   - {fileID: 766677754}
   - {fileID: 864132182291869870}
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_Father: {fileID: 8320362180693419115}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0.283}
+  m_AnchoredPosition: {x: 0.2, y: 0.283}
   m_SizeDelta: {x: 480, y: 489}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &7848570514881451035
@@ -61030,6 +61046,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5629437628552951771}
+  - {fileID: 7848570514881451026}
   - {fileID: 6969157712653424871}
   - {fileID: 5629437628653377546}
   - {fileID: 1080671001193722015}
@@ -63116,6 +63133,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1057
   ParentGrabber: {fileID: 8516297022253647120}
+  OnEnterGrabbableEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnExitGrabbableEvent:
+    m_PersistentCalls:
+      m_Calls: []
   ShowGizmos: 1
 --- !u!136 &8516297023033579491
 CapsuleCollider:
