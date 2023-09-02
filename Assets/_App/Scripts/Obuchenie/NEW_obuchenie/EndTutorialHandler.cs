@@ -12,6 +12,9 @@ public class EndTutorialHandler : MonoBehaviour
     [Tooltip("Массив объектов, которые будут выключены после воспроизведения звука и включены при старте")]
     public GameObject[] objectsToDisable;
 
+    [Tooltip("Субтитры")]
+    public GameObject SubEndUrok;
+    
     private AudioSource audioSource;
 
     private void OnEnable()
@@ -19,6 +22,7 @@ public class EndTutorialHandler : MonoBehaviour
         // Включаем объекты из массива при старте
         foreach (GameObject obj in objectsToDisable)
         {
+            SubEndUrok.SetActive(false);
             obj.SetActive(true);
         }
 
@@ -39,6 +43,7 @@ public class EndTutorialHandler : MonoBehaviour
     {
         if (endSound)
         {
+            SubEndUrok.SetActive(true);
             audioSource.clip = endSound;
             audioSource.Play();
             yield return new WaitForSeconds(endSound.length);
@@ -55,6 +60,7 @@ public class EndTutorialHandler : MonoBehaviour
 
         foreach (GameObject obj in objectsToDisable)
         {
+            SubEndUrok.SetActive(false);
             obj.SetActive(false);
         }
 

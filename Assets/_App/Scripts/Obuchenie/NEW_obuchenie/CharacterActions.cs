@@ -23,7 +23,8 @@ public class CharacterActions : MonoBehaviour
     
     // Массив шагов обучения.
     public TutorialStep[] tutorialSteps;
-
+   
+    
     // Индекс текущего шага обучения.
     private int currentStepIndex = 0;
     
@@ -47,6 +48,7 @@ public class CharacterActions : MonoBehaviour
         public string description; // Описание шага.
         public AudioClip startSound; // Звук при старте шага.
         public string startAnimation; // Анимация при старте шага.
+        public GameObject SubStart;//субтитры старта
         public bool startSoundRun; //звук проигрался
         public Transform targetPoint; // Точка, к которой должен двигаться персонаж.
         public bool targetPointRun; //Персонаж подошёл к точке
@@ -55,6 +57,7 @@ public class CharacterActions : MonoBehaviour
         public bool layerGoPersRun; //Игрок подошёл к персонажу
         public AudioClip mainTaskSound; // Главный звук задания.
         public string mainTaskAnimation; // Главная анимация задания.
+        public GameObject SubMainTask;//субтитры главного звука
         public bool mainTaskSoundRun; //Основной звук проигрался
         public bool stopUrok; // Переменная ожидания выполнения скрипта
         public AudioClip[] waitingForTaskCompletionSounds; // Звуки ожидания завершения задания.
@@ -110,12 +113,24 @@ public class CharacterActions : MonoBehaviour
     // Корутина выполнения шага обучения.
     public IEnumerator ExecuteStep(TutorialStep step)
     {
+
+       
         //Debug.Log("Шаг: ");
         
         // Если есть звук, , включаем его и ждем его завершения.
         if (step.startSound)
         {
             //Debug.Log("Звук есть, запускаем корутину  PlaySoundAndAnimation и отправляем в неё звук из урока номер: ");
+            
+
+            //включаем субтитры
+            if (step.SubMainTask)
+            {step.SubMainTask.SetActive(false);}
+            if (step.SubStart)
+            {step.SubStart.SetActive(true); }
+
+            
+            
             
             // Воспроизводим звук и анимацию начала шага. передаёт в функцию  PlaySoundAndAnimation звук и анимацию
             PlaySoundAndAnimation(step.startSound, step.startAnimation);
@@ -192,6 +207,12 @@ public class CharacterActions : MonoBehaviour
             {
                 step.layerGoPersRun = true; //игрок дошёл до персонажа
                 playerApproached = true; //Игрок подошёл
+                
+                //включаем субтитры
+                if (step.SubStart)
+                {step.SubStart.SetActive(false); }
+                if (step.SubMainTask)
+                {step.SubMainTask.SetActive(true);}
                 
                 
                 //если есть звук основной 
@@ -281,6 +302,13 @@ public class CharacterActions : MonoBehaviour
                 // Если задание выполнено.
                 if (step.isTaskCompleted)
                 {
+                    
+                    //выключаем субтитры
+                    if (step.SubStart)
+                    {step.SubStart.SetActive(false); }
+                    if (step.SubMainTask)
+                    {step.SubMainTask.SetActive(false);}
+                    
                 // Переходим к следующему шагу обучения.
                 NextStep();
                 }

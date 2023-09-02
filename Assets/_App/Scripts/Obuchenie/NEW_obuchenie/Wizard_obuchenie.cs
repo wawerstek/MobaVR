@@ -16,9 +16,12 @@ public class Wizard_obuchenie : MonoBehaviour
         [HideInInspector] public bool isPlaying;
     }
 	public int NomerUroka;
+    public bool isMainTaskSoundRunInSecondStep;
     public SaveInfoClass _SaveInfoClass;// получаем класс ирока
     public string ID;//вводим класс игрока, который будем сравнивать с полученным
     private CharacterActions characterActions; // Ссылка на ваш скрипт CharacterActions
+    
+    
     private AudioSource audioSource; // Аудиосоурс на этом объекте
     public Lesson[] lessons;
     private int currentLesson = 0;
@@ -54,43 +57,51 @@ public class Wizard_obuchenie : MonoBehaviour
 
         if (ID == _SaveInfoClass.targetID)
         {
+            // Проверяем значение mainTaskSoundRun для второго урока (индекс 1, так как индексы в массивах обычно начинаются с 0).
+            // isMainTaskSoundRunInSecondStep = characterActions.tutorialSteps[NomerUroka].mainTaskSoundRun;
+            
             if (characterActions && characterActions.tutorialSteps[NomerUroka].mainTaskSoundRun && !RunUrok0)
+            //if (characterActions && characterActions.CurrentStepIndex == NomerUroka &&  characterActions.tutorialSteps[characterActions.CurrentStepIndex].mainTaskSoundRun  && !RunUrok0)
                     {
+                        //если у нас есть урок и не воспроизводится звук урока
                         if (currentLesson < lessons.Length && !lessons[currentLesson].isPlaying)
                         {
                             RunUrok0=true;
-                            StartLesson(0);
+                            StartLesson(0); 
                         }
                     }
             
-                    if (currentLesson < lessons.Length)
-                    {
-                        Lesson currentLessonObj = lessons[currentLesson];
+            if (currentLesson < lessons.Length && RunUrok0)
+            {
+                Lesson currentLessonObj = lessons[currentLesson];
             
-                        if (InputBridge.Instance.GetControllerBindingValue(currentLessonObj.Button) || currentLessonObj.test || currentLessonObj.autoStop)
-                        {
+                if (InputBridge.Instance.GetControllerBindingValue(currentLessonObj.Button) || currentLessonObj.test || currentLessonObj.autoStop)
+                {
 
                            
-                            if (currentLessonObj.autoStop)
-                            {
+                    if (currentLessonObj.autoStop)
+                    {
                                
-                               // Debug.Log("Запускаем звук");
-                                StartCoroutine(StartEndLessonAuto());
-                            }
-                            else if (!timerStarted)
-                            {
-                                currentLessonObj.test = false;
-                                timerStarted = true;
-                               // Debug.Log("Запускаем ожидание");
-                                StartCoroutine(StartEndLessonTimer());
-                            }
-                        }
-                        else
-                        {
-                            // Если кнопка больше не нажимается, сбрасываем таймер
-                            timerStarted = false;
-                        }
+                        // Debug.Log("Запускаем звук");
+                        StartCoroutine(StartEndLessonAuto());
                     }
+                    else if (!timerStarted)
+                    {
+                        currentLessonObj.test = false;
+                        timerStarted = true;
+                        // Debug.Log("Запускаем ожидание");
+                        StartCoroutine(StartEndLessonTimer());
+                    }
+                }
+                else
+                {
+                    // Если кнопка больше не нажимается, сбрасываем таймер
+                    timerStarted = false;
+                }
+            }
+
+            
+                  
         }
         
     }
