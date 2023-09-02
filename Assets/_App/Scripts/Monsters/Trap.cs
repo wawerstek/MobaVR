@@ -16,24 +16,6 @@ namespace MobaVR
         [SerializeField] private float m_ExplosionRadius = 4f;
         [SerializeField] private float m_ExplosionModifier = 1f;
 
-        private void Start()
-        {
-            StartCoroutine(Attack());
-        }
-
-        private IEnumerator Attack()
-        {
-            m_Collider.enabled = false;
-            yield return new WaitForSeconds(m_Delay);
-            m_Animator.SetTrigger("open");
-            m_Collider.enabled = true;
-            yield return new WaitForSeconds(0.5f);
-            m_Collider.enabled = false;
-            yield return new WaitForSeconds(1f);
-            m_Animator.SetTrigger("close");
-            StartCoroutine(Attack());
-        }
-
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Enemy"))
@@ -53,6 +35,18 @@ namespace MobaVR
                     hit.Explode(m_ExplosionForce, m_ExplosionPoint.position, m_ExplosionRadius, m_ExplosionModifier);
                 }
             }
+        }
+
+        public void Activate()
+        {
+            m_Animator.SetTrigger("open");
+            m_Collider.enabled = true;
+        }
+
+        public void Deactivate()
+        {
+            m_Animator.SetTrigger("close");
+            m_Collider.enabled = false;
         }
     }
 }

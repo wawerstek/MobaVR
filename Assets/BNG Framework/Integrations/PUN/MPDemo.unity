@@ -130,9 +130,19 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 966512732591709781, guid: 2af1d2045149fe743b81bc4d1a6f8406,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2101652783312529233, guid: 2af1d2045149fe743b81bc4d1a6f8406,
         type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2981720430411257789, guid: 2af1d2045149fe743b81bc4d1a6f8406,
+        type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4711852044370096620, guid: 2af1d2045149fe743b81bc4d1a6f8406,
@@ -292,7 +302,7 @@ PrefabInstance:
     - target: {fileID: 6941527642207653767, guid: 1368e9fa0016fca4c82a05a8af094a46,
         type: 3}
       propertyPath: sceneViewId
-      value: 41
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6941527642207653767, guid: 1368e9fa0016fca4c82a05a8af094a46,
         type: 3}
@@ -392,7 +402,7 @@ PrefabInstance:
     - target: {fileID: 6941527642207653767, guid: 1368e9fa0016fca4c82a05a8af094a46,
         type: 3}
       propertyPath: sceneViewId
-      value: 40
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6941527642207653767, guid: 1368e9fa0016fca4c82a05a8af094a46,
         type: 3}
@@ -473,7 +483,7 @@ PrefabInstance:
     - target: {fileID: 1227900757193237028, guid: 10c9462aa623df9478b05b11a7ee5af8,
         type: 3}
       propertyPath: sceneViewId
-      value: 39
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1227900757193237028, guid: 10c9462aa623df9478b05b11a7ee5af8,
         type: 3}
@@ -563,7 +573,7 @@ PrefabInstance:
     - target: {fileID: 1227900757193237028, guid: 10c9462aa623df9478b05b11a7ee5af8,
         type: 3}
       propertyPath: sceneViewId
-      value: 38
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1227900757193237028, guid: 10c9462aa623df9478b05b11a7ee5af8,
         type: 3}
@@ -741,7 +751,7 @@ PrefabInstance:
     - target: {fileID: 8770020790522591365, guid: dded405d29dd5ea4998b68485176a275,
         type: 3}
       propertyPath: sceneViewId
-      value: 37
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8770020790522591365, guid: dded405d29dd5ea4998b68485176a275,
         type: 3}
@@ -898,7 +908,7 @@ PrefabInstance:
     - target: {fileID: 8770020790522591365, guid: dded405d29dd5ea4998b68485176a275,
         type: 3}
       propertyPath: sceneViewId
-      value: 36
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8770020790522591365, guid: dded405d29dd5ea4998b68485176a275,
         type: 3}
@@ -913,49 +923,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 758413086}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1005646844 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5117709272763234209, guid: 2af1d2045149fe743b81bc4d1a6f8406,
-    type: 3}
-  m_PrefabInstance: {fileID: 216212246}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1005646848
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1005646844}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4b00acd070e37747b9e19b276d11877, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  EmulatorEnabled: 1
-  EditorOnly: 1
-  RequireGameFocus: 1
-  EmulatorActionSet: {fileID: 0}
-  ForceStraightTeleportRotation: 1
-  AllowUpDownControls: 1
-  PlayerUpAction: {fileID: 0}
-  PlayerDownAction: {fileID: 0}
-  MinPlayerHeight: 0.2
-  MaxPlayerHeight: 5
-  LockCameraAction: {fileID: 0}
-  CameraLookAction: {fileID: 0}
-  CameraLookSensitivityX: 0.1
-  CameraLookSensitivityY: 0.1
-  MinimumCameraY: -90
-  MaximumCameraY: 90
-  LeftGripAction: {fileID: 0}
-  LeftTriggerAction: {fileID: 0}
-  LeftThumbNearAction: {fileID: 0}
-  RightGripAction: {fileID: 0}
-  RightTriggerAction: {fileID: 0}
-  RightThumbNearAction: {fileID: 0}
-  HMDIsActive: 0
-  LeftControllerPosition: {x: -0.2, y: -0.2, z: 0.5}
-  RightControllerPosition: {x: 0.2, y: -0.2, z: 0.5}
 --- !u!1 &1133568070
 GameObject:
   m_ObjectHideFlags: 0
@@ -1004,7 +971,7 @@ PrefabInstance:
     - target: {fileID: 1227900757193237028, guid: 10c9462aa623df9478b05b11a7ee5af8,
         type: 3}
       propertyPath: sceneViewId
-      value: 35
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1227900757193237028, guid: 10c9462aa623df9478b05b11a7ee5af8,
         type: 3}

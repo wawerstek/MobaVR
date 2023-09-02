@@ -9,7 +9,7 @@ namespace MobaVR.Content
         [SerializeField] private TowerModeView m_ModeView;
 
         [Header("Tower")]
-        [SerializeField] private List<Trap> m_Traps = new List<Trap>();
+        [SerializeField] private List<ManualTraps> m_Traps = new List<ManualTraps>();
         [SerializeField] private Lich m_Lich;
         [SerializeField] private Tower m_Tower;
 
@@ -22,7 +22,7 @@ namespace MobaVR.Content
 
         public TowerModeView ModeView => m_ModeView;
         public List<MonsterPointSpawner> Spawners => m_Spawners;
-        public List<Trap> Traps => m_Traps;
+        public List<ManualTraps> Traps => m_Traps;
         public Lich Lich => m_Lich;
         public Tower Tower => m_Tower;
         public List<MonsterWave> Waves => m_Waves;

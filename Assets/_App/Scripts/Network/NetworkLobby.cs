@@ -16,6 +16,7 @@ namespace MobaVR
         [SerializeField] private byte m_MaxPlayersPerRoom = 12;
         [SerializeField] private string m_RoomName = "MobaVR";
         [SerializeField] private string m_GameVersion = "1";
+        [SerializeField] private bool m_IsGetOnlineFromPlayerPrefs = true;
         [SerializeField] private bool m_GameOnline;
 
 
@@ -31,7 +32,10 @@ namespace MobaVR
         private void Awake()
         {
             localRepository = new LocalRepository();
-            m_GameOnline = !localRepository.IsLocalServer;
+            if (m_IsGetOnlineFromPlayerPrefs)
+            {
+                m_GameOnline = !localRepository.IsLocalServer;
+            }
 
             PhotonNetwork.NetworkingClient.SerializationProtocol = SerializationProtocol.GpBinaryV16;
             // PhotonNetwork.OfflineMode = true;

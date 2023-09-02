@@ -26,10 +26,12 @@ namespace MobaVR.ClassicModeStateMachine.Tower
                 }
             }
 
-            foreach (Trap trap in m_Content.Traps)
+            /*
+            foreach (SimpleTrap trap in m_Content.Traps)
             {
                 trap.enabled = false;
             }
+            */
             
             m_Content.ModeView.BlueTeamScoreView.Hide();
             m_Content.ModeView.BlueTeamKillScoreView.Hide();

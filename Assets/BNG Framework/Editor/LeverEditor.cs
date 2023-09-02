@@ -48,6 +48,8 @@ namespace BNG {
                 EditorGUILayout.HelpBox("Make sure 'AllowPhysicsForces' is set to FALSE for ReturnToCenter to work properly.", MessageType.Warning);
             }
             EditorGUILayout.PropertyField(serializedObject.FindProperty("ReturnToCenter"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("IsResetOnCenter"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("CenterDelta"));
 
 
             EditorGUILayout.PropertyField(serializedObject.FindProperty("ReturnLookSpeed"));

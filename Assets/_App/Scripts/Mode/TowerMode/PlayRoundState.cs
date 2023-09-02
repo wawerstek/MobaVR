@@ -109,10 +109,12 @@ namespace MobaVR.ClassicModeStateMachine.Tower
                 m_Content.ModeView.MonsterCountView.UpdateText(monsterCountMessage);
             }
 
-            foreach (Trap trap in m_Content.Traps)
+            /*
+            foreach (SimpleTrap trap in m_Content.Traps)
             {
                 trap.enabled = true;
             }
+            */
 
             m_IsPlay = true;
             m_Content.ModeView.MonsterCountView.Show();
