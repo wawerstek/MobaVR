@@ -74,6 +74,11 @@ namespace MobaVR
                     continue;
                 }
 
+                if (grab.Value.BeingHeld)
+                {
+                    continue;
+                }
+
                 if (view != null && RecentlyRequested(view) == false && !view.AmOwner)
                 {
                     RequestGrabbableOwnership(view);
@@ -86,6 +91,11 @@ namespace MobaVR
                 PhotonView view = grab.Value.GetComponent<PhotonView>();
                 
                 if (view.OwnershipTransfer != OwnershipOption.Fixed)
+                {
+                    continue;
+                }
+                
+                if (grab.Value.BeingHeld)
                 {
                     continue;
                 }

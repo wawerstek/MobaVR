@@ -8,12 +8,14 @@ namespace MobaVR
     {
         //объявляем переменные 
         //говорим, что переменная view несёт в себе фотонавью, это тоже самое, что и PV
-        PhotonView view;
-        Rigidbody rb;
+        private PhotonView view;
+        private Rigidbody rb;
 
         //Используется для защиты нашей позиции, когда мы не являемся владельцами
         private Vector3 _syncStartPosition = Vector3.zero;
         private Vector3 _syncEndPosition = Vector3.zero;
+        private Vector3 _syncStartScale = Vector3.one;
+        private Vector3 _syncEndScale = Vector3.one;
         private Quaternion _syncStartRotation = Quaternion.identity;
         private Quaternion _syncEndRotation = Quaternion.identity;
         private bool _syncBeingHeld = false;
@@ -22,6 +24,13 @@ namespace MobaVR
         private float _lastSynchronizationTime = 0f;
         private float _syncDelay = 0f;
         private float _syncTime = 0f;
+
+        [Header("Sync Vars")]
+        [SerializeField] private bool _isSyncHold = true;
+        [SerializeField] private float _maxDeltaPosition = 3f;
+        [SerializeField] private bool _isSyncPosition = false;
+        [SerializeField] private bool _isSyncRotation = false;
+        [SerializeField] private bool _isSyncScale = false;
 
         //в старте говорим какие значения мы вешаем на наши переменные
         void Start()
@@ -38,30 +47,59 @@ namespace MobaVR
             //CheckForNullOwner();
 
             // если объект не мой то мы зритель и мы видим, что...
-            if (!view.IsMine && view.Owner != null && _syncEndPosition != null && _syncEndPosition != Vector3.zero)
+            if (!view.IsMine && view.Owner != null)
             {
+                if (_isSyncHold)
+                {
+                    BeingHeld = _syncBeingHeld;
+                }
+
                 //что на этом объекте включена кинематика, значит он у нас не имеет физических свойств и мы видим те траектори, куда он движется. И мы не видим, что он падает как физическое тело
-                // rb.isKinematic = true;
+                rb.isKinematic = true;
 
-                // Учитывает задержку, чтобы синхронизировать объект. Скорее всего это синхронизация положения предмета
-                _syncTime += Time.deltaTime;
-
-                float syncValue = _syncTime / _syncDelay;
-                float dist = Vector3.Distance(_syncStartPosition, _syncEndPosition);
-
-                // Если далеко, просто телепортируйся туда, чтобы не просчитывать каждый кадр как летит объект и уже если дистанция меньше 3-х то мы делаем синхронизацию планого движения.
-                if (dist > 3f)
+                if (_isSyncPosition || _isSyncRotation || _isSyncScale)
                 {
-                    transform.position = _syncEndPosition;
-                    transform.rotation = _syncEndRotation;
-                }
-                else
-                {
-                    transform.position = Vector3.Lerp(_syncStartPosition, _syncEndPosition, syncValue);
-                    transform.rotation = Quaternion.Lerp(_syncStartRotation, _syncEndRotation, syncValue);
-                }
+                    // Учитывает задержку, чтобы синхронизировать объект. Скорее всего это синхронизация положения предмета
+                    _syncTime += Time.deltaTime;
 
-                BeingHeld = _syncBeingHeld;
+                    float syncValue = _syncTime / _syncDelay;
+                    float dist = _isSyncPosition ? Vector3.Distance(_syncStartPosition, _syncEndPosition) : 0f;
+                    // Если далеко, просто телепортируйся туда, чтобы не просчитывать каждый кадр как летит объект и уже если дистанция меньше 3-х то мы делаем синхронизацию планого движения.
+                    if (dist > _maxDeltaPosition)
+                    {
+                        if (_isSyncPosition)
+                        {
+                            transform.position = _syncEndPosition;
+                        }
+
+                        if (_isSyncRotation)
+                        {
+                            transform.rotation = _syncEndRotation;
+                        }
+
+                        if (_isSyncScale)
+                        {
+                            transform.localScale = _syncEndScale;
+                        }
+                    }
+                    else
+                    {
+                        if (_isSyncPosition)
+                        {
+                            transform.position = Vector3.Lerp(_syncStartPosition, _syncEndPosition, syncValue);
+                        }
+
+                        if (_isSyncRotation)
+                        {
+                            transform.rotation = Quaternion.Lerp(_syncStartRotation, _syncEndRotation, syncValue);
+                        }
+
+                        if (_isSyncScale)
+                        {
+                            transform.localScale = Vector3.Lerp(_syncStartScale, _syncEndScale, syncValue);
+                        }
+                    }
+                }
             }
             // Если этот объект наш, то мы отключаем кинематику
             else if (view.IsMine)
@@ -160,23 +198,55 @@ namespace MobaVR
             // Это наша цель, отправляйте наши позиции другим игрокам
             if (stream.IsWriting && view.IsMine)
             {
-                stream.SendNext(transform.position);
-                stream.SendNext(transform.rotation);
-                stream.SendNext(BeingHeld);
+                if (_isSyncPosition)
+                {
+                    stream.SendNext(transform.position);
+                }
+
+                if (_isSyncRotation)
+                {
+                    stream.SendNext(transform.rotation);
+                }
+
+                if (_isSyncScale)
+                {
+                    stream.SendNext(transform.lossyScale);
+                }
+
+                if (_isSyncHold)
+                {
+                    stream.SendNext(BeingHeld);
+                }
             }
             // Получать Обновления
             else
             {
                 // Position
-                _syncStartPosition = transform.position;
-                _syncEndPosition = (Vector3)stream.ReceiveNext();
+                if (_isSyncPosition)
+                {
+                    _syncStartPosition = transform.position;
+                    _syncEndPosition = (Vector3)stream.ReceiveNext();
+                }
 
                 // Rotation
-                _syncStartRotation = transform.rotation;
-                _syncEndRotation = (Quaternion)stream.ReceiveNext();
+                if (_isSyncRotation)
+                {
+                    _syncStartRotation = transform.rotation;
+                    _syncEndRotation = (Quaternion)stream.ReceiveNext();
+                }
+
+                // Scale
+                if (_isSyncScale)
+                {
+                    _syncStartScale = transform.lossyScale;
+                    _syncEndScale = (Vector3)stream.ReceiveNext();
+                }
 
                 // Status
-                _syncBeingHeld = (bool)stream.ReceiveNext();
+                if (_isSyncHold)
+                {
+                    _syncBeingHeld = (bool)stream.ReceiveNext();
+                }
 
                 _syncTime = 0f;
                 _syncDelay = Time.time - _lastSynchronizationTime;

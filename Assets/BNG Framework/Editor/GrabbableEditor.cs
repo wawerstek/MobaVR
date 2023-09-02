@@ -17,7 +17,7 @@ namespace BNG {
         /// </summary>
         public bool UseCustomEditor = true;
 
-        Grabbable grabbable;
+        protected Grabbable grabbable;
 
         SerializedProperty grabButton;
         SerializedProperty grabType;
@@ -66,7 +66,7 @@ namespace BNG {
         SerializedProperty GrabPoints;
         SerializedProperty collisions;
 
-        void OnEnable() {
+        protected virtual void OnEnable() {
             grabButton = serializedObject.FindProperty("GrabButton");
             grabType = serializedObject.FindProperty("Grabtype");
             grabPhysics = serializedObject.FindProperty("GrabPhysics");
