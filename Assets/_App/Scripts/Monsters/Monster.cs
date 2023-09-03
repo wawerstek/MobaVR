@@ -380,7 +380,8 @@ namespace MobaVR
                 {
                     Amount = m_Damage,
                     TeamType = TeamType.OTHER,
-                    PhotonOwner = photonView
+                    PhotonOwner = photonView,
+                    PhotonView = photonView
                 };
 
                 /*

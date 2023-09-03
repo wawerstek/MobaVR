@@ -24,7 +24,12 @@ namespace MobaVR.ClassicModeStateMachine.Tower
             {
                 UpdatePlayers();
             }
-            
+
+            if (m_Content.Lich.IsLife)
+            {
+                m_Content.Lich.RpcPause_Monster();
+            }
+
             m_Content.ModeView.PreRoundTimeView.Show();
             m_Content.ModeView.PreRoundTimeView.UpdateTime(m_Time);
             

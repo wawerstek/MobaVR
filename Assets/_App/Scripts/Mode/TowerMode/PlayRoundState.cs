@@ -108,6 +108,11 @@ namespace MobaVR.ClassicModeStateMachine.Tower
                 m_Content.ModeView.MonsterCountView.Show();
                 m_Content.ModeView.MonsterCountView.UpdateText(monsterCountMessage);
             }
+            
+            if (m_Content.Lich.IsLife)
+            {
+                m_Content.Lich.RpcRelease_Monster();
+            }
 
             /*
             foreach (SimpleTrap trap in m_Content.Traps)

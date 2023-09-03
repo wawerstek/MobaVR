@@ -1,9 +1,11 @@
 using System;
+using System.Collections.Generic;
 using AmazingAssets.AdvancedDissolve;
 using DG.Tweening;
 using Photon.Pun;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace MobaVR
 {
@@ -34,6 +36,15 @@ namespace MobaVR
         [SerializeField] private float m_Damage = 20f;
         [SerializeField] [ReadOnly] private float m_CurrentHealth = 2000f;
         [SerializeField] private float m_DestroyTime = 5f;
+
+        #endregion
+
+        #region Spells
+
+        [SerializeField] private bool m_CanCast = true;
+        [SerializeField] private float m_Cooldown = 20f;
+        [SerializeField] private List<LichSpell> m_LichSpells = new();
+        [SerializeField] private List<Transform> m_SpellPoints = new();
 
         #endregion
 
@@ -138,10 +149,75 @@ namespace MobaVR
             m_BodyCollider.enabled = true;
             m_MonsterView.SetEnabled(true);
 
-
             m_IsActive = true;
-            
+
             OnInit?.Invoke();
+
+            //ReadyToCast();
+        }
+
+        public void Pause()
+        {
+            photonView.RPC(nameof(RpcPause_Monster), RpcTarget.All);
+        }
+
+        [PunRPC]
+        public void RpcPause_Monster()
+        {
+            m_CanGetDamage = false;
+            m_IsImmortal = true;
+
+            CancelInvoke(nameof(Cast));
+        }
+
+        public void Release()
+        {
+            photonView.RPC(nameof(RpcRelease_Monster), RpcTarget.All);
+        }
+
+        [PunRPC]
+        public void RpcRelease_Monster()
+        {
+            m_CanGetDamage = true;
+            m_IsImmortal = false;
+
+            ReadyToCast();
+        }
+
+        private void ReadyToCast()
+        {
+            if (PhotonNetwork.IsMasterClient && m_CanCast && IsLife)
+            {
+                CancelInvoke(nameof(Cast));
+                Invoke(nameof(Cast), m_Cooldown);
+            }
+        }
+
+        public void Cast()
+        {
+            if (PhotonNetwork.IsMasterClient && m_SpellPoints.Count > 0 && IsLife)
+            {
+                int pointPosition = Random.Range(0, m_SpellPoints.Count);
+                photonView.RPC(nameof(RpcCast_Monster), RpcTarget.All, pointPosition);
+                
+                ReadyToCast();
+            }
+        }
+
+        [PunRPC]
+        public void RpcCast_Monster(int pointPosition)
+        {
+            Transform pointTransform = m_SpellPoints[pointPosition];
+            if (m_LichSpells.Count == 0)
+            {
+                return;
+            }
+
+            LichSpell lichSpell = m_LichSpells[0];
+            lichSpell.gameObject.SetActive(true);
+            lichSpell.transform.position = pointTransform.position;
+            //lichSpell.Activate();
+            lichSpell.RpcActivate();
         }
 
         public void Deactivate()
@@ -150,15 +226,17 @@ namespace MobaVR
             {
                 return;
             }
-            
+
             photonView.RPC(nameof(RpcDeactivate_Monster), RpcTarget.All);
         }
 
         [PunRPC]
         public void RpcDeactivate_Monster()
         {
-            m_IsActive = false;
+            CancelInvoke(nameof(Cast));
             
+            m_IsActive = false;
+
             m_CurrentHealth = m_Health;
             m_CanGetDamage = false;
             m_IsImmortal = true;
@@ -251,7 +329,7 @@ namespace MobaVR
             m_MonsterView.SetEnabled(false);
             m_BodyCollider.enabled = false;
             OnDeath?.Invoke();
-            
+
             m_IsActive = false;
 
             foreach (Collider childCollider in transform.GetComponentsInChildren<Collider>())

@@ -42,6 +42,8 @@ namespace MobaVR.ClassicModeStateMachine.Tower
             m_Content.ModeView.VictoryView.Hide();
             m_Content.ModeView.LoseView.Hide();
             m_Content.ModeView.MonsterCountView.Hide();
+            
+            //m_Content.Lich.Deactivate();
 
             m_Content.CurrentWave = 0;
         }

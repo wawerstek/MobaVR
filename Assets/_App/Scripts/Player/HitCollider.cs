@@ -15,7 +15,7 @@ namespace MobaVR
 
         public Collider Collider => m_Collider;
 
-        //public WizardPlayer WizardPlayer => m_WizardPlayer;
+        public WizardPlayer WizardPlayer => m_WizardPlayer;
 
         private void InitComponents()
         {

@@ -28,6 +28,7 @@ namespace MobaVR
         public Player Player;
         public bool IsMine;
         public PhotonView PhotonOwner;
+        public PhotonView PhotonView;
         //public Transform Source;
         //public Transform Owner;
         //public PlayerRef InstigatorRef;

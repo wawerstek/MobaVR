@@ -21,7 +21,7 @@ namespace MobaVR
                 sizeof(short) * 2 + // HitActionType + TeamType
                 sizeof(float) * 1 + // Amount
                 sizeof(float) * 3 + // Vector3 Position
-                sizeof(int) * 1 * 2 // Player + PhotonView
+                sizeof(int) * 1 * 3 // Player + PhotonViewOwner + PhotonView
             ;
 
         private static readonly byte[] m_MemData = new byte[size];
@@ -56,6 +56,15 @@ namespace MobaVR
                 else
                 {
                     Protocol.Serialize(hitData.PhotonOwner.ViewID, bytes, ref index);
+                }
+                
+                if (hitData.PhotonView == null)
+                {
+                    Protocol.Serialize(-1, bytes, ref index);
+                }
+                else
+                {
+                    Protocol.Serialize(hitData.PhotonView.ViewID, bytes, ref index);
                 }
 
                 outStream.Write(bytes, 0, size);
@@ -108,8 +117,11 @@ namespace MobaVR
                     break;
                 }
 
+                Protocol.Deserialize(out int idPhotonOwner, m_MemData, ref off);
+                hitData.PhotonOwner = idPhotonOwner > 0 ? PhotonView.Find(idPhotonOwner) : null;
+                
                 Protocol.Deserialize(out int idPhotonView, m_MemData, ref off);
-                hitData.PhotonOwner = idPhotonView > 0 ? PhotonView.Find(idPhotonView) : null;
+                hitData.PhotonView = idPhotonView > 0 ? PhotonView.Find(idPhotonView) : null;
             }
 
             return hitData;

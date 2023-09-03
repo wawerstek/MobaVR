@@ -114,6 +114,7 @@ namespace MobaVR
                 Amount = m_Damage,
                 Player = PhotonNetwork.LocalPlayer,
                 PhotonOwner = photonView,
+                PhotonView = photonView,
                 PlayerVR = Owner.PlayerVR,
                 TeamType = TeamType
             };
