@@ -47,6 +47,7 @@ namespace MobaVR.ClassicModeStateMachine.PVP
             m_Content.ModeView.RedTeamKillScoreView.Show();
             
             m_Content.ZoneManager.Show();
+            m_Content.KillZoneManager.Show();
 
             foreach (PlayerVR player in m_Mode.RedTeam.Players)
             {
@@ -127,6 +128,7 @@ namespace MobaVR.ClassicModeStateMachine.PVP
 
             m_Content.ModeView.RoundTimeView.Hide();
             m_Content.ZoneManager.Hide();
+            m_Content.KillZoneManager.Hide();
 
             /*
             foreach (PlayerVR player in m_Mode.RedTeam.Players)

@@ -18,6 +18,7 @@ namespace MobaVR.ClassicModeStateMachine.PVP
         public override void Enter()
         {
             m_Content.ZoneManager.Hide();
+            m_Content.KillZoneManager.Hide();
             m_Content.ModeView.RedTeamScoreView.Hide();
             m_Content.ModeView.RedTeamKillScoreView.Hide();
             

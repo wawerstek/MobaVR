@@ -12,6 +12,7 @@ namespace MobaVR
         private bool m_CanReborn = true;
 
         public bool CanReborn => m_CanReborn;
+        public WizardPlayer WizardPlayer => m_WizardPlayer;
 
         private void OnEnable()
         {
@@ -20,7 +21,7 @@ namespace MobaVR
                 m_WizardPlayer.OnDie += OnDie;
             }
         }
-        
+
         private void OnDisable()
         {
             if (m_WizardPlayer != null)
@@ -38,8 +39,8 @@ namespace MobaVR
 
         public bool TryReborn()
         {
-            if (m_WizardPlayer != null 
-                && m_WizardPlayer.photonView.IsMine 
+            if (m_WizardPlayer != null
+                && m_WizardPlayer.photonView.IsMine
                 && !m_WizardPlayer.IsLife
                 && m_CanReborn)
             {
@@ -59,6 +60,21 @@ namespace MobaVR
             m_Collider.enabled = true;
             m_CanReborn = true;
         }
+
+        public bool TryDie(HitData hitData)
+        {
+            if (m_WizardPlayer != null
+                && m_WizardPlayer.photonView.IsMine
+                && m_WizardPlayer.IsLife
+                && m_WizardPlayer.TryGetComponent(out NetworkDamageable networkDamageable))
+            {
+                networkDamageable.Hit(hitData);
+                return true;
+            }
+
+            return false;
+        }
+
 
         /*
         private void OnTriggerEnter(Collider other)
