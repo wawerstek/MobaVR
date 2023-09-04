@@ -36,6 +36,7 @@
             m_Vrik.enabled = true;
             m_EyeAnimationHandler.enabled = true;
 
+            m_Animator.ResetTrigger("Die");
             m_Animator.SetTrigger("Reborn");
         }
     }

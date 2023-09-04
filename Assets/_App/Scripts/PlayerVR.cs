@@ -415,7 +415,8 @@ namespace MobaVR
         {
             if (m_SkinCollection != null)
             {
-                m_SkinCollection.SetDeadSkin();
+                //m_SkinCollection.SetDeadSkin();
+                m_SkinCollection.RpcSetDeadSkin();
             }
         }
 
@@ -430,7 +431,8 @@ namespace MobaVR
         {
             if (m_SkinCollection != null)
             {
-                m_SkinCollection.RestoreSkin();
+                //m_SkinCollection.RestoreSkin();
+                m_SkinCollection.RpcRestoreSkin();
             }
         }
     }

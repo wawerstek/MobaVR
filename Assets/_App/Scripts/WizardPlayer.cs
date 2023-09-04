@@ -912,13 +912,16 @@ namespace MobaVR
                 damagePlayer.GetComponent<Collider>().enabled = true;
             }
 
-            OnReborn?.Invoke();
+            //OnReborn?.Invoke();
 
 
             //TODO: MERGE
-            m_PlayerVR.PlayerReborn();
+            //m_PlayerVR.PlayerReborn();
+            m_PlayerVR.RpcPlayerReborn();
             //m_PlayerView.SetHealth(m_CurrentHealth);
             m_PlayerView.RpcSetHealth(m_CurrentHealth);
+
+            OnReborn?.Invoke();
         }
 
         public void RestoreHp()
@@ -1033,11 +1036,14 @@ namespace MobaVR
                 }
 
                 ResetSpells();
-                OnDie?.Invoke();
+                //OnDie?.Invoke();
 
 
                 //TODO: MERGE
-                m_PlayerVR.PlayerDie();
+                //m_PlayerVR.PlayerDie();
+                m_PlayerVR.RpcPlayerDie();
+                
+                OnDie?.Invoke();
             }
 
             if (photonView.IsMine)

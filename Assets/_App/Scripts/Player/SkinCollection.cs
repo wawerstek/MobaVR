@@ -271,7 +271,7 @@ namespace MobaVR
         }
 
         [PunRPC]
-        private void RpcSetDeadSkin(int position = 0)
+        public void RpcSetDeadSkin(int position = 0)
         {
             if (m_AliveActiveSkin != null)
             {
@@ -303,7 +303,7 @@ namespace MobaVR
         }
 
         [PunRPC]
-        private void RpcRestoreSkin()
+        public void RpcRestoreSkin()
         {
             if (m_AliveActiveSkin == null)
             {

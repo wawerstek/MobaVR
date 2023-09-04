@@ -68,7 +68,8 @@ namespace MobaVR.ClassicModeStateMachine.Tower
         {
             m_MonsterCount = 0;
             m_CurrentMonsterCount = 0;
-
+            m_CurrentPlayerCount = 0;
+            
             if (PhotonNetwork.IsMasterClient)
             {
                 UpdatePlayers();

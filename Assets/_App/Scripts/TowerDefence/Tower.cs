@@ -13,6 +13,7 @@ namespace MobaVR
 
         public UnityEvent OnDie;
         public UnityEvent OnHit;
+        public UnityEvent<float> OnChangeHealth;
         public UnityEvent OnRestore;
         
         public bool IsLife => m_CurrentHp > 0f;
@@ -27,6 +28,8 @@ namespace MobaVR
             OnRestore?.Invoke();
             m_CurrentHp = m_MaxHp;
             m_Renderer.enabled = true;
+            
+            OnChangeHealth?.Invoke(m_CurrentHp);
         }
 
         public void Hit(HitData hitData)
@@ -43,6 +46,8 @@ namespace MobaVR
                 m_Renderer.enabled = false;
                 OnDie?.Invoke();
             }
+            
+            OnChangeHealth?.Invoke(m_CurrentHp);
         }
     }
 }
