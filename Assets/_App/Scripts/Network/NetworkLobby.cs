@@ -69,6 +69,7 @@ namespace MobaVR
                     PhotonNetwork.NickName = username;
                 }
 
+               
                 if (m_GameOnline == true)
                 {
                     PhotonNetwork.PhotonServerSettings.AppSettings.AppIdRealtime = "359a2117-3847-4818-b6fe-9058f80cbac0";
@@ -80,14 +81,14 @@ namespace MobaVR
                 {
                    PhotonNetwork.PhotonServerSettings.AppSettings.AppIdRealtime = "1234567890-1234567890-1234567890";
                     PhotonNetwork.PhotonServerSettings.AppSettings.UseNameServer = false;
-                    //PhotonNetwork.PhotonServerSettings.AppSettings.Server = "LocalServer";
-                    PhotonNetwork.PhotonServerSettings.AppSettings.Server = "192.168.0.229";
+                    // PhotonNetwork.PhotonServerSettings.AppSettings.Server = "LocalServer";
+                    PhotonNetwork.PhotonServerSettings.AppSettings.Server = "192.168.0.13";
                     PhotonNetwork.ConnectUsingSettings();
                     //PhotonNetwork.ConnectToMaster("192.168.0.182", 5055, "1");
                 }
 
                
-                //PhotonNetwork.ConnectUsingSettings();
+               // PhotonNetwork.ConnectUsingSettings();
 
 
                 PhotonNetwork.AutomaticallySyncScene = true;

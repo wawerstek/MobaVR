@@ -19,6 +19,9 @@ public class SliderMenu : MonoBehaviour
     public GameObject MenuName;
     public GameObject MenuHands;
     public GameObject MenuGoTir;
+    
+    public GameObject RightHead;
+    public GameObject LeftHead;
 
     public Text HandsLeftRight;
     private AudioSource audioSource;
@@ -26,7 +29,7 @@ public class SliderMenu : MonoBehaviour
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
-        // ������� ��� ������ � ��������� �� ������������ �������
+       
         //characterButtons = GetComponentsInChildren<Button>();
 
         originalScales = new Vector3[characterButtons.Length];
@@ -38,10 +41,10 @@ public class SliderMenu : MonoBehaviour
 
     public void OnCharacterButtonEnter(int buttonIndex)
     {
-        // ����������� ������ ������ ��� ���������
+        
         characterButtons[buttonIndex].transform.localScale = originalScales[buttonIndex] * 1.2f;
 
-        // ������������� ���� ���������
+      
         PlaySound(hoverSound);
     }
 
@@ -50,13 +53,13 @@ public class SliderMenu : MonoBehaviour
 
     public void OnCharacterButtonExit(int buttonIndex)
     {
-        // ���������� ������ ������������ ������
+      
         characterButtons[buttonIndex].transform.localScale = originalScales[buttonIndex];
     }
 
     public void OnCharacterButtonClick(int buttonIndex)
     {
-        // ������������� ���� �������
+        
         PlaySound(clickSound);
     
 
@@ -78,7 +81,7 @@ public class SliderMenu : MonoBehaviour
 
     public void NextClickName()
     {
-        //��� ����� �������� ������� ���������� ����� ������
+        
         PlaySound(clickSound);
         MenuClass.SetActive(false);
         MenuName.SetActive(false);
@@ -114,7 +117,7 @@ public class SliderMenu : MonoBehaviour
 
     public void Red_team_Click()
     {
-        // ������������� ���� �������
+      
         PlaySound(clickSound);
 
 
@@ -122,7 +125,7 @@ public class SliderMenu : MonoBehaviour
 
     public void Blue_team_Click()
     {
-        // ������������� ���� �������
+        
         PlaySound(clickSound);
 
     }
@@ -130,18 +133,22 @@ public class SliderMenu : MonoBehaviour
 
     public void LeftHands()
     {
-
+        //сюда нужно добавить переменную ,чтобы потом использовать её
         PlaySound(clickSound);
-        HandsLeftRight.text = "�� �����";
+       // HandsLeftRight.text = "Левая рука";
+       RightHead.SetActive(false);
+       LeftHead.SetActive(true);
 
     }   
     
     public void RightHands()
     {
-
+    //сюда нужно добавить переменную ,чтобы потом использовать её
         PlaySound(clickSound);
-        HandsLeftRight.text = "�� ������";
-
+       // HandsLeftRight.text = "Правая рука";
+       LeftHead.SetActive(false);
+       RightHead.SetActive(true);
+   
     }
 
 

@@ -67,7 +67,7 @@ public class Luchnik_obuchenie : MonoBehaviour
                         }
                     }
             
-                    if (currentLesson < lessons.Length)
+                    if (currentLesson < lessons.Length  && RunUrok0)
                     {
                         Lesson currentLessonObj = lessons[currentLesson];
             
