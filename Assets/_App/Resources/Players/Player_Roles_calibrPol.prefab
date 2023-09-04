@@ -1371,6 +1371,7 @@ MonoBehaviour:
   - {fileID: 5011674391247362209}
   - {fileID: 5455075009430611077}
   - {fileID: 6333856959555330004}
+  m_SetInactiveOnDie: 1
   m_Renderers:
   - {fileID: 4711890292101642921}
   - {fileID: 2604113204307721806}
@@ -1405,10 +1406,14 @@ MonoBehaviour:
   - {fileID: 3269729003745346128}
   m_BodyRenderers: []
   m_HiddenVrRenderers: []
+  m_DieRenderers: []
   OnActivated:
     m_PersistentCalls:
       m_Calls: []
   OnDeactivated:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDie:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &3385261886260077269
@@ -7019,6 +7024,7 @@ MonoBehaviour:
   - {fileID: 5455530446168544710}
   - {fileID: 2044121967983900488}
   - {fileID: 6339800150736214003}
+  m_SetInactiveOnDie: 1
   m_Renderers:
   - {fileID: 5793044444489537251}
   - {fileID: 1128671597283012433}
@@ -7053,10 +7059,14 @@ MonoBehaviour:
   - {fileID: 7763024493198676117}
   m_BodyRenderers: []
   m_HiddenVrRenderers: []
+  m_DieRenderers: []
   OnActivated:
     m_PersistentCalls:
       m_Calls: []
   OnDeactivated:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDie:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &1287750338600883758
@@ -11503,6 +11513,7 @@ MonoBehaviour:
   m_Collider: {fileID: 592611715684197663}
   m_Colliders: []
   m_PlayerPoint: {fileID: 7119276537999087632}
+  m_SetDisableOnDie: 0
   m_ActiveInput: {fileID: 11400000, guid: d3c7e9075daed3044919e6d7278fd3aa, type: 2}
   m_IsAutoDetect: 0
   m_OculusInput: {fileID: 11400000, guid: d3c7e9075daed3044919e6d7278fd3aa, type: 2}
@@ -11672,6 +11683,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0225251665a48b494c8a6bd938224e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_IsValidateSourceDamage: 0
+  m_DeltaMs: 100
+  m_Hits: []
   OnHit:
     m_PersistentCalls:
       m_Calls:
@@ -12015,6 +12029,7 @@ MonoBehaviour:
   m_Canvas: {fileID: 7843816485523969432}
   m_UseVRUISystem: 0
   m_GameSession: {fileID: 0}
+  m_SessionSettings: {fileID: 0}
   m_StateMachineSwitcher: {fileID: 0}
   m_Environment: {fileID: 0}
   m_SceneEnvironment: {fileID: 0}
@@ -14609,10 +14624,20 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7547268798183446424, guid: a6ac4bc6765a57b48b78da9a237482ed,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 8504058539419572082, guid: a6ac4bc6765a57b48b78da9a237482ed,
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8712976958130268656, guid: a6ac4bc6765a57b48b78da9a237482ed,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8789939852375118888, guid: a6ac4bc6765a57b48b78da9a237482ed,
         type: 3}
@@ -17052,6 +17077,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0225251665a48b494c8a6bd938224e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_IsValidateSourceDamage: 0
+  m_DeltaMs: 100
+  m_Hits: []
   OnHit:
     m_PersistentCalls:
       m_Calls:
@@ -17366,6 +17394,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2843065403944093428, guid: bd075e86b47fff146bc8140665323506,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3096146782130605242, guid: bd075e86b47fff146bc8140665323506,
         type: 3}
@@ -18112,6 +18145,11 @@ PrefabInstance:
       propertyPath: m_ParentDamageable
       value: 
       objectReference: {fileID: 6396726963003723858}
+    - target: {fileID: 4791062388679153212, guid: 16ce0b2e5adf50646b28118971bd6185,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 4874487728725730030, guid: 16ce0b2e5adf50646b28118971bd6185,
         type: 3}
       propertyPath: InspectedPose
