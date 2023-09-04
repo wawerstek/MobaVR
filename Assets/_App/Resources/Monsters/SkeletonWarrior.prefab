@@ -4239,7 +4239,7 @@ MonoBehaviour:
   m_NavMeshAgent: {fileID: 3852093359590742938}
   m_NavMeshObstacle: {fileID: 3852093359590742917}
   m_CurrentState: 0
-  m_Health: 25
+  m_Health: 15
   m_Damage: 20
   m_RotationSpeed: 4
   m_CurrentHealth: 100
@@ -4434,6 +4434,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0225251665a48b494c8a6bd938224e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_IsValidateSourceDamage: 0
+  m_DeltaMs: 100
+  m_Hits: []
   OnHit:
     m_PersistentCalls:
       m_Calls:
