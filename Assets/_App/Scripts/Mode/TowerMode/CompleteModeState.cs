@@ -19,7 +19,7 @@ namespace MobaVR.ClassicModeStateMachine.Tower
             if (PhotonNetwork.IsMasterClient)
             {
                 UpdatePlayers();
-                
+
                 if (m_Content.Lich.IsLife)
                 {
                     m_Content.Lich.Deactivate();
@@ -39,6 +39,8 @@ namespace MobaVR.ClassicModeStateMachine.Tower
             {
                 m_Content.ModeView.LoseView.Show();
             }
+
+            m_Content.Lich.RpcPause_Monster();
         }
 
         public override void Update()

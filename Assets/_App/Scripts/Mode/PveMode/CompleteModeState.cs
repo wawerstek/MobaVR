@@ -39,6 +39,8 @@ namespace MobaVR.ClassicModeStateMachine.PVE
             {
                 //TODO: LOSE
             }
+            
+            m_Content.Lich.RpcPause_Monster();
         }
 
         public override void Update()

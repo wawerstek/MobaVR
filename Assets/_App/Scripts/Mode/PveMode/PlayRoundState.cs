@@ -14,12 +14,14 @@ namespace MobaVR.ClassicModeStateMachine.PVE
             if (PhotonNetwork.IsMasterClient)
             {
                 UpdatePlayers();
-                
+
                 foreach (MonsterPointSpawner pointSpawner in m_Content.Spawners)
                 {
                     pointSpawner.GenerateMonsters();
                 }
             }
+
+            m_Content.Lich.RpcRelease_Monster();
         }
 
         public override void Update()

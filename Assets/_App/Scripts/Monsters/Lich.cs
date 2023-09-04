@@ -186,7 +186,7 @@ namespace MobaVR
 
         private void ReadyToCast()
         {
-            if (PhotonNetwork.IsMasterClient && m_CanCast && IsLife)
+            if (PhotonNetwork.IsMasterClient && m_CanCast && IsLife && m_IsActive)
             {
                 CancelInvoke(nameof(Cast));
                 Invoke(nameof(Cast), m_Cooldown);
@@ -195,7 +195,7 @@ namespace MobaVR
 
         public void Cast()
         {
-            if (PhotonNetwork.IsMasterClient && m_SpellPoints.Count > 0 && IsLife)
+            if (PhotonNetwork.IsMasterClient && m_SpellPoints.Count > 0 && IsLife && m_IsActive)
             {
                 int pointPosition = Random.Range(0, m_SpellPoints.Count);
                 photonView.RPC(nameof(RpcCast_Monster), RpcTarget.All, pointPosition);
@@ -213,6 +213,8 @@ namespace MobaVR
                 return;
             }
 
+            m_Animator.SetTrigger("cast");
+            
             LichSpell lichSpell = m_LichSpells[0];
             lichSpell.gameObject.SetActive(true);
             lichSpell.transform.position = pointTransform.position;
@@ -243,6 +245,8 @@ namespace MobaVR
 
             m_BodyCollider.enabled = true;
             m_MonsterView.SetEnabled(true);
+            
+            m_Animator.SetTrigger("reset");
         }
 
         #endregion

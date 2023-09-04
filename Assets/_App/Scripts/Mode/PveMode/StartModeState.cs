@@ -16,6 +16,8 @@ namespace MobaVR.ClassicModeStateMachine.PVE
 
         public override void Enter()
         {
+            m_Content.Lich.RpcPause_Monster();
+            
             if (PhotonNetwork.IsMasterClient)
             {
                 UpdatePlayers();

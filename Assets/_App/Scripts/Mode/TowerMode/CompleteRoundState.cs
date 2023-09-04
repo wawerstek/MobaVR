@@ -10,6 +10,8 @@ namespace MobaVR.ClassicModeStateMachine.Tower
     {
         public override void Enter()
         {
+            m_Content.Lich.RpcPause_Monster();
+            
             if (PhotonNetwork.IsMasterClient)
             {
                 foreach (MonsterPointSpawner pointSpawner in m_Content.Spawners)
@@ -22,6 +24,8 @@ namespace MobaVR.ClassicModeStateMachine.Tower
                     m_Mode.CompleteMode();
                     return;
                 }
+                
+                m_Content.Lich.Pause();
                 
                 m_Content.CurrentWave++;
                 if (m_Content.CurrentWave < m_Content.Waves.Count)
