@@ -139,7 +139,7 @@ namespace MobaVR
             HitData hitData = new HitData()
             {
                 Action = HitActionType.Damage,
-                Player = PhotonNetwork.LocalPlayer,
+                //Player = PhotonNetwork.LocalPlayer,
                 PhotonOwner = m_PhotonView,
                 Amount = 50f,
             };

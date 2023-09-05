@@ -42,7 +42,11 @@ namespace MobaVR
 
                 if (hitData.Player == null)
                 {
-                    Protocol.Serialize(PhotonNetwork.LocalPlayer.ActorNumber, bytes, ref index);
+                    // TODO: 
+                    // Плеера можно найти всегда. Но у нас возможен вариант, когда WizardVR не будет существовать
+                    // + существую предметы или зоны, которые дмажут и фотоны у них совпадают, поэтому игрок не получает урон у других игроков
+                    // Protocol.Serialize(PhotonNetwork.LocalPlayer.ActorNumber, bytes, ref index);
+                    Protocol.Serialize(-1, bytes, ref index);
                 }
                 else
                 {
@@ -102,19 +106,26 @@ namespace MobaVR
                 hitData.TeamType = (TeamType)teamType;
 
                 Protocol.Deserialize(out int idPlayer, m_MemData, ref off);
-                Player player = PhotonNetwork.CurrentRoom.GetPlayer(idPlayer);
-                hitData.Player = player;
-
-                PlayerVR[] players = GameObject.FindObjectsOfType<PlayerVR>();
-                foreach (PlayerVR playerVR in players)
+                Player player = null;
+                if (idPlayer != -1)
                 {
-                    if (playerVR.photonView.Owner.ActorNumber != player.ActorNumber)
-                    {
-                        continue;
-                    }
+                    player = PhotonNetwork.CurrentRoom.GetPlayer(idPlayer);
+                }
 
-                    hitData.PlayerVR = playerVR;
-                    break;
+                hitData.Player = player;
+                if (player != null)
+                {
+                    PlayerVR[] players = GameObject.FindObjectsOfType<PlayerVR>();
+                    foreach (PlayerVR playerVR in players)
+                    {
+                        if (playerVR.photonView.Owner.ActorNumber != player.ActorNumber)
+                        {
+                            continue;
+                        }
+
+                        hitData.PlayerVR = playerVR;
+                        break;
+                    }
                 }
 
                 Protocol.Deserialize(out int idPhotonOwner, m_MemData, ref off);
