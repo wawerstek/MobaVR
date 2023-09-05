@@ -168,7 +168,8 @@ namespace MobaVR
                 m_StatsSO = value;
                 m_MaxHp = m_StatsSO.MaxHp;
                 m_CurrentHealth = m_MaxHp;
-                m_PlayerView.SetHealth(m_CurrentHealth);
+                //m_PlayerView.SetHealth(m_CurrentHealth);
+                m_PlayerView.SetMaxHealth(m_CurrentHealth);
             }
         }
 

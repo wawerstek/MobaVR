@@ -101,7 +101,17 @@ namespace MobaVR
         [PunRPC]
         public void SetHealth(float value)
         {
-
+            //float percent = value / m_ProgressBar.maxValue * 100;
+            //m_ProgressBar.currentPercent = percent;
+            m_ProgressBar.currentPercent = value;
+            m_ProgressBar.UpdateUI();
+        }
+        
+        [PunRPC]
+        public void SetMaxHealth(float value)
+        {
+            m_ProgressBar.valueLimit = value;
+            m_ProgressBar.maxValue = value;
             m_ProgressBar.currentPercent = value;
             m_ProgressBar.UpdateUI();
         }
