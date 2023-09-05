@@ -200,7 +200,14 @@ namespace MobaVR
 
         public void ClearCal()
         {
-            _Call.GetComponent<Calibration>().calibr = false;
+            //_Call.GetComponent<Calibration>().calibr = false;
+            //_Call.GetComponent<Calibration>().calibr = false;
+
+            if (_Call.TryGetComponent(out CalibrationPol calibraion))
+            {
+                calibraion.calibr = false;
+                calibraion.calibr = false;
+            }
         }
 
         #region Game Mode
@@ -347,9 +354,19 @@ namespace MobaVR
             m_SceneEnvironment.ShowNecropolisMap();
         }
 
+        public void ShowTowerDemoMap()
+        {
+            m_SceneEnvironment.ShowTowerDemoMap();
+        }
+
         public void ShowTowerMap()
         {
             m_SceneEnvironment.ShowTowerMap();
+        }
+
+        public void ShowDungeonMap()
+        {
+            m_SceneEnvironment.ShowDungeonMap();
         }
 
         public void ShowDefaultPvPMap()
