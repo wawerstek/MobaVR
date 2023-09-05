@@ -33,7 +33,7 @@ namespace BNG {
                 OnInputSelect();
             }
             else if (isFocused == false && wasFocused == true) {
-                OnInputDeselect();
+              //  OnInputDeselect();
             }
 
             wasFocused = isFocused;

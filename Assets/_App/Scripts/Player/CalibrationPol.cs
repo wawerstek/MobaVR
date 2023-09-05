@@ -18,7 +18,7 @@ namespace MobaVR
         public Transform additionalObjectTarget; // Цель для дополнительного объекта из инспектора
 
         public GameObject CalibrovkaText;
-        
+
 
         public Transform pointA;
         public Transform pointB;
@@ -27,8 +27,8 @@ namespace MobaVR
 
         public bool calibr;
 
-        public bool step_1;//первый раз контроллер поставили
-        
+        public bool step_1; //первый раз контроллер поставили
+
         //----
 
         [Header("Calibr rost")]
@@ -53,17 +53,16 @@ namespace MobaVR
         public bool runRost;
 
         private float requiredHoldTime = 4f; // Время удержания в секундах
-        private float buttonHoldTimer = 0f;//для таймера
-        
-        
-            //логика зажатия
+        private float buttonHoldTimer = 0f; //для таймера
+
+
+        //логика зажатия
         private bool isButtonCalibrPressed = false;
         private bool isButtonCalibrBPressed = false;
         private bool isCalibrating = false;
         private bool areButtonsReleased = true;
-        
-        
-        
+
+
         public ControllerBinding Button_Calibr = ControllerBinding.AButton; //нажатие
         public ControllerBinding Button_Calibr_B = ControllerBinding.BButton; //нажатие
 
@@ -90,7 +89,8 @@ namespace MobaVR
             if (calibr == false)
             {
                 //если зажата кнопка 
-                if (InputBridge.Instance.GetControllerBindingValue(Button_Calibr) && InputBridge.Instance.GetControllerBindingValue(Button_Calibr_B))
+                if (InputBridge.Instance.GetControllerBindingValue(Button_Calibr) &&
+                    InputBridge.Instance.GetControllerBindingValue(Button_Calibr_B))
                 {
                     isButtonCalibrPressed = true;
                 }
@@ -98,13 +98,13 @@ namespace MobaVR
                 {
                     isButtonCalibrPressed = false;
                 }
-                
+
                 //если мы включали первый раз кнопки, но теперь они опущены
                 if (isCalibrating && !isButtonCalibrPressed)
                 {
                     areButtonsReleased = true;
                 }
-                
+
                 //если ещё не зажимали кнопки и зажаты обе кнопки
                 if (!isCalibrating && isButtonCalibrPressed && areButtonsReleased)
                 {
@@ -134,35 +134,34 @@ namespace MobaVR
 
                     calibr = true;
                 }
-                
             }
             else if (calibr == true)
             {
                 isCalibrating = false;
                 areButtonsReleased = true;
-                
+
                 //возвращаем точку вращения на место к правому контроллеру
                 RessetCalibr();
             }
 
             //рост
-            
-                //сли зажато 2 клавиши
-                if (InputBridge.Instance.GetControllerBindingValue(Button_Calibr) && InputBridge.Instance.GetControllerBindingValue(Button_Calibr_B))
-                {
-                    buttonHoldTimer += Time.deltaTime;
-                    
-                    // Проверка, достигнуто ли требуемое время удержания
-                    if (buttonHoldTimer >= requiredHoldTime)
-                    {
-                        kalibr_rost();
-                   }
-                }
-                else
-                {
-                    buttonHoldTimer = 0f; // Обнуляем таймер
-                }
 
+            //сли зажато 2 клавиши
+            if (InputBridge.Instance.GetControllerBindingValue(Button_Calibr) &&
+                InputBridge.Instance.GetControllerBindingValue(Button_Calibr_B))
+            {
+                buttonHoldTimer += Time.deltaTime;
+
+                // Проверка, достигнуто ли требуемое время удержания
+                if (buttonHoldTimer >= requiredHoldTime)
+                {
+                    kalibr_rost();
+                }
+            }
+            else
+            {
+                buttonHoldTimer = 0f; // Обнуляем таймер
+            }
         }
 
 
@@ -173,14 +172,13 @@ namespace MobaVR
 
             // перемещаем родительский объект на вектор deltaPosition
             transform.position += deltaPosition;
-            
+
             // перемещаем дополнительный объект к его цели нужно для калибровки одним контроллером, этот объект имитирует второй контроллер
             if (additionalObject != null && additionalObjectTarget != null)
             {
-                additionalObject.SetParent(additionalObjectTarget); // Устанавливаем additionalObject как дочерний объект для additionalObjectTarget
-
+                additionalObject.SetParent(
+                    additionalObjectTarget); // Устанавливаем additionalObject как дочерний объект для additionalObjectTarget
             }
-            
         }
 
         private void RotateAroundPointC()
@@ -203,22 +201,21 @@ namespace MobaVR
 
             // перемещаем родительский объект на вектор deltaPosition
             transform.position += deltaPosition2;
-            
-          
         }
 
         private void RessetCalibr()
         {
             //возвращаем точку вращения на место
             additionalObject.SetParent(pointD); // Устанавливаем additionalObject как дочерний объект для правой руки
-            
+
             // Устанавливаем локальную позицию additionalObject в ноль
             additionalObject.localPosition = Vector3.zero;
         }
 
-
+        [ContextMenu("Calibration Rost")]
         public void kalibr_rost()
         {
+            /*
             _PlayerVR = _GameSession.Player;
 
             _rostPlayer = _CenterEyeAnchor.transform.position.y;
@@ -228,6 +225,12 @@ namespace MobaVR
             {
                 rost.SetHeight(_rostPlayer);
             }
+            */
+
+            _rostPlayer = _CenterEyeAnchor.transform.position.y;
+            _rostPlayer += 0.1f;
+
+            _rost.SetHeight(_rostPlayer);
         }
     }
 }

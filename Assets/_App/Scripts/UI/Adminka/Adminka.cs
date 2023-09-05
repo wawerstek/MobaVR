@@ -156,6 +156,7 @@ public class Adminka : MonoBehaviourPunCallbacks
     {
         string ipAddress = ipAddressInput.text;
         PlayerPrefs.SetString("LastIPAddress", ipAddress);
+        PlayerPrefs.Save();
     }
     
     // Загрузить IP-адрес из PlayerPrefs
@@ -226,6 +227,11 @@ public class Adminka : MonoBehaviourPunCallbacks
     {
         m_SceneEnvironment.ShowTowerMap();
     }
+    
+    public void ShowDungeonMap()
+    {
+        m_SceneEnvironment.ShowDungeonMap();
+    }
 
     public void ShowDefaultPvPMap()
     {
@@ -236,6 +242,9 @@ public class Adminka : MonoBehaviourPunCallbacks
     {
         m_SceneEnvironment.ShowLichMap();
     }
+    
+    
+    
     #endregion
     
     

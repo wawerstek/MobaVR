@@ -10,7 +10,6 @@ namespace MobaVR
 {
     public class NetworkLobby : MonoBehaviourPunCallbacks
     {
-
         [Header("Photon")]
         [SerializeField] private string m_SceneName = "Room";
         [SerializeField] private byte m_MaxPlayersPerRoom = 12;
@@ -36,12 +35,12 @@ namespace MobaVR
             if (m_IsGetOnlineFromPlayerPrefs)
             {
                 m_GameOnline = !localRepository.IsLocalServer;
-               //если у нас локальный сервре
-                if (!m_GameOnline == true)
+                //если у нас локальный сервре
+                if (!m_GameOnline)
                 {
                     // Получаем сохраненный IP-адрес из PlayerPrefs
                     string savedIPAddress = PlayerPrefs.GetString("LastIPAddress", ""); // "" - значение по умолчанию
-                    
+
                     // Используйте savedIPAddress по вашим потребностям
                     if (!string.IsNullOrEmpty(savedIPAddress))
                     {
@@ -83,19 +82,20 @@ namespace MobaVR
                     PhotonNetwork.NickName = username;
                 }
 
-               
-                if (m_GameOnline == true)
+
+                if (m_GameOnline)
                 {
                     Debug.Log("Запускаем онлайн");
-                    PhotonNetwork.PhotonServerSettings.AppSettings.AppIdRealtime = "359a2117-3847-4818-b6fe-9058f80cbac0";
+                    PhotonNetwork.PhotonServerSettings.AppSettings.AppIdRealtime =
+                        "359a2117-3847-4818-b6fe-9058f80cbac0";
                     PhotonNetwork.PhotonServerSettings.AppSettings.UseNameServer = true;
                     PhotonNetwork.PhotonServerSettings.AppSettings.Server = "";
-                   PhotonNetwork.ConnectUsingSettings();
-                } 
-                else if (m_GameOnline == false)
+                    PhotonNetwork.ConnectUsingSettings();
+                }
+                else
                 {
                     Debug.Log("Запускаем локальный, через IP " + ipServ);
-                   PhotonNetwork.PhotonServerSettings.AppSettings.AppIdRealtime = "1234567890-1234567890-1234567890";
+                    PhotonNetwork.PhotonServerSettings.AppSettings.AppIdRealtime = "1234567890-1234567890-1234567890";
                     PhotonNetwork.PhotonServerSettings.AppSettings.UseNameServer = false;
                     // PhotonNetwork.PhotonServerSettings.AppSettings.Server = "LocalServer";
                     PhotonNetwork.PhotonServerSettings.AppSettings.Server = ipServ;
@@ -103,19 +103,14 @@ namespace MobaVR
                     //PhotonNetwork.ConnectToMaster("192.168.0.182", 5055, "1");
                 }
 
-               
-               // PhotonNetwork.ConnectUsingSettings();
+
+                // PhotonNetwork.ConnectUsingSettings();
 
 
                 PhotonNetwork.AutomaticallySyncScene = true;
                 PhotonNetwork.OfflineMode = false;
                 PhotonNetwork.GameVersion = m_GameVersion;
                 //PhotonNetwork.UseRpcMonoBehaviourCache = true;
-
-                
-
-               
-              
             }
 
 

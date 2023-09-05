@@ -351,12 +351,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32bf49b17a5aa2e4fb8e46bc01850344, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SceneName: Tavern_Tutorial_China
+  m_SceneName: Tavern_Tutorial
   m_MaxPlayersPerRoom: 12
-  m_RoomName: ArenaVR_6
+  m_RoomName: ArenaVR_10
   m_GameVersion: 2
-  m_IsGetOnlineFromPlayerPrefs: 1
-  m_GameOnline: 0
+  m_IsGetOnlineFromPlayerPrefs: 0
+  m_GameOnline: 1
   ipServ: 
   OnRoomConnected:
     m_PersistentCalls:
@@ -405,7 +405,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UsePlayerSettings: 0
-  UseLogs: 0
+  UseLogs: 1
 --- !u!1 &909933732
 GameObject:
   m_ObjectHideFlags: 0
