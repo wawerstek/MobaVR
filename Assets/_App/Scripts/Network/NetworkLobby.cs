@@ -18,6 +18,7 @@ namespace MobaVR
         [SerializeField] private string m_GameVersion = "1";
         [SerializeField] private bool m_IsGetOnlineFromPlayerPrefs = true;
         [SerializeField] private bool m_GameOnline;
+        [SerializeField] private string ipServ;
 
 
         private bool m_IsConnecting = false;
@@ -35,6 +36,18 @@ namespace MobaVR
             if (m_IsGetOnlineFromPlayerPrefs)
             {
                 m_GameOnline = !localRepository.IsLocalServer;
+               //если у нас локальный сервре
+                if (m_GameOnline == true)
+                {
+                    // Получить сохраненный IP-адрес из PlayerPrefs
+                    string savedIPAddress = PlayerPrefs.GetString("LastIPAddress", ""); // "" - значение по умолчанию
+
+                    // Используйте savedIPAddress по вашим потребностям
+                    if (!string.IsNullOrEmpty(savedIPAddress))
+                    {
+                        ipServ = savedIPAddress;
+                    }
+                }
             }
 
             PhotonNetwork.NetworkingClient.SerializationProtocol = SerializationProtocol.GpBinaryV16;
@@ -72,6 +85,7 @@ namespace MobaVR
                
                 if (m_GameOnline == true)
                 {
+                    Debug.Log("Запускаем онлайн");
                     PhotonNetwork.PhotonServerSettings.AppSettings.AppIdRealtime = "359a2117-3847-4818-b6fe-9058f80cbac0";
                     PhotonNetwork.PhotonServerSettings.AppSettings.UseNameServer = true;
                     PhotonNetwork.PhotonServerSettings.AppSettings.Server = "";
@@ -79,10 +93,11 @@ namespace MobaVR
                 } 
                 else if (m_GameOnline == false)
                 {
+                    Debug.Log("Запускаем локальный, через IP " + ipServ);
                    PhotonNetwork.PhotonServerSettings.AppSettings.AppIdRealtime = "1234567890-1234567890-1234567890";
                     PhotonNetwork.PhotonServerSettings.AppSettings.UseNameServer = false;
                     // PhotonNetwork.PhotonServerSettings.AppSettings.Server = "LocalServer";
-                    PhotonNetwork.PhotonServerSettings.AppSettings.Server = "192.168.0.13";
+                    PhotonNetwork.PhotonServerSettings.AppSettings.Server = ipServ;
                     PhotonNetwork.ConnectUsingSettings();
                     //PhotonNetwork.ConnectToMaster("192.168.0.182", 5055, "1");
                 }

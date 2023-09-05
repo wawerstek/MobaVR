@@ -20,6 +20,7 @@ namespace MobaVR
         //[SerializeField] private PveMode m_LichMode;
         //[SerializeField] private LichGame m_LichMode;
         //[SerializeField] private Environment m_Environment;
+        public ManagerDevice managerDevice; // Ссылка на объект ManagerDevice
 
         [Header("Player")]
         [SerializeField] private BasePlayerSpawner<PlayerVR> m_PlayerSpawner;
@@ -57,6 +58,7 @@ namespace MobaVR
 
         private void Awake()
         {
+            managerDevice = GameObject.Find("DeviceManager").GetComponent<ManagerDevice>();
             //TODO: 
             PhotonCustomHitData.Register();
             #if !UNITY_EDITOR
@@ -68,7 +70,10 @@ namespace MobaVR
         {
             //InitPlayer();
             //InitMode();
-            Invoke(nameof(InitPlayer), 2f);
+            if (managerDevice.PlayerCrate) // Проверяем, нужно ли создавать игрока
+            {
+                Invoke(nameof(InitPlayer), 2f);
+            }
             //Invoke(nameof(InitMode), 3f);
         }
 
