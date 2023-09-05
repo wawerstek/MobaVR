@@ -37,15 +37,16 @@ namespace MobaVR
             {
                 m_GameOnline = !localRepository.IsLocalServer;
                //если у нас локальный сервре
-                if (m_GameOnline == true)
+                if (!m_GameOnline == true)
                 {
-                    // Получить сохраненный IP-адрес из PlayerPrefs
+                    // Получаем сохраненный IP-адрес из PlayerPrefs
                     string savedIPAddress = PlayerPrefs.GetString("LastIPAddress", ""); // "" - значение по умолчанию
-
+                    
                     // Используйте savedIPAddress по вашим потребностям
                     if (!string.IsNullOrEmpty(savedIPAddress))
                     {
                         ipServ = savedIPAddress;
+                        // Далее используйте ipServ в вашем коде
                     }
                 }
             }
