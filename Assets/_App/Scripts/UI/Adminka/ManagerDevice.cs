@@ -49,7 +49,17 @@ public class ManagerDevice : MonoBehaviour
         else if (Application.platform == RuntimePlatform.WindowsPlayer)
         {
             // Если игра запущена на Windows
-            FunctionForWindows();
+            if (TestAndroid)
+            {
+                // Запустим как админ
+                //FunctionForWindows();
+                FunctionForAndroid();
+            }
+            else
+            {
+                // Запустим как клиент Виндовс
+                FunctionForWindows();
+            }
         }
         else if (Application.platform == RuntimePlatform.Android)
         {
