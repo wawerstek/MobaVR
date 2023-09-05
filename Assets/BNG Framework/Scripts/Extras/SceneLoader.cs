@@ -6,20 +6,23 @@ using UnityEngine.SceneManagement;
 namespace BNG {
     public class SceneLoader : MonoBehaviour {
 
-        [Tooltip("The Unity 'LoadSceneMode' method of loading the scene (In most cases should be 'Single'). ")]
+        [Tooltip("Метод загрузки сцены 'LoadSceneMode' (в большинстве случаев должен быть одиночным). ")]
         public LoadSceneMode loadSceneMode = LoadSceneMode.Single;
 
-        [Tooltip("If true, the ScreenFader component will fade the screen to black before loading a level.")]
+        [Tooltip("Если значение true, компонент Screen Fader сделает экран черным перед загрузкой уровня.")]
         public bool UseSceenFader = true;
 
-        [Tooltip("Wait this long in seconds before attempting to load the scene. Useful if you need to fade the screen out before attempting to load the level.")]
+        [Tooltip("Подождите столько времени в секундах, прежде чем пытаться загрузить сцену. Полезно, если вам нужно погасить экран перед попыткой загрузить уровень.")]
         public float ScreenFadeTime = 0.5f;
 
+        
         private LocalRepository localRepository;
-
+        
+        
         private void Awake()
         {
             localRepository = new LocalRepository();
+            
         }
         
         ScreenFader sf;
@@ -28,12 +31,14 @@ namespace BNG {
 
         public void LoadLocalServerScene(string SceneName)
         {
+            Debug.Log("Запускаем локальный, через IP ");
             localRepository.SetLocalServer(true);
             LoadScene(SceneName);
         }
 
         public void LoadRemoteServerScene(string SceneName)
         {
+            Debug.Log("Запускаем онлайн");
             localRepository.SetLocalServer(false);
             LoadScene(SceneName);
         }
@@ -69,5 +74,6 @@ namespace BNG {
             SceneManager.LoadScene(_loadSceneName, loadSceneMode);
         }
     }
+    
 }
 
