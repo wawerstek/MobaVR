@@ -8,7 +8,8 @@ using Photon.Pun;
 //админка у правление с компьютера
 public class Adminka : MonoBehaviourPunCallbacks
 {
-    
+    [Header("Тест. меню включается с нужного экрана")]
+    public bool Test;//тестовая переменная, которая выключает включение с первого экрана, в ключит с того, который был включен
     
     [Header("Меню выбора сетевого режима")]
     public GameObject PanelLocad; // выбора сетевого режима
@@ -26,6 +27,8 @@ public class Adminka : MonoBehaviourPunCallbacks
 
     private bool RunGames;//проверяем заработала ли игра или нет
     
+    [Header("Информация о картах")]
+    public GameObject[] InfoMaps; 
     
     
     [Header("IP-адрес")]
@@ -74,12 +77,16 @@ public class Adminka : MonoBehaviourPunCallbacks
     
     public void Start()
     {
-        //включаем только мень выбора языка и сетевого режима игры
-        PanelLocad.SetActive(true);
-        PanelLocading.SetActive(false);
-        PanelOsnova.SetActive(false);
-        PanelGame.SetActive(false);
-        PanelCamers.SetActive(false);
+        if (!Test)
+        {
+            //включаем только мень выбора языка и сетевого режима игры
+            PanelLocad.SetActive(true);
+            PanelLocading.SetActive(false);
+            PanelOsnova.SetActive(false);
+            PanelGame.SetActive(false);
+            PanelCamers.SetActive(false);
+        }
+
     }  
 
     void Update()
@@ -197,6 +204,10 @@ public class Adminka : MonoBehaviourPunCallbacks
     {
         m_SceneEnvironment.ShowTavernMap();
     }
+    public void ShowTavernMapPointEnter()
+    {
+        ActivateMap(0); // Информация о карте
+    }
 
     /*public void ShowSkyLandMap()
     {
@@ -205,7 +216,12 @@ public class Adminka : MonoBehaviourPunCallbacks
 
     public void ShowSkyLandWithPropMap()
     {
+        
         m_SceneEnvironment.ShowSkyLandWithPropMap();
+    }
+    public void ShowSkyLandWithPropMapPointEnter()
+    {
+        ActivateMap(1); // Информация о карте
     }
 
     /*public void ShowMobaMap()
@@ -221,17 +237,33 @@ public class Adminka : MonoBehaviourPunCallbacks
     public void ShowNecropolisMap()
     {
         m_SceneEnvironment.ShowNecropolisMap();
+    }   
+    
+    public void ShowNecropolisMapPointEnter()
+    {
+        ActivateMap(2); // Информация о карте
     }
 
     public void ShowTowerMap()
     {
+       
         m_SceneEnvironment.ShowTowerMap();
+    }
+    public void ShowTowerMapPointEnter()
+    {
+        ActivateMap(3); // Информация о карте
     }
     
     public void ShowDungeonMap()
     {
+        
         m_SceneEnvironment.ShowDungeonMap();
     }
+    public void ShowDungeonMapPointEnter()
+    {
+        ActivateMap(4); // Информация о карте
+    }
+
 
     public void ShowDefaultPvPMap()
     {
@@ -365,6 +397,23 @@ public class Adminka : MonoBehaviourPunCallbacks
             #endif
         }
 
-    
+        // Функция для активации одного элемента массива и выключения остальных
+        public void ActivateMap(int mapIndex)
+        {
+            // Перебираем все элементы массива
+            for (int i = 0; i < InfoMaps.Length; i++)
+            {
+                // Если текущий элемент массива имеет индекс, равный mapIndex, то активируем его
+                if (i == mapIndex)
+                {
+                    InfoMaps[i].SetActive(true);
+                }
+                else
+                {
+                    // Иначе выключаем все остальные элементы
+                    InfoMaps[i].SetActive(false);
+                }
+            }
+        }
     
 }
