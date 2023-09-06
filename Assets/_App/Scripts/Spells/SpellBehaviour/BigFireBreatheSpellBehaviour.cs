@@ -77,12 +77,22 @@ namespace MobaVR
                 m_IsPerformed = false;
                 WaitCooldown();
                 Interrupt();
+                
+                //Stop();
             }
         }
 
         protected override void Interrupt()
         {
             base.Interrupt();
+
+            // TODO:
+            // Если прерывается во время выполнения, то уводим в откат.
+            // Например, убили игрока
+            if (m_IsPerformed)
+            {
+                WaitCooldown();
+            }
             
             CancelInvoke(nameof(Stop));
             OnCompleted?.Invoke();
@@ -96,8 +106,10 @@ namespace MobaVR
             Interrupt();
         }
         
-        private void Update()
+        protected override void Update()
         {
+            base.Update();
+            
             if (!m_IsPerformed)
             {
                 return;

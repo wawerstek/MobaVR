@@ -28,15 +28,19 @@ namespace MobaVR
         [SerializeField] protected PhotonView m_PhotonView;
 
         protected SpellHandler m_SpellsHandler;
+        [SerializeField] [ReadOnly] protected bool m_IsInCooldown = false;
+        [SerializeField] [ReadOnly] protected float m_CurrentTime = 0f;
         protected PlayerVR m_PlayerVR;
         protected bool m_IsInit = false;
-        protected bool m_IsAvailable = true;
+        [SerializeField] [ReadOnly] protected bool m_IsAvailable = true;
 
         public string SpellName => m_SpellName;
         public bool IsInit => m_IsInit;
         public bool IsAvailable => !m_UseCooldown || m_IsAvailable;
         public bool UseCooldown => m_UseCooldown;
         public float CooldownTime => m_CooldownTime;
+        public bool IsInCooldown => m_IsInCooldown;
+        public float CurrentTime => m_CurrentTime;
 
         public Action OnStarted;
         public Action OnPerformed;
@@ -96,8 +100,10 @@ namespace MobaVR
         {
             if (m_UseCooldown)
             {
+                m_CurrentTime = 0f;
                 m_IsAvailable = false;
-                Invoke(nameof(SetAvailable), m_CooldownTime);
+                m_IsInCooldown = true;
+                //Invoke(nameof(SetAvailable), m_CooldownTime);
             }
             else
             {
@@ -105,8 +111,25 @@ namespace MobaVR
             }
         }
 
+        protected virtual void Update()
+        {
+            if (m_IsInCooldown)
+            {
+                m_CurrentTime += Time.deltaTime;
+                if (m_CurrentTime >= m_CooldownTime)
+                {
+                    m_CurrentTime = m_CooldownTime;
+                    //m_CurrentTime = 0;
+                    m_IsInCooldown = false;
+                    SetAvailable();
+                }
+            }
+        }
+
         protected virtual void SetAvailable()
         {
+            //m_CurrentTime = 0;
+            m_IsInCooldown = false;
             m_IsAvailable = true;
         }
 

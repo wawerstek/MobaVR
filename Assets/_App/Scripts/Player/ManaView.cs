@@ -30,7 +30,7 @@ namespace MobaVR
 
         private void OnEnable()
         {
-            m_SpellBehaviour.OnCompleted += OnCompleted;
+            //m_SpellBehaviour.OnCompleted += OnCompleted;
             m_SpellBehaviour.OnPerformed += OnPerformed;
             m_CooldownTime = m_SpellBehaviour.CooldownTime;
         }
@@ -50,6 +50,13 @@ namespace MobaVR
         
         private void OnCompleted()
         {
+            /*
+            if (!m_SpellBehaviour.IsPerformed())
+            {
+                return;
+            }
+            */
+            
             m_CurrentTime = 0f;
             m_ProgressBar.currentPercent = 0f;
             m_ProgressBar.UpdateUI();
@@ -62,7 +69,20 @@ namespace MobaVR
             {
                 return;
             }
+
+            if (m_SpellBehaviour.IsAvailable || !m_SpellBehaviour.UseCooldown)
+            {
+                m_ProgressBar.currentPercent = 100f;
+                m_ProgressBar.UpdateUI();
+            }
+            else
+            {
+                m_CurrentTime = m_SpellBehaviour.CurrentTime;
+                m_ProgressBar.currentPercent = m_CurrentTime / m_CooldownTime * 100f;
+                m_ProgressBar.UpdateUI();
+            }
             
+            /*
             if ((m_SpellBehaviour.IsAvailable && !m_SpellBehaviour.IsPerformed()) || !m_SpellBehaviour.UseCooldown)
             {
                 m_ProgressBar.currentPercent = 100;
@@ -77,6 +97,7 @@ namespace MobaVR
                     m_ProgressBar.UpdateUI();
                 }
             }
+            */
         }
     }
 }

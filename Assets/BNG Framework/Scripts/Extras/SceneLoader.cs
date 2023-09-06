@@ -42,6 +42,14 @@ namespace BNG {
             localRepository.SetLocalServer(false);
             LoadScene(SceneName);
         }
+        
+        [ContextMenu("Load Lobby")]
+        public void LoadRemoteLobby()
+        {
+            Debug.Log("Запускаем онлайн");
+            localRepository.SetLocalServer(false);
+            LoadScene("Lobby");
+        }
 
         public void LoadScene(string SceneName) {
 
