@@ -50,6 +50,18 @@ namespace BNG {
             localRepository.SetLocalServer(false);
             LoadScene("Lobby");
         }
+        
+        private void Update(){
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                LoadRemoteServerScene("Lobby");
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                LoadLocalServerScene("Lobby");
+            }
+        }
 
         public void LoadScene(string SceneName) {
 
