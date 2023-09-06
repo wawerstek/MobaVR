@@ -42,7 +42,7 @@ namespace MobaVR
 
         private bool IsValidateHitData(HitData hitData)
         {
-            //Clear();
+            Clear();
 
             if (hitData == null)
             {
