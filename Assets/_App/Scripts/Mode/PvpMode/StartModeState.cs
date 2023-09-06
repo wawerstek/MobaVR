@@ -19,8 +19,12 @@ namespace MobaVR.ClassicModeStateMachine.PVP
         {
             m_Content.ZoneManager.Hide();
             m_Content.KillZoneManager.Hide();
+            
             m_Content.ModeView.RedTeamScoreView.Hide();
             m_Content.ModeView.RedTeamKillScoreView.Hide();
+            
+            m_Content.ModeView.BlueTeamScoreView.Hide();
+            m_Content.ModeView.BlueTeamKillScoreView.Hide();
             
             m_Mode.BlueTeam.Score = 0;
             m_Content.ModeView.BlueTeamScoreView.SetScore(0); //
