@@ -30,6 +30,9 @@ namespace MobaVR
         public Action OnTotalLimit;
         public Action<bool> OnStateChange;
         
+        public AudioClip[] sounds;  // Массив звуков, которые вы хотите воспроизводить
+        private AudioSource audioSource;
+        
         public TargetType TargetType
         {
             get => m_TargetType;
@@ -38,6 +41,7 @@ namespace MobaVR
         
         private void Start()
         {
+            audioSource = GetComponent<AudioSource>();
             //RpcGenerateMonsters();
             m_CurrentTotalCount = 0;
         }
@@ -48,6 +52,7 @@ namespace MobaVR
             {
                 return;
             }
+            
             
             photonView.RPC(nameof(RpcGenerateMonsters), RpcTarget.AllBuffered);
         }
@@ -207,6 +212,8 @@ namespace MobaVR
         {
             m_CreatedEffect.Play();//TODO
             
+            PlayRandomSoundOnce();//запускаем  звук создания монстра
+            
             if (!CanSpawn)
             {
                 return;
@@ -268,5 +275,20 @@ namespace MobaVR
 
             MonsterControllers.Add(monster);
         }
+  
+        
+        public void PlayRandomSoundOnce()
+        {
+            if (sounds.Length > 0)
+            {
+                int randomIndex = Random.Range(0, sounds.Length);
+                audioSource.clip = sounds[randomIndex];
+                audioSource.Play();
+            }
+        }
+        
+        
+        
+        
     }
 }
