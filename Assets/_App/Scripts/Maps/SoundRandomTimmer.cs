@@ -4,21 +4,29 @@ using UnityEngine;
 
 public class SoundRandomTimmer : MonoBehaviour
 {
-    public AudioClip[] sounds;  // Массив звуков, которые вы хотите воспроизводить
-    public float initialDelay = 0f;  // Задержка перед первым воспроизведением звука
-    public float timeInterval = 15f;  // Интервал времени между воспроизведением звука
+    public AudioClip[] sounds; // Массив звуков, которые вы хотите воспроизводить
+    public float initialDelay = 0f; // Задержка перед первым воспроизведением звука
+    public float timeInterval = 15f; // Интервал времени между воспроизведением звука
+    public bool isPlayOnStart = true;
 
     private AudioSource audioSource;
     private bool isPlayingSound = false;
 
-    private void Start()
+    private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
-        // Запустите метод PlayRandomSound с задержкой
-        Invoke("PlayRandomSound", initialDelay);
     }
 
-    private void PlayRandomSound()
+    private void Start()
+    {
+        // Запустите метод PlayRandomSound с задержкой
+        if (isPlayOnStart)
+        {
+            Invoke("PlayRandomSound", initialDelay);
+        }
+    }
+
+    public void PlayRandomSound()
     {
         if (!isPlayingSound)
         {
@@ -36,6 +44,22 @@ public class SoundRandomTimmer : MonoBehaviour
 
         // Запустите таймер для воспроизведения следующего звука с интервалом
         Invoke("PlayRandomSound", timeInterval);
+    }
+
+    public void PlayOneSound()
+    {
+        if (!isPlayingSound)
+        {
+            if (sounds.Length > 0)
+            {
+                int randomIndex = Random.Range(0, sounds.Length);
+                audioSource.clip = sounds[randomIndex];
+                audioSource.Play();
+                isPlayingSound = true;
+
+                Invoke("ResetIsPlayingSound", audioSource.clip.length);
+            }
+        }
     }
 
     private void ResetIsPlayingSound()
