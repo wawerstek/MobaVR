@@ -70,7 +70,7 @@ namespace MobaVR
         {
             //InitPlayer();
             //InitMode();
-            if (managerDevice.PlayerCrate) // Проверяем, нужно ли создавать игрока
+            if (managerDevice != null && managerDevice.PlayerCrate) // Проверяем, нужно ли создавать игрока
             {
                 Invoke(nameof(InitPlayer), 2f);
             }

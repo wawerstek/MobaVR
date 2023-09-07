@@ -75,7 +75,7 @@ namespace MobaVR
                 return;
             }
 
-            m_IsPerformed = false;
+            //m_IsPerformed = false;
 
             if (m_IsAttach)
             {
@@ -85,6 +85,9 @@ namespace MobaVR
             {
                 Interrupt();
             }
+
+
+            m_IsPerformed = false;
         }
 
         protected override void Interrupt()
@@ -100,11 +103,15 @@ namespace MobaVR
                 m_IsThrown = false;
             }
 
+            if (m_IsPerformed)
+            {
+                WaitCooldown();
+            }
+
             m_IsPerformed = false;
             m_Bow.Show(false);
             m_Bow.Grabbable.DropItem(m_LeftHand.Grabber);
 
-            WaitCooldown();
             OnCompleted?.Invoke();
         }
 
@@ -119,11 +126,12 @@ namespace MobaVR
                 m_IsAttach = false;
             }
 
+            WaitCooldown();
+
             m_IsPerformed = false;
             m_Bow.Show(false);
             m_Bow.Grabbable.DropItem(m_LeftHand.Grabber);
-            
-            WaitCooldown();
+
             OnCompleted?.Invoke();
         }
 
