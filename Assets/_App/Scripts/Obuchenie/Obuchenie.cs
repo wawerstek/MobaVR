@@ -15,7 +15,7 @@ public class Obuchenie : MonoBehaviour
     public GameObject Personag;
     public GameObject Point;
     public GameObject Player;
-    private float requiredHoldTime = 4f; // Время удержания в секундах
+    private float requiredHoldTime = 2f; // Время удержания в секундах
     private float buttonHoldTimer = 0f;//для таймера
     
     private bool isButtonCalibrPressed = false;
