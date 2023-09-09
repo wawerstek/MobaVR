@@ -52,14 +52,14 @@ namespace BNG {
         }
         
         private void Update(){
-            if (Input.GetKeyDown(KeyCode.Alpha1))
+            if (Input.GetKeyDown(KeyCode.O))
             {
-                //LoadRemoteServerScene("Lobby");
+                LoadRemoteServerScene("Lobby");
             }
 
-            if (Input.GetKeyDown(KeyCode.Alpha2))
+            if (Input.GetKeyDown(KeyCode.L))
             {
-                //LoadLocalServerScene("Lobby");
+                LoadLocalServerScene("Lobby");
             }
         }
 

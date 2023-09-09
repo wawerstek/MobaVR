@@ -1,4 +1,5 @@
-﻿using Photon.Pun;
+﻿using System;
+using Photon.Pun;
 using Photon.Realtime;
 using System.Collections.Generic;
 using BNG;
@@ -8,6 +9,8 @@ namespace MobaVR
 {
     public class GrabbableOwner : MonoBehaviourPun, IPunOwnershipCallbacks
     {
+        [SerializeField] private bool isCheckOnGrab = true;
+        
         private Grabber leftGrabber;
         private GrabbablesInTrigger leftTriggerGrabber;
         private Grabber rightGrabber;
@@ -20,7 +23,23 @@ namespace MobaVR
         private bool _syncLeftHoldingItem;
         private bool _syncRightHoldingItem;
 
+        private bool _isLeftGrabbed = false;
+        private bool _isRightGrabbed = false;
+
         #if PUN_2_OR_NEWER
+
+        private void OnEnable()
+        {
+            
+        }
+
+        private void OnDestroy()
+        {
+            if (photonView.IsMine)
+            {
+                Unsubscribe();
+            }
+        }
 
         private void Start()
         {
@@ -37,12 +56,74 @@ namespace MobaVR
             rightGrabber = inputVR.RightGrabber;
             rightGrabberTrigger = rightGrabber.GetComponent<GrabbablesInTrigger>();
 
+            Subscribe();
+            
             requestedGrabbables = new Dictionary<int, double>();
         }
 
         private void Update()
         {
             CheckGrabbablesTransfer();
+        }
+
+        private void Subscribe()
+        {
+            if (!photonView.IsMine)
+            {
+                return;
+            }
+
+            if (leftGrabber != null)
+            {
+                leftGrabber.onGrabEvent.AddListener(OnLeftGrab);
+                leftGrabber.onReleaseEvent.AddListener(OnLeftRelease);
+            }
+            
+            if (rightGrabber != null)
+            {
+                rightGrabber.onGrabEvent.AddListener(OnRightGrab);
+                rightGrabber.onReleaseEvent.AddListener(OnRightRelease);
+            }
+        }
+
+        private void Unsubscribe()
+        {
+            if (!photonView.IsMine)
+            {
+                return;
+            }
+
+            if (leftGrabber != null)
+            {
+                leftGrabber.onGrabEvent.RemoveListener(OnLeftGrab);
+                leftGrabber.onReleaseEvent.RemoveListener(OnLeftRelease);
+            }
+            
+            if (rightGrabber != null)
+            {
+                rightGrabber.onGrabEvent.RemoveListener(OnRightGrab);
+                rightGrabber.onReleaseEvent.RemoveListener(OnRightRelease);
+            }
+        }
+
+        private void OnLeftGrab(Grabbable grabbable)
+        {
+            _isLeftGrabbed = true;
+        }
+        
+        private void OnLeftRelease(Grabbable grabbable)
+        {
+            _isLeftGrabbed = false;
+        }
+
+        private void OnRightGrab(Grabbable grabbable)
+        {
+            _isRightGrabbed = true;
+        }
+        
+        private void OnRightRelease(Grabbable grabbable)
+        {
+            _isRightGrabbed = false;
         }
 
         private void CheckGrabbablesTransfer()
@@ -52,8 +133,15 @@ namespace MobaVR
                 return;
             }
 
-            RequestOwnerShipForNearbyGrabbables(leftTriggerGrabber);
-            RequestOwnerShipForNearbyGrabbables(rightGrabberTrigger);
+            if (!isCheckOnGrab || _isLeftGrabbed)
+            {
+                RequestOwnerShipForNearbyGrabbables(leftTriggerGrabber);
+            }
+
+            if (!isCheckOnGrab || _isRightGrabbed)
+            {
+                RequestOwnerShipForNearbyGrabbables(rightGrabberTrigger);
+            }
         }
 
         private void RequestOwnerShipForNearbyGrabbables(GrabbablesInTrigger grabbables)

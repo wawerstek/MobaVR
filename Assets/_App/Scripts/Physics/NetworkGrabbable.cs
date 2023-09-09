@@ -27,6 +27,7 @@ namespace MobaVR
 
         [Header("Sync Vars")]
         [SerializeField] private bool _isSyncHold = true;
+        [SerializeField] private bool _isGrabbed = true;
         [SerializeField] private float _maxDeltaPosition = 3f;
         [SerializeField] private bool _isSyncPosition = false;
         [SerializeField] private bool _isSyncRotation = false;
@@ -42,7 +43,7 @@ namespace MobaVR
         public override void Update()
         {
             base.Update();
-
+            //Debug.Log($"NetworkGrabbable: BeingHeld = {BeingHeld}");
             // Проверьте, ушел ли владелец или не назначен. запускаем функицю проверки, она ниже
             //CheckForNullOwner();
 
