@@ -130,6 +130,14 @@ namespace MobaVR
                 }
 
                 BeingHeld = heldByGrabbers != null && heldByGrabbers.Count > 0;
+
+                if (!BeingHeld)
+                {
+                    if (rb)
+                    {
+                        rb.isKinematic = !ForceDisableKinematicOnDrop && wasKinematic;
+                    }
+                }
             }
         }
 

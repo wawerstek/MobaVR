@@ -9,7 +9,10 @@ namespace MobaVR
     {
         [Header("VFX")]
         [SerializeField] private ParticleSystem m_CastVfx;
+        [SerializeField] private AudioClip m_CastAudioClip;
         [SerializeField] private ParticleSystem m_ShootVfx;
+        [SerializeField] private AudioClip m_ShootAudioClip;
+        [SerializeField] private AudioSource m_AudioSource;
         [SerializeField] private float m_ShootDelay = 5f;
         [SerializeField] private float m_ShootDuration = 5f;
         
@@ -80,6 +83,10 @@ namespace MobaVR
         public void Cast()
         {
             m_CastVfx.Play();
+            if (m_AudioSource != null && m_CastAudioClip != null)
+            {
+                m_AudioSource.PlayOneShot(m_CastAudioClip);
+            }
             m_Collider.enabled = false;
 
             Invoke(nameof(Shoot), m_ShootDelay);
@@ -91,7 +98,11 @@ namespace MobaVR
             
             m_Collider.enabled = true;
             m_ShootVfx.Play();
-
+            if (m_AudioSource != null && m_ShootAudioClip != null)
+            {
+                m_AudioSource.PlayOneShot(m_ShootAudioClip);
+            }
+            
             CancelInvoke(nameof(Shoot));
             Invoke(nameof(Reset), m_ShootDuration);
         }
