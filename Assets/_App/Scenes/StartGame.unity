@@ -1409,13 +1409,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 214013836}
-  m_LocalRotation: {x: 0.11431875, y: -0.87470615, z: 0.25086018, w: 0.39860967}
-  m_LocalPosition: {x: 6.82, y: 3.55, z: 5.41}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 772465070}
-  m_RootOrder: 4
+  m_Father: {fileID: 1680312644}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 32.005, y: -131.002, z: 0}
 --- !u!81 &214013838
 AudioListener:
@@ -2787,12 +2787,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 343343164}
-  m_LocalRotation: {x: 0.24016257, y: 0.28801912, z: -0.07486142, w: 0.9239928}
-  m_LocalPosition: {x: -4.79, y: 1.54, z: -6.05}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 772465070}
+  m_Father: {fileID: 1782097874}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 29.14, y: 34.626, z: 0}
 --- !u!81 &343343166
@@ -2834,7 +2834,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 3260215
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: 63c57a6bdf7ebbd4395e6ff33e49eb69, type: 2}
   m_TargetDisplay: 1
@@ -4415,13 +4415,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 548133792}
-  m_LocalRotation: {x: 0.19493248, y: -0.37465388, z: 0.10388583, w: 0.9004685}
-  m_LocalPosition: {x: 5.53, y: 2.257, z: -6.05}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 772465070}
-  m_RootOrder: 2
+  m_Father: {fileID: 1133797252}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 25.398, y: -44.594, z: 2.603}
 --- !u!81 &548133794
 AudioListener:
@@ -4505,7 +4505,7 @@ Transform:
   m_Children:
   - {fileID: 141559123}
   m_Father: {fileID: 772465070}
-  m_RootOrder: 8
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &565779773
 MonoBehaviour:
@@ -5128,7 +5128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3566a9917494fb419808b8ed6bad39a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TestAndroid: 1
+  TestAndroid: 0
   PlayerVR: {fileID: 2683195716764533364}
   PlayerPC: {fileID: 716183762}
   PlayerCrate: 0
@@ -5177,9 +5177,10 @@ Transform:
   m_LocalPosition: {x: -4.49, y: 2.33, z: 4.98}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1429543815}
   m_Father: {fileID: 772465070}
-  m_RootOrder: 7
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 31.637, y: 136.234, z: 0}
 --- !u!81 &649227364
 AudioListener:
@@ -5510,6 +5511,7 @@ GameObject:
   - component: {fileID: 716183763}
   - component: {fileID: 716183764}
   - component: {fileID: 716183765}
+  - component: {fileID: 716183766}
   m_Layer: 0
   m_Name: AminkaPC
   m_TagString: Untagged
@@ -5593,6 +5595,24 @@ MonoBehaviour:
   FreeCamera: {fileID: 565779771}
   uiImage: {fileID: 2124297430}
   MonitorDouble: 0
+--- !u!114 &716183766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 716183762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e8034ab6025556439a9a3d8c875ad1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameras:
+  - {fileID: 1782097876}
+  - {fileID: 1133797254}
+  - {fileID: 1680312646}
+  - {fileID: 649227365}
+  cameraTargets: []
 --- !u!114 &721589666
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6367,13 +6387,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 343343165}
   - {fileID: 1782097874}
-  - {fileID: 548133793}
   - {fileID: 1133797252}
-  - {fileID: 214013837}
   - {fileID: 1680312644}
-  - {fileID: 1429543815}
   - {fileID: 649227363}
   - {fileID: 565779772}
   m_Father: {fileID: 716183763}
@@ -8944,9 +8960,10 @@ Transform:
   m_LocalPosition: {x: 5.53, y: 2.257, z: -6.05}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 548133793}
   m_Father: {fileID: 772465070}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 25.398, y: -44.594, z: 2.603}
 --- !u!81 &1133797253
 AudioListener:
@@ -10452,13 +10469,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1429543814}
-  m_LocalRotation: {x: 0.10159804, y: 0.89280564, z: -0.25295013, w: 0.35859764}
-  m_LocalPosition: {x: -4.49, y: 2.33, z: 4.98}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 772465070}
-  m_RootOrder: 6
+  m_Father: {fileID: 649227363}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 31.637, y: 136.234, z: 0}
 --- !u!81 &1429543816
 AudioListener:
@@ -10499,7 +10516,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 3243831
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: 177b563dcf647ac459e82c4aa7d80b36, type: 2}
   m_TargetDisplay: 1
@@ -11554,9 +11571,10 @@ Transform:
   m_LocalPosition: {x: 6.82, y: 3.55, z: 5.41}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 214013837}
   m_Father: {fileID: 772465070}
-  m_RootOrder: 5
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 32.005, y: -131.002, z: 0}
 --- !u!81 &1680312645
 AudioListener:
@@ -12591,9 +12609,10 @@ Transform:
   m_LocalPosition: {x: -4.79, y: 1.54, z: -6.05}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 343343165}
   m_Father: {fileID: 772465070}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 29.14, y: 34.626, z: 0}
 --- !u!81 &1782097875
 AudioListener:
