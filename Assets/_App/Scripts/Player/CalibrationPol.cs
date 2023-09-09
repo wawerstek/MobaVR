@@ -52,7 +52,7 @@ namespace MobaVR
         // public GameObject CalibrovkaText;
         public bool runRost;
 
-        private float requiredHoldTime = 4f; // Время удержания в секундах
+        private float requiredHoldTime = 2f; // Время удержания в секундах
         private float buttonHoldTimer = 0f; //для таймера
 
 
