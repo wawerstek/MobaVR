@@ -45,6 +45,8 @@ namespace MobaVR.ClassicModeStateMachine.Tower
             
             //m_Content.Lich.Deactivate();
             m_Content.Lich.RpcPause_Monster();
+            
+            m_Content.IsVictory = false;
 
             m_Content.CurrentWave = 0;
         }

@@ -8,9 +8,11 @@ public class SoundRandomTimmer : MonoBehaviour
     public float initialDelay = 0f; // Задержка перед первым воспроизведением звука
     public float timeInterval = 15f; // Интервал времени между воспроизведением звука
     public bool isPlayOnStart = true;
+    public bool useRandom = true;
 
     private AudioSource audioSource;
     private bool isPlayingSound = false;
+    private int currentPosition = 0;
 
     private void Awake()
     {
@@ -52,8 +54,18 @@ public class SoundRandomTimmer : MonoBehaviour
         {
             if (sounds.Length > 0)
             {
-                int randomIndex = Random.Range(0, sounds.Length);
-                audioSource.clip = sounds[randomIndex];
+                int index;
+                if (useRandom)
+                {
+                    index = Random.Range(0, sounds.Length);
+                }
+                else
+                {
+                    index = currentPosition % sounds.Length;
+                    currentPosition++;
+                }
+
+                audioSource.clip = sounds[index];
                 audioSource.Play();
                 isPlayingSound = true;
 
