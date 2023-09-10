@@ -72,4 +72,18 @@ public class TriggerCamersMaps : MonoBehaviour
             }
         }
     }
+
+
+	//если нажимаем на кнопки камер    
+    public void RssetCamers()
+	{
+		//обнуляем массив
+		cameraTargets = null;
+		FindCameraTargets();
+ 		// Проверяем, что были найдены точки для хотя бы одной камеры
+        if (cameraTargets != null && cameraTargets.Length > 0)
+        {
+            MoveCamerasToTargets();
+        }
+	}
 }
