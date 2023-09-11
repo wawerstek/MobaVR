@@ -12,6 +12,7 @@ namespace MobaVR
         [SerializeField] private Material m_BlueMaterial;
 
         [SerializeField] private ParticleSystem m_ParticleSystem;
+        [SerializeField] private ParticleSystem m_CollisionParticleSystem;
 
         public override void SetTeam(TeamType teamType)
         {
@@ -40,6 +41,29 @@ namespace MobaVR
                 if (m_RedMaterial != null && m_BlueMaterial != null)
                 {
                     particleRenderer.material = material;
+                }
+            }
+
+            if (m_CollisionParticleSystem != null)
+            {
+                ParticleSystem.CollisionModule collisionModule = m_CollisionParticleSystem.collision;
+                if (teamType == TeamType.RED)
+                {
+                    collisionModule.collidesWith = LayerMask.GetMask(new[]
+                    {
+                        "Default",
+                        //"RedTeam_DetectOnlyEnemyCollision"
+                        "BlueTeam_DetectOnlyEnemyCollision"
+                    });
+                }
+                else
+                {
+                    collisionModule.collidesWith = LayerMask.GetMask(new[]
+                    {
+                        "Default",
+                        //"BlueTeam_DetectOnlyEnemyCollision"
+                        "RedTeam_DetectOnlyEnemyCollision"
+                    });
                 }
             }
         }

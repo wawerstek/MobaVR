@@ -116926,6 +116926,7 @@ GameObject:
   - component: {fileID: 1913719201}
   - component: {fileID: 5791563242939573088}
   - component: {fileID: -1914884321680268463}
+  - component: {fileID: 5387639895684656110}
   m_Layer: 10
   m_Name: ArrowMagicSpell
   m_TagString: Untagged
@@ -117330,6 +117331,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Damage: 30
+--- !u!114 &5387639895684656110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7030444657866217279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2839c1b7f7274cef89e8e86d35c93acb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_BlueLayerMask:
+    m_LayerIndex: 25
+  m_RedLayerMask:
+    m_LayerIndex: 26
 --- !u!1 &7058592380083308881
 GameObject:
   m_ObjectHideFlags: 0

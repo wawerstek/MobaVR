@@ -68,6 +68,8 @@ namespace MobaVR
 
         public Action<PlayerVR> OnDestroyPlayer;
         public Action<PlayerVR> OnInitPlayer;
+        public Action<TeamType> OnChangeTeam;
+        public Action<TeamType> OnRpcChangeTeam;
 
         public Transform BodyTarget => m_BodyTarget;
         public Transform HeadTarget => m_HeadTarget;
@@ -266,6 +268,7 @@ namespace MobaVR
             //ChangeTeamColor(teamType);
             
             m_TeamType = teamType;
+            OnChangeTeam?.Invoke(m_TeamType);
             photonView.RPC(nameof(SetTeamRpc), RpcTarget.AllBuffered, teamType);
         }
 
@@ -275,6 +278,7 @@ namespace MobaVR
             
             m_Team = team;
             m_TeamType = m_Team.TeamType;
+            OnChangeTeam?.Invoke(m_TeamType);
             photonView.RPC(nameof(SetTeamRpc), RpcTarget.AllBuffered, m_TeamType);
         }
 
@@ -282,6 +286,7 @@ namespace MobaVR
         public void SetTeamRpc(TeamType teamType)
         {
             m_TeamType = teamType;
+            OnRpcChangeTeam?.Invoke(m_TeamType);
             m_SkinCollection.SetTeam(m_TeamType);
 
             if (m_WizardPlayer != null)

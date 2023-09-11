@@ -3,6 +3,7 @@ using DG.Tweening;
 using Michsky.MUIP;
 using Photon.Pun;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace MobaVR
 {
@@ -10,6 +11,8 @@ namespace MobaVR
     {
         [SerializeField] private Renderer m_Renderer;
         [SerializeField] private Collider m_Collider;
+        [SerializeField] private Collider m_PhysicCollider;
+        [SerializeField] private NavMeshObstacle m_NavMeshObstacle;
         [SerializeField] private SliderManager m_Slider;
         [SerializeField] private float m_PlaceAlpha = 0.25f;
 
@@ -17,6 +20,11 @@ namespace MobaVR
         {
             m_Renderer.enabled = false;
             m_Collider.enabled = false;
+            m_PhysicCollider.enabled = false;
+            if (m_NavMeshObstacle != null)
+            {
+                m_NavMeshObstacle.enabled = false;
+            }
             m_Slider.gameObject.SetActive(false);
         }
 
@@ -26,6 +34,15 @@ namespace MobaVR
             
             m_Renderer.enabled = true;
             m_Collider.enabled = false;
+            if (m_PhysicCollider != null)
+            {
+                m_PhysicCollider.enabled = false;
+            }
+
+            if (m_NavMeshObstacle != null)
+            {
+                m_NavMeshObstacle.enabled = false;
+            }
 
             Color color = m_Renderer.material.color;
             color.a = 0.1f;
@@ -44,6 +61,20 @@ namespace MobaVR
 
             m_Renderer.enabled = true;
             m_Collider.enabled = true;
+            
+            if (m_PhysicCollider != null)
+            {
+                m_PhysicCollider.enabled = true;
+
+                gameObject.layer = m_TeamType == TeamType.RED
+                    ? LayerMask.NameToLayer("RedTeam_DetectOnlyEnemyCollision")
+                    : LayerMask.NameToLayer("BlueTeam_DetectOnlyEnemyCollision");
+            }
+            
+            if (m_NavMeshObstacle != null)
+            {
+                m_NavMeshObstacle.enabled = true;
+            }
 
             Color color = m_Renderer.material.color;
             color.a = m_PlaceAlpha;

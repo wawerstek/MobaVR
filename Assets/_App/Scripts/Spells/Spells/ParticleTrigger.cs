@@ -13,6 +13,7 @@ namespace MobaVR
         [SerializeField] private bool m_IsUpdateEveryFrame = true;
         [SerializeField] private Rigidbody m_Rigidbody;
 
+        private TeamType m_TeamType;
         private ParticleSystem m_ParticleSystem;
         private Transform m_Point;
 
@@ -28,12 +29,18 @@ namespace MobaVR
             OnDestroyTrigger?.Invoke();
         }
 
-        public void Init(ParticleSystem particles, Transform point)
+        public void Init(ParticleSystem particles, Transform point, TeamType teamType)
         {
             gameObject.SetActive(true);
+            m_TeamType = teamType;
             m_ParticleSystem = particles;
             m_Point = point;
             OnInitTrigger?.Invoke();
+
+            string nameLayer = teamType == TeamType.RED
+                ? "RedTeam_DetectOnlyEnemyCollision"
+                : "BlueTeam_DetectOnlyEnemyCollision";
+            gameObject.layer = LayerMask.NameToLayer(nameLayer);
         }
 
         public void Shoot()

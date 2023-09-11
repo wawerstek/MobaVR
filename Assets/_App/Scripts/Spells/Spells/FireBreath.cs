@@ -9,6 +9,7 @@ namespace MobaVR
     {
         [SerializeField] private float m_Damage = 5f;
         [SerializeField] private ParticleSystem m_ParticleSystem;
+        [SerializeField] private ParticleSystem m_CollisionParticleSystem;
 
         [Header("Balls")]
         [SerializeField] private bool m_UseParticleTriggers;
@@ -20,13 +21,44 @@ namespace MobaVR
             RpcShow(false);
             ParticleSystem.TriggerModule particleSystemTrigger = m_ParticleSystem.trigger;
             particleSystemTrigger.enabled = photonView.IsMine;
+
         }
 
-        public void Init()
+        public override void Init(WizardPlayer wizardPlayer, TeamType teamType)
         {
-            
+            base.Init(wizardPlayer, teamType);
         }
 
+        [PunRPC]
+        public override void RpcInit(TeamType teamType, int idOwner)
+        {
+            base.RpcInit(teamType, idOwner);
+            
+            // TODO: Выполняется только один раз. Плохо
+            // Добавить для заклинаний, щитов возможности смены команды. Сейчас это делается только для смены визуала, а на сам спелл не влияет
+            /*
+            ParticleSystem.CollisionModule collisionModule = m_CollisionParticleSystem.collision;
+            if (teamType == TeamType.RED)
+            {
+                collisionModule.collidesWith = LayerMask.GetMask(new[]
+                {
+                    "Default",
+                    //"RedTeam_DetectOnlyEnemyCollision"
+                    "BlueTeam_DetectOnlyEnemyCollision"
+                });
+            }
+            else
+            {
+                collisionModule.collidesWith = LayerMask.GetMask(new[]
+                {
+                    "Default",
+                    //"BlueTeam_DetectOnlyEnemyCollision"
+                    "RedTeam_DetectOnlyEnemyCollision"
+                });
+            }
+            */
+        }
+        
         public void Show(bool isShow)
         {
             photonView.RPC(nameof(RpcShow), RpcTarget.All, isShow);
@@ -79,7 +111,15 @@ namespace MobaVR
                 particleTrigger.OnParticleCollisionEnter -= OnParticleCollisionEnter;
             };
 
-            particleTrigger.Init(m_ParticleSystem, transform);
+            if (m_Owner != null)
+            {
+                particleTrigger.Init(m_ParticleSystem, transform, m_Owner.TeamType);
+            }
+            else
+            {
+                particleTrigger.Init(m_ParticleSystem, transform, m_TeamType);
+            }
+
             particleTrigger.Shoot();
         }
 

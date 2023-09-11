@@ -15750,7 +15750,7 @@ PrefabInstance:
     - target: {fileID: 2217704089936483599, guid: aa1480eb39466114796b80e249970ae0,
         type: 3}
       propertyPath: m_CullingMask.m_Bits
-      value: 3267895
+      value: 129097015
       objectReference: {fileID: 0}
     - target: {fileID: 2319027173699037086, guid: aa1480eb39466114796b80e249970ae0,
         type: 3}
@@ -17517,6 +17517,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7702456167165704559}
     m_Modifications:
+    - target: {fileID: 176715282934741238, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
+        type: 3}
+      propertyPath: m_CollisionParticleSystem
+      value: 
+      objectReference: {fileID: 3905391237335704768}
+    - target: {fileID: 176715284221545708, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
+        type: 3}
+      propertyPath: CollisionModule.enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 176715284221545708, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
+        type: 3}
+      propertyPath: CollisionModule.collidesWith.m_Bits
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 640242851393250069, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
         type: 3}
       propertyPath: HandControl
@@ -17532,11 +17547,36 @@ PrefabInstance:
       propertyPath: m_WizardPlayer
       value: 
       objectReference: {fileID: 7702456167165704558}
+    - target: {fileID: 1522105113528702803, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
+        type: 3}
+      propertyPath: CollisionModule.m_Bounce.scalar
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1522105113528702803, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
+        type: 3}
+      propertyPath: CollisionModule.m_Dampen.scalar
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1522105113528702803, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
+        type: 3}
+      propertyPath: CollisionModule.m_Dampen.minScalar
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2276358887883467812, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
         type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3500343627645019079, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3705528000788749347, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
+        type: 3}
+      propertyPath: m_CollisionParticleSystem
+      value: 
+      objectReference: {fileID: 3905391237335704768}
     - target: {fileID: 4315992672498332217, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
         type: 3}
       propertyPath: m_Enabled
@@ -17880,6 +17920,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e477cb3cbcb6aeb43a3f8a3f063ccb1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!198 &3905391237335704768 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 1522105113528702803, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
+    type: 3}
+  m_PrefabInstance: {fileID: 2534724130482058131}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4331781995812884306 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2247492943023865025, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
@@ -27316,6 +27362,12 @@ PrefabInstance:
       propertyPath: m_CooldownTime
       value: 18
       objectReference: {fileID: 0}
+    - target: {fileID: 2852542761475008868, guid: f9109c656482e594395ec2845ccb6c06,
+        type: 3}
+      propertyPath: m_ShieldPrefab
+      value: 
+      objectReference: {fileID: 1256544414490149151, guid: eea1bea1c9a0e33459008a2069d5d28a,
+        type: 3}
     - target: {fileID: 3001746013069313677, guid: f9109c656482e594395ec2845ccb6c06,
         type: 3}
       propertyPath: m_PhotonView
