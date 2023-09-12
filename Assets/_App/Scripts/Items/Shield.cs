@@ -2,6 +2,7 @@
 using Photon.Pun;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace MobaVR
 {
@@ -24,6 +25,11 @@ namespace MobaVR
         protected bool m_Use = false;
         protected bool m_IsAvailable = true;
         [SerializeField] [ReadOnly] protected float m_CurrentHealth = 1f;
+
+        public UnityEvent OnShow;
+        public UnityEvent OnHide;
+        public UnityEvent OnHit;
+        public UnityEvent OnDestroy;
 
         public bool IsLife => m_CurrentHealth > 0f;
         public TeamType TeamType => m_TeamItem != null ? m_TeamItem.TeamType : TeamType.RED;
@@ -61,6 +67,15 @@ namespace MobaVR
         [PunRPC]
         public virtual void RpcShow(bool isShow)
         {
+            if (isShow)
+            {
+                OnShow?.Invoke();
+            }
+            else
+            {
+                OnHide?.Invoke();
+            }
+            
             if (!m_IsAvailable)
             {
                 if (photonView.IsMine && m_TimeView != null)
@@ -125,7 +140,12 @@ namespace MobaVR
                 UpdateVisualState();
                 if (m_CurrentHealth <= 0)
                 {
+                    OnDestroy?.Invoke();
                     Die();
+                }
+                else
+                {
+                    OnHit?.Invoke();
                 }
             }
         }

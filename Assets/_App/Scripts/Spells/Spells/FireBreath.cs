@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace MobaVR
 {
@@ -15,6 +16,10 @@ namespace MobaVR
         [SerializeField] private bool m_UseParticleTriggers;
         [SerializeField] private ParticleTrigger m_ParticleTriggerPrefab;
         [SerializeField] private float m_RepeatingTime = 0.2f;
+
+        public UnityEvent OnShow;
+        public UnityEvent OnHide;
+        public UnityEvent OnCast;
 
         private void Awake()
         {
@@ -181,10 +186,13 @@ namespace MobaVR
         {
             if (isShow)
             {
+                OnShow?.Invoke();
+                OnCast?.Invoke();
                 m_ParticleSystem.Play();
             }
             else
             {
+                OnHide?.Invoke();
                 m_ParticleSystem.Stop();
             }
         }

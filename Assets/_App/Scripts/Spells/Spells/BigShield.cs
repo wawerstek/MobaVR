@@ -4,6 +4,7 @@ using Michsky.MUIP;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 
 namespace MobaVR
 {
@@ -15,6 +16,11 @@ namespace MobaVR
         [SerializeField] private NavMeshObstacle m_NavMeshObstacle;
         [SerializeField] private SliderManager m_Slider;
         [SerializeField] private float m_PlaceAlpha = 0.25f;
+
+        public UnityEvent OnPrepare;
+        public UnityEvent OnShow;
+        public UnityEvent OnCast;
+        public UnityEvent OnHide;
 
         private void Awake()
         {
@@ -47,6 +53,8 @@ namespace MobaVR
             Color color = m_Renderer.material.color;
             color.a = 0.1f;
             m_Renderer.material.color = color;
+            
+            OnPrepare?.Invoke();
         }
 
         public void Place()
@@ -57,6 +65,9 @@ namespace MobaVR
         [PunRPC]
         private void RpcPlace()
         {
+            OnShow?.Invoke();
+            OnCast?.Invoke();
+            
             transform.parent = null;
 
             m_Renderer.enabled = true;
@@ -107,6 +118,7 @@ namespace MobaVR
         private void RpcDestroyShield()
         {
             OnDestroySpell?.Invoke();
+            OnHide?.Invoke();
 
             if (photonView.IsMine)
             {

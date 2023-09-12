@@ -2,6 +2,7 @@ using System;
 using BNG;
 using Photon.Pun;
 using UnityEngine;
+using UnityEngine.Events;
 using Bow = MobaVR.Weapons.Bow.Bow;
 
 namespace MobaVR
@@ -23,6 +24,8 @@ namespace MobaVR
         protected Bow m_Bow;
         protected bool m_IsDamaged = false;
         protected bool m_IsThrown = false;
+
+        public Action OnThrown;
         
         public Weapons.Bow.Arrow Arrow => m_Arrow;
 
@@ -163,6 +166,8 @@ namespace MobaVR
                 return;
             }
 
+            OnThrown?.Invoke();
+            
             m_Grabbable.enabled = false;
             m_TrailRenderer.enabled = true;
 
