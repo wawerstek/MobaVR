@@ -5,43 +5,45 @@ using Photon.Pun;
 public class perdeg_grusha : MonoBehaviourPunCallbacks
 {
     public AudioClip[] perdeg;
-    private int currentClipIndex = 0;
+    public AudioClip otrigka;
 
     private void OnEnable()
     {
-        StartCoroutine(PlayPerdegSounds());
-    }
-    
-    private void Start()
-    {
-        
+        StartCoroutine(PlaySounds());
     }
 
-    IEnumerator PlayPerdegSounds()
+    IEnumerator PlaySounds()
     {
-        while (currentClipIndex < perdeg.Length)
-        {
-            yield return new WaitForSeconds(7f);
-            photonView.RPC("PlaySound", RpcTarget.All, currentClipIndex);
-            currentClipIndex++;
-        }
-        photonView.RPC("DestroyObject", RpcTarget.All);
+        yield return new WaitForSeconds(2f);
+        photonView.RPC("PlayOtrigkaSound", RpcTarget.All);
+
+        yield return new WaitForSeconds(7f);
+        int randomIndex = Random.Range(0, perdeg.Length);
+        photonView.RPC("PlayRandomSound", RpcTarget.All, randomIndex);
     }
 
     [PunRPC]
-    void PlaySound(int index)
+    void PlayOtrigkaSound()
     {
         AudioSource source = GetComponent<AudioSource>();
-        if (source != null && index < perdeg.Length)
+        if (source != null && otrigka != null)
         {
-            source.clip = perdeg[index];
+            source.clip = otrigka;
             source.Play();
         }
     }
 
     [PunRPC]
-    void DestroyObject()
+    void PlayRandomSound(int index)
     {
-        Destroy(gameObject);
+        if (index >= 0 && index < perdeg.Length)
+        {
+            AudioSource source = GetComponent<AudioSource>();
+            if (source != null)
+            {
+                source.clip = perdeg[index];
+                source.Play();
+            }
+        }
     }
 }
