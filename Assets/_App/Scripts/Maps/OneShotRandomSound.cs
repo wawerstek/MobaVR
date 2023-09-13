@@ -16,6 +16,11 @@ public class OneShotRandomSound : MonoBehaviour
 
     public void Play()
     {
+        if (audioSource == null)
+        {
+            return;
+        }
+        
         if (!isPlayingSound)
         {
             if (sounds.Length > 0)
@@ -31,6 +36,11 @@ public class OneShotRandomSound : MonoBehaviour
 
     public void Stop()
     {
+        if (audioSource == null)
+        {
+            return;
+        }
+        
         CancelInvoke(nameof(Reset));
         isPlayingSound = true;
         audioSource.Stop();

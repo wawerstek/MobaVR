@@ -8,6 +8,7 @@ namespace MobaVR
     public class Tower : MonoBehaviourPun
     {
         [SerializeField] private MeshRenderer m_Renderer;
+        [SerializeField] private bool m_UseRender = false;
         [SerializeField] private float m_MaxHp = 1000;
         [SerializeField] private float m_CurrentHp;
 
@@ -27,8 +28,11 @@ namespace MobaVR
         {
             OnRestore?.Invoke();
             m_CurrentHp = m_MaxHp;
-            m_Renderer.enabled = true;
-            
+            if (m_UseRender)
+            {
+                m_Renderer.enabled = true;
+            }
+
             OnChangeHealth?.Invoke(m_CurrentHp);
         }
 
@@ -43,7 +47,11 @@ namespace MobaVR
             if (m_CurrentHp <= 0)
             {
                 m_CurrentHp = 0;
-                m_Renderer.enabled = false;
+                if (m_UseRender)
+                {
+                    m_Renderer.enabled = false;
+                }
+
                 OnDie?.Invoke();
             }
             
