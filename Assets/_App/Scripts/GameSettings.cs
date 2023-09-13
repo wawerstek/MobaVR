@@ -328,6 +328,14 @@ namespace MobaVR
         ////
         ///
         ///
+        ///
+        /// 
+
+        public void ShowMap(string mapName)
+        {
+            m_SceneEnvironment.ShowMap(mapName);
+        }
+        
         public void ShowTavernMap()
         {
             m_SceneEnvironment.ShowTavernMap();

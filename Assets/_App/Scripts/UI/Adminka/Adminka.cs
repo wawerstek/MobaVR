@@ -199,6 +199,12 @@ public class Adminka : MonoBehaviourPunCallbacks
     
     
     #region Maps
+    
+    public void ShowMap(string mapName)
+    {
+        m_SceneEnvironment.ShowMap(mapName);
+    }
+    
     //включение карт
     public void ShowTavernMap()
     {

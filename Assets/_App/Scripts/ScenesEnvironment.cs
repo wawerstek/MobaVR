@@ -181,6 +181,24 @@ namespace MobaVR
             m_CurrentMap = sceneName;
         }
         
+        public void ShowMap(string mapName)
+        {
+            if (!PhotonNetwork.AutomaticallySyncScene)
+            {
+                photonView.RPC(nameof(RpcShowMap), RpcTarget.All, mapName);
+            }
+            else
+            {
+                RpcShowMap(mapName);
+            }
+        }
+        
+        [PunRPC]
+        public void RpcShowMap(string mapName)
+        {
+            LoadSceneAsync(mapName);
+        }
+        
         [ContextMenu("Show Tavern")]
         public void ShowTavernMap()
         {
