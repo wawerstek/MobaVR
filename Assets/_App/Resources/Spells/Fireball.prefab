@@ -14607,7 +14607,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.6
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -14616,9 +14616,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 6
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -14651,7 +14651,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -14703,7 +14703,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36a7a6a7208241f4a047136239c4e98b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sounds: []
+  sounds:
+  - {fileID: 8300000, guid: 654f61a0fadf7844f93f0bab74eeaae4, type: 3}
+  - {fileID: 8300000, guid: 79ccb8fb23e90f1488eba8235f16f0d7, type: 3}
+  - {fileID: 8300000, guid: 8d065a15642d2d542828f24e37f65be0, type: 3}
+  - {fileID: 8300000, guid: 7c80b6df84ad87b46b520970f6f98349, type: 3}
 --- !u!1 &2446939674638437698
 GameObject:
   m_ObjectHideFlags: 0
@@ -14716,6 +14720,7 @@ GameObject:
   - component: {fileID: 3523364632151682933}
   - component: {fileID: 486122023687440772}
   - component: {fileID: 546573597495815660}
+  - component: {fileID: 6261399737461485353}
   m_Layer: 10
   m_Name: Explosion
   m_TagString: Untagged
@@ -19603,12 +19608,12 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2446939674638437698}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 878d46363e7e0164a8b8c68333f993dc, type: 3}
-  m_PlayOnAwake: 1
-  m_Volume: 0.4
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 0.6
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -19617,9 +19622,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 300
+  MaxDistance: 6
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -19692,6 +19697,21 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &6261399737461485353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2446939674638437698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba8d0627c6f33fa408e25aeb4bfb114a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - {fileID: 8300000, guid: 0ad097cf975cc604cbc642d64ee28ca2, type: 3}
+  - {fileID: 8300000, guid: 02eea8af144a8f54ba6b9b613c9b6fc8, type: 3}
 --- !u!1 &3318618810005502174
 GameObject:
   m_ObjectHideFlags: 0
@@ -20381,19 +20401,7 @@ MonoBehaviour:
         m_CallState: 2
   OnDestroySpell:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8744217456716780234}
-        m_TargetAssemblyTypeName: OneShotRandomSound, Assembly-CSharp
-        m_MethodName: Play
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &3318618811458133669
 GameObject:
   m_ObjectHideFlags: 0
@@ -25635,7 +25643,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.6
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -25644,9 +25652,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 6
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -25679,7 +25687,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -25731,7 +25739,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36a7a6a7208241f4a047136239c4e98b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sounds: []
+  sounds:
+  - {fileID: 8300000, guid: dc80d346a88c3e7418377636f488f6e3, type: 3}
+  - {fileID: 8300000, guid: 493f33b7cc656714494f702f6570b5c4, type: 3}
+  - {fileID: 8300000, guid: cd23035eba4e4d4419977d53b769a772, type: 3}
+  - {fileID: 8300000, guid: 4c337ed2bf1b8704fa64d56e47cca4ec, type: 3}
+  - {fileID: 8300000, guid: f3f971509b4d3cf4ab95fa08ace6536c, type: 3}
+  - {fileID: 8300000, guid: 65638d5700addbe49a1397461d1161a6, type: 3}
+  - {fileID: 8300000, guid: b52ad0708bfea5446b795e763190ec52, type: 3}
 --- !u!1 &5734068789412663288
 GameObject:
   m_ObjectHideFlags: 0
@@ -25742,14 +25757,14 @@ GameObject:
   m_Component:
   - component: {fileID: 2808301996259680628}
   - component: {fileID: 1035054999303944309}
-  - component: {fileID: 8744217456716780234}
+  - component: {fileID: 650557238886890846}
   m_Layer: 0
   m_Name: DestroySound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2808301996259680628
 Transform:
   m_ObjectHideFlags: 0
@@ -25757,7 +25772,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5734068789412663288}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -25777,7 +25792,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.6
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -25786,9 +25801,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 6
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -25821,7 +25836,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -25861,19 +25876,21 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &8744217456716780234
+--- !u!114 &650557238886890846
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5734068789412663288}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36a7a6a7208241f4a047136239c4e98b, type: 3}
+  m_Script: {fileID: 11500000, guid: ba8d0627c6f33fa408e25aeb4bfb114a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sounds: []
+  sounds:
+  - {fileID: 8300000, guid: 0ad097cf975cc604cbc642d64ee28ca2, type: 3}
+  - {fileID: 8300000, guid: 02eea8af144a8f54ba6b9b613c9b6fc8, type: 3}
 --- !u!1 &5871259036390363530
 GameObject:
   m_ObjectHideFlags: 0
