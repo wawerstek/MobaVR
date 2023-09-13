@@ -409,7 +409,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.6
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -418,9 +418,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 6
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -453,7 +453,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -505,7 +505,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36a7a6a7208241f4a047136239c4e98b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sounds: []
+  sounds:
+  - {fileID: 8300000, guid: 5a7d58f6a6f95234ca12cef72b70ab51, type: 3}
 --- !u!1 &4949175290614700160
 GameObject:
   m_ObjectHideFlags: 0
@@ -652,7 +653,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.6
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -661,9 +662,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 6
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -696,7 +697,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -748,7 +749,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36a7a6a7208241f4a047136239c4e98b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sounds: []
+  sounds:
+  - {fileID: 8300000, guid: 25be489d447b5f9459292bd341298236, type: 3}
+  - {fileID: 8300000, guid: a1252543735d4cb4f915511f2d1e037b, type: 3}
 --- !u!1 &6417932573197957573
 GameObject:
   m_ObjectHideFlags: 0
@@ -794,18 +797,18 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.6
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 6
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -838,7 +841,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -890,7 +893,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36a7a6a7208241f4a047136239c4e98b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sounds: []
+  sounds:
+  - {fileID: 8300000, guid: 5a7d58f6a6f95234ca12cef72b70ab51, type: 3}
 --- !u!1 &6541429943461242067
 GameObject:
   m_ObjectHideFlags: 0
@@ -1120,7 +1124,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.6
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1129,9 +1133,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 6
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -1164,7 +1168,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -1216,7 +1220,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36a7a6a7208241f4a047136239c4e98b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sounds: []
+  sounds:
+  - {fileID: 8300000, guid: 424bd5deadd62d7488a9104b3c69c86d, type: 3}
+  - {fileID: 8300000, guid: 6e16bcd76e45795448879127d1802a1c, type: 3}
+  - {fileID: 8300000, guid: 8785e4c057c5533459a69f43db1eaed6, type: 3}
+  - {fileID: 8300000, guid: ff97d2a989dabe14c8ab4afd2e1e9219, type: 3}
 --- !u!1 &8102369346866468943
 GameObject:
   m_ObjectHideFlags: 0
