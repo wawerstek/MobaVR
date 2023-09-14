@@ -24,6 +24,9 @@ public class Adminka : MonoBehaviourPunCallbacks
     
     [Header("Меню камер")]
     public GameObject PanelCamers; //меню камер
+    
+    [Header("Меню камер")]
+    public GameObject PanelMap; //меню камер
 
     private bool RunGames;//проверяем заработала ли игра или нет
     
@@ -85,6 +88,7 @@ public class Adminka : MonoBehaviourPunCallbacks
             PanelOsnova.SetActive(false);
             PanelGame.SetActive(false);
             PanelCamers.SetActive(false);
+            PanelMap.SetActive(false);
         }
 
     }  
@@ -182,6 +186,7 @@ public class Adminka : MonoBehaviourPunCallbacks
         PanelLocading.SetActive(false);
         PanelOsnova.SetActive(true);
         PanelGame.SetActive(false);
+        PanelMap.SetActive(false);
         PanelCamers.SetActive(true);
     }    
     
@@ -193,9 +198,19 @@ public class Adminka : MonoBehaviourPunCallbacks
         PanelOsnova.SetActive(true);
         PanelGame.SetActive(true);
         PanelCamers.SetActive(false);
+        PanelMap.SetActive(false);
     }    
     
-    
+    public void loadMap()
+    {
+       
+        PanelLocad.SetActive(false);
+        PanelLocading.SetActive(false);
+        PanelOsnova.SetActive(true);
+        PanelGame.SetActive(false);
+        PanelCamers.SetActive(false);
+        PanelMap.SetActive(true);
+    }    
     
     
     #region Maps

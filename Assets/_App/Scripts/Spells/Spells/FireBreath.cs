@@ -184,6 +184,21 @@ namespace MobaVR
         [PunRPC]
         public virtual void RpcShow(bool isShow)
         {
+            //TODO: УДАЛИТЬ ОТСЮДА
+            /*
+            if (isShow && Application.platform == RuntimePlatform.WindowsPlayer)
+            {
+                if (m_UseParticleTriggers)
+                {
+                    SpawnParticleTriggers(isShow);
+                }
+                else
+                {
+                    InitColliders();
+                }
+            }
+            */            
+            
             if (isShow)
             {
                 OnShow?.Invoke();

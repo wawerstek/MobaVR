@@ -18,7 +18,7 @@ namespace MobaVR
 
         private void TryMoveToMainSettings()
         {
-            MenuHolder menuHolder = FindObjectOfType<MenuHolder>();
+            LocationMenuHolder menuHolder = FindObjectOfType<LocationMenuHolder>();
             if (menuHolder != null)
             {
                 menuHolder.SetLocationPanel(m_LocationView);
