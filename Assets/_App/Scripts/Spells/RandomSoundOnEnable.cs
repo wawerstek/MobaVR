@@ -22,6 +22,7 @@ public class RandomSoundOnEnable : MonoBehaviour
         if (sounds.Length == 0) return; // проверка на наличие звуков в массиве
 
         int randomIndex = Random.Range(0, sounds.Length);
+        
         audioSource.clip = sounds[randomIndex];
         audioSource.Play();
     }
