@@ -26,7 +26,6 @@ namespace MobaVR
             RpcShow(false);
             ParticleSystem.TriggerModule particleSystemTrigger = m_ParticleSystem.trigger;
             particleSystemTrigger.enabled = photonView.IsMine;
-
         }
 
         public override void Init(WizardPlayer wizardPlayer, TeamType teamType)
@@ -38,7 +37,7 @@ namespace MobaVR
         public override void RpcInit(TeamType teamType, int idOwner)
         {
             base.RpcInit(teamType, idOwner);
-            
+
             // TODO: Выполняется только один раз. Плохо
             // Добавить для заклинаний, щитов возможности смены команды. Сейчас это делается только для смены визуала, а на сам спелл не влияет
             /*
@@ -63,11 +62,13 @@ namespace MobaVR
             }
             */
         }
-        
+
         public void Show(bool isShow)
         {
             photonView.RPC(nameof(RpcShow), RpcTarget.All, isShow);
 
+            // TODO: расскоментить
+            /*
             if (photonView.IsMine)
             {
                 if (m_UseParticleTriggers)
@@ -79,6 +80,7 @@ namespace MobaVR
                     InitColliders();
                 }
             }
+            */
         }
 
         private void InitColliders()
@@ -143,7 +145,7 @@ namespace MobaVR
             {
                 return;
             }
-            
+
             /*
             if (other.CompareTag("RemotePlayer")
                 || other.CompareTag("LifeCollider")
@@ -153,7 +155,7 @@ namespace MobaVR
                 //TODO
             }
             */
-            
+
             HitData hitData = new HitData()
             {
                 Amount = m_Damage,
@@ -185,20 +187,11 @@ namespace MobaVR
         public virtual void RpcShow(bool isShow)
         {
             //TODO: УДАЛИТЬ ОТСЮДА
-            /*
-            if (isShow && Application.platform == RuntimePlatform.WindowsPlayer)
+            if (m_UseParticleTriggers)
             {
-                if (m_UseParticleTriggers)
-                {
-                    SpawnParticleTriggers(isShow);
-                }
-                else
-                {
-                    InitColliders();
-                }
+                SpawnParticleTriggers(isShow);
             }
-            */            
-            
+
             if (isShow)
             {
                 OnShow?.Invoke();
