@@ -20,6 +20,7 @@ namespace MobaVR
         public UnityEvent OnShow;
         public UnityEvent OnHide;
         public UnityEvent OnCast;
+        public UnityEvent OnHit;
 
         private void Awake()
         {
@@ -109,7 +110,16 @@ namespace MobaVR
             ParticleTrigger particleTrigger = Instantiate(m_ParticleTriggerPrefab,
                                                           transform.position,
                                                           transform.rotation);
+            
+            particleTrigger.OnParticleTriggerEnter.AddListener(OnParticleTriggerEnter);
+            particleTrigger.OnParticleCollisionEnter.AddListener(OnParticleCollisionEnter);
+            particleTrigger.OnDestroyTrigger += () =>
+            {
+                particleTrigger.OnParticleTriggerEnter.RemoveListener(OnParticleTriggerEnter);
+                particleTrigger.OnParticleCollisionEnter.RemoveListener(OnParticleCollisionEnter);
+            };
 
+            /*
             particleTrigger.OnParticleTriggerEnter += OnParticleTriggerEnter;
             particleTrigger.OnParticleCollisionEnter += OnParticleCollisionEnter;
             particleTrigger.OnDestroyTrigger += () =>
@@ -117,6 +127,7 @@ namespace MobaVR
                 particleTrigger.OnParticleTriggerEnter -= OnParticleTriggerEnter;
                 particleTrigger.OnParticleCollisionEnter -= OnParticleCollisionEnter;
             };
+            */
 
             if (m_Owner != null)
             {
@@ -155,6 +166,8 @@ namespace MobaVR
                 //TODO
             }
             */
+
+            OnHit?.Invoke();
 
             HitData hitData = new HitData()
             {

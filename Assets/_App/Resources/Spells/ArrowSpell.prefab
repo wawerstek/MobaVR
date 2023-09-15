@@ -173,6 +173,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sounds: []
+  canInterrupt: 0
+  maxFadeInVolume: 0.5
+  minFadeOutVolume: 0
+  fadeDuration: 1
 --- !u!1 &1306938055114598453
 GameObject:
   m_ObjectHideFlags: 0
@@ -5453,6 +5457,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: f3659177a6c5d8f4cac93d715f389048, type: 3}
   - {fileID: 8300000, guid: 6b420f76897f7c64f91c3f0548a4ba52, type: 3}
   - {fileID: 8300000, guid: 5c4ad0b0f09a1d6439e0755793af47c3, type: 3}
+  canInterrupt: 0
+  maxFadeInVolume: 0.5
+  minFadeOutVolume: 0
+  fadeDuration: 1
 --- !u!1 &7030444657866217279
 GameObject:
   m_ObjectHideFlags: 0
@@ -6105,8 +6113,8 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 3
-  MaxDistance: 7
+  MinDistance: 1
+  MaxDistance: 10
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -6199,6 +6207,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: edba5952454bd994588635dba7b19875, type: 3}
   - {fileID: 8300000, guid: 9252bb5006ad4fa47a153cb40bad37e9, type: 3}
   - {fileID: 8300000, guid: 529ff1c754784da408cff594f90bb7e3, type: 3}
+  canInterrupt: 0
+  maxFadeInVolume: 0.5
+  minFadeOutVolume: 0
+  fadeDuration: 1
 --- !u!1 &7737695100403329152
 GameObject:
   m_ObjectHideFlags: 0
@@ -11345,7 +11357,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 6
+  MaxDistance: 5
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -11435,6 +11447,10 @@ MonoBehaviour:
   sounds:
   - {fileID: 8300000, guid: 1421f9f8040f6794bb5316bdf51c9122, type: 3}
   - {fileID: 8300000, guid: fafc8a16e2b37a74ea7f0bee92813a69, type: 3}
+  canInterrupt: 0
+  maxFadeInVolume: 0.5
+  minFadeOutVolume: 0
+  fadeDuration: 1
 --- !u!1001 &2668404289755931111
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11742,7 +11758,7 @@ PrefabInstance:
     - target: {fileID: 8491735123676863010, guid: f42cdc74dfb4d7741b4cc216cb64b18b,
         type: 3}
       propertyPath: MaxDistance
-      value: 6
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 8491735123676863010, guid: f42cdc74dfb4d7741b4cc216cb64b18b,
         type: 3}

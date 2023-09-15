@@ -686,6 +686,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sounds: []
+  canInterrupt: 0
+  maxFadeInVolume: 0.5
+  minFadeOutVolume: 0
+  fadeDuration: 1
 --- !u!1 &4131099765808107090
 GameObject:
   m_ObjectHideFlags: 0
@@ -5671,6 +5675,7 @@ GameObject:
   - component: {fileID: 5070492451677238847}
   - component: {fileID: 5070492451677238846}
   - component: {fileID: 5073124986873414615}
+  - component: {fileID: 1790125686563930276}
   m_Layer: 10
   m_Name: Projectile
   m_TagString: Untagged
@@ -10488,12 +10493,12 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5070492451677238841}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 49365b3021f7bd44cbc24829cdf743f5, type: 3}
-  m_PlayOnAwake: 1
-  m_Volume: 0.1
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 0.6
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -10502,9 +10507,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 300
+  MaxDistance: 12
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -10577,6 +10582,27 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1790125686563930276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5070492451677238841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36a7a6a7208241f4a047136239c4e98b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - {fileID: 8300000, guid: b52ad0708bfea5446b795e763190ec52, type: 3}
+  - {fileID: 8300000, guid: dc80d346a88c3e7418377636f488f6e3, type: 3}
+  - {fileID: 8300000, guid: 493f33b7cc656714494f702f6570b5c4, type: 3}
+  - {fileID: 8300000, guid: 4c337ed2bf1b8704fa64d56e47cca4ec, type: 3}
+  canInterrupt: 0
+  maxFadeInVolume: 0.5
+  minFadeOutVolume: 0
+  fadeDuration: 1
 --- !u!1 &5070492451824953427
 GameObject:
   m_ObjectHideFlags: 0
@@ -16269,7 +16295,7 @@ MonoBehaviour:
   OnThrowSpell:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7928285971819782085}
+      - m_Target: {fileID: 1790125686563930276}
         m_TargetAssemblyTypeName: OneShotRandomSound, Assembly-CSharp
         m_MethodName: Play
         m_Mode: 1
@@ -16283,19 +16309,7 @@ MonoBehaviour:
         m_CallState: 2
   OnHitSpell:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3845797790911125381}
-        m_TargetAssemblyTypeName: OneShotRandomSound, Assembly-CSharp
-        m_MethodName: Play
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   OnDestroySpell:
     m_PersistentCalls:
       m_Calls: []
@@ -35919,7 +35933,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 6
+  MaxDistance: 8
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -36010,6 +36024,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 02bb6fcc086f4a74ca11111e1cbfeeb1, type: 3}
   - {fileID: 8300000, guid: 7cc38ad3b8a44344dbd96808d085b46f, type: 3}
   - {fileID: 8300000, guid: 357c29511e3113e4195ddc16bf7755ad, type: 3}
+  canInterrupt: 0
+  maxFadeInVolume: 0.5
+  minFadeOutVolume: 0
+  fadeDuration: 1
 --- !u!1 &7955556792664119643
 GameObject:
   m_ObjectHideFlags: 0
@@ -36020,14 +36038,13 @@ GameObject:
   m_Component:
   - component: {fileID: 4948720203509174183}
   - component: {fileID: 7946523929241341947}
-  - component: {fileID: 7928285971819782085}
   m_Layer: 0
   m_Name: ThrowSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4948720203509174183
 Transform:
   m_ObjectHideFlags: 0
@@ -36139,28 +36156,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &7928285971819782085
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7955556792664119643}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36a7a6a7208241f4a047136239c4e98b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sounds:
-  - {fileID: 8300000, guid: b52ad0708bfea5446b795e763190ec52, type: 3}
-  - {fileID: 8300000, guid: dc80d346a88c3e7418377636f488f6e3, type: 3}
-  - {fileID: 8300000, guid: 493f33b7cc656714494f702f6570b5c4, type: 3}
-  - {fileID: 8300000, guid: cd23035eba4e4d4419977d53b769a772, type: 3}
-  - {fileID: 8300000, guid: 4c337ed2bf1b8704fa64d56e47cca4ec, type: 3}
-  - {fileID: 8300000, guid: f3f971509b4d3cf4ab95fa08ace6536c, type: 3}
-  - {fileID: 8300000, guid: 65638d5700addbe49a1397461d1161a6, type: 3}
-  - {fileID: 8300000, guid: 756bc916fbd7d7643bfd3f585dfd1d6c, type: 3}
-  - {fileID: 8300000, guid: 8c387caa8cfca2842972f043d1ad8c4b, type: 3}
 --- !u!1 &8570868992653829974
 GameObject:
   m_ObjectHideFlags: 0
@@ -41077,7 +41072,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 6
+  MaxDistance: 15
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0

@@ -16,8 +16,11 @@ namespace MobaVR
         [SerializeField] private NavMeshObstacle m_NavMeshObstacle;
         [SerializeField] private SliderManager m_Slider;
         [SerializeField] private float m_PlaceAlpha = 0.25f;
+        [SerializeField] private float m_SecondsBeforeHide = 1.0f;
 
         public UnityEvent OnPrepare;
+        public UnityEvent OnReadyShow;
+        public UnityEvent OnReadyHide;
         public UnityEvent OnShow;
         public UnityEvent OnCast;
         public UnityEvent OnHide;
@@ -55,6 +58,7 @@ namespace MobaVR
             m_Renderer.material.color = color;
             
             OnPrepare?.Invoke();
+            OnReadyShow?.Invoke();
         }
 
         public void Place()
@@ -93,16 +97,27 @@ namespace MobaVR
 
             m_Slider.gameObject.SetActive(true);
             float sliderValue = 1f;
-
             DOTween
                 .To(() => sliderValue, x => sliderValue = x, 0, m_DestroyLifeTime)
-                .OnUpdate(() => { m_Slider.mainSlider.value = sliderValue; })
+                .OnUpdate(() =>
+                {
+                    m_Slider.mainSlider.value = sliderValue;
+                })
                 .OnComplete(() => { m_Slider.gameObject.SetActive(false); });
+            
+            //TODO: READY HIDE???
+            float timeBeforeDestroy = m_DestroyLifeTime - m_SecondsBeforeHide;
+            Invoke(nameof(ReadyHide), timeBeforeDestroy);
 
             if (photonView.IsMine)
             {
                 Invoke(nameof(DestroySpell), m_DestroyLifeTime);
             }
+        }
+
+        public void ReadyHide()
+        {
+            OnReadyHide?.Invoke();
         }
 
         public void DestroySpell()

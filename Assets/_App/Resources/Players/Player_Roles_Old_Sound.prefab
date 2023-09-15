@@ -859,7 +859,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.5
+  m_Volume: 0.6
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -868,7 +868,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 10
+  MaxDistance: 6
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -956,11 +956,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sounds:
-  - {fileID: 8300000, guid: 45d8734f53bcce94aa03fa41586c4495, type: 3}
-  canInterrupt: 0
-  maxFadeInVolume: 0.5
-  minFadeOutVolume: 0
-  fadeDuration: 1
+  - {fileID: 8300000, guid: ef085cab380c5d4438cc2dbc40f6e06b, type: 3}
 --- !u!1 &613368876696526963
 GameObject:
   m_ObjectHideFlags: 0
@@ -2718,7 +2714,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 8
+  MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -2806,10 +2802,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sounds: []
-  canInterrupt: 0
-  maxFadeInVolume: 0.5
-  minFadeOutVolume: 0
-  fadeDuration: 1
 --- !u!1 &2653179473432128608
 GameObject:
   m_ObjectHideFlags: 0
@@ -3608,7 +3600,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 8
+  MaxDistance: 3
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -3697,10 +3689,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sounds:
   - {fileID: 8300000, guid: 12570230e0895044292a864a9ea73678, type: 3}
-  canInterrupt: 0
-  maxFadeInVolume: 0.5
-  minFadeOutVolume: 0
-  fadeDuration: 1
 --- !u!1 &3068293075566485589
 GameObject:
   m_ObjectHideFlags: 0
@@ -4250,7 +4238,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4798176671476817041
 Transform:
   m_ObjectHideFlags: 0
@@ -4287,7 +4275,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 10
+  MaxDistance: 6
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -4375,10 +4363,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sounds: []
-  canInterrupt: 0
-  maxFadeInVolume: 0.5
-  minFadeOutVolume: 0
-  fadeDuration: 1
 --- !u!1 &3646787468737081075
 GameObject:
   m_ObjectHideFlags: 0
@@ -5113,7 +5097,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2909069706187601984
 Transform:
   m_ObjectHideFlags: 0
@@ -5150,7 +5134,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 10
+  MaxDistance: 6
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -5239,10 +5223,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sounds:
   - {fileID: 8300000, guid: 09d26df8259bece41ace8879d9c13bd1, type: 3}
-  canInterrupt: 0
-  maxFadeInVolume: 0.5
-  minFadeOutVolume: 0
-  fadeDuration: 1
 --- !u!1 &4246257852033879287
 GameObject:
   m_ObjectHideFlags: 0
@@ -7033,7 +7013,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 8
+  MaxDistance: 3
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -7122,10 +7102,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sounds:
   - {fileID: 8300000, guid: 1421f9f8040f6794bb5316bdf51c9122, type: 3}
-  canInterrupt: 1
-  maxFadeInVolume: 0.5
-  minFadeOutVolume: 0
-  fadeDuration: 1
 --- !u!1 &5303873842248801339
 GameObject:
   m_ObjectHideFlags: 0
@@ -10461,7 +10437,7 @@ GameObject:
   - component: {fileID: 6396726963003723858}
   - component: {fileID: 4748812649820972693}
   m_Layer: 0
-  m_Name: Player_Roles
+  m_Name: Player_Roles_Old_Sound
   m_TagString: RemotePlayer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14677,7 +14653,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 8
+  MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -14765,10 +14741,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sounds: []
-  canInterrupt: 0
-  maxFadeInVolume: 0.5
-  minFadeOutVolume: 0
-  fadeDuration: 1
 --- !u!1 &9120535537401698535
 GameObject:
   m_ObjectHideFlags: 0
@@ -18685,12 +18657,12 @@ PrefabInstance:
     - target: {fileID: 176715282934741238, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
         type: 3}
       propertyPath: OnCast.m_PersistentCalls.m_Calls.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 176715282934741238, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
         type: 3}
       propertyPath: OnHide.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 176715282934741238, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
         type: 3}
@@ -18726,7 +18698,7 @@ PrefabInstance:
         type: 3}
       propertyPath: OnHide.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 57994872640650843}
+      objectReference: {fileID: 7051418287842670252}
     - target: {fileID: 176715282934741238, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
         type: 3}
       propertyPath: OnHide.m_PersistentCalls.m_Calls.Array.data[1].m_Target
@@ -18736,7 +18708,7 @@ PrefabInstance:
         type: 3}
       propertyPath: OnShow.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 57994872640650843}
+      objectReference: {fileID: 6324844587144103268}
     - target: {fileID: 176715282934741238, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
         type: 3}
       propertyPath: OnCast.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
@@ -18765,7 +18737,7 @@ PrefabInstance:
     - target: {fileID: 176715282934741238, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
         type: 3}
       propertyPath: OnHide.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: FadeOut
+      value: Play
       objectReference: {fileID: 0}
     - target: {fileID: 176715282934741238, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
         type: 3}
@@ -18775,7 +18747,7 @@ PrefabInstance:
     - target: {fileID: 176715282934741238, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
         type: 3}
       propertyPath: OnShow.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: FadeIn
+      value: Play
       objectReference: {fileID: 0}
     - target: {fileID: 176715282934741238, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
         type: 3}
@@ -18875,7 +18847,7 @@ PrefabInstance:
     - target: {fileID: 361273564806103200, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
         type: 3}
       propertyPath: MaxDistance
-      value: 8
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 361273564806103200, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
         type: 3}
@@ -18895,7 +18867,7 @@ PrefabInstance:
     - target: {fileID: 418097634281019092, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
         type: 3}
       propertyPath: MaxDistance
-      value: 8
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 418097634281019092, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
         type: 3}
@@ -18915,7 +18887,7 @@ PrefabInstance:
     - target: {fileID: 458262625930623517, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
         type: 3}
       propertyPath: MaxDistance
-      value: 8
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 458262625930623517, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
         type: 3}
@@ -18926,11 +18898,6 @@ PrefabInstance:
         type: 3}
       propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 472872041844661320, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
-        type: 3}
-      propertyPath: MaxDistance
-      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 640242851393250069, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
         type: 3}
@@ -18942,11 +18909,6 @@ PrefabInstance:
       propertyPath: HandGrabber
       value: 
       objectReference: {fileID: 3826017742905746297}
-    - target: {fileID: 822156266698258837, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
-        type: 3}
-      propertyPath: MaxDistance
-      value: 8
-      objectReference: {fileID: 0}
     - target: {fileID: 892367141344175003, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
         type: 3}
       propertyPath: m_WizardPlayer
@@ -18987,11 +18949,6 @@ PrefabInstance:
       propertyPath: sounds.Array.data[1]
       value: 
       objectReference: {fileID: 8300000, guid: e51bdbf72a2851d40a81472f0a9e629f, type: 3}
-    - target: {fileID: 2036629874703297801, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
-        type: 3}
-      propertyPath: MaxDistance
-      value: 8
-      objectReference: {fileID: 0}
     - target: {fileID: 2276358887883467812, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
         type: 3}
       propertyPath: m_IsActive
@@ -19007,11 +18964,6 @@ PrefabInstance:
       propertyPath: sounds.Array.data[0]
       value: 
       objectReference: {fileID: 8300000, guid: 12570230e0895044292a864a9ea73678, type: 3}
-    - target: {fileID: 2576522999921815563, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
-        type: 3}
-      propertyPath: MaxDistance
-      value: 8
-      objectReference: {fileID: 0}
     - target: {fileID: 3290658686780721470, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
         type: 3}
       propertyPath: m_Volume
@@ -19020,7 +18972,7 @@ PrefabInstance:
     - target: {fileID: 3290658686780721470, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
         type: 3}
       propertyPath: MaxDistance
-      value: 8
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3290658686780721470, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
         type: 3}
@@ -19047,11 +18999,6 @@ PrefabInstance:
       propertyPath: m_CollisionParticleSystem
       value: 
       objectReference: {fileID: 3905391237335704768}
-    - target: {fileID: 3818180734315276773, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
-        type: 3}
-      propertyPath: canInterrupt
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3818180734315276773, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
         type: 3}
       propertyPath: sounds.Array.size
@@ -19154,11 +19101,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5271715748092177778, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
         type: 3}
-      propertyPath: canInterrupt
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5271715748092177778, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
-        type: 3}
       propertyPath: sounds.Array.size
       value: 2
       objectReference: {fileID: 0}
@@ -19207,11 +19149,6 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 5759621099139629565, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
-        type: 3}
-      propertyPath: MaxDistance
-      value: 8
-      objectReference: {fileID: 0}
     - target: {fileID: 5840269339591577974, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
         type: 3}
       propertyPath: HandControl
@@ -19227,11 +19164,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Targets
       objectReference: {fileID: 0}
-    - target: {fileID: 6134503399320596668, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
-        type: 3}
-      propertyPath: MaxDistance
-      value: 8
-      objectReference: {fileID: 0}
     - target: {fileID: 6192954872206055145, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
         type: 3}
       propertyPath: m_Volume
@@ -19240,7 +19172,7 @@ PrefabInstance:
     - target: {fileID: 6192954872206055145, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
         type: 3}
       propertyPath: MaxDistance
-      value: 8
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6192954872206055145, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
         type: 3}
@@ -19260,7 +19192,7 @@ PrefabInstance:
     - target: {fileID: 6218114228200657902, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
         type: 3}
       propertyPath: MaxDistance
-      value: 8
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6218114228200657902, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
         type: 3}
@@ -19280,7 +19212,7 @@ PrefabInstance:
     - target: {fileID: 6224178500139694624, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
         type: 3}
       propertyPath: MaxDistance
-      value: 8
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6224178500139694624, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
         type: 3}
@@ -19302,16 +19234,6 @@ PrefabInstance:
       propertyPath: m_PointPlayer
       value: 
       objectReference: {fileID: 1261346771359000727}
-    - target: {fileID: 6340491638415945238, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
-        type: 3}
-      propertyPath: MaxDistance
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 7026074234992616684, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
-        type: 3}
-      propertyPath: canInterrupt
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7026074234992616684, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
         type: 3}
       propertyPath: sounds.Array.size
@@ -19336,11 +19258,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_CooldownTime
       value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7444801954190542097, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
-        type: 3}
-      propertyPath: canInterrupt
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7444801954190542097, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
         type: 3}
@@ -19530,7 +19447,7 @@ PrefabInstance:
     - target: {fileID: 9142985859789511280, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
         type: 3}
       propertyPath: MaxDistance
-      value: 8
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 9142985859789511280, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
         type: 3}
@@ -19541,11 +19458,6 @@ PrefabInstance:
         type: 3}
       propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9175159886336649096, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
-        type: 3}
-      propertyPath: MaxDistance
-      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4315992672498332217, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1, type: 3}

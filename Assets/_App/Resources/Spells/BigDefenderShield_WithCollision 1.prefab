@@ -381,7 +381,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2445603421541869424
 Transform:
   m_ObjectHideFlags: 0
@@ -418,7 +418,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 20
+  MaxDistance: 6
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -666,7 +666,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 20
+  MaxDistance: 6
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -777,7 +777,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5225614417802116918
 Transform:
   m_ObjectHideFlags: 0
@@ -814,7 +814,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 20
+  MaxDistance: 6
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -1136,8 +1136,8 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.5
-  m_Pitch: 0.4
+  m_Volume: 0.6
+  m_Pitch: 1
   Loop: 1
   Mute: 0
   Spatialize: 0
@@ -1145,7 +1145,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 10
+  MaxDistance: 6
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -1233,9 +1233,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sounds:
+  - {fileID: 8300000, guid: 424bd5deadd62d7488a9104b3c69c86d, type: 3}
+  - {fileID: 8300000, guid: 6e16bcd76e45795448879127d1802a1c, type: 3}
+  - {fileID: 8300000, guid: 8785e4c057c5533459a69f43db1eaed6, type: 3}
+  - {fileID: 8300000, guid: ff97d2a989dabe14c8ab4afd2e1e9219, type: 3}
   - {fileID: 8300000, guid: e6758c00722d8e044b8bd697e5902bce, type: 3}
   canInterrupt: 0
-  maxFadeInVolume: 0.25
+  maxFadeInVolume: 0.5
   minFadeOutVolume: 0
   fadeDuration: 1
 --- !u!1 &8102369346866468943
@@ -1291,7 +1295,7 @@ GameObject:
   - component: {fileID: 3269205067809299739}
   - component: {fileID: 8572025032258328317}
   m_Layer: 0
-  m_Name: BigDefenderShield_WithCollision
+  m_Name: BigDefenderShield_WithCollision 1
   m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1390,7 +1394,6 @@ MonoBehaviour:
   m_NavMeshObstacle: {fileID: 8572025032258328317}
   m_Slider: {fileID: 1712487048817753394}
   m_PlaceAlpha: 0.15
-  m_SecondsBeforeHide: 1
   OnPrepare:
     m_PersistentCalls:
       m_Calls:
@@ -1406,30 +1409,12 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  OnReadyShow:
-    m_PersistentCalls:
-      m_Calls: []
-  OnReadyHide:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3468097473129006290}
-        m_TargetAssemblyTypeName: OneShotRandomSound, Assembly-CSharp
-        m_MethodName: FadeOut
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
   OnShow:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3468097473129006290}
+      - m_Target: {fileID: 2589217511391218865}
         m_TargetAssemblyTypeName: OneShotRandomSound, Assembly-CSharp
-        m_MethodName: FadeIn
+        m_MethodName: Play
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1441,10 +1426,34 @@ MonoBehaviour:
         m_CallState: 2
   OnCast:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3468097473129006290}
+        m_TargetAssemblyTypeName: OneShotRandomSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnHide:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6415318251317028204}
+        m_TargetAssemblyTypeName: OneShotRandomSound, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &7349842883598653204
 MonoBehaviour:
   m_ObjectHideFlags: 0

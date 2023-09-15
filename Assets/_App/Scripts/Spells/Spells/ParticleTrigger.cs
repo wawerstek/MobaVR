@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace MobaVR
 {
@@ -16,11 +17,11 @@ namespace MobaVR
         private TeamType m_TeamType;
         private ParticleSystem m_ParticleSystem;
         private Transform m_Point;
-
+        
         public Action OnInitTrigger;
         public Action OnDestroyTrigger;
-        public Action<Collider> OnParticleTriggerEnter;
-        public Action<Collision> OnParticleCollisionEnter;
+        public UnityEvent<Collider> OnParticleTriggerEnter;
+        public UnityEvent<Collision> OnParticleCollisionEnter;
 
         private bool m_IsShoot = false;
 

@@ -14487,8 +14487,8 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 12
+  MinDistance: 3
+  MaxDistance: 7
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -14580,7 +14580,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: bd321ca96bbb5d84eaaa08bb55b4b325, type: 3}
   - {fileID: 8300000, guid: 573a6caeb181bbe479e3dc6a3470386e, type: 3}
   - {fileID: 8300000, guid: 709e3e5eea7fb284dbd96e00ddb8eabb, type: 3}
-  canInterrupt: 0
   maxFadeInVolume: 0.5
   minFadeOutVolume: 0
   fadeDuration: 1
@@ -14638,7 +14637,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 8
+  MaxDistance: 6
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -14729,7 +14728,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: caac636ef5d6d30449f1bfb1a60c4824, type: 3}
   - {fileID: 8300000, guid: 61f39493efa3e354e83e7b07202355b8, type: 3}
   - {fileID: 8300000, guid: d9121498546ccc543aca17c407638ede, type: 3}
-  canInterrupt: 0
   maxFadeInVolume: 0.5
   minFadeOutVolume: 0
   fadeDuration: 1
@@ -19647,7 +19645,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 15
+  MaxDistance: 6
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -19856,7 +19854,7 @@ GameObject:
   - component: {fileID: -8183252643809227223}
   - component: {fileID: 6118843029438640525}
   m_Layer: 10
-  m_Name: Fireball
+  m_Name: Fireball 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25709,8 +25707,8 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 10
+  MinDistance: 3
+  MaxDistance: 7
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -25837,8 +25835,8 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 20
+  MinDistance: 3
+  MaxDistance: 7
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -25967,7 +25965,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 20
+  MaxDistance: 6
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -26147,7 +26145,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 20
+  MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -26235,7 +26233,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sounds: []
-  canInterrupt: 0
   maxFadeInVolume: 0.5
   minFadeOutVolume: 0
   fadeDuration: 1
