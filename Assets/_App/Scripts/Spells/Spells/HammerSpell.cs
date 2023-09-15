@@ -123,7 +123,8 @@ namespace MobaVR
         private void OnGrabbed(Grabber grabber)
         {
             m_Grabber = grabber;
-            Invoke(nameof(ShowWeapon), 0.2f);
+            //Invoke(nameof(ShowWeapon), 0.2f);
+            ShowWeapon();
 
             foreach (Collider collisionCollider in m_CollisionColliders)
             {
