@@ -173,6 +173,10 @@ namespace MobaVR
             }
         }
 
+        //TODO: HitData
+        public Action<HitData> OnPlayerHit;
+        public Action<HitData> OnPlayerDie;
+        
         public Action OnInit;
         public Action<float> OnHit;
         public Action OnDie;
@@ -983,7 +987,8 @@ namespace MobaVR
                 return;
             }
 
-            RpcHit_Player(hitData.Amount);
+            //RpcHit_Player(hitData.Amount);
+            RpcHit_Player(hitData);
         }
 
         //public void Hit(float damage)
@@ -1010,7 +1015,7 @@ namespace MobaVR
         }
 
         [PunRPC]
-        private void RpcHit_Player(float damage)
+        private void RpcHit_Player(HitData hitData)
         {
             if (!m_State.StateSo.CanGetDamage)
             {
@@ -1022,8 +1027,10 @@ namespace MobaVR
                 return;
             }
 
-            OnHit?.Invoke(damage);
-            m_CurrentHealth -= damage;
+            OnHit?.Invoke(hitData.Amount);
+            OnPlayerHit.Invoke(hitData);
+            
+            m_CurrentHealth -= hitData.Amount;
             if (m_CurrentHealth <= 0)
             {
                 //m_Collider.enabled = false;
@@ -1044,6 +1051,7 @@ namespace MobaVR
                 //m_PlayerVR.PlayerDie();
                 m_PlayerVR.RpcPlayerDie();
                 
+                OnPlayerDie?.Invoke(hitData);
                 OnDie?.Invoke();
             }
 
