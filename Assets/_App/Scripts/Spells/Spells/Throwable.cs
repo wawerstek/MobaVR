@@ -173,6 +173,9 @@ namespace MobaVR
             {
                 isGoodThrow = m_Rigidbody.velocity.magnitude > m_MinVelocity;
             }
+            
+            //TODO:
+            m_Grabbable.enabled = false;
 
             OnValidated?.Invoke(isGoodThrow);
             OnReleased?.Invoke();
