@@ -1,11 +1,13 @@
 using Michsky.MUIP;
 using Photon.Pun;
+using TMPro;
 using UnityEngine;
 
 namespace MobaVR
 {
     public class PlayerView : MonoBehaviourPunCallbacks
     {
+        [SerializeField] private TextMeshProUGUI m_Nickname;
         [SerializeField] private ProgressBar m_ProgressBar;
         [SerializeField] private Transform m_PointPlayer;
 
@@ -24,6 +26,11 @@ namespace MobaVR
         {
             if (photonView.IsMine)
             {
+                if (m_Nickname != null)
+                {
+                    m_Nickname.gameObject.SetActive(false);
+                }
+                
                 if (m_PointPlayer == null)
                 {
                     GameObject pointPlayer = GameObject.Find("PlayerViewPoint");
