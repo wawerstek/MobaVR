@@ -7,6 +7,7 @@ namespace MobaVR
 {
     public class GameSettings : MonoBehaviour
     {
+        public BannerDropScript bannerController;//баннер включения карт
         [SerializeField] private GameObject m_View;
         [SerializeField] private Canvas m_Canvas;
         [SerializeField] private bool m_UseVRUISystem = false;
@@ -348,7 +349,19 @@ namespace MobaVR
 
         public void ShowSkyLandWithPropMap()
         {
-            m_SceneEnvironment.ShowSkyLandWithPropMap();
+            bannerController = FindObjectOfType<BannerDropScript>();
+            if (bannerController != null)
+            {
+                Debug.Log("Запускаем функцию в другом скрипте");
+                bannerController.TriggerLowerShield();
+            }
+            else
+            {
+                Debug.Log("Запускаем карту");
+                m_SceneEnvironment.ShowSkyLandWithPropMap();
+            }
+            
+           
         }
 
         public void ShowMobaMap()

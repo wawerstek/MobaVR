@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: PhotonServerSettings
   m_EditorClassIdentifier: 
   AppSettings:
-    AppIdRealtime: 359a2117-3847-4818-b6fe-9058f80cbac0
+    AppIdRealtime: 1234567890-1234567890-1234567890
     AppIdFusion: 
     AppIdChat: 1234567890-1234567890-1234567890
     AppIdVoice: 
     AppVersion: 
-    UseNameServer: 1
+    UseNameServer: 0
     FixedRegion: eu
-    Server: 
+    Server: 127.0.0.1
     Port: 5055
     ProxyServer: 
     Protocol: 0
@@ -164,6 +164,8 @@ MonoBehaviour:
   - PlayOtrigkaSound
   - PlayRandomSound
   - RpcShowMap
+  - StartDroppingBanner
+  - LowerShield
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
