@@ -1,6 +1,8 @@
-using UnityEngine;
+using System;
+using MobaVR;
 using UnityEngine.UI;
 using Photon.Pun;
+using Random = UnityEngine.Random;
 
 public class NameSetter : MonoBehaviourPunCallbacks
 {
@@ -19,6 +21,16 @@ public class NameSetter : MonoBehaviourPunCallbacks
         string randomSuffix = Random.Range(1000, 9999).ToString();
         string fullName = enteredName + randomSuffix;
 
-        PhotonNetwork.LocalPlayer.NickName = fullName;
+        BaseGameSession gameSession = FindObjectOfType<BaseGameSession>();
+        if (gameSession == null || gameSession.LocalPlayer == null)
+        {
+            return;
+        }
+
+        if (gameSession.LocalPlayer.TryGetComponent(out NameDisplay nameDisplay))
+        {
+            nameDisplay.SetName(fullName);
+        }
+        //PhotonNetwork.LocalPlayer.NickName = fullName;
     }
 }

@@ -1028,7 +1028,7 @@ namespace MobaVR
             }
 
             OnHit?.Invoke(hitData.Amount);
-            OnPlayerHit.Invoke(hitData);
+            OnPlayerHit?.Invoke(hitData);
             
             m_CurrentHealth -= hitData.Amount;
             if (m_CurrentHealth <= 0)

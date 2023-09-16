@@ -21,6 +21,7 @@ namespace MobaVR
         [SerializeField] private WizardPlayer m_WizardPlayer;
         [SerializeField] private PlayerMode m_PlayerMode;
         [SerializeField] private Teammate m_Teammate;
+        [SerializeField] private DieView m_DieView;
         [SerializeField] private CharacterIK m_CharacterIK;
         [SerializeField] private SkinCollection m_SkinCollection;
 
@@ -64,6 +65,7 @@ namespace MobaVR
         public Team Team => m_Team;
         public PlayerMode PlayerMode => m_PlayerMode;
         public WizardPlayer WizardPlayer => m_WizardPlayer;
+        public DieView DieView => m_DieView;
         public SkinCollection SkinCollection => m_SkinCollection;
 
         public Action<PlayerVR> OnDestroyPlayer;

@@ -13,7 +13,8 @@ namespace MobaVR
         [SerializeField] private float m_HitCooldown = 20f;
         private WizardPlayer m_Wizard;
 
-        private List<PlayerVR> m_HitPlayers;
+        private List<PlayerVR> m_HitPlayers = new List<PlayerVR>();
+        private PlayerVR m_LastHitPlayer;
         private PlayerVR m_Killer;
         private float m_CurrentTime = 0f;
 
@@ -45,20 +46,32 @@ namespace MobaVR
 
         private void OnPlayerHit(HitData hitData)
         {
+            if (hitData.PlayerVR != null)
+            {
+                m_LastHitPlayer = hitData.PlayerVR;
+            }
         }
 
         private void OnPlayerDie(HitData hitData)
         {
+            m_Killer = hitData.PlayerVR != null ? hitData.PlayerVR : m_LastHitPlayer;
+            
+            if (m_Killer != null)
+            {
+                m_Wizard.PlayerVR.DieView.SetDieInfo(m_Killer.photonView.Owner.NickName);
+            }
         }
 
         private void OnPlayerReborn()
         {
+            Reset();
         }
 
         private void Reset()
         {
             m_HitPlayers.Clear();
             m_Killer = null;
+            m_LastHitPlayer = null;
             m_CurrentTime = 0f;
         }
     }

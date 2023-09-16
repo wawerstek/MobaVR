@@ -95,6 +95,11 @@ public class Urok_02 : MonoBehaviour
     //это вызывается из книги. потом она сбивается.
     public void FinishUrok02()
     {
+        if (characterActions == null || characterActions.tutorialSteps == null)
+        {
+            return;
+        }
+        
         if(characterActions.tutorialSteps.Length > 1) // проверка, чтобы убедиться, что у нас есть хотя бы один шаг обучения
         {
             //обнуляем переменную, чтобы использовать скрипт повторно

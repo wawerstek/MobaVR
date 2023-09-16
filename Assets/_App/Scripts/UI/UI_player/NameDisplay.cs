@@ -3,13 +3,29 @@ using TMPro;
 using Photon.Pun;
 using System.Text.RegularExpressions; // Для регулярных выражений
 
-public class NameDisplay : MonoBehaviourPunCallbacks, IPunObservable
+public class NameDisplay : MonoBehaviourPunCallbacks
+                         , IPunObservable
 {
-    public TMP_Text playerNameText;
+    public TextMeshProUGUI playerNameText;
     private string playerName;
 
+    public void SetName(string nickName)
+    {
+        nickName = StripNumberFromName(nickName);
+        PhotonNetwork.LocalPlayer.NickName = nickName;
+        
+        photonView.RPC(nameof(RpcSetNickname), RpcTarget.AllBuffered, nickName);
+    }
+
+    [PunRPC]
+    private void RpcSetNickname(string nickName)
+    {
+        playerNameText.text = nickName;
+    }
+    
     private void Update()
     {
+        /*
         if (photonView.IsMine)
         {
             playerNameText.text = StripNumberFromName(PhotonNetwork.LocalPlayer.NickName);
@@ -18,6 +34,7 @@ public class NameDisplay : MonoBehaviourPunCallbacks, IPunObservable
         {
             playerNameText.text = StripNumberFromName(playerName);
         }
+        */
     }
 
     private string StripNumberFromName(string fullName)
@@ -34,6 +51,7 @@ public class NameDisplay : MonoBehaviourPunCallbacks, IPunObservable
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
+        /*
         if (stream.IsWriting)
         {
             stream.SendNext(PhotonNetwork.LocalPlayer.NickName);
@@ -42,5 +60,6 @@ public class NameDisplay : MonoBehaviourPunCallbacks, IPunObservable
         {
             playerName = (string)stream.ReceiveNext();
         }
+        */
     }
 }

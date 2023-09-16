@@ -1,13 +1,16 @@
 using MobaVR;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class DieView : MonoBehaviour
 {
     [SerializeField] private WizardPlayer wizardPlayer;
 
-    public GameObject TextDie;
+    public GameObject DiePanel;
+    public GameObject DieInfoPanel;
+    public TextMeshProUGUI KillerName;
 
 
     public AudioClip[] sounds;
@@ -34,24 +37,20 @@ public class DieView : MonoBehaviour
     private void OnDie()
     {
         PlayRandomSound();
-        TextDie.SetActive(true);
+        DiePanel.SetActive(true);
     }
 
     private void OnReborn()
     {
-        TextDie.SetActive(false);
+        DiePanel.SetActive(false);
+        DieInfoPanel.SetActive(false);
     }
 
-    void Start()
+    public void SetDieInfo(string nickname)
     {
-        
+        DieInfoPanel.SetActive(true);
+        KillerName.text = nickname;
     }
-
-    void Update()
-    {
-        
-    }
-
 
     public void PlayRandomSound()
     {
