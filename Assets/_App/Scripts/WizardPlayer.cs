@@ -179,6 +179,7 @@ namespace MobaVR
         
         public Action OnInit;
         public Action<float> OnHit;
+        public Action<float> OnHeal;
         public Action OnDie;
         public Action OnReborn;
 
@@ -899,6 +900,30 @@ namespace MobaVR
         #endregion
 
         #region HP
+
+        [ContextMenu("Heal")]
+        public void Heal(float amount)
+        {
+            photonView.RPC(nameof(RpcHeal_Player), RpcTarget.AllBuffered, amount);
+        }
+
+        [PunRPC]
+        private void RpcHeal_Player(float amount)
+        {
+            if (!IsLife)
+            {
+                return;
+            }
+            
+            m_CurrentHealth += amount;
+            if (m_CurrentHealth >= m_MaxHp)
+            {
+                m_CurrentHealth = m_MaxHp;
+            }
+            
+            OnHeal?.Invoke(amount);
+            m_PlayerView.RpcSetHealth(m_CurrentHealth);
+        }
 
         [ContextMenu("Reborn")]
         public void Reborn()

@@ -1654,6 +1654,15 @@
                     "processors": "",
                     "interactions": "Delay(Delay=0.1)",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "L_XButton",
+                    "type": "Button",
+                    "id": "81aad754-ba78-45ff-8954-647e76db23f0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -2259,6 +2268,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "L_Grip",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7f5078e5-6956-4a5a-b8b0-929841472977",
+                    "path": "<XRController>{LeftHand}/secondaryButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "L_XButton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8334989d-6d20-409b-b4f9-afabfe8f823e",
+                    "path": "<Keyboard>/g",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "L_XButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -54,12 +54,15 @@ MonoBehaviour:
   m_CooldownTime: 0
   m_IsPerformed: 0
   m_PhotonView: {fileID: 0}
+  m_IsInCooldown: 0
+  m_CurrentTime: 0
+  m_IsAvailable: 1
   m_BlockingInputs:
   - {fileID: 1102691089809686521, guid: e39f4b35a6db18348b41eb0262520e69, type: 3}
   m_SpellHandType: 0
   m_CastInput: {fileID: 7496509737427759073, guid: e39f4b35a6db18348b41eb0262520e69,
     type: 3}
-  m_ThrowableSpell: {fileID: 5539838930902219004, guid: 7eaa686541c3b7f4a99631814fe53a9f,
+  m_ThrowableSpell: {fileID: 5539838930902219004, guid: ce3aa66f41310b74e8f6ac166b67f9f2,
     type: 3}
   m_RedirectInput: {fileID: 1102691089809686521, guid: e39f4b35a6db18348b41eb0262520e69,
     type: 3}
@@ -228,6 +231,9 @@ MonoBehaviour:
   m_CooldownTime: 0
   m_IsPerformed: 0
   m_PhotonView: {fileID: 0}
+  m_IsInCooldown: 0
+  m_CurrentTime: 0
+  m_IsAvailable: 1
   m_BlockingInputs: []
   m_SpellHandType: 0
   m_CastInput: {fileID: 3792752541121168264, guid: e39f4b35a6db18348b41eb0262520e69,
@@ -415,6 +421,8 @@ MonoBehaviour:
     Priority: 10
   - SpellBehaviour: {fileID: 684793504565814561}
     Priority: 0
+  - SpellBehaviour: {fileID: 684793504565814561}
+    Priority: 0
   m_IsInitOnStart: 0
   m_ActiveSpells: []
 --- !u!1 &774280944719939523
@@ -526,15 +534,18 @@ MonoBehaviour:
   m_SpellName: Big Firebreath
   m_CanInterrupted: 1
   m_UseCooldown: 1
-  m_CooldownTime: 30
+  m_CooldownTime: 18
   m_IsPerformed: 0
   m_PhotonView: {fileID: 0}
+  m_IsInCooldown: 0
+  m_CurrentTime: 0
+  m_IsAvailable: 1
   m_BlockingInputs: []
   m_SpellHandType: 2
   m_CastInput: {fileID: 6545274833854041215, guid: e39f4b35a6db18348b41eb0262520e69,
     type: 3}
   m_FireBreath: {fileID: 0}
-  m_Duration: 8
+  m_Duration: 6
   m_CheckDistanceAngle: 1
   m_MaxDistance: 0.5
   m_MaxAngle: 90
@@ -628,6 +639,9 @@ MonoBehaviour:
   m_CooldownTime: 0
   m_IsPerformed: 0
   m_PhotonView: {fileID: 0}
+  m_IsInCooldown: 0
+  m_CurrentTime: 0
+  m_IsAvailable: 1
   m_BlockingInputs: []
   m_SpellHandType: 0
   m_CastInput: {fileID: 7496509737427759073, guid: e39f4b35a6db18348b41eb0262520e69,
@@ -687,6 +701,9 @@ MonoBehaviour:
   m_CooldownTime: 0
   m_IsPerformed: 0
   m_PhotonView: {fileID: 0}
+  m_IsInCooldown: 0
+  m_CurrentTime: 0
+  m_IsAvailable: 1
   m_BlockingInputs: []
   m_SpellHandType: 1
   m_CastInput: {fileID: -5458519290034272516, guid: e39f4b35a6db18348b41eb0262520e69,
@@ -899,6 +916,9 @@ MonoBehaviour:
   m_CooldownTime: 0
   m_IsPerformed: 0
   m_PhotonView: {fileID: 0}
+  m_IsInCooldown: 0
+  m_CurrentTime: 0
+  m_IsAvailable: 1
   m_BlockingInputs: []
   m_SpellHandType: 2
   m_CastInput: {fileID: -1406781778437722472, guid: e39f4b35a6db18348b41eb0262520e69,
@@ -1013,6 +1033,9 @@ MonoBehaviour:
   m_CooldownTime: 0
   m_IsPerformed: 0
   m_PhotonView: {fileID: 0}
+  m_IsInCooldown: 0
+  m_CurrentTime: 0
+  m_IsAvailable: 1
   m_BlockingInputs: []
   m_SpellHandType: 0
   m_CastInput: {fileID: 3792752541121168264, guid: e39f4b35a6db18348b41eb0262520e69,
@@ -1074,6 +1097,9 @@ MonoBehaviour:
   m_CooldownTime: 0
   m_IsPerformed: 0
   m_PhotonView: {fileID: 0}
+  m_IsInCooldown: 0
+  m_CurrentTime: 0
+  m_IsAvailable: 1
   m_BlockingInputs:
   - {fileID: 8558313123292153694, guid: e39f4b35a6db18348b41eb0262520e69, type: 3}
   m_SpellHandType: 1
@@ -1194,6 +1220,9 @@ MonoBehaviour:
   m_CooldownTime: 0
   m_IsPerformed: 0
   m_PhotonView: {fileID: 0}
+  m_IsInCooldown: 0
+  m_CurrentTime: 0
+  m_IsAvailable: 1
   m_BlockingInputs: []
   m_SpellHandType: 2
   m_CastInput: {fileID: -1406781778437722472, guid: e39f4b35a6db18348b41eb0262520e69,
@@ -1316,6 +1345,9 @@ MonoBehaviour:
   m_CooldownTime: 0
   m_IsPerformed: 0
   m_PhotonView: {fileID: 0}
+  m_IsInCooldown: 0
+  m_CurrentTime: 0
+  m_IsAvailable: 1
   m_BlockingInputs: []
   m_SpellHandType: 2
   m_CastInput: {fileID: -1406781778437722472, guid: e39f4b35a6db18348b41eb0262520e69,
@@ -1372,12 +1404,16 @@ MonoBehaviour:
   m_BlockingSpells:
   - {fileID: 7129994661956078668}
   - {fileID: 4148036727447410087}
+  - {fileID: 684793504565814561}
   m_SpellName: Right Arrow
   m_CanInterrupted: 1
   m_UseCooldown: 0
   m_CooldownTime: 0
   m_IsPerformed: 0
   m_PhotonView: {fileID: 0}
+  m_IsInCooldown: 0
+  m_CurrentTime: 0
+  m_IsAvailable: 1
   m_BlockingInputs: []
   m_SpellHandType: 1
   m_CastInput: {fileID: -763389729007880358, guid: e39f4b35a6db18348b41eb0262520e69,
@@ -1581,6 +1617,9 @@ MonoBehaviour:
   m_CooldownTime: 0
   m_IsPerformed: 0
   m_PhotonView: {fileID: 0}
+  m_IsInCooldown: 0
+  m_CurrentTime: 0
+  m_IsAvailable: 1
   m_BlockingInputs:
   - {fileID: 1102691089809686521, guid: e39f4b35a6db18348b41eb0262520e69, type: 3}
   m_SpellHandType: 0
@@ -1761,6 +1800,9 @@ MonoBehaviour:
   m_CooldownTime: 0
   m_IsPerformed: 0
   m_PhotonView: {fileID: 0}
+  m_IsInCooldown: 0
+  m_CurrentTime: 0
+  m_IsAvailable: 1
   m_BlockingInputs: []
   m_SpellHandType: 2
   m_CastInput: {fileID: -1406781778437722472, guid: e39f4b35a6db18348b41eb0262520e69,
@@ -1983,12 +2025,15 @@ MonoBehaviour:
   m_CooldownTime: 0
   m_IsPerformed: 0
   m_PhotonView: {fileID: 0}
+  m_IsInCooldown: 0
+  m_CurrentTime: 0
+  m_IsAvailable: 1
   m_BlockingInputs:
   - {fileID: 8558313123292153694, guid: e39f4b35a6db18348b41eb0262520e69, type: 3}
   m_SpellHandType: 1
   m_CastInput: {fileID: -763389729007880358, guid: e39f4b35a6db18348b41eb0262520e69,
     type: 3}
-  m_ThrowableSpell: {fileID: 5539838930902219004, guid: 7eaa686541c3b7f4a99631814fe53a9f,
+  m_ThrowableSpell: {fileID: 5539838930902219004, guid: ce3aa66f41310b74e8f6ac166b67f9f2,
     type: 3}
   m_RedirectInput: {fileID: 8558313123292153694, guid: e39f4b35a6db18348b41eb0262520e69,
     type: 3}
@@ -2043,6 +2088,9 @@ MonoBehaviour:
   m_CooldownTime: 0
   m_IsPerformed: 0
   m_PhotonView: {fileID: 0}
+  m_IsInCooldown: 0
+  m_CurrentTime: 0
+  m_IsAvailable: 1
   m_BlockingInputs: []
   m_SpellHandType: 2
   m_CastInput: {fileID: -1406781778437722472, guid: e39f4b35a6db18348b41eb0262520e69,
@@ -2354,6 +2402,9 @@ MonoBehaviour:
   m_CooldownTime: 0
   m_IsPerformed: 0
   m_PhotonView: {fileID: 0}
+  m_IsInCooldown: 0
+  m_CurrentTime: 0
+  m_IsAvailable: 1
   m_BlockingInputs: []
   m_SpellHandType: 1
   m_CastInput: {fileID: -5458519290034272516, guid: e39f4b35a6db18348b41eb0262520e69,
@@ -2599,6 +2650,9 @@ MonoBehaviour:
   m_CooldownTime: 0
   m_IsPerformed: 0
   m_PhotonView: {fileID: 0}
+  m_IsInCooldown: 0
+  m_CurrentTime: 0
+  m_IsAvailable: 1
   m_BlockingInputs: []
   m_SpellHandType: 0
   m_CastInput: {fileID: 3792752541121168264, guid: e39f4b35a6db18348b41eb0262520e69,
@@ -2785,9 +2839,12 @@ MonoBehaviour:
   m_SpellName: Ultimate Bow
   m_CanInterrupted: 0
   m_UseCooldown: 1
-  m_CooldownTime: 15
+  m_CooldownTime: 18
   m_IsPerformed: 0
   m_PhotonView: {fileID: 0}
+  m_IsInCooldown: 0
+  m_CurrentTime: 0
+  m_IsAvailable: 1
   m_BlockingInputs: []
   m_SpellHandType: 2
   m_CastInput: {fileID: 6545274833854041215, guid: e39f4b35a6db18348b41eb0262520e69,
@@ -2955,6 +3012,9 @@ MonoBehaviour:
   m_CooldownTime: 0
   m_IsPerformed: 0
   m_PhotonView: {fileID: 0}
+  m_IsInCooldown: 0
+  m_CurrentTime: 0
+  m_IsAvailable: 1
   m_BlockingInputs: []
   m_SpellHandType: 2
   m_CastInput: {fileID: -1406781778437722472, guid: e39f4b35a6db18348b41eb0262520e69,
@@ -3190,6 +3250,9 @@ MonoBehaviour:
   m_CooldownTime: 0
   m_IsPerformed: 0
   m_PhotonView: {fileID: 0}
+  m_IsInCooldown: 0
+  m_CurrentTime: 0
+  m_IsAvailable: 1
   m_BlockingInputs: []
   m_SpellHandType: 1
   m_CastInput: {fileID: -5458519290034272516, guid: e39f4b35a6db18348b41eb0262520e69,
@@ -3312,6 +3375,9 @@ MonoBehaviour:
   m_CooldownTime: 0
   m_IsPerformed: 0
   m_PhotonView: {fileID: 0}
+  m_IsInCooldown: 0
+  m_CurrentTime: 0
+  m_IsAvailable: 1
   m_BlockingInputs: []
   m_SpellHandType: 0
   m_CastInput: {fileID: 3792752541121168264, guid: e39f4b35a6db18348b41eb0262520e69,
@@ -3440,14 +3506,17 @@ MonoBehaviour:
   m_SpellName: Big Shield
   m_CanInterrupted: 0
   m_UseCooldown: 1
-  m_CooldownTime: 30
+  m_CooldownTime: 18
   m_IsPerformed: 0
   m_PhotonView: {fileID: 0}
+  m_IsInCooldown: 0
+  m_CurrentTime: 0
+  m_IsAvailable: 1
   m_BlockingInputs: []
   m_SpellHandType: 2
   m_CastInput: {fileID: 6545274833854041215, guid: e39f4b35a6db18348b41eb0262520e69,
     type: 3}
-  m_ShieldPrefab: {fileID: 1256544414490149151, guid: e34e45b37581e9a4e9c4af438e39be2a,
+  m_ShieldPrefab: {fileID: 1256544414490149151, guid: eea1bea1c9a0e33459008a2069d5d28a,
     type: 3}
   m_SpawnPoint: {fileID: 0}
   m_IsPlaced: 0
@@ -3720,6 +3789,9 @@ MonoBehaviour:
   m_CooldownTime: 0
   m_IsPerformed: 0
   m_PhotonView: {fileID: 0}
+  m_IsInCooldown: 0
+  m_CurrentTime: 0
+  m_IsAvailable: 1
   m_BlockingInputs: []
   m_SpellHandType: 1
   m_CastInput: {fileID: -5458519290034272516, guid: e39f4b35a6db18348b41eb0262520e69,
@@ -3744,7 +3816,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7388957870289574304
 Transform:
   m_ObjectHideFlags: 0
@@ -3775,18 +3847,22 @@ MonoBehaviour:
   m_BlockingSpells:
   - {fileID: 7129994661956078668}
   - {fileID: 4148036727447410087}
+  - {fileID: 4883409438873745968}
   m_SpellName: Right Arrow Withou Quiver
   m_CanInterrupted: 1
   m_UseCooldown: 0
   m_CooldownTime: 0
   m_IsPerformed: 0
   m_PhotonView: {fileID: 0}
+  m_IsInCooldown: 0
+  m_CurrentTime: 0
+  m_IsAvailable: 1
   m_BlockingInputs: []
   m_SpellHandType: 1
   m_CastInput: {fileID: -763389729007880358, guid: e39f4b35a6db18348b41eb0262520e69,
     type: 3}
   m_Quiver: {fileID: 0}
-  m_UseQuiver: 0
+  m_UseQuiver: 1
   m_ArrowPrefab: {fileID: 4019626770689762863, guid: 5cfd26ccdc5cf294496acfdfe594ff88,
     type: 3}
   m_IsTriggerQuiver: 0
@@ -4782,7 +4858,7 @@ PrefabInstance:
     - target: {fileID: 2156806369796615463, guid: 6798e0ec1aa16ec4bb7d2479825949c0,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6108116711572582550, guid: 6798e0ec1aa16ec4bb7d2479825949c0,
         type: 3}
@@ -5064,7 +5140,7 @@ PrefabInstance:
     - target: {fileID: 2156806369796615463, guid: 6798e0ec1aa16ec4bb7d2479825949c0,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6108116711572582550, guid: 6798e0ec1aa16ec4bb7d2479825949c0,
         type: 3}
@@ -5611,6 +5687,9 @@ MonoBehaviour:
   m_CooldownTime: 0
   m_IsPerformed: 0
   m_PhotonView: {fileID: 0}
+  m_IsInCooldown: 0
+  m_CurrentTime: 0
+  m_IsAvailable: 1
   m_BlockingInputs: []
   m_SpellHandType: 1
   m_CastInput: {fileID: -5458519290034272516, guid: e39f4b35a6db18348b41eb0262520e69,
@@ -7099,6 +7178,9 @@ MonoBehaviour:
   m_CooldownTime: 0
   m_IsPerformed: 0
   m_PhotonView: {fileID: 0}
+  m_IsInCooldown: 0
+  m_CurrentTime: 0
+  m_IsAvailable: 1
   m_BlockingInputs: []
   m_SpellHandType: 0
   m_CastInput: {fileID: 3792752541121168264, guid: e39f4b35a6db18348b41eb0262520e69,
@@ -7376,6 +7458,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8429294818820493779}
     m_Modifications:
+    - target: {fileID: 1364560148225022017, guid: b22331e3c6d78e24fbda6944fb5bf343,
+        type: 3}
+      propertyPath: m_HandType
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1364560148225022017, guid: b22331e3c6d78e24fbda6944fb5bf343,
         type: 3}
       propertyPath: m_SpellName
@@ -9307,6 +9394,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1364560148225022017, guid: b22331e3c6d78e24fbda6944fb5bf343,
         type: 3}
+      propertyPath: m_HandType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1364560148225022017, guid: b22331e3c6d78e24fbda6944fb5bf343,
+        type: 3}
       propertyPath: m_SpellName
       value: Left Pickup
       objectReference: {fileID: 0}
@@ -9416,6 +9508,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SmallFireball
+      objectReference: {fileID: 0}
+    - target: {fileID: 2156806369796615463, guid: 6798e0ec1aa16ec4bb7d2479825949c0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6108116711572582550, guid: 6798e0ec1aa16ec4bb7d2479825949c0,
         type: 3}
@@ -9556,6 +9653,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3172226610181556956}
     m_Modifications:
+    - target: {fileID: 1364560148225022017, guid: b22331e3c6d78e24fbda6944fb5bf343,
+        type: 3}
+      propertyPath: m_HandType
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1364560148225022017, guid: b22331e3c6d78e24fbda6944fb5bf343,
         type: 3}
       propertyPath: m_SpellName
@@ -10557,7 +10659,7 @@ PrefabInstance:
     - target: {fileID: 2156806369796615463, guid: 6798e0ec1aa16ec4bb7d2479825949c0,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6108116711572582550, guid: 6798e0ec1aa16ec4bb7d2479825949c0,
         type: 3}
