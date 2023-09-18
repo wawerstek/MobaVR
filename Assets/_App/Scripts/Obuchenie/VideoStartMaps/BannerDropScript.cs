@@ -1,54 +1,65 @@
 using System.Collections;
 using UnityEngine;
 using Photon.Pun;
-using MobaVR;
+using System.Collections.Generic;
+
 public class BannerDropScript : MonoBehaviourPunCallbacks
 {
-    public Transform topPoint;
-    public Transform bottomPoint;
-    public GameObject shield;
-    public AudioClip chainSound;
-    public GameObject[] bannerObjects;
-    public bool runZvuk;
+    
+    public Transform topPoint; // Верхняя точка, откуда начинается движение щита
+    public Transform bottomPoint; // Нижняя точка, где заканчивается движение щита
+    public GameObject shield; // Объект щита, который будет перемещаться
+    public AudioClip chainSound; // Звук цепи
+    
+    public bool runZvuk; // Переменная для проверки, проигрывался ли звук
 
-    private AudioSource audioSource;
-    [SerializeField] private ScenesEnvironment m_SceneEnvironment;
+    private AudioSource audioSource; // Источник звука для проигрывания звуковых эффектов
+    private string sceneToLoadNext; // Имя следующей сцены для загрузки
 
+   
+    // Массив объектов баннера
+    [System.Serializable]
+    public class SceneBannerObject
+    {
+        public string sceneName; // имя сцены
+        public GameObject bannerObject; // объект баннера
+    }
+    public List<SceneBannerObject> sceneBanners = new List<SceneBannerObject>();
+    
+    
     private void Start()
     {
+        CityManager.Instance.RegisterBannerDropScript(this);//регестрируем код в менеджере сцен, чтобы он находил его
+        
         audioSource = GetComponent<AudioSource>();
         if (audioSource == null)
         {
-            audioSource = gameObject.AddComponent<AudioSource>();
+            audioSource = gameObject.AddComponent<AudioSource>(); // Если источник звука отсутствует, добавляем его
         }
-        if (m_SceneEnvironment == null)
-        {
-            m_SceneEnvironment = FindObjectOfType<ScenesEnvironment>();
-        }
-
-        runZvuk = false;
+        runZvuk = false; // По умолчанию звук не проигрывался
     }
 
     [PunRPC]
-    public void LowerShield()
+    public void LowerShield() // Опускание щита
     {
         if(runZvuk)
         {
-            StartCoroutine(RaiseBanner());
+            StartCoroutine(RaiseBanner()); // Если звук проигрывался, поднимаем баннер
         }
         else
         {
-            StartCoroutine(LowerAndActivateBanner());
+            StartCoroutine(LowerAndActivateBanner()); // Иначе опускаем щит и активируем баннер
         }
     }
 
-    private IEnumerator LowerAndActivateBanner()
+    private IEnumerator LowerAndActivateBanner() // Опускание щита и активация баннера
     {
+        // Расчет дистанции и времени для опускания щита
         float journeyLength = Vector3.Distance(topPoint.position, bottomPoint.position);
         float startTime = Time.time;
         float journeyTime = 6.0f;
 
-        audioSource.PlayOneShot(chainSound);
+        audioSource.PlayOneShot(chainSound); // Проигрываем звук цепи
 
         while (true)
         {
@@ -56,58 +67,111 @@ public class BannerDropScript : MonoBehaviourPunCallbacks
             float fracJourney = distCovered / journeyLength;
             shield.transform.position = Vector3.Lerp(topPoint.position, bottomPoint.position, fracJourney);
 
-            if (fracJourney >= 1) break;
+            if (fracJourney >= 1) break; // Если щит достиг нижней точки, прерываем цикл
 
             yield return null;
         }
 
-        ActivateBanner();
+        ActivateBanner(); // Активируем баннер
     }
 
-    private IEnumerator RaiseBanner()
+    private IEnumerator RaiseBanner() // Поднятие баннера
     {
+        // Расчет дистанции и времени для поднятия баннера
         float journeyLength = Vector3.Distance(bottomPoint.position, topPoint.position);
         float startTime = Time.time;
         float journeyTime = 6.0f;
-        audioSource.PlayOneShot(chainSound);
+        audioSource.PlayOneShot(chainSound); // Проигрываем звук цепи
         while (true)
         {
             float distCovered = (Time.time - startTime) * (journeyLength / journeyTime);
             float fracJourney = distCovered / journeyLength;
             shield.transform.position = Vector3.Lerp(bottomPoint.position, topPoint.position, fracJourney);
 
-            if (fracJourney >= 1) break;
+            if (fracJourney >= 1) break; // Если баннер достиг верхней точки, прерываем цикл
 
             yield return null;
         }
 
-        LoadNewScene();
+        //LoadNewScene(); // Загружаем новую сцену
+        
+        StartCoroutine(LoadNewSceneWithDelay()); 
     }
 
+    //активируем баннер
     private void ActivateBanner()
     {
-        bannerObjects[0].SetActive(true);
-        AudioSource bannerAudio = bannerObjects[0].GetComponent<AudioSource>();
-        if (bannerAudio != null)
+        //извлекаем имя сцены без города
+        string baseName = ExtractBaseSceneName(sceneToLoadNext);
+        GameObject targetBanner = null;
+
+        foreach (SceneBannerObject sbo in sceneBanners)
         {
-            bannerAudio.Play();
+            if (sbo.sceneName == baseName)
+            {
+                targetBanner = sbo.bannerObject;
+                break;
+            }
         }
-        StartCoroutine(LoadNewSceneAfterSound(bannerAudio.clip.length));
+
+        if (targetBanner != null)
+        {
+            targetBanner.SetActive(true);
+            AudioSource bannerAudio = targetBanner.GetComponent<AudioSource>();
+            if (bannerAudio != null)
+            {
+                bannerAudio.Play();
+                StartCoroutine(LoadNewSceneAfterSound(bannerAudio.clip.length));
+            }
+        }
     }
 
-    private IEnumerator LoadNewSceneAfterSound(float waitTime)
+    
+    //извленкаем имя сцены без города
+    private string ExtractBaseSceneName(string fullSceneName)
+    {
+        int underscoreIndex = fullSceneName.LastIndexOf('_');
+        if (underscoreIndex >= 0)
+        {
+            return fullSceneName.Substring(0, underscoreIndex);
+        }
+        return fullSceneName;
+    }
+
+
+
+    private IEnumerator LoadNewSceneAfterSound(float waitTime) // Загрузка новой сцены после проигрывания звука
     {
         yield return new WaitForSeconds(waitTime);
-        runZvuk = true;
-        TriggerLowerShield();
+        runZvuk = true; // Устанавливаем, что звук проигрался
+        TriggerLowerShield(); // Запускаем процесс опускания щита
     }
 
-    private void LoadNewScene()
+    /*private void LoadNewScene() // Загрузка новой сцены
     {
-        m_SceneEnvironment.ShowSkyLandWithPropMap();
+        if (!string.IsNullOrEmpty(sceneToLoadNext)) // Если имя сцены задано
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(sceneToLoadNext); // Загружаем сцену
+        }
+    }*/
+    
+    private IEnumerator LoadNewSceneWithDelay() 
+    {
+        yield return new WaitForSeconds(3f); // Задержка в 3 секунды
+
+        if (!string.IsNullOrEmpty(sceneToLoadNext)) 
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(sceneToLoadNext); // Загружаем сцену
+        }
+    }
+    
+
+    public void SetSceneToLoadNext(string sceneName) // Устанавливаем имя следующей сцены для загрузки
+    {
+        sceneToLoadNext = sceneName;
     }
 
-    public void TriggerLowerShield()
+    public void TriggerLowerShield() // Запуск опускания щита через Photon
     {
         photonView.RPC("LowerShield", RpcTarget.All);
     }

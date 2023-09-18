@@ -3,29 +3,69 @@ using UnityEngine.SceneManagement; // Для работы со сценами.
 
 public class CityManager : MonoBehaviour
 {
-    // Пусть это будет синглтон, чтобы вы могли легко получить доступ к нему из любой части вашего приложения.
     public static CityManager Instance;
+    public AppSettingSity appSettings; // Добавьте ссылку на ваш ScriptableObject где есть название города
+    
+    private bool isSceneLoading = false;//проверяем, загрузилась ли сцена или нет, чтобы не включать 2 одновременно
 
-    // Название текущего города.
-    public string CurrentCity = "Moscow"; // По умолчанию Moscow, но вы можете менять это значение в зависимости от билда.
-
+    public BannerDropScript bannerDropScript;// скрипт для баннера
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(this.gameObject); // Объект останется живым при переключении сцен.
+            DontDestroyOnLoad(this.gameObject);
         }
         else
         {
             Destroy(this.gameObject);
         }
     }
+    
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
 
-    // Функция для загрузки сцены на основе названия сцены и текущего города.
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        isSceneLoading = false;
+    }
+    
+    
+    public void RegisterBannerDropScript(BannerDropScript script)
+    {
+        bannerDropScript = script;
+    }
+    
+
     public void LoadCityScene(string baseSceneName)
     {
-        string sceneName = $"{baseSceneName}_{CurrentCity}";
-        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
+        if (isSceneLoading) return; // Если идет загрузка, прекратить выполнение
+
+        isSceneLoading = true; 
+
+        string sceneName = $"{baseSceneName}_{appSettings.CurrentCity}";
+
+      
+            // bannerDropScript = FindObjectOfType<BannerDropScript>();
+        if (bannerDropScript != null && baseSceneName != "Taverna")
+        {
+        
+            bannerDropScript.SetSceneToLoadNext(sceneName);
+            bannerDropScript.TriggerLowerShield();
+        }
+        else
+        {
+            
+            
+            UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
+        }
     }
+
 }

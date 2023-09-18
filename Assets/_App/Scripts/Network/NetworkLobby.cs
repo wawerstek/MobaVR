@@ -18,6 +18,7 @@ namespace MobaVR
         [SerializeField] private bool m_IsGetOnlineFromPlayerPrefs = true;
         [SerializeField] private bool m_GameOnline;
         [SerializeField] private string ipServ;
+        public AppSettingSity appSettings;
 
 
         private bool m_IsConnecting = false;
@@ -150,7 +151,7 @@ namespace MobaVR
             OnRoomDisconnected?.Invoke();
         }
 
-        public override void OnJoinedRoom()
+        /*public override void OnJoinedRoom()
         {
             base.OnJoinedRoom();
             Debug.Log(
@@ -159,7 +160,24 @@ namespace MobaVR
             {
                 PhotonNetwork.LoadLevel(m_SceneName);
             }
+        }*/
+        
+        public override void OnJoinedRoom()
+        {
+            base.OnJoinedRoom();
+            Debug.Log(
+                $"{name}: Launcher: OnJoinedRoom() called by PUN. Now this client is in a room.\nFrom here on, your game would be running.");
+
+            LoadCityScene(m_SceneName); // Здесь мы вызываем новый метод
         }
+
+        private void LoadCityScene(string baseSceneName)
+        {
+            string sceneName = $"{baseSceneName}_{appSettings.CurrentCity}"; 
+            PhotonNetwork.LoadLevel(sceneName);
+        }
+        
+        
 
         #endregion
     }
