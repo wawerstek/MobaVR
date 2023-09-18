@@ -79,7 +79,7 @@ public static class BuildCommon
         for (int i = 0; i < baseMapNames.Length; i++)
         {
             // Формируем полный путь к сцене с использованием базового имени карты и имени города.
-            scenes[i] = $"Assets/_App/Scenes/Sity/{cityName}/{baseMapNames[i]}_{cityName}.unity";
+            scenes[i] = $"Assets/_App/Scenes/City/{cityName}/{baseMapNames[i]}_{cityName}.unity";
         }
 
         return scenes;
