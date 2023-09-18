@@ -42,6 +42,11 @@ namespace MobaVR.ClassicModeStateMachine.Tower
             {
                 return;
             }
+            
+            if (m_Content.Sound != null)
+            {
+                m_Content.Sound.PlayWaveLose();
+            }
 
             m_IsPlay = false;
             m_Content.IsVictory = false;
@@ -59,6 +64,12 @@ namespace MobaVR.ClassicModeStateMachine.Tower
             if (m_CurrentPlayerCount >= m_Mode.Players.Count)
             {
                 m_Content.IsVictory = false;
+                
+                if (m_Content.Sound != null)
+                {
+                    m_Content.Sound.PlayWaveLose();
+                }
+                
                 m_Mode.CompleteRound();
                 m_IsPlay = false;
             }
@@ -73,6 +84,11 @@ namespace MobaVR.ClassicModeStateMachine.Tower
             if (PhotonNetwork.IsMasterClient)
             {
                 UpdatePlayers();
+
+                if (m_Content.Sound != null)
+                {
+                    m_Content.Sound.PlayWaveReady();
+                }
 
                 foreach (PlayerVR player in m_Mode.Players)
                 {

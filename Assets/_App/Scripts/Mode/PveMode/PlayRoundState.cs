@@ -34,12 +34,22 @@ namespace MobaVR.ClassicModeStateMachine.PVE
             if (!m_Content.Lich.IsLife)
             {
                 m_Mode.CompleteRound();
+                if (m_Content.Sound != null)
+                {
+                    m_Content.Sound.PlayVictory();
+                }
+                
                 return;
             }
 
             if (m_Mode.Players.Count(player => player.WizardPlayer.IsLife) <= 0)
             {
                 m_Mode.CompleteRound();
+                if (m_Content.Sound != null)
+                {
+                    m_Content.Sound.PlayLose();
+                }
+                
                 return;
             }
         }

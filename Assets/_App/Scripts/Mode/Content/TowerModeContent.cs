@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using MobaVR.Sound;
 using Photon.Pun;
 using UnityEngine;
 
@@ -7,6 +8,7 @@ namespace MobaVR.Content
     public class TowerModeContent : MonoBehaviourPun
     {
         [SerializeField] private TowerModeView m_ModeView;
+        [SerializeField] private TowerModeSound m_Sound;
 
         [Header("Tower")]
         [SerializeField] private List<ManualTraps> m_Traps = new List<ManualTraps>();
@@ -21,6 +23,7 @@ namespace MobaVR.Content
         private int m_CurrentWave = 0;
 
         public TowerModeView ModeView => m_ModeView;
+        public TowerModeSound Sound => m_Sound;
         public List<MonsterPointSpawner> Spawners => m_Spawners;
         public List<ManualTraps> Traps => m_Traps;
         public Lich Lich => m_Lich;

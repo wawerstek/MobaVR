@@ -29,6 +29,11 @@ namespace MobaVR.ClassicModeStateMachine.PVP
             if (PhotonNetwork.IsMasterClient)
             {
                 UpdatePlayers();
+                
+                if (m_Content.PvpModeSound != null)
+                {
+                    m_Content.PvpModeSound.PlayStartRound();
+                }
             }
 
             m_IsTimeout = false;
@@ -98,6 +103,12 @@ namespace MobaVR.ClassicModeStateMachine.PVP
                 {
                     m_Mode.RedTeam.Score++;
                     m_Content.ModeView.RedTeamScoreView.SetScore(m_Mode.RedTeam.Score);
+                    
+                    if (m_Content.PvpModeSound != null)
+                    {
+                        m_Content.PvpModeSound.PlayRedVictory();
+                    }
+                    
                     m_Mode.CompleteRound();
                 }
 
@@ -105,6 +116,12 @@ namespace MobaVR.ClassicModeStateMachine.PVP
                 {
                     m_Mode.BlueTeam.Score++;
                     m_Content.ModeView.BlueTeamScoreView.SetScore(m_Mode.BlueTeam.Score);
+                    
+                    if (m_Content.PvpModeSound != null)
+                    {
+                        m_Content.PvpModeSound.PlayBlueVictory();
+                    }
+                    
                     m_Mode.CompleteRound();
                 }
 
@@ -115,6 +132,11 @@ namespace MobaVR.ClassicModeStateMachine.PVP
 
                     m_Mode.BlueTeam.Score++;
                     m_Content.ModeView.BlueTeamScoreView.SetScore(m_Mode.BlueTeam.Score);
+                    
+                    if (m_Content.PvpModeSound != null)
+                    {
+                        m_Content.PvpModeSound.PlayCompleteRound();
+                    }
                     
                     m_Mode.CompleteRound();
                 }

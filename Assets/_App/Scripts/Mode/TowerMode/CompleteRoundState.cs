@@ -30,10 +30,20 @@ namespace MobaVR.ClassicModeStateMachine.Tower
                 m_Content.CurrentWave++;
                 if (m_Content.CurrentWave < m_Content.Waves.Count)
                 {
+                    if (m_Content.Sound != null)
+                    {
+                        m_Content.Sound.PlayWaveVictory();
+                    }
+                    
                     m_Mode.ReadyRound();
                 }
                 else
                 {
+                    if (m_Content.Sound != null)
+                    {
+                        m_Content.Sound.PlayCompleteMode();
+                    }
+                    
                     m_Mode.CompleteMode();
                 }
             }
