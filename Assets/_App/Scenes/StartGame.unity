@@ -1205,7 +1205,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &205363490
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1301,16 +1301,16 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 716183764}
-        m_TargetAssemblyTypeName: Adminka, Assembly-CSharp
-        m_MethodName: ShowNecropolisMap
-        m_Mode: 1
+      - m_Target: {fileID: 396286247}
+        m_TargetAssemblyTypeName: CityManager, Assembly-CSharp
+        m_MethodName: LoadCityScene
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Lobby
+          m_StringArgument: Necropolis
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!222 &205363493
@@ -1347,7 +1347,7 @@ MonoBehaviour:
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
-            m_StringArgument: 
+            m_StringArgument: Necropolis
             m_BoolArgument: 0
           m_CallState: 2
 --- !u!1 &206687212
@@ -2635,7 +2635,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &288685794
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4213,6 +4213,52 @@ CapsuleCollider:
   m_Height: 0.035
   m_Direction: 2
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &396286246
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 396286248}
+  - component: {fileID: 396286247}
+  m_Layer: 0
+  m_Name: SityManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &396286247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 396286246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e93729b69dbdcf74182a5f432473eb13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  appSettings: {fileID: 11400000, guid: 8782f1d9f25aee2488c8c65e55d9ad21, type: 2}
+  bannerDropScript: {fileID: 0}
+--- !u!4 &396286248
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 396286246}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.0328538, y: 1.4179214, z: -2.7287972}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &413768455
 GameObject:
   m_ObjectHideFlags: 0
@@ -6561,7 +6607,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3566a9917494fb419808b8ed6bad39a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TestAndroid: 1
+  TestAndroid: 0
   PlayerVR: {fileID: 2683195716764533364}
   PlayerPC: {fileID: 716183762}
   PlayerCrate: 0
@@ -9046,7 +9092,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 902007665}
-  m_Enabled: 0
+  m_Enabled: 1
 --- !u!20 &902007668
 Camera:
   m_ObjectHideFlags: 0
@@ -13891,7 +13937,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1450984899
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13982,21 +14028,21 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Highlighted
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 1450984900}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 716183764}
-        m_TargetAssemblyTypeName: Adminka, Assembly-CSharp
-        m_MethodName: ShowDungeonMap
-        m_Mode: 1
+      - m_Target: {fileID: 396286247}
+        m_TargetAssemblyTypeName: CityManager, Assembly-CSharp
+        m_MethodName: LoadCityScene
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Lobby
+          m_StringArgument: Dungeon
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!222 &1450984902
@@ -14033,7 +14079,7 @@ MonoBehaviour:
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
-            m_StringArgument: 
+            m_StringArgument: Dungeon
             m_BoolArgument: 0
           m_CallState: 2
 --- !u!225 &1450984904
@@ -14043,7 +14089,7 @@ CanvasGroup:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1450984898}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Alpha: 0.2
   m_Interactable: 1
   m_BlocksRaycasts: 1
@@ -17646,7 +17692,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1929760948
 RectTransform:
   m_ObjectHideFlags: 0
@@ -17742,16 +17788,16 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 716183764}
-        m_TargetAssemblyTypeName: Adminka, Assembly-CSharp
-        m_MethodName: ShowTavernMap
-        m_Mode: 1
+      - m_Target: {fileID: 396286247}
+        m_TargetAssemblyTypeName: CityManager, Assembly-CSharp
+        m_MethodName: LoadCityScene
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Lobby
+          m_StringArgument: Taverna
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!222 &1929760951
@@ -17788,7 +17834,7 @@ MonoBehaviour:
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
-            m_StringArgument: 
+            m_StringArgument: Taverna
             m_BoolArgument: 0
           m_CallState: 2
 --- !u!1 &1949911350
@@ -17884,7 +17930,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1995806882
 RectTransform:
   m_ObjectHideFlags: 0
@@ -17980,16 +18026,16 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 716183764}
-        m_TargetAssemblyTypeName: Adminka, Assembly-CSharp
-        m_MethodName: ShowTowerMap
-        m_Mode: 1
+      - m_Target: {fileID: 396286247}
+        m_TargetAssemblyTypeName: CityManager, Assembly-CSharp
+        m_MethodName: LoadCityScene
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Lobby
+          m_StringArgument: Tower
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!222 &1995806885
@@ -18026,7 +18072,7 @@ MonoBehaviour:
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
-            m_StringArgument: 
+            m_StringArgument: Tower
             m_BoolArgument: 0
           m_CallState: 2
 --- !u!1 &2002996929
@@ -18048,7 +18094,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2002996930
 RectTransform:
   m_ObjectHideFlags: 0
@@ -18144,16 +18190,16 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 716183764}
-        m_TargetAssemblyTypeName: Adminka, Assembly-CSharp
-        m_MethodName: ShowSkyLandWithPropMap
-        m_Mode: 1
+      - m_Target: {fileID: 396286247}
+        m_TargetAssemblyTypeName: CityManager, Assembly-CSharp
+        m_MethodName: LoadCityScene
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Lobby
+          m_StringArgument: SkyArena
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!222 &2002996933
@@ -18190,7 +18236,7 @@ MonoBehaviour:
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
-            m_StringArgument: 
+            m_StringArgument: SkyArena
             m_BoolArgument: 0
           m_CallState: 2
 --- !u!1 &2013162915
