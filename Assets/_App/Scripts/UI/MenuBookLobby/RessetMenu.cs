@@ -9,12 +9,19 @@ public class RessetMenu : MonoBehaviour
     void Start()
     {
         // ��� ������ ������� ������ ��������
+        
+    }
+    
+    void OnEnable()
+    {
+        // ��� ������ ������� ������ ��������
         StartCoroutine(ActivateAfterDelay());
     }
+    
 
     private IEnumerator ActivateAfterDelay()
     {
-        yield return new WaitForSeconds(45); // ���� 5 ������
+        yield return new WaitForSeconds(5); // ���� 5 ������
         objectToActivate.SetActive(true);   // ���������� ������
     }
 }
