@@ -108,7 +108,7 @@ public class BannerDropScript : MonoBehaviourPunCallbacks
             yield return null;
         }
 
-        //LoadNewScene(); // Загружаем новую сцену
+   
         
         StartCoroutine(LoadNewSceneWithDelay()); 
     }
@@ -116,7 +116,7 @@ public class BannerDropScript : MonoBehaviourPunCallbacks
     //активируем баннер
     private void ActivateBanner()
     {
-        //извлекаем имя сцены без города
+        // извлекаем имя сцены без города
         string baseName = ExtractBaseSceneName(sceneToLoadNext);
         GameObject targetBanner = null;
 
@@ -136,10 +136,18 @@ public class BannerDropScript : MonoBehaviourPunCallbacks
             if (bannerAudio != null)
             {
                 bannerAudio.Play();
+                StartCoroutine(DeactivateBannerAfterSound(targetBanner, bannerAudio.clip.length));
                 StartCoroutine(LoadNewSceneAfterSound(bannerAudio.clip.length));
             }
         }
     }
+
+    private IEnumerator DeactivateBannerAfterSound(GameObject banner, float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        banner.SetActive(false);
+    }
+
 
     
     //извленкаем имя сцены без города
@@ -162,13 +170,7 @@ public class BannerDropScript : MonoBehaviourPunCallbacks
         TriggerLowerShield(); // Запускаем процесс опускания щита
     }
 
-    /*private void LoadNewScene() // Загрузка новой сцены
-    {
-        if (!string.IsNullOrEmpty(sceneToLoadNext)) // Если имя сцены задано
-        {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(sceneToLoadNext); // Загружаем сцену
-        }
-    }*/
+
     
     private IEnumerator LoadNewSceneWithDelay() 
     {

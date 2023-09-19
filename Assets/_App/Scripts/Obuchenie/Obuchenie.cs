@@ -100,7 +100,8 @@ public class Obuchenie : MonoBehaviour
     public void RessetPlayerPoint()
     {
         Point.transform.SetParent(Player.transform);
-        Point.transform.localPosition = Vector3.zero;
+            // Point.transform.localPosition = Vector3.zero;
+            Point.transform.localPosition = new Vector3(0, -0.4f, 0);
     }
     
     //обнуляем книгу
