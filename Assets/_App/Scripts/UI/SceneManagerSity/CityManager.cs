@@ -57,8 +57,8 @@ public class CityManager : MonoBehaviour
         if (bannerDropScript != null && baseSceneName != "Taverna")
         {
         
-            bannerDropScript.SetSceneToLoadNext(sceneName);
-            bannerDropScript.TriggerLowerShield();
+            //bannerDropScript.SetSceneToLoadNext(sceneName);
+            bannerDropScript.TriggerLowerShield(sceneName);
         }
         else
         {
