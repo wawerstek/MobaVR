@@ -117,6 +117,18 @@ namespace BNG {
                 }
             }
         }
+        
+        public void RemoveShift() {
+            UseShift = false;
+
+            foreach(var key in KeyboardKeys) {
+                if(key != null) {
+                    key.ToggleShift();
+                }
+            }
+        }
+        
+        
 
         IEnumerator IncreaseInputFieldCareteRoutine() {
             yield return new WaitForEndOfFrame();
