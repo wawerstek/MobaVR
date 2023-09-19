@@ -353,7 +353,7 @@ namespace MobaVR
             if (bannerController != null)
             {
                 Debug.Log("Запускаем функцию в другом скрипте");
-                bannerController.TriggerLowerShield();
+               // bannerController.TriggerLowerShield();
             }
             else
             {

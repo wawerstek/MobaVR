@@ -39,7 +39,7 @@ public class BannerDropScript : MonoBehaviourPunCallbacks
         runZvuk = false; // По умолчанию звук не проигрывался
     }
 
-    [PunRPC]
+    /*[PunRPC]
     public void LowerShield() // Опускание щита
     {
         if(runZvuk)
@@ -50,7 +50,7 @@ public class BannerDropScript : MonoBehaviourPunCallbacks
         {
             StartCoroutine(LowerAndActivateBanner()); // Иначе опускаем щит и активируем баннер
         }
-    }
+    }*/
     
     [PunRPC]
     public void LowerShieldBySceneName(string sceneName) // Опускание щита
@@ -146,6 +146,7 @@ public class BannerDropScript : MonoBehaviourPunCallbacks
     {
         yield return new WaitForSeconds(waitTime);
         banner.SetActive(false);
+        
     }
 
 
@@ -167,7 +168,8 @@ public class BannerDropScript : MonoBehaviourPunCallbacks
     {
         yield return new WaitForSeconds(waitTime);
         runZvuk = true; // Устанавливаем, что звук проигрался
-        TriggerLowerShield(); // Запускаем процесс опускания щита
+        StartCoroutine(RaiseBanner()); // Если звук проигрывался, поднимаем баннер
+            //TriggerLowerShield(); // Запускаем процесс опускания щита
     }
 
 
@@ -188,10 +190,10 @@ public class BannerDropScript : MonoBehaviourPunCallbacks
         sceneToLoadNext = sceneName;
     }
 
-    public void TriggerLowerShield() // Запуск опускания щита через Photon
+    /*public void TriggerLowerShield() // Запуск опускания щита через Photon
     {
         photonView.RPC("LowerShield", RpcTarget.All);
-    }
+    }*/
     
     public void TriggerLowerShield(string sceneName) // Запуск опускания щита через Photon
     {
