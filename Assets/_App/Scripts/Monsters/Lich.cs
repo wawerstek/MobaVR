@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using AmazingAssets.AdvancedDissolve;
 using DG.Tweening;
 using Photon.Pun;
@@ -43,6 +44,7 @@ namespace MobaVR
 
         [SerializeField] private bool m_CanCast = true;
         [SerializeField] private float m_Cooldown = 20f;
+        [SerializeField] private bool m_IsPlayerTarget = false;
         [SerializeField] private List<LichSpell> m_LichSpells = new();
         [SerializeField] private List<Transform> m_SpellPoints = new();
 
@@ -197,11 +199,43 @@ namespace MobaVR
         {
             if (PhotonNetwork.IsMasterClient && m_SpellPoints.Count > 0 && IsLife && m_IsActive)
             {
-                int pointPosition = Random.Range(0, m_SpellPoints.Count);
-                photonView.RPC(nameof(RpcCast_Monster), RpcTarget.All, pointPosition);
-                
+                if (!m_IsPlayerTarget)
+                {
+                    int pointPosition = Random.Range(0, m_SpellPoints.Count);
+                    photonView.RPC(nameof(RpcCast_Monster), RpcTarget.All, pointPosition);
+                }
+                else
+                {
+                    WizardPlayer wizardPlayer = FindPlayerTarget();
+                    if (wizardPlayer != null)
+                    {
+                        Vector3 targetPosition = wizardPlayer.PointPlayer.position;
+                        if (m_SpellPoints.Count > 0)
+                        {
+                            targetPosition.y = m_SpellPoints[0].position.y;
+                        }
+                        
+                        photonView.RPC(nameof(RpcCastPoint_Monster), RpcTarget.All, targetPosition);
+                    }
+                }
+
                 ReadyToCast();
             }
+        }
+        
+        private WizardPlayer FindPlayerTarget()
+        {
+            WizardPlayer[] players = FindObjectsOfType<WizardPlayer>();
+            if (players.Length > 0)
+            {
+                WizardPlayer[] lifePlayers = players.Where(player => player.IsLife).ToArray();
+                if (lifePlayers.Length > 0)
+                {
+                    return lifePlayers[Random.Range(0, lifePlayers.Length)];
+                }
+            }
+
+            return null;
         }
 
         [PunRPC]
@@ -214,11 +248,27 @@ namespace MobaVR
             }
 
             m_Animator.SetTrigger("cast");
-            
+
             LichSpell lichSpell = m_LichSpells[0];
             lichSpell.gameObject.SetActive(true);
             lichSpell.transform.position = pointTransform.position;
             //lichSpell.Activate();
+            lichSpell.RpcActivate();
+        }
+        
+        [PunRPC]
+        public void RpcCastPoint_Monster(Vector3 pointPosition)
+        {
+            if (m_LichSpells.Count == 0)
+            {
+                return;
+            }
+
+            m_Animator.SetTrigger("cast");
+
+            LichSpell lichSpell = m_LichSpells[0];
+            lichSpell.gameObject.SetActive(true);
+            lichSpell.transform.position = pointPosition;
             lichSpell.RpcActivate();
         }
 
@@ -236,7 +286,7 @@ namespace MobaVR
         public void RpcDeactivate_Monster()
         {
             CancelInvoke(nameof(Cast));
-            
+
             m_IsActive = false;
 
             m_CurrentHealth = m_Health;
@@ -245,7 +295,7 @@ namespace MobaVR
 
             m_BodyCollider.enabled = true;
             m_MonsterView.SetEnabled(true);
-            
+
             m_Animator.SetTrigger("reset");
         }
 
