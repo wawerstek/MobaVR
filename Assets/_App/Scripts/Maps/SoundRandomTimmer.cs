@@ -24,7 +24,14 @@ public class SoundRandomTimmer : MonoBehaviour
         // Запустите метод PlayRandomSound с задержкой
         if (isPlayOnStart)
         {
-            Invoke("PlayRandomSound", initialDelay);
+            if (useRandom)
+            {
+                Invoke("PlayRandomSound", initialDelay);
+            }
+            else
+            {
+                Invoke("PlayOneSound", initialDelay);
+            }
         }
     }
 

@@ -306,7 +306,11 @@ namespace MobaVR
         private void ResetModes()
         {
             //m_LichMode.CompleteMode();
-            m_Mode.DeactivateMode();
+            if (m_Mode != null)
+            {
+                m_Mode.DeactivateMode();
+            }
+
             //m_Environment.ShowDefaultPvPMap();
             m_IsPvPMode = true;
         }

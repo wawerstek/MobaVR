@@ -26,6 +26,8 @@ namespace MobaVR.ClassicModeStateMachine.PVP
                     m_Content.PvpModeSound.PlayStartRound();
                 }
             }
+            
+            m_Content.KillZoneManager.Show();
         }
 
         public override void Update()
@@ -69,6 +71,7 @@ namespace MobaVR.ClassicModeStateMachine.PVP
 
         public override void Exit()
         {
+            m_Content.KillZoneManager.Hide();
         }
     }
 }
