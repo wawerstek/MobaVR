@@ -14,8 +14,8 @@ public class RusEng : MonoBehaviour
     void Start()
     {
       LanguageManager.Instance.LanguageChanged += UpdateText;
+      UpdateText();
 
-        
     }
 
 
