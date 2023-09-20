@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using Photon.Realtime;
 using ExitGames.Client.Photon;
 using Photon.Pun;
@@ -19,6 +20,8 @@ namespace MobaVR
 
         private static short size =
                 sizeof(short) * 2 + // HitActionType + TeamType
+                //sizeof(bool) * 2 + // CanApplyBySelf + CanApplyForTeammates
+                sizeof(short) * 2 + // CanApplyBySelf + CanApplyForTeammates
                 sizeof(float) * 1 + // Amount
                 sizeof(float) * 3 + // Vector3 Position
                 sizeof(int) * 1 * 3 // Player + PhotonViewOwner + PhotonView
@@ -34,6 +37,10 @@ namespace MobaVR
                 byte[] bytes = m_MemData;
                 int index = 0;
                 Protocol.Serialize((short)hitData.Action, bytes, ref index);
+                
+                Protocol.Serialize((short)(hitData.CanApplyBySelf ? 1 : 0), bytes, ref index);
+                Protocol.Serialize((short)(hitData.CanApplyForTeammates ? 1 : 0), bytes, ref index);
+                
                 Protocol.Serialize(hitData.Amount, bytes, ref index);
                 Protocol.Serialize(hitData.Position.x, bytes, ref index);
                 Protocol.Serialize(hitData.Position.y, bytes, ref index);
@@ -92,7 +99,13 @@ namespace MobaVR
 
                 Protocol.Deserialize(out short action, m_MemData, ref off);
                 hitData.Action = (HitActionType)action;
+                
+                Protocol.Deserialize(out short canApplyBySelf, m_MemData, ref off);
+                hitData.CanApplyBySelf = canApplyBySelf == 1;
 
+                Protocol.Deserialize(out short canApplyForTeammates, m_MemData, ref off);
+                hitData.CanApplyForTeammates = canApplyForTeammates == 1;
+                
                 Protocol.Deserialize(out hitData.Amount, m_MemData, ref off);
 
                 Vector3 position;
@@ -133,6 +146,8 @@ namespace MobaVR
                 
                 Protocol.Deserialize(out int idPhotonView, m_MemData, ref off);
                 hitData.PhotonView = idPhotonView > 0 ? PhotonView.Find(idPhotonView) : null;
+                
+                hitData.DateTime = DateTime.Now;
             }
 
             return hitData;

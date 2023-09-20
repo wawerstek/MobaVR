@@ -13,6 +13,8 @@ namespace MobaVR
         public HitActionType Action = HitActionType.Damage;
         public float Amount = 0;
         public Vector3 Position = Vector3.zero;
+        public bool CanApplyBySelf = false;
+        public bool CanApplyForTeammates = false;
 
         #endregion
 
@@ -35,6 +37,12 @@ namespace MobaVR
 
         #endregion
 
+        #region Time
+
+        public long HitDate = 0;
+        public DateTime DateTime;
+
+        #endregion
 
     }
 }
