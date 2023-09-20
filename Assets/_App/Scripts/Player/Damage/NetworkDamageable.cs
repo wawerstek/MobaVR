@@ -4,6 +4,7 @@ using Photon.Pun;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
+using Random = UnityEngine.Random;
 
 namespace MobaVR
 {
@@ -142,6 +143,20 @@ namespace MobaVR
                 //Player = PhotonNetwork.LocalPlayer,
                 PhotonOwner = m_PhotonView,
                 Amount = 50f,
+            };
+
+            Hit(hitData);
+        }
+        
+        [ContextMenu("HitRandom")]
+        private void HitRandom_Debug()
+        {
+            HitData hitData = new HitData()
+            {
+                Action = HitActionType.Damage,
+                //Player = PhotonNetwork.LocalPlayer,
+                PhotonOwner = m_PhotonView,
+                Amount = Random.Range(1, 60),
             };
 
             Hit(hitData);
