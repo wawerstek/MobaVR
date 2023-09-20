@@ -22,6 +22,7 @@ namespace MobaVR
         [SerializeField] private PlayerMode m_PlayerMode;
         [SerializeField] private Teammate m_Teammate;
         [SerializeField] private DieView m_DieView;
+        [SerializeField] private Damageable m_Damageable;
         [SerializeField] private CharacterIK m_CharacterIK;
         [SerializeField] private SkinCollection m_SkinCollection;
 
@@ -64,6 +65,7 @@ namespace MobaVR
         public InputVR InputVR => m_InputVR;
         public Team Team => m_Team;
         public PlayerMode PlayerMode => m_PlayerMode;
+        public Damageable Damageable => m_Damageable;
         public WizardPlayer WizardPlayer => m_WizardPlayer;
         public DieView DieView => m_DieView;
         public SkinCollection SkinCollection => m_SkinCollection;
@@ -98,6 +100,11 @@ namespace MobaVR
             if (m_PlayerMode == null)
             {
                 TryGetComponent(out m_PlayerMode);
+            }
+            
+            if (m_Damageable == null)
+            {
+                TryGetComponent(out m_Damageable);
             }
             
             /*

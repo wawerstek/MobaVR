@@ -986,27 +986,34 @@ namespace MobaVR
         //public void Hit(HitData hitData)
         protected void Hit(HitData hitData)
         {
-            if (hitData.PlayerVR != null && hitData.PlayerVR.WizardPlayer == this)
+            if (!hitData.CanApplyBySelf)
             {
-                return;
+                if (hitData.PlayerVR != null && hitData.PlayerVR.WizardPlayer == this)
+                {
+                    return;
+                }
+                
+                if (hitData.Player != null && hitData.Player.ActorNumber == photonView.Owner.ActorNumber)
+                {
+                    return;
+                }
             }
 
-            if (hitData.Player != null && hitData.Player.ActorNumber == photonView.Owner.ActorNumber)
+            if (!hitData.CanApplyForTeammates)
             {
-                return;
+                if (hitData.TeamType == m_Teammate.TeamType)
+                {
+                    return;
+                }
+                
+                if ((hitData.TeamType == TeamType.RED && m_Teammate.IsRed)
+                    || (hitData.TeamType == TeamType.BLUE && !m_Teammate.IsRed))
+                {
+                    return;
+                }
             }
 
-            if (hitData.TeamType == m_Teammate.TeamType)
-            {
-                return;
-            }
-
-            if ((hitData.TeamType == TeamType.RED && m_Teammate.IsRed)
-                || (hitData.TeamType == TeamType.BLUE && !m_Teammate.IsRed))
-            {
-                return;
-            }
-
+            // For PVE mode
             if (hitData.TeamType != TeamType.OTHER && !m_State.StateSo.CanGetDamageFromEnemyPlayers)
             {
                 return;
