@@ -28026,6 +28026,75 @@ Transform:
   m_Father: {fileID: 6104381726352823957}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5990724806499562154
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2144326183564999101}
+  - component: {fileID: 5529573649154983280}
+  m_Layer: 0
+  m_Name: VoiceFire
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2144326183564999101
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5990724806499562154}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 932873993356830364}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5529573649154983280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5990724806499562154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 995fe502157ed4444b2f3da32a190f3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_BlockingSpells: []
+  m_SpellName: Fire Voice
+  m_CanInterrupted: 0
+  m_UseCooldown: 1
+  m_CooldownTime: 15
+  m_IsPerformed: 0
+  m_PhotonView: {fileID: 1988228305405573867}
+  m_IsInCooldown: 0
+  m_CurrentTime: 0
+  m_IsAvailable: 1
+  m_BlockingInputs: []
+  m_SpellHandType: 2
+  m_CastInput: {fileID: -502701476867438357, guid: e39f4b35a6db18348b41eb0262520e69,
+    type: 3}
+  m_UseActivateButton: 1
+  m_Duration: 3
+  m_MicrophoneInput: {fileID: 8434122986965353874}
+  m_LoudnessSensibility: 100
+  m_Threshold: 0.1
+  m_MinVoiceValue: 10
+  m_CurrentLoudness: 0
+  m_DamageDelay: 0.25
+  m_OwnerDamage: 5
+  m_TeamDamage: 2
+  m_EnemyDamage: 5
 --- !u!1 &6010941071971145133
 GameObject:
   m_ObjectHideFlags: 0
@@ -36694,6 +36763,7 @@ MonoBehaviour:
   m_PlayerMode: {fileID: 2951710517302752507}
   m_Teammate: {fileID: 4524219345660546153}
   m_DieView: {fileID: 5619093549321284910}
+  m_Damageable: {fileID: 6396726963003723858}
   m_CharacterIK: {fileID: 7702456167767660258}
   m_SkinCollection: {fileID: 3131115738554725555}
   m_BodyTarget: {fileID: 8214592399591671613}
@@ -36976,6 +37046,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_HitCooldown: 20
+  m_Hits: []
 --- !u!1 &7702456167767660269
 GameObject:
   m_ObjectHideFlags: 0
@@ -60608,6 +60679,21 @@ PrefabInstance:
       propertyPath: m_PlayerVR
       value: 
       objectReference: {fileID: 7702456167165704557}
+    - target: {fileID: 3520177445585439663, guid: f9109c656482e594395ec2845ccb6c06,
+        type: 3}
+      propertyPath: m_Spells.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3520177445585439663, guid: f9109c656482e594395ec2845ccb6c06,
+        type: 3}
+      propertyPath: m_Spells.Array.data[1].Priority
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 3520177445585439663, guid: f9109c656482e594395ec2845ccb6c06,
+        type: 3}
+      propertyPath: m_Spells.Array.data[1].SpellBehaviour
+      value: 
+      objectReference: {fileID: 5529573649154983280}
     - target: {fileID: 3810982750819172733, guid: f9109c656482e594395ec2845ccb6c06,
         type: 3}
       propertyPath: m_PhotonView
@@ -61197,6 +61283,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6914e6cbfc064174681e7d4acfa5cbfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &932873993356830364 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6933924577005221029, guid: f9109c656482e594395ec2845ccb6c06,
+    type: 3}
+  m_PrefabInstance: {fileID: 7838519953707029049}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1579281894112966348 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8728742291273671925, guid: f9109c656482e594395ec2845ccb6c06,
