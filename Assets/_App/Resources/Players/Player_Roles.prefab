@@ -32646,6 +32646,74 @@ MonoBehaviour:
           m_StringArgument: XR Demo
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!1 &6764050209324761866
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8264596557244096069}
+  - component: {fileID: 8940726479977590764}
+  m_Layer: 0
+  m_Name: VoiceFog
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8264596557244096069
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6764050209324761866}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1028874029318453002}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8940726479977590764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6764050209324761866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac4b2d728327471da05367ebf058ec4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_BlockingSpells: []
+  m_SpellName: Fog Voice
+  m_CanInterrupted: 0
+  m_UseCooldown: 1
+  m_CooldownTime: 15
+  m_IsPerformed: 0
+  m_PhotonView: {fileID: 1988228305405573867}
+  m_IsInCooldown: 0
+  m_CurrentTime: 0
+  m_IsAvailable: 1
+  m_BlockingInputs: []
+  m_SpellHandType: 2
+  m_CastInput: {fileID: -502701476867438357, guid: e39f4b35a6db18348b41eb0262520e69,
+    type: 3}
+  m_UseActivateButton: 1
+  m_Duration: 5
+  m_MicrophoneInput: {fileID: 8434122986965353874}
+  m_LoudnessSensibility: 100
+  m_Threshold: 0.1
+  m_MinVoiceValue: 10
+  m_CurrentLoudness: 0
+  m_FogSpell: {fileID: 5509168810726322704, guid: 13ff08a0e5c811a41936f720c35b7594,
+    type: 3}
+  m_FogDelay: 6
 --- !u!1 &6770305408825022181
 GameObject:
   m_ObjectHideFlags: 0
@@ -60563,6 +60631,21 @@ PrefabInstance:
       propertyPath: m_PlayerVR
       value: 
       objectReference: {fileID: 7702456167165704557}
+    - target: {fileID: 1001745908999066867, guid: f9109c656482e594395ec2845ccb6c06,
+        type: 3}
+      propertyPath: m_Spells.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1001745908999066867, guid: f9109c656482e594395ec2845ccb6c06,
+        type: 3}
+      propertyPath: m_Spells.Array.data[1].Priority
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1001745908999066867, guid: f9109c656482e594395ec2845ccb6c06,
+        type: 3}
+      propertyPath: m_Spells.Array.data[1].SpellBehaviour
+      value: 
+      objectReference: {fileID: 8940726479977590764}
     - target: {fileID: 1033514958547817822, guid: f9109c656482e594395ec2845ccb6c06,
         type: 3}
       propertyPath: m_PhotonView
@@ -61415,6 +61498,12 @@ MonoBehaviour:
 --- !u!4 &932873993356830364 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6933924577005221029, guid: f9109c656482e594395ec2845ccb6c06,
+    type: 3}
+  m_PrefabInstance: {fileID: 7838519953707029049}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1028874029318453002 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7101982155062011187, guid: f9109c656482e594395ec2845ccb6c06,
     type: 3}
   m_PrefabInstance: {fileID: 7838519953707029049}
   m_PrefabAsset: {fileID: 0}
