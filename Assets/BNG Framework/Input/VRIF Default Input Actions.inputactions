@@ -243,6 +243,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Menu_Hold",
+                    "type": "Button",
+                    "id": "96a6e8ac-3ed0-4433-b70e-a824fd1a5393",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Hold(duration=2)",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "SwitchMode",
                     "type": "Button",
                     "id": "b9dee6b9-f398-411e-a750-5d7522f3948f",
@@ -743,6 +752,39 @@
                     "action": "ActivateGrabCombo",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "4551b2d1-f8c4-467d-a76c-8e55725b4ce3",
+                    "path": "<XRController>{LeftHand}/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "Menu_Hold",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0f96acea-0035-450a-ad26-e845a1fbb02f",
+                    "path": "<XRController>{LeftHand}/menu",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Menu_Hold",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b407cc29-1a4f-4af3-947b-c5aa00b4597e",
+                    "path": "<Keyboard>/period",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Menu_Hold",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
