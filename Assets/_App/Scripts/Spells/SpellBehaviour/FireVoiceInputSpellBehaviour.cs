@@ -28,6 +28,12 @@ namespace MobaVR
         private void Awake()
         {
             m_GameSession = FindObjectOfType<ClassicGameSession>();
+        }
+
+        public override void Init(SpellHandler spellHandler, PlayerVR playerVR)
+        {
+            base.Init(spellHandler, playerVR);
+            
             m_OwnerHitData = GetHitData(m_OwnerDamage);
             m_TeamHitData = GetHitData(m_TeamDamage);
             m_EnemyHitData = GetHitData(m_EnemyDamage);
@@ -56,7 +62,11 @@ namespace MobaVR
                 {
                     if (player == m_PlayerVR)
                     {
-                        m_PlayerVR.Damageable.Hit(m_OwnerHitData);
+                        // TODO: Маг убить себя не может
+                        if (m_PlayerVR.WizardPlayer.CurrentHealth > m_OwnerDamage)
+                        {
+                            m_PlayerVR.Damageable.Hit(m_OwnerHitData);
+                        }
                     }
                     else
                     {
