@@ -11,6 +11,7 @@ namespace MobaVR
         public int MaxCountMonster = -1;
         public float DelayBetweenMonster = 10f;
         public float DelayBetweenMaxMonster = 5f;
+        public float StartDelay = 0f;
         public bool CanSpawn = true;
 
         public void Init()
@@ -20,6 +21,7 @@ namespace MobaVR
             PointSpawner.DelayBetweenMonster = DelayBetweenMonster;
             PointSpawner.DelayBetweenMaxMonster = DelayBetweenMaxMonster;
             PointSpawner.CanSpawn = CanSpawn;
+            PointSpawner.StartDelay = StartDelay;
         }
     }
 }

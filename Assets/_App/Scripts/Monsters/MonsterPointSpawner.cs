@@ -16,6 +16,7 @@ namespace MobaVR
         [SerializeField] private ParticleSystem m_CreatedEffect;
         [SerializeField] protected TargetType m_TargetType = TargetType.PLAYER;
 
+        public float StartDelay = 0;
         public int MaxTotalCountMonster = -1;
         public int MaxCountMonster = -1;
         public float DelayBetweenMonster = 10f;
@@ -70,7 +71,8 @@ namespace MobaVR
                 //ClearMonsters();
 
                 CanSpawn = true;
-                StartCoroutine(GenerateMonsterWave(0f));
+                //StartCoroutine(GenerateMonsterWave(0f));
+                StartCoroutine(GenerateMonsterWave(StartDelay));
             }
         }
 
