@@ -8,7 +8,9 @@ namespace MobaVR
     public class PlayerView : MonoBehaviourPunCallbacks
     {
         [SerializeField] private TextMeshProUGUI m_Nickname;
-        [SerializeField] private ProgressBar m_ProgressBar;
+        [SerializeField] private ProgressBar m_HealthProgressBar;
+        [SerializeField] private ProgressBar m_ManaProgressBar;
+        [SerializeField] private ProgressBar m_VoiceProgressBar;
         [SerializeField] private Transform m_PointPlayer;
 
         [SerializeField] private PlayerVR playerVR;
@@ -56,6 +58,23 @@ namespace MobaVR
                 if (Camera.main != null)
                 {
                     transform.LookAt(Camera.main.transform);
+                }
+
+                /*
+                if (m_HealthProgressBar != null)
+                {
+                    m_HealthProgressBar.gameObject.SetActive(false);
+                }
+                */
+                
+                if (m_ManaProgressBar != null)
+                {
+                    m_ManaProgressBar.gameObject.SetActive(false);
+                }
+                
+                if (m_VoiceProgressBar != null)
+                {
+                    m_VoiceProgressBar.gameObject.SetActive(false);
                 }
             }
         }
@@ -110,17 +129,17 @@ namespace MobaVR
         {
             //float percent = value / m_ProgressBar.maxValue * 100;
             //m_ProgressBar.currentPercent = percent;
-            m_ProgressBar.currentPercent = value;
-            m_ProgressBar.UpdateUI();
+            m_HealthProgressBar.currentPercent = value;
+            m_HealthProgressBar.UpdateUI();
         }
         
         [PunRPC]
         public void SetMaxHealth(float value)
         {
-            m_ProgressBar.valueLimit = value;
-            m_ProgressBar.maxValue = value;
-            m_ProgressBar.currentPercent = value;
-            m_ProgressBar.UpdateUI();
+            m_HealthProgressBar.valueLimit = value;
+            m_HealthProgressBar.maxValue = value;
+            m_HealthProgressBar.currentPercent = value;
+            m_HealthProgressBar.UpdateUI();
         }
 
 

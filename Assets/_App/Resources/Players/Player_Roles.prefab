@@ -28550,8 +28550,8 @@ MonoBehaviour:
   m_MinVoiceValue: 10
   m_CurrentLoudness: 0
   m_DamageDelay: 0.25
-  m_OwnerDamage: 5
-  m_TeamDamage: 2
+  m_OwnerDamage: 2
+  m_TeamDamage: 0
   m_EnemyDamage: 5
 --- !u!114 &6703271057782133277
 MonoBehaviour:
@@ -50087,7 +50087,7 @@ PrefabInstance:
     - target: {fileID: 4459041332398756643, guid: aa1480eb39466114796b80e249970ae0,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
-      value: Tower_ARMA_v3
+      value: Tower_v3
       objectReference: {fileID: 0}
     - target: {fileID: 4532908627626264989, guid: aa1480eb39466114796b80e249970ae0,
         type: 3}
@@ -51804,6 +51804,11 @@ PrefabInstance:
       propertyPath: HandGrabber
       value: 
       objectReference: {fileID: 3826017742905746297}
+    - target: {fileID: 656868559504397618, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 874930515481539997, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
         type: 3}
       propertyPath: m_IsActive
@@ -52004,6 +52009,21 @@ PrefabInstance:
       propertyPath: m_PointPlayer
       value: 
       objectReference: {fileID: 1261346771359000727}
+    - target: {fileID: 6243918028450656639, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
+        type: 3}
+      propertyPath: m_ManaProgressBar
+      value: 
+      objectReference: {fileID: 3660339397318613770}
+    - target: {fileID: 6243918028450656639, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
+        type: 3}
+      propertyPath: m_VoiceProgressBar
+      value: 
+      objectReference: {fileID: 202568552298601992}
+    - target: {fileID: 6243918028450656639, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
+        type: 3}
+      propertyPath: m_HealthProgressBar
+      value: 
+      objectReference: {fileID: 7084666821434880098}
     - target: {fileID: 8335356928656471342, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
         type: 3}
       propertyPath: m_Color.g
@@ -52289,6 +52309,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dbf7a682d0b54fb468803c3ce2cc68c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7084666821434880098 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4718906934170829809, guid: 46c7acdf4b2b0564681dd4c4b7d39ea1,
+    type: 3}
+  m_PrefabInstance: {fileID: 2534724130482058131}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20c6dbf0102c7bc468113ccdd97dad83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &7085786827584234271 stripped
