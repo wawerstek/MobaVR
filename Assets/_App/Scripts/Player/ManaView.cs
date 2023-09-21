@@ -33,11 +33,15 @@ namespace MobaVR
             //m_SpellBehaviour.OnCompleted += OnCompleted;
             m_SpellBehaviour.OnPerformed += OnPerformed;
             m_CooldownTime = m_SpellBehaviour.CooldownTime;
+            
+            m_ProgressBar.gameObject.SetActive(true);
         }
 
         private void OnDisable()
         {
             m_SpellBehaviour.OnCompleted -= OnCompleted;
+            
+            m_ProgressBar.gameObject.SetActive(false);
         }
 
         private void OnPerformed()

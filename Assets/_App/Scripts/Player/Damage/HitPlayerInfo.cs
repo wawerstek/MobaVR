@@ -13,6 +13,9 @@ namespace MobaVR
         [SerializeField] private float m_HitCooldown = 20f;
         private WizardPlayer m_Wizard;
 
+        private GameStatistics m_GameStatistics;
+
+        [SerializeField] [ReadOnly] private List<HitDataTime> m_Hits = new();
         private List<PlayerVR> m_HitPlayers = new List<PlayerVR>();
         private PlayerVR m_LastHitPlayer;
         private PlayerVR m_Killer;
@@ -41,21 +44,29 @@ namespace MobaVR
         private void Awake()
         {
             m_Wizard = GetComponent<WizardPlayer>();
+            m_GameStatistics = FindObjectOfType<GameStatistics>();
             Reset();
         }
 
         private void OnPlayerHit(HitData hitData)
         {
-            if (hitData.PlayerVR != null)
+            if (hitData.PlayerVR == null)
             {
-                m_LastHitPlayer = hitData.PlayerVR;
+                return;
+            }
+
+            m_LastHitPlayer = hitData.PlayerVR;
+
+            if (!m_HitPlayers.Contains(hitData.PlayerVR))
+            {
+                m_HitPlayers.Add(hitData.PlayerVR);
             }
         }
 
         private void OnPlayerDie(HitData hitData)
         {
             m_Killer = hitData.PlayerVR != null ? hitData.PlayerVR : m_LastHitPlayer;
-            
+
             if (m_Killer != null)
             {
                 m_Wizard.PlayerVR.DieView.SetDieInfo(m_Killer.photonView.Owner.NickName);
