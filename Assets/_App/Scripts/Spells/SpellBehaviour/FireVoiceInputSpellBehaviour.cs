@@ -54,21 +54,21 @@ namespace MobaVR
 
             m_CanDamage = false;
 
+            if (m_OwnerDamage > 0)
+            {
+                if (m_PlayerVR.WizardPlayer.CurrentHealth > m_OwnerDamage)
+                {
+                    m_PlayerVR.Damageable.Hit(m_OwnerHitData);
+                }
+            }
+
             if (m_GameSession != null && m_TeamDamage > 0)
             {
                 Team team = m_PlayerVR.Team.TeamType == TeamType.BLUE ? m_GameSession.BlueTeam : m_GameSession.RedTeam;
 
                 foreach (PlayerVR player in team.Players)
                 {
-                    if (player == m_PlayerVR)
-                    {
-                        // TODO: Маг убить себя не может
-                        if (m_PlayerVR.WizardPlayer.CurrentHealth > m_OwnerDamage)
-                        {
-                            m_PlayerVR.Damageable.Hit(m_OwnerHitData);
-                        }
-                    }
-                    else
+                    if (player != m_PlayerVR)
                     {
                         player.Damageable.Hit(m_TeamHitData);
                     }
