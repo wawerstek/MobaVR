@@ -3,21 +3,29 @@ using UnityEngine;
 
 namespace MobaVR
 {
-    public class AnimalIK : MonoBehaviour
+    public class SimpleIK : MonoBehaviour
     {
-        [SerializeField] private Transform m_Root;
-        
-        [Header("Head")]
-        [SerializeField] private Transform m_IKHead;
-        [SerializeField] private Transform m_TargetHead;
-        
-        [Header("Head")]
-        [SerializeField] private Transform m_IKBody;
-        [SerializeField] private Transform m_TargetBody;
+        [Header("Body")]
+        [SerializeField] private Transform m_HeadTarget;
+        [SerializeField] private Transform m_HeadIK;
+
+        [Header("Body")]
+        [SerializeField] private Transform m_BodyIK;
+        [SerializeField] private Transform m_BodyTarget;
 
         private void Update()
         {
-            if (m_IKHead != null && m_TargetHead != null){}
+            if (m_BodyTarget != null && m_BodyIK != null)
+            {
+                m_BodyIK.position = m_BodyTarget.transform.position;
+                m_BodyIK.rotation = m_BodyTarget.transform.rotation;
+            }
+
+            if (m_HeadTarget != null && m_HeadIK != null)
+            {
+                m_HeadIK.position = m_HeadTarget.transform.position;
+                m_HeadIK.rotation = m_HeadTarget.transform.rotation;
+            }
         }
     }
 }

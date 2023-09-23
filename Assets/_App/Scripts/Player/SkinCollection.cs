@@ -17,12 +17,17 @@ namespace MobaVR
         [Header("Skins")]
         [SerializeField] private List<Skin> m_AliveSkins = new();
         [SerializeField] private List<Skin> m_DeadSkins = new();
+        [Header("Animal Skins")]
+        [SerializeField] private List<AnimalSkin> m_AnimalSkins = new();
 
         private Skin m_AliveActiveSkin = null;
         private int m_AliveSkinPosition = 0;
 
         private Skin m_DeadActiveSkin = null;
         private int m_DeadSkinPosition = 0;
+
+        private AnimalSkin m_AnimalSkin = null;
+        private int m_AnimalSkinPosition = 0;
 
         public List<Skin> AliveSkins => m_AliveSkins;
         public Skin AliveActiveSkin => m_AliveActiveSkin;
@@ -123,6 +128,11 @@ namespace MobaVR
             {
                 skin.SetVisibilityVR(isVisible);
             }
+
+            foreach (AnimalSkin skin in m_AnimalSkins)
+            {
+                skin.SetVisibilityVR(isVisible);
+            }
         }
 
         [ContextMenu("SetVisibilityBody")]
@@ -138,7 +148,7 @@ namespace MobaVR
                 skin.SetVisibilityBody(isVisible);
             }
         }
-        
+
         [ContextMenu("SetVisibilityDie")]
         public void SetVisibilityDie(bool isVisible = false)
         {
@@ -157,6 +167,8 @@ namespace MobaVR
         #endregion
 
         #region Set Skin
+
+        #region Alive Skin
 
         [ContextMenu("SetNextSkin")]
         public void SetNextSkin()
@@ -207,6 +219,15 @@ namespace MobaVR
         [PunRPC]
         private void RpcSetAliveSkin(int position)
         {
+            // TODO: Очищать все активные скины через отдельный метод, а то лишние разы вызывает методы
+            /*
+            if (m_AnimalSkin != null)
+            {
+                m_AnimalSkin.DeactivateSkin();
+            }
+            */
+            DeactivateAnimalSkin();
+
             if (m_DeadActiveSkin != null)
             {
                 m_DeadActiveSkin.DeactivateSkin();
@@ -238,6 +259,8 @@ namespace MobaVR
             Skin skin = m_AliveSkins.Find(skin => skin.ID.Equals(idSkin));
             if (skin != null)
             {
+                DeactivateAnimalSkin();
+
                 if (m_DeadActiveSkin != null)
                 {
                     m_DeadActiveSkin.DeactivateSkin();
@@ -254,6 +277,10 @@ namespace MobaVR
                 m_AliveActiveSkin.ActivateSkin(teamType);
             }
         }
+
+        #endregion
+
+        #region Dead Skin
 
         [ContextMenu("SetDeadDefaultSkin")]
         public void SetDeadDefaultSkin()
@@ -273,6 +300,8 @@ namespace MobaVR
         [PunRPC]
         public void RpcSetDeadSkin(int position = 0)
         {
+            DeactivateAnimalSkin();
+
             if (m_AliveActiveSkin != null)
             {
                 //TODO:
@@ -292,6 +321,60 @@ namespace MobaVR
             TeamType teamType = m_PlayerVR != null ? m_PlayerVR.TeamType : TeamType.RED;
             m_DeadActiveSkin.ActivateSkin(teamType);
         }
+
+        #endregion
+
+        #region Animal Skin
+
+        private void DeactivateAnimalSkin()
+        {
+            if (m_AnimalSkin != null)
+            {
+                m_AnimalSkin.DeactivateSkin();
+
+                m_AnimalSkin = null;
+                m_AnimalSkinPosition = -1;
+            }
+        }
+
+        [ContextMenu("SetDefaultAnimalSkin")]
+        public void SetAnimalDefaultSkin()
+        {
+            SetAnimalSkin(0);
+        }
+
+        [ContextMenu("SetAnimalSkin")]
+        public void SetAnimalSkin(int position = 0)
+        {
+            if (m_PhotonView != null)
+            {
+                m_PhotonView.RPC(nameof(RpcSetAnimalSkin), RpcTarget.AllBuffered, position);
+            }
+        }
+
+        [PunRPC]
+        public void RpcSetAnimalSkin(int position = 0)
+        {
+            if (m_AliveActiveSkin != null)
+            {
+                m_AliveActiveSkin.DeactivateSkin();
+            }
+
+            if (m_DeadActiveSkin != null)
+            {
+                m_DeadActiveSkin.DeactivateSkin();
+            }
+
+            DeactivateAnimalSkin();
+
+            m_AnimalSkinPosition = Math.Clamp(position, 0, m_DeadSkins.Count - 1);
+            m_AnimalSkin = m_AnimalSkins[m_AnimalSkinPosition];
+
+            TeamType teamType = m_PlayerVR != null ? m_PlayerVR.TeamType : TeamType.RED;
+            m_AnimalSkin.ActivateSkin(teamType);
+        }
+
+        #endregion
 
         [ContextMenu("RestoreSkin")]
         public void RestoreSkin()
@@ -315,6 +398,8 @@ namespace MobaVR
                 m_DeadActiveSkin.DeactivateSkin();
             }
 
+            DeactivateAnimalSkin();
+
             TeamType teamType = m_PlayerVR != null ? m_PlayerVR.TeamType : TeamType.RED;
             SetVisibilityDie(false);
             m_AliveActiveSkin.ActivateSkin(teamType);
@@ -328,7 +413,7 @@ namespace MobaVR
                 m_AliveActiveSkin.SetTeam(teamType);
             }
         }
-        
+
         private void OnDie()
         {
             if (m_PhotonView.IsMine && m_IsHideVR)

@@ -1,95 +1,118 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using Sirenix.OdinInspector;
+using Photon.Pun;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.Serialization;
 
 namespace MobaVR
 {
-    public class AnimalSkin : TeamItem, ISkin
+    public class AnimalSkinTransformer : MonoBehaviourPun
     {
-        public string ID;
+        [SerializeField] private float m_Duration = 5f;
+        [SerializeField] private ParticleSystem m_ParticleSystem;
+        [SerializeField] private PlayerStateSO m_PlayerStateSO;
 
-        [Header("Armature")]
-        [SerializeField] private Transform m_Armature;
-        [SerializeField] [ReadOnly] private float m_ArmatureScale = 0.54f;
+        private AnimalSkin m_AnimalSkin;
+        private SkinCollection m_SkinCollection;
+        private PlayerVR m_PlayerVR;
 
-        [Header("Team")]
-        [SerializeField] private List<SkinItem> m_TeamRenderers = new();
-        [SerializeField] private List<Renderer> m_HiddenVrRenderers = new();
+        private PlayerStateSO m_CurrentPlayerStateSO;
+        private PlayerStateSO m_PrevPlayerStateSO;
 
-        [Space]
-        [Header("Events")]
-        public UnityEvent OnActivated;
-        public UnityEvent OnDeactivated;
-        public UnityEvent OnDie;
+        private bool m_IsAnimalSkin = true;
 
-        public Transform Armature => m_Armature;
-
-        #region Find Renderers
-
-        [ContextMenu("FindArmature")]
-        private void FindArmature()
+        private void OnDestroy()
         {
-            if (m_Armature == null)
+            m_AnimalSkin.OnActivated.RemoveListener(OnSkinActivated);
+            m_AnimalSkin.OnDeactivated.RemoveListener(OnSkinDeactivated);
+
+            m_PlayerVR.WizardPlayer.OnDie -= OnPlayerDie;
+            m_PlayerVR.WizardPlayer.OnReborn -= OnPlayerReborn;
+        }
+
+        // TODO: подписываемся тут
+        private void Awake()
+        {
+            m_AnimalSkin = GetComponent<AnimalSkin>();
+            m_SkinCollection = GetComponentInParent<SkinCollection>();
+            m_PlayerVR = GetComponentInParent<PlayerVR>();
+
+            m_AnimalSkin.OnActivated.AddListener(OnSkinActivated);
+            m_AnimalSkin.OnDeactivated.AddListener(OnSkinDeactivated);
+
+            m_PlayerVR.WizardPlayer.OnDie += OnPlayerDie;
+            m_PlayerVR.WizardPlayer.OnReborn += OnPlayerReborn;
+        }
+
+        private void OnPlayerDie()
+        {
+            if (!m_IsAnimalSkin)
             {
-                m_Armature = transform.Find("Armature");
+                return;
             }
+
+            m_IsAnimalSkin = false;
+            
+            CancelInvoke(nameof(HideSkin));
+            ShowParticle();
         }
 
-        [ContextMenu("FindTeamRenderers")]
-        private void FindTeamRenderers()
+        private void OnPlayerReborn()
         {
-            if (m_TeamRenderers.Count == 0)
+            if (!m_IsAnimalSkin)
             {
-                m_TeamRenderers.AddRange(GetComponentsInChildren<SkinItem>(true));
+                return;
             }
+
+            m_IsAnimalSkin = false;
+            
+            CancelInvoke(nameof(HideSkin));
+            ShowParticle();
         }
 
-        [ContextMenu("SetVisibility")]
-        public void SetVisibilityVR(bool isVisible = false)
+        private void OnSkinActivated()
         {
-            foreach (Renderer meshRenderer in m_HiddenVrRenderers)
+            CancelInvoke(nameof(HideSkin));
+
+            m_IsAnimalSkin = true;
+            
+            ShowParticle();
+            Invoke(nameof(HideSkin), m_Duration);
+        }
+
+        private void OnSkinDeactivated()
+        {
+            m_IsAnimalSkin = false;
+            
+            CancelInvoke(nameof(HideSkin));
+            ShowParticle();
+        }
+
+        private void HideSkin()
+        {
+            /*
+            if (photonView.IsMine)
             {
-                meshRenderer.gameObject.SetActive(isVisible);
+                m_SkinCollection.RestoreSkin();
             }
+            */
+
+            CancelInvoke(nameof(HideSkin));
+            m_IsAnimalSkin = false;
+            
+            ShowParticle();
+            m_SkinCollection.RpcRestoreSkin();
         }
 
-        #endregion
-
-        #region Skin
-
-        public override void SetTeam(TeamType teamType)
+        private void ShowParticle()
         {
-            base.SetTeam(teamType);
-
-            foreach (SkinItem skinItem in m_TeamRenderers)
-            {
-                skinItem.SetTeam(teamType);
-            }
+            m_ParticleSystem.transform.position = m_AnimalSkin.Armature.position;
+            m_ParticleSystem.Play();
         }
 
-        public void ActivateSkin(TeamType teamType)
-        {
-            gameObject.SetActive(true);
-            SetTeam(teamType);
+        #region Debug
 
-            OnActivated?.Invoke();
-        }
-
-        public void DeactivateSkin()
+        [ContextMenu("Set Animal Skin")]
+        private void SetAnimalSkin()
         {
-            gameObject.SetActive(false);
-            OnDeactivated?.Invoke();
-        }
-
-        public void SetDieSkin()
-        {
-            gameObject.SetActive(false);
-            OnDie?.Invoke();
+            m_SkinCollection.SetAnimalDefaultSkin();
         }
 
         #endregion
