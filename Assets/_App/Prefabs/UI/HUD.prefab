@@ -4818,7 +4818,7 @@ GameObject:
   - component: {fileID: 1298569996220141474}
   - component: {fileID: 1298569996220141475}
   m_Layer: 5
-  m_Name: Stena_on
+  m_Name: On
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4892,7 +4892,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1298569996554475293}
   m_Layer: 5
-  m_Name: Ulta
+  m_Name: UltSpell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4911,11 +4911,12 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4294415030624236238}
-  - {fileID: 1298569998105287428}
   - {fileID: 1298569998076962501}
   - {fileID: 1298569997149807401}
   - {fileID: 1298569998038708870}
+  - {fileID: 1298569998105287428}
   - {fileID: 4294415030624290324}
+  - {fileID: 3610972399476210320}
   m_Father: {fileID: 1298569997544637691}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4936,7 +4937,7 @@ GameObject:
   - component: {fileID: 1298569996606092890}
   - component: {fileID: 1298569996606092891}
   m_Layer: 5
-  m_Name: Plamya_on
+  m_Name: On
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5088,7 +5089,7 @@ GameObject:
   - component: {fileID: 1298569996691274963}
   - component: {fileID: 1298569996691274956}
   m_Layer: 5
-  m_Name: Strela_off
+  m_Name: Off
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5241,8 +5242,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1298569997149807401}
+  - component: {fileID: 9179128909852144767}
   m_Layer: 5
-  m_Name: Stena
+  m_Name: Defender
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5263,13 +5265,27 @@ RectTransform:
   - {fileID: 1298569997967852673}
   - {fileID: 1298569996220141468}
   m_Father: {fileID: 1298569996554475293}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &9179128909852144767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1298569997149807402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 570173a9b6514f39bc08c82e619d2059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OffImage: {fileID: 1298569997967852672}
+  m_OnImage: {fileID: 1298569996220141475}
 --- !u!1 &1298569997338444202
 GameObject:
   m_ObjectHideFlags: 0
@@ -5282,7 +5298,7 @@ GameObject:
   - component: {fileID: 1298569997338444207}
   - component: {fileID: 1298569997338444200}
   m_Layer: 5
-  m_Name: Strela_on
+  m_Name: On
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5358,7 +5374,7 @@ GameObject:
   - component: {fileID: 1298569997432193428}
   - component: {fileID: 1298569997432193429}
   m_Layer: 5
-  m_Name: OZ_off
+  m_Name: Off
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5432,7 +5448,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1298569997466213755}
   m_Layer: 5
-  m_Name: Voise
+  m_Name: VoiceSpell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5473,7 +5489,7 @@ GameObject:
   - component: {fileID: 1298569997489116968}
   - component: {fileID: 1298569997489116969}
   m_Layer: 5
-  m_Name: Plamya_off
+  m_Name: Off
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5546,8 +5562,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1298569997541974666}
+  - component: {fileID: 1473593183347223884}
   m_Layer: 5
-  m_Name: Krik
+  m_Name: Voice
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5575,6 +5592,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1473593183347223884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1298569997541974667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 570173a9b6514f39bc08c82e619d2059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OffImage: {fileID: 1298569997914809059}
+  m_OnImage: {fileID: 1298569997853696157}
 --- !u!1 &1298569997544637684
 GameObject:
   m_ObjectHideFlags: 0
@@ -5909,7 +5940,7 @@ GameObject:
   - component: {fileID: 1298569997853696156}
   - component: {fileID: 1298569997853696157}
   m_Layer: 5
-  m_Name: Krik_on
+  m_Name: On
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5985,7 +6016,7 @@ GameObject:
   - component: {fileID: 1298569997914809058}
   - component: {fileID: 1298569997914809059}
   m_Layer: 5
-  m_Name: Krik_off
+  m_Name: Off
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6061,7 +6092,7 @@ GameObject:
   - component: {fileID: 1298569997967852679}
   - component: {fileID: 1298569997967852672}
   m_Layer: 5
-  m_Name: Stena_off
+  m_Name: Off
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6135,7 +6166,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1298569997992061772}
   m_Layer: 5
-  m_Name: OZ
+  m_Name: Health
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6176,7 +6207,7 @@ GameObject:
   - component: {fileID: 1298569998011507741}
   - component: {fileID: 1298569998011507742}
   m_Layer: 5
-  m_Name: OZ_on
+  m_Name: On
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6249,8 +6280,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1298569998038708870}
+  - component: {fileID: 3117335092149650866}
   m_Layer: 5
-  m_Name: Strela
+  m_Name: Archer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6271,13 +6303,27 @@ RectTransform:
   - {fileID: 1298569996691274957}
   - {fileID: 1298569997338444201}
   m_Father: {fileID: 1298569996554475293}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &3117335092149650866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1298569998038708871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 570173a9b6514f39bc08c82e619d2059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OffImage: {fileID: 1298569996691274956}
+  m_OnImage: {fileID: 1298569997338444200}
 --- !u!1 &1298569998059773858
 GameObject:
   m_ObjectHideFlags: 0
@@ -6336,8 +6382,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1298569998076962501}
+  - component: {fileID: 264983129842744174}
   m_Layer: 5
-  m_Name: Plamya
+  m_Name: Wizard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6358,13 +6405,27 @@ RectTransform:
   - {fileID: 1298569997489116970}
   - {fileID: 1298569996606092884}
   m_Father: {fileID: 1298569996554475293}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &264983129842744174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1298569998076962502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 570173a9b6514f39bc08c82e619d2059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OffImage: {fileID: 1298569997489116969}
+  m_OnImage: {fileID: 1298569996606092891}
 --- !u!1 &1298569998105287429
 GameObject:
   m_ObjectHideFlags: 0
@@ -6377,7 +6438,7 @@ GameObject:
   - component: {fileID: 1298569998105287434}
   - component: {fileID: 1298569998105287435}
   m_Layer: 5
-  m_Name: Image_2
+  m_Name: ControllerImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6396,7 +6457,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1298569996554475293}
-  m_RootOrder: 1
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -20832,3 +20893,79 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!1 &7543073739958453577
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3610972399476210320}
+  - component: {fileID: 7439372826440777928}
+  - component: {fileID: 6627213586608662064}
+  m_Layer: 5
+  m_Name: Image_3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &3610972399476210320
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7543073739958453577}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2.3435, y: 2.3435, z: 2.3435}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1298569996554475293}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 300, y: 300}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &7439372826440777928
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7543073739958453577}
+  m_CullTransparentMesh: 1
+--- !u!114 &6627213586608662064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7543073739958453577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 2b7e5c2295192754ebe261aef7cf1eba, type: 3}
+  m_Type: 3
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 0
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1

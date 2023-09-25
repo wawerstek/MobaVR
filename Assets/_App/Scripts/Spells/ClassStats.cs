@@ -10,6 +10,10 @@ namespace MobaVR
         [SerializeField] private ClassStatsSO m_ClassStatsSo;
         [SerializeField] private SpellsHandler m_SpellsHandler;
         [SerializeField] private Skin m_Skin;
+        
+        // TODO: update refs 
+        //[Header("UI")]
+        //[SerializeField] private GameObject m_SpellImage;
 
         public string ClassId => m_ClassId;
         public WizardPlayer WizardPlayer => m_WizardPlayer;

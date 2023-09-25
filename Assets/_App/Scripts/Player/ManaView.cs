@@ -8,8 +8,8 @@ namespace MobaVR
 {
     public class ManaView : MonoBehaviourPun
     {
-        
-        public Image healthImage; // Это для индикатора здоровья
+        //public Image healthImage; // Это для индикатора здоровья
+        public SpellImage m_SpellImage; // Это для индикатора здоровья
         private float currentHealth;
         
         
@@ -45,6 +45,11 @@ namespace MobaVR
             if (photonView.IsMine)
             {
                 m_ProgressBar.gameObject.SetActive(true);
+
+                if (m_SpellImage != null)
+                {
+                    m_SpellImage.gameObject.SetActive(true);
+                }
             }
         }
 
@@ -55,6 +60,11 @@ namespace MobaVR
             if (photonView.IsMine)
             {
                 m_ProgressBar.gameObject.SetActive(false);
+                
+                if (m_SpellImage != null)
+                {
+                    m_SpellImage.gameObject.SetActive(false);
+                }
             }
         }
 
@@ -90,10 +100,17 @@ namespace MobaVR
         
         private void UpdateHealthImage()
         {
+            if (m_SpellImage != null) 
+            {
+                m_SpellImage.OnImage.fillAmount = m_ProgressBar.currentPercent / 100.0f;
+            }
+            
+            /*
             if (healthImage != null) 
             {
                 healthImage.fillAmount = m_ProgressBar.currentPercent / 100.0f;
             }
+            */
         }
 
         
