@@ -1,0 +1,624 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6222920290620225097
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6222920290620225092}
+  - component: {fileID: 6222920290620225093}
+  - component: {fileID: 6222920290620225094}
+  - component: {fileID: 6222920290620225095}
+  - component: {fileID: 6222920290620225096}
+  m_Layer: 0
+  m_Name: TowerMode
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6222920290620225092
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6222920290620225097}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6222920291627390187}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6222920290620225093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6222920290620225097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55c742b50fa542e4851535de98f5ecf8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_GameSession: {fileID: 0}
+  m_StateMachine: {fileID: 6222920291627390189}
+  m_Content: {fileID: 6222920290620225095}
+--- !u!114 &6222920290620225094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6222920290620225097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3d80649413e44719183575d3fe7c9ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RedTeamScoreView: {fileID: 0}
+  m_BlueTeamScoreView: {fileID: 0}
+  m_RedTeamKillScoreView: {fileID: 0}
+  m_BlueTeamKillScoreView: {fileID: 0}
+  m_PreRoundTimeView: {fileID: 0}
+  m_RoundTimeView: {fileID: 0}
+  m_VictoryView: {fileID: 0}
+  m_LoseView: {fileID: 0}
+  m_MonsterCountView: {fileID: 0}
+--- !u!114 &6222920290620225095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6222920290620225097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd62c3dba6db4b85b8442a5645609335, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ModeView: {fileID: 6222920290620225094}
+  m_Sound: {fileID: 0}
+  m_Traps:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  m_Lich: {fileID: 0}
+  m_Tower: {fileID: 0}
+  m_Spawners:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  m_Waves:
+  - Points:
+    - PointSpawner: {fileID: 0}
+      MaxTotalCountMonster: 1
+      MaxCountMonster: -1
+      DelayBetweenMonster: 10
+      DelayBetweenMaxMonster: 5
+      StartDelay: 0
+      CanSpawn: 1
+    - PointSpawner: {fileID: 0}
+      MaxTotalCountMonster: 1
+      MaxCountMonster: -1
+      DelayBetweenMonster: 10
+      DelayBetweenMaxMonster: 5
+      StartDelay: 0
+      CanSpawn: 1
+    - PointSpawner: {fileID: 0}
+      MaxTotalCountMonster: 1
+      MaxCountMonster: -1
+      DelayBetweenMonster: 10
+      DelayBetweenMaxMonster: 5
+      StartDelay: 0
+      CanSpawn: 1
+    - PointSpawner: {fileID: 0}
+      MaxTotalCountMonster: 2
+      MaxCountMonster: -1
+      DelayBetweenMonster: 10
+      DelayBetweenMaxMonster: 5
+      StartDelay: 0
+      CanSpawn: 1
+    - PointSpawner: {fileID: 0}
+      MaxTotalCountMonster: 2
+      MaxCountMonster: -1
+      DelayBetweenMonster: 10
+      DelayBetweenMaxMonster: 5
+      StartDelay: 0
+      CanSpawn: 1
+    - PointSpawner: {fileID: 0}
+      MaxTotalCountMonster: 1
+      MaxCountMonster: -1
+      DelayBetweenMonster: 10
+      DelayBetweenMaxMonster: 5
+      StartDelay: 0
+      CanSpawn: 1
+    - PointSpawner: {fileID: 0}
+      MaxTotalCountMonster: 1
+      MaxCountMonster: -1
+      DelayBetweenMonster: 10
+      DelayBetweenMaxMonster: 5
+      StartDelay: 0
+      CanSpawn: 1
+    - PointSpawner: {fileID: 0}
+      MaxTotalCountMonster: 0
+      MaxCountMonster: 0
+      DelayBetweenMonster: 0
+      DelayBetweenMaxMonster: 5
+      StartDelay: 0
+      CanSpawn: 0
+    - PointSpawner: {fileID: 0}
+      MaxTotalCountMonster: 0
+      MaxCountMonster: 0
+      DelayBetweenMonster: 10
+      DelayBetweenMaxMonster: 5
+      StartDelay: 0
+      CanSpawn: 0
+    - PointSpawner: {fileID: 0}
+      MaxTotalCountMonster: 1
+      MaxCountMonster: 1
+      DelayBetweenMonster: 10
+      DelayBetweenMaxMonster: 5
+      StartDelay: 0
+      CanSpawn: 1
+    - PointSpawner: {fileID: 0}
+      MaxTotalCountMonster: 1
+      MaxCountMonster: 1
+      DelayBetweenMonster: 10
+      DelayBetweenMaxMonster: 5
+      StartDelay: 0
+      CanSpawn: 1
+    - PointSpawner: {fileID: 0}
+      MaxTotalCountMonster: 1
+      MaxCountMonster: 1
+      DelayBetweenMonster: 10
+      DelayBetweenMaxMonster: 5
+      StartDelay: 0
+      CanSpawn: 1
+    - PointSpawner: {fileID: 0}
+      MaxTotalCountMonster: 0
+      MaxCountMonster: 0
+      DelayBetweenMonster: 10
+      DelayBetweenMaxMonster: 5
+      StartDelay: 0
+      CanSpawn: 0
+    - PointSpawner: {fileID: 0}
+      MaxTotalCountMonster: 1
+      MaxCountMonster: 1
+      DelayBetweenMonster: 30
+      DelayBetweenMaxMonster: 30
+      StartDelay: 10
+      CanSpawn: 0
+    - PointSpawner: {fileID: 0}
+      MaxTotalCountMonster: 1
+      MaxCountMonster: 1
+      DelayBetweenMonster: 30
+      DelayBetweenMaxMonster: 30
+      StartDelay: 10
+      CanSpawn: 0
+  - Points:
+    - PointSpawner: {fileID: 0}
+      MaxTotalCountMonster: 2
+      MaxCountMonster: -1
+      DelayBetweenMonster: 10
+      DelayBetweenMaxMonster: 5
+      StartDelay: 0
+      CanSpawn: 1
+    - PointSpawner: {fileID: 0}
+      MaxTotalCountMonster: 4
+      MaxCountMonster: -1
+      DelayBetweenMonster: 10
+      DelayBetweenMaxMonster: 5
+      StartDelay: 0
+      CanSpawn: 1
+    - PointSpawner: {fileID: 0}
+      MaxTotalCountMonster: 4
+      MaxCountMonster: -1
+      DelayBetweenMonster: 10
+      DelayBetweenMaxMonster: 5
+      StartDelay: 0
+      CanSpawn: 1
+    - PointSpawner: {fileID: 0}
+      MaxTotalCountMonster: 4
+      MaxCountMonster: -1
+      DelayBetweenMonster: 10
+      DelayBetweenMaxMonster: 5
+      StartDelay: 0
+      CanSpawn: 1
+    - PointSpawner: {fileID: 0}
+      MaxTotalCountMonster: 4
+      MaxCountMonster: -1
+      DelayBetweenMonster: 10
+      DelayBetweenMaxMonster: 5
+      StartDelay: 0
+      CanSpawn: 1
+    - PointSpawner: {fileID: 0}
+      MaxTotalCountMonster: 4
+      MaxCountMonster: -1
+      DelayBetweenMonster: 10
+      DelayBetweenMaxMonster: 5
+      StartDelay: 0
+      CanSpawn: 1
+    - PointSpawner: {fileID: 0}
+      MaxTotalCountMonster: 4
+      MaxCountMonster: -1
+      DelayBetweenMonster: 10
+      DelayBetweenMaxMonster: 5
+      StartDelay: 0
+      CanSpawn: 1
+    - PointSpawner: {fileID: 0}
+      MaxTotalCountMonster: 2
+      MaxCountMonster: 1
+      DelayBetweenMonster: 0
+      DelayBetweenMaxMonster: 5
+      StartDelay: 0
+      CanSpawn: 1
+    - PointSpawner: {fileID: 0}
+      MaxTotalCountMonster: 2
+      MaxCountMonster: 1
+      DelayBetweenMonster: 10
+      DelayBetweenMaxMonster: 5
+      StartDelay: 0
+      CanSpawn: 1
+    - PointSpawner: {fileID: 0}
+      MaxTotalCountMonster: 2
+      MaxCountMonster: 1
+      DelayBetweenMonster: 10
+      DelayBetweenMaxMonster: 5
+      StartDelay: 0
+      CanSpawn: 1
+    - PointSpawner: {fileID: 0}
+      MaxTotalCountMonster: 2
+      MaxCountMonster: 1
+      DelayBetweenMonster: 10
+      DelayBetweenMaxMonster: 5
+      StartDelay: 0
+      CanSpawn: 1
+    - PointSpawner: {fileID: 0}
+      MaxTotalCountMonster: 1
+      MaxCountMonster: 1
+      DelayBetweenMonster: 10
+      DelayBetweenMaxMonster: 5
+      StartDelay: 0
+      CanSpawn: 1
+    - PointSpawner: {fileID: 0}
+      MaxTotalCountMonster: 1
+      MaxCountMonster: 1
+      DelayBetweenMonster: 10
+      DelayBetweenMaxMonster: 5
+      StartDelay: 0
+      CanSpawn: 1
+  - Points:
+    - PointSpawner: {fileID: 0}
+      MaxTotalCountMonster: 3
+      MaxCountMonster: -1
+      DelayBetweenMonster: 10
+      DelayBetweenMaxMonster: 4
+      StartDelay: 0
+      CanSpawn: 1
+    - PointSpawner: {fileID: 0}
+      MaxTotalCountMonster: 4
+      MaxCountMonster: -1
+      DelayBetweenMonster: 6
+      DelayBetweenMaxMonster: 4
+      StartDelay: 0
+      CanSpawn: 1
+    - PointSpawner: {fileID: 0}
+      MaxTotalCountMonster: 4
+      MaxCountMonster: -1
+      DelayBetweenMonster: 6
+      DelayBetweenMaxMonster: 4
+      StartDelay: 0
+      CanSpawn: 1
+    - PointSpawner: {fileID: 0}
+      MaxTotalCountMonster: 6
+      MaxCountMonster: -1
+      DelayBetweenMonster: 6
+      DelayBetweenMaxMonster: 4
+      StartDelay: 0
+      CanSpawn: 1
+    - PointSpawner: {fileID: 0}
+      MaxTotalCountMonster: 6
+      MaxCountMonster: -1
+      DelayBetweenMonster: 6
+      DelayBetweenMaxMonster: 4
+      StartDelay: 0
+      CanSpawn: 1
+    - PointSpawner: {fileID: 0}
+      MaxTotalCountMonster: 6
+      MaxCountMonster: -1
+      DelayBetweenMonster: 6
+      DelayBetweenMaxMonster: 4
+      StartDelay: 0
+      CanSpawn: 1
+    - PointSpawner: {fileID: 0}
+      MaxTotalCountMonster: 6
+      MaxCountMonster: -1
+      DelayBetweenMonster: 6
+      DelayBetweenMaxMonster: 4
+      StartDelay: 0
+      CanSpawn: 1
+    - PointSpawner: {fileID: 0}
+      MaxTotalCountMonster: 4
+      MaxCountMonster: 1
+      DelayBetweenMonster: 8
+      DelayBetweenMaxMonster: 4
+      StartDelay: 0
+      CanSpawn: 1
+    - PointSpawner: {fileID: 0}
+      MaxTotalCountMonster: 4
+      MaxCountMonster: 1
+      DelayBetweenMonster: 8
+      DelayBetweenMaxMonster: 4
+      StartDelay: 0
+      CanSpawn: 1
+    - PointSpawner: {fileID: 0}
+      MaxTotalCountMonster: 4
+      MaxCountMonster: 1
+      DelayBetweenMonster: 8
+      DelayBetweenMaxMonster: 4
+      StartDelay: 0
+      CanSpawn: 1
+    - PointSpawner: {fileID: 0}
+      MaxTotalCountMonster: 4
+      MaxCountMonster: 1
+      DelayBetweenMonster: 8
+      DelayBetweenMaxMonster: 4
+      StartDelay: 0
+      CanSpawn: 1
+    - PointSpawner: {fileID: 0}
+      MaxTotalCountMonster: 4
+      MaxCountMonster: 3
+      DelayBetweenMonster: 6
+      DelayBetweenMaxMonster: 5
+      StartDelay: 0
+      CanSpawn: 1
+    - PointSpawner: {fileID: 0}
+      MaxTotalCountMonster: 4
+      MaxCountMonster: 3
+      DelayBetweenMonster: 6
+      DelayBetweenMaxMonster: 5
+      StartDelay: 0
+      CanSpawn: 1
+    - PointSpawner: {fileID: 0}
+      MaxTotalCountMonster: 1
+      MaxCountMonster: 1
+      DelayBetweenMonster: 30
+      DelayBetweenMaxMonster: 30
+      StartDelay: 30
+      CanSpawn: 1
+    - PointSpawner: {fileID: 0}
+      MaxTotalCountMonster: 0
+      MaxCountMonster: 0
+      DelayBetweenMonster: 30
+      DelayBetweenMaxMonster: 30
+      StartDelay: 30
+      CanSpawn: 0
+  - Points:
+    - PointSpawner: {fileID: 0}
+      MaxTotalCountMonster: 6
+      MaxCountMonster: -1
+      DelayBetweenMonster: 8
+      DelayBetweenMaxMonster: 4
+      StartDelay: 0
+      CanSpawn: 1
+    - PointSpawner: {fileID: 0}
+      MaxTotalCountMonster: 6
+      MaxCountMonster: -1
+      DelayBetweenMonster: 5
+      DelayBetweenMaxMonster: 4
+      StartDelay: 0
+      CanSpawn: 1
+    - PointSpawner: {fileID: 0}
+      MaxTotalCountMonster: 6
+      MaxCountMonster: -1
+      DelayBetweenMonster: 5
+      DelayBetweenMaxMonster: 4
+      StartDelay: 0
+      CanSpawn: 1
+    - PointSpawner: {fileID: 0}
+      MaxTotalCountMonster: 6
+      MaxCountMonster: -1
+      DelayBetweenMonster: 5
+      DelayBetweenMaxMonster: 4
+      StartDelay: 0
+      CanSpawn: 1
+    - PointSpawner: {fileID: 0}
+      MaxTotalCountMonster: 6
+      MaxCountMonster: -1
+      DelayBetweenMonster: 5
+      DelayBetweenMaxMonster: 4
+      StartDelay: 0
+      CanSpawn: 1
+    - PointSpawner: {fileID: 0}
+      MaxTotalCountMonster: 6
+      MaxCountMonster: -1
+      DelayBetweenMonster: 5
+      DelayBetweenMaxMonster: 4
+      StartDelay: 0
+      CanSpawn: 1
+    - PointSpawner: {fileID: 0}
+      MaxTotalCountMonster: 6
+      MaxCountMonster: -1
+      DelayBetweenMonster: 5
+      DelayBetweenMaxMonster: 4
+      StartDelay: 0
+      CanSpawn: 1
+    - PointSpawner: {fileID: 0}
+      MaxTotalCountMonster: 5
+      MaxCountMonster: 1
+      DelayBetweenMonster: 8
+      DelayBetweenMaxMonster: 4
+      StartDelay: 0
+      CanSpawn: 1
+    - PointSpawner: {fileID: 0}
+      MaxTotalCountMonster: 5
+      MaxCountMonster: 1
+      DelayBetweenMonster: 8
+      DelayBetweenMaxMonster: 4
+      StartDelay: 0
+      CanSpawn: 1
+    - PointSpawner: {fileID: 0}
+      MaxTotalCountMonster: 4
+      MaxCountMonster: 1
+      DelayBetweenMonster: 8
+      DelayBetweenMaxMonster: 4
+      StartDelay: 0
+      CanSpawn: 1
+    - PointSpawner: {fileID: 0}
+      MaxTotalCountMonster: 4
+      MaxCountMonster: 1
+      DelayBetweenMonster: 8
+      DelayBetweenMaxMonster: 4
+      StartDelay: 0
+      CanSpawn: 1
+    - PointSpawner: {fileID: 0}
+      MaxTotalCountMonster: 6
+      MaxCountMonster: 3
+      DelayBetweenMonster: 6
+      DelayBetweenMaxMonster: 5
+      StartDelay: 0
+      CanSpawn: 1
+    - PointSpawner: {fileID: 0}
+      MaxTotalCountMonster: 6
+      MaxCountMonster: 3
+      DelayBetweenMonster: 6
+      DelayBetweenMaxMonster: 5
+      StartDelay: 0
+      CanSpawn: 1
+    - PointSpawner: {fileID: 0}
+      MaxTotalCountMonster: 3
+      MaxCountMonster: -1
+      DelayBetweenMonster: 30
+      DelayBetweenMaxMonster: 30
+      StartDelay: 10
+      CanSpawn: 1
+    - PointSpawner: {fileID: 0}
+      MaxTotalCountMonster: 2
+      MaxCountMonster: 2
+      DelayBetweenMonster: 30
+      DelayBetweenMaxMonster: 50
+      StartDelay: 10
+      CanSpawn: 1
+--- !u!114 &6222920290620225096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6222920290620225097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!1 &6222920291627390190
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6222920291627390187}
+  - component: {fileID: 6222920291627390189}
+  - component: {fileID: 6222920291627390188}
+  m_Layer: 0
+  m_Name: StateMachine
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6222920291627390187
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6222920291627390190}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6222920290620225092}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6222920291627390189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6222920291627390190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7eef8264d8e42a68497bc45d4212afe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_InitModeState: {fileID: 11400000, guid: 8e30c4a987a97f143ab6e0217de73159, type: 2}
+  m_InactiveModeState: {fileID: 11400000, guid: 8e30c4a987a97f143ab6e0217de73159,
+    type: 2}
+  m_StartModeState: {fileID: 11400000, guid: 16db51be1e3455540b19579d9fa052a4, type: 2}
+  m_ReadyRoundState: {fileID: 11400000, guid: 6efa34c53f8eed046940996232550c55, type: 2}
+  m_PlayRoundState: {fileID: 11400000, guid: 7d91399dba2861749a314a4411924346, type: 2}
+  m_CompleteRoundState: {fileID: 11400000, guid: 96afc10ef59f50342a8fc095a9902d6f,
+    type: 2}
+  m_CompleteModeState: {fileID: 11400000, guid: ca1067f26f7f7414aaf6c1b57fb3562e,
+    type: 2}
+  m_IsInitOnAwake: 1
+  m_ModeState: 0
+  m_CurrentState: {fileID: 11400000, guid: ddc8c4ea144a11e489ac10e3b8719be1, type: 2}
+--- !u!114 &6222920291627390188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6222920291627390190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
