@@ -40,7 +40,8 @@ namespace MobaVR.ClassicModeStateMachine.Tower
                 m_Content.ModeView.LoseView.Show();
             }
 
-            m_Content.CurrentWave = 0;
+            //m_Content.CurrentWave = 0;
+            m_Content.ResetWave();
             m_Content.Lich.RpcPause_Monster();
         }
 

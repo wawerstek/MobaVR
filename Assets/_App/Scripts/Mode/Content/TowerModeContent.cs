@@ -14,6 +14,7 @@ namespace MobaVR.Content
         [SerializeField] private List<ManualTraps> m_Traps = new List<ManualTraps>();
         [SerializeField] private Lich m_Lich;
         [SerializeField] private Tower m_Tower;
+        [SerializeField] private bool m_SaveLastWave = true;
 
         [Header("Waves")]
         [SerializeField] private List<MonsterPointSpawner> m_Spawners = new List<MonsterPointSpawner>();
@@ -45,6 +46,14 @@ namespace MobaVR.Content
         }
         public bool HasCurrentWave => m_CurrentWave < m_Waves.Count;
         public bool HasNextWave => m_CurrentWave < m_Waves.Count;
+
+        public void ResetWave()
+        {
+            if (!m_SaveLastWave)
+            {
+                m_CurrentWave = 0;
+            }
+        }
 
         [PunRPC]
         public void RpcSetVictory(bool isVictory)
