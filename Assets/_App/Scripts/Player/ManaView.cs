@@ -2,14 +2,22 @@
 using Michsky.MUIP;
 using Photon.Pun;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace MobaVR
 {
     public class ManaView : MonoBehaviourPun
     {
+        
+        public Image healthImage; // Это для индикатора здоровья
+        private float currentHealth;
+        
+        
         [SerializeField] private SpellBehaviour m_SpellBehaviour;
         [SerializeField] private float m_CooldownTime = 30f;
         [SerializeField] private ProgressBar m_ProgressBar;
+        
+       
 
         private float m_CurrentTime = 0f;
         private bool m_IsCompleted = true;
@@ -55,6 +63,10 @@ namespace MobaVR
             m_CurrentTime = 0f;
             m_ProgressBar.currentPercent = 0f;
             m_ProgressBar.UpdateUI();
+            
+            UpdateHealthImage();//обновляем картинку
+            
+            
             m_IsCompleted = false;
         }
         
@@ -70,9 +82,26 @@ namespace MobaVR
             m_CurrentTime = 0f;
             m_ProgressBar.currentPercent = 0f;
             m_ProgressBar.UpdateUI();
+            UpdateHealthImage();//обновляем картинку
             m_IsCompleted = true;
         }
 
+        
+        
+        private void UpdateHealthImage()
+        {
+            if (healthImage != null) 
+            {
+                healthImage.fillAmount = m_ProgressBar.currentPercent / 100.0f;
+            }
+        }
+
+        
+        
+        
+        
+        
+        
         private void Update()
         {
             if (!gameObject.activeSelf)
@@ -84,12 +113,15 @@ namespace MobaVR
             {
                 m_ProgressBar.currentPercent = 100f;
                 m_ProgressBar.UpdateUI();
+                UpdateHealthImage();//обновляем картинку
+                
             }
             else
             {
                 m_CurrentTime = m_SpellBehaviour.CurrentTime;
                 m_ProgressBar.currentPercent = m_CurrentTime / m_CooldownTime * 100f;
                 m_ProgressBar.UpdateUI();
+                UpdateHealthImage();//обновляем картинку
             }
             
             /*
