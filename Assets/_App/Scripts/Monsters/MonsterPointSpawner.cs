@@ -39,7 +39,15 @@ namespace MobaVR
             get => m_TargetType;
             set => m_TargetType = value;
         }
-        
+
+        private void OnValidate()
+        {
+            if (m_CreatedEffect == null)
+            {
+                m_CreatedEffect = GetComponentInChildren<ParticleSystem>();
+            }
+        }
+
         private void Start()
         {
             audioSource = GetComponent<AudioSource>();
