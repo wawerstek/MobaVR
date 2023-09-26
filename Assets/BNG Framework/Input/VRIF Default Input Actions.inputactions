@@ -998,6 +998,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "UI_Hold",
+                    "type": "Button",
+                    "id": "856bac4d-cb8f-4c69-94a3-d7da544a47be",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Hold(duration=2)",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -1427,6 +1436,39 @@
                     "processors": "",
                     "groups": "Generic XR Controller",
                     "action": "GrabDoubleTap",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ef0851c8-3367-47e5-927b-282a84035f1b",
+                    "path": "<XRController>{RightHand}/menu",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "UI_Hold",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a2d9fffc-37a3-46fa-aba9-6e8d81cc1193",
+                    "path": "<XRController>{RightHand}/primaryButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UI_Hold",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4655901d-a780-493e-9d61-836f4b08c32b",
+                    "path": "<Keyboard>/comma",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UI_Hold",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -2493,6 +2535,24 @@
                     "processors": "",
                     "interactions": "Delay(Delay=0.1)",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "R_BButton",
+                    "type": "Button",
+                    "id": "f2175c15-a183-4f39-b158-fb0bffc0fd2e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "R_BButton_Hold",
+                    "type": "Button",
+                    "id": "0c288802-10f4-4518-b698-c15fc327675f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Hold(duration=2)",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -3021,6 +3081,50 @@
                     "processors": "",
                     "groups": "",
                     "action": "R_Trigger_Delay",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f176dcd7-6af6-451e-88bc-50d028b68d63",
+                    "path": "<XRController>{RightHand}/primaryButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "R_BButton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ddc603ee-d4b2-43f9-8bf3-60b19fadd346",
+                    "path": "<Keyboard>/comma",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "R_BButton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3d337e50-b0ed-4637-8185-7a9d91f4abe2",
+                    "path": "<XRController>{RightHand}/primaryButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "R_BButton_Hold",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e12489ba-52e1-4948-a112-96fd07643e8f",
+                    "path": "<Keyboard>/comma",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "R_BButton_Hold",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
