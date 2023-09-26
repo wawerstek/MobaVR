@@ -51382,6 +51382,11 @@ PrefabInstance:
       propertyPath: RightHandGFXHolder
       value: 
       objectReference: {fileID: 8949229234143428338}
+    - target: {fileID: 182731450736535648, guid: aa1480eb39466114796b80e249970ae0,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 212653912103909338, guid: aa1480eb39466114796b80e249970ae0,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -54075,6 +54080,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 8283413741057670200}
+    - target: {fileID: 9055973484686436646, guid: aa1480eb39466114796b80e249970ae0,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 9097780167845437154, guid: aa1480eb39466114796b80e249970ae0,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -54119,6 +54129,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMin.x
       value: 0.375
+      objectReference: {fileID: 0}
+    - target: {fileID: 9184698390672937475, guid: aa1480eb39466114796b80e249970ae0,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 9214096207102028616, guid: aa1480eb39466114796b80e249970ae0,
         type: 3}
@@ -54305,7 +54320,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetImage: {fileID: 5609526481433944814}
-  objectToToggle: {fileID: 7225088418690777251}
+  controllerImage: {fileID: 0}
+  m_ParticleSystem: {fileID: 0}
 --- !u!1 &5609526480625389510 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6165299540593785642, guid: aa1480eb39466114796b80e249970ae0,
@@ -54325,7 +54341,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetImage: {fileID: 5609526480941239760}
-  objectToToggle: {fileID: 5609526481594997704}
+  controllerImage: {fileID: 0}
+  m_ParticleSystem: {fileID: 0}
 --- !u!114 &5609526480941239760 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6165299540938996028, guid: aa1480eb39466114796b80e249970ae0,
@@ -54357,7 +54374,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetImage: {fileID: 5609526480426790117}
-  objectToToggle: {fileID: 7225088418690777251}
+  controllerImage: {fileID: 0}
+  m_ParticleSystem: {fileID: 0}
 --- !u!1 &5609526481164274571 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6165299541128773479, guid: aa1480eb39466114796b80e249970ae0,
@@ -54377,7 +54395,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetImage: {fileID: 5609526482088319766}
-  objectToToggle: {fileID: 7225088418690777251}
+  controllerImage: {fileID: 0}
+  m_ParticleSystem: {fileID: 0}
 --- !u!114 &5609526481433944814 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6165299539288659458, guid: aa1480eb39466114796b80e249970ae0,
@@ -54390,12 +54409,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &5609526481594997704 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6165299539146682148, guid: aa1480eb39466114796b80e249970ae0,
-    type: 3}
-  m_PrefabInstance: {fileID: 1753731875142792428}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &5609526482088319766 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6165299539641053178, guid: aa1480eb39466114796b80e249970ae0,
@@ -54481,12 +54494,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e97e54343fcd4e4b81f6e22d317008a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &7225088418690777251 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8940254921072063567, guid: aa1480eb39466114796b80e249970ae0,
-    type: 3}
-  m_PrefabInstance: {fileID: 1753731875142792428}
-  m_PrefabAsset: {fileID: 0}
 --- !u!223 &7843816485523969432 stripped
 Canvas:
   m_CorrespondingSourceObject: {fileID: 8398180109024502132, guid: aa1480eb39466114796b80e249970ae0,

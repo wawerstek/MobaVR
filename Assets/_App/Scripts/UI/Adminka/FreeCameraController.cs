@@ -15,7 +15,25 @@ public class FreeCameraController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
             //включаем управление камерой
-        isCameraControlEnabled = true;
+        SetActiveControl(true);
+    }
+
+    public void SetActiveControl(bool isActive)
+    {
+        if (!gameObject.activeSelf)
+        {
+            return;
+        }
+        
+        isCameraControlEnabled = isActive;
+        
+        Cursor.lockState = isCameraControlEnabled ? CursorLockMode.Locked : CursorLockMode.None;
+        Cursor.visible = !isCameraControlEnabled;
+    }
+
+    public void SwitchActiveControl()
+    {
+        SetActiveControl(!isCameraControlEnabled);
     }
 
     void Update()
@@ -50,9 +68,7 @@ public class FreeCameraController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             // выключаем управление камерой
-            isCameraControlEnabled = false;
-            Cursor.lockState = isCameraControlEnabled ? CursorLockMode.Locked : CursorLockMode.None;
-            Cursor.visible = !isCameraControlEnabled;
+            SetActiveControl(false);
         }
     }
 }

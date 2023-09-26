@@ -41,12 +41,22 @@ public class CameraManager : MonoBehaviour
     //включаем управление свободнйо камеры
     public void FreeCameraRun()
     {
-        FreeCamera.SetActive(true); 
+        FreeCamera.SetActive(true);
+        if (FreeCamera.TryGetComponent(out FreeCameraController freeCameraController))
+        {
+            freeCameraController.SetActiveControl(true);
+        }
     }    
+    
     //отключаем свободную камеру
     public void FreeCameraStop()
     {
         FreeCamera.SetActive(false); 
+        
+        if (FreeCamera.TryGetComponent(out FreeCameraController freeCameraController))
+        {
+            freeCameraController.SetActiveControl(false);
+        }
     }
 
     public void ToggleSecondScreen()
