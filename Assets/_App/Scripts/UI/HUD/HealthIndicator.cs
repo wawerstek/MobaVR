@@ -1,27 +1,61 @@
+using System;
+using MobaVR;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class HealthIndicator : MonoBehaviour
 {
+    [SerializeField] private ParticleSystem m_ParticleSystem;
+    [SerializeField] private TextMeshProUGUI m_HealthText;
+    [SerializeField] private string m_Postfix = "<size=24>HP</size>";
+    [SerializeField] private float m_WarningHealth = 40f;
+
     public Image healthImage; // Перетащите ваш Image компонент сюда в редакторе
     private float maxHealth = 100;
     public float currentHealth;
 
-    private void Start()
+    private WizardPlayer m_WizardPlayer;
+
+    private void OnEnable()
     {
-        SetHealth(maxHealth);
+        if (m_WizardPlayer != null)
+        {
+            m_WizardPlayer.OnHealthChange += OnHealthChange;
+        }
     }
 
-    public void DecreaseHealth(float amount)
+    private void OnDisable()
     {
-        currentHealth -= amount;
-        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
-        healthImage.fillAmount = currentHealth / maxHealth;
+        if (m_WizardPlayer != null)
+        {
+            m_WizardPlayer.OnHealthChange -= OnHealthChange;
+        }
     }
 
-    public void SetHealth(float health)
+    private void Awake()
     {
-        currentHealth = health;
-        healthImage.fillAmount = currentHealth / maxHealth;
+        m_WizardPlayer = GetComponentInParent<WizardPlayer>();
+    }
+
+    private void OnHealthChange(float value)
+    {
+        m_HealthText.text = $"{value}{m_Postfix}";
+        healthImage.fillAmount = value / m_WizardPlayer.MaxHp;
+        
+        if (value > m_WarningHealth)
+        {
+            if (m_ParticleSystem.isPlaying)
+            {
+                m_ParticleSystem.Stop();
+            }
+        }
+        else
+        {
+            if (!m_ParticleSystem.isPlaying)
+            {
+                m_ParticleSystem.Play();
+            }
+        }
     }
 }

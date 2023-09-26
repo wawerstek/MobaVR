@@ -8,8 +8,11 @@ namespace MobaVR
     public class PlayerView : MonoBehaviourPunCallbacks
     {
         [SerializeField] private TextMeshProUGUI m_Nickname;
+        [SerializeField] private bool m_IsShowHealthOnLocalPlayer = false;
         [SerializeField] private ProgressBar m_HealthProgressBar;
+        [SerializeField] private bool m_IsShowManaOnLocalPlayer = false;
         [SerializeField] private ProgressBar m_ManaProgressBar;
+        [SerializeField] private bool m_IsShowVoiceOnLocalPlayer = false;
         [SerializeField] private ProgressBar m_VoiceProgressBar;
         [SerializeField] private Transform m_PointPlayer;
 
@@ -40,6 +43,21 @@ namespace MobaVR
                     {
                         m_PointPlayer = pointPlayer.transform;
                     }
+                }
+                
+                if (m_HealthProgressBar != null)
+                {
+                    m_HealthProgressBar.gameObject.SetActive(m_IsShowHealthOnLocalPlayer);
+                }
+                
+                if (m_ManaProgressBar != null)
+                {
+                    m_ManaProgressBar.gameObject.SetActive(m_IsShowManaOnLocalPlayer);
+                }
+                
+                if (m_VoiceProgressBar != null)
+                {
+                    m_VoiceProgressBar.gameObject.SetActive(m_IsShowVoiceOnLocalPlayer);
                 }
 
                 if (m_PointPlayer == null)

@@ -112,6 +112,7 @@ namespace MobaVR
         [Header("Utils")]
         [SerializeField] private bool m_CanOverrideThrowableSettings = false;
 
+        public float MaxHp => m_MaxHp;
         public float CurrentHealth => m_CurrentHealth;
         public GravityType GravityFireballType
         {
@@ -169,6 +170,7 @@ namespace MobaVR
                 m_MaxHp = m_StatsSO.MaxHp;
                 m_CurrentHealth = m_MaxHp;
                 //m_PlayerView.SetHealth(m_CurrentHealth);
+                OnHealthChange?.Invoke(m_CurrentHealth);
                 m_PlayerView.SetMaxHealth(m_CurrentHealth);
             }
         }
@@ -176,6 +178,7 @@ namespace MobaVR
         //TODO: HitData
         public Action<HitData> OnPlayerHit;
         public Action<HitData> OnPlayerDie;
+        public Action<float> OnHealthChange;
         
         public Action OnInit;
         public Action<float> OnHit;
@@ -923,6 +926,7 @@ namespace MobaVR
             
             OnHeal?.Invoke(amount);
             m_PlayerView.RpcSetHealth(m_CurrentHealth);
+            OnHealthChange?.Invoke(m_CurrentHealth);
         }
 
         [ContextMenu("Reborn")]
@@ -950,7 +954,7 @@ namespace MobaVR
             m_PlayerVR.RpcPlayerReborn();
             //m_PlayerView.SetHealth(m_CurrentHealth);
             m_PlayerView.RpcSetHealth(m_CurrentHealth);
-
+            OnHealthChange?.Invoke(m_CurrentHealth);
             OnReborn?.Invoke();
         }
 
@@ -967,6 +971,7 @@ namespace MobaVR
             if (photonView.IsMine)
             {
                 m_PlayerView.RpcSetHealth(m_CurrentHealth);
+                OnHealthChange?.Invoke(m_CurrentHealth);
             }
         }
 
@@ -1063,6 +1068,7 @@ namespace MobaVR
             OnPlayerHit?.Invoke(hitData);
             
             m_CurrentHealth -= hitData.Amount;
+
             if (m_CurrentHealth <= 0)
             {
                 //m_Collider.enabled = false;
@@ -1091,9 +1097,12 @@ namespace MobaVR
             {
                 //TODO: merge
                 //m_CurrentHealth -= damage;
+                
                 m_PlayerView.RpcSetHealth(m_CurrentHealth);
+                OnHealthChange?.Invoke(m_CurrentHealth);
                 m_DamageIndicator.Show();
             }
+            
         }
 
         #endregion

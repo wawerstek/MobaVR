@@ -1,10 +1,21 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ImageFillWatcher : MonoBehaviour
 {
     public Image targetImage; // картинка которую проверяем на заполняемость
-    public GameObject objectToToggle; // Объект, FX
+    public Image controllerImage; // картинка c контроллером
+    public ParticleSystem m_ParticleSystem; // Объект, FX
+
+    private bool isFillActivated = false;
+    private bool isProgressActivated = false;
+
+    private void OnEnable()
+    {
+        isFillActivated = false;
+        isProgressActivated = false;
+    }
 
     private void Update()
     {
@@ -13,13 +24,24 @@ public class ImageFillWatcher : MonoBehaviour
 
     private void CheckImageFill()
     {
-        if (targetImage.fillAmount >= 1.0f)
+        if (!isFillActivated && targetImage.fillAmount >= 1.0f)
         {
-            objectToToggle.SetActive(true);
+            isFillActivated = true;
+            isProgressActivated = false;
+            
+            m_ParticleSystem.Play();
+            controllerImage.gameObject.SetActive(true);
+            return;
         }
-        else
+
+        if (!isProgressActivated && targetImage.fillAmount < 1.0f)
         {
-            objectToToggle.SetActive(false);
+            isProgressActivated = true;
+            isFillActivated = false;
+            
+            m_ParticleSystem.Stop();
+            controllerImage.gameObject.SetActive(false);
+            return;
         }
     }
 }

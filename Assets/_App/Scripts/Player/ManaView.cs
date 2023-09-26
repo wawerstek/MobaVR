@@ -12,18 +12,17 @@ namespace MobaVR
         public SpellImage m_SpellImage; // Это для индикатора здоровья
         private float currentHealth;
         
-        
         [SerializeField] private SpellBehaviour m_SpellBehaviour;
         [SerializeField] private float m_CooldownTime = 30f;
         [SerializeField] private ProgressBar m_ProgressBar;
         
-       
-
         private float m_CurrentTime = 0f;
         private bool m_IsCompleted = true;
         
         private void Start()
         {
+            //TODO:
+            /*
             if (photonView.IsMine && m_SpellBehaviour.isActiveAndEnabled)
             {
                 m_ProgressBar.gameObject.SetActive(true);
@@ -33,6 +32,16 @@ namespace MobaVR
             else
             {
                 m_ProgressBar.gameObject.SetActive(false);
+            }
+            */
+            
+            if (photonView.IsMine && m_SpellBehaviour.isActiveAndEnabled)
+            {
+                m_SpellImage.gameObject.SetActive(true);
+            }
+            else
+            {
+                m_SpellImage.gameObject.SetActive(false);
             }
         }
 
@@ -44,7 +53,8 @@ namespace MobaVR
 
             if (photonView.IsMine)
             {
-                m_ProgressBar.gameObject.SetActive(true);
+                //TODO: progressBar spell
+                //m_ProgressBar.gameObject.SetActive(true);
 
                 if (m_SpellImage != null)
                 {
@@ -59,7 +69,8 @@ namespace MobaVR
 
             if (photonView.IsMine)
             {
-                m_ProgressBar.gameObject.SetActive(false);
+                //TODO: progressBar spell
+                //m_ProgressBar.gameObject.SetActive(false);
                 
                 if (m_SpellImage != null)
                 {
