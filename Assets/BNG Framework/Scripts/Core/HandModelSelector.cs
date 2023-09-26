@@ -3,46 +3,35 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace BNG {
+    // Класс для выбора модели руки
     public class HandModelSelector : MonoBehaviour {
 
-        /// <summary>
-        /// Child index of the hand model to use if nothing stored in playerprefs and LoadHandSelectionFromPrefs true
-        /// </summary>
-        [Tooltip("Child index of the hand model to use if nothing stored in playerprefs or LoadHandSelectionFromPrefs set to false")]        
+        /// По умолчанию используемая модель руки, если в PlayerPrefs ничего не сохранено или LoadHandSelectionFromPrefs установлено в false
+        [Tooltip("Индекс дочернего объекта модели руки для использования, если в PlayerPrefs ничего не сохранено или LoadHandSelectionFromPrefs установлено в false")]        
         public int DefaultHandsModel = 1;
 
-        /// <summary>
-        /// If true, hand model will be saved and loaded from player prefs. If false DefaultHandModel will be loaded.
-        /// </summary>
-        [Tooltip("If true, the selected hand model will be saved and loaded from player prefs")]  
+        /// Если true, выбранная модель руки будет сохраняться и загружаться из PlayerPrefs. Если false, будет загружена DefaultHandModel.
+        [Tooltip("Если true, выбранная модель руки будет сохраняться и загружаться из PlayerPrefs")]  
         public bool LoadHandSelectionFromPrefs = false;
 
-
-        [Tooltip("Input used to toggle between hands")]
+        [Tooltip("Входной сигнал для переключения между руками")]
         public ControllerBinding ToggleHandsInput = ControllerBinding.RightThumbstickDown;
 
-        /// <summary>
-        /// This transform holds all of the hand models. Can be used to enabled / disabled various hand options
-        /// </summary>
-        [Tooltip("This transform holds all of the hand models. Can be used to enabled / disabled various hand options.")]
+        /// Этот Transform содержит все модели рук и может использоваться для их включения / отключения
+        [Tooltip("Transform, содержащий все модели рук. Можно использовать для их включения / отключения")]
         public Transform LeftHandGFXHolder;
 
-        /// <summary>
-        /// This transform holds all of the hand models. Can be used to enabled / disabled various hand options
-        /// </summary>
-        [Tooltip("This transform holds all of the hand models. Can be used to enabled / disabled various hand options")]
+        /// Этот Transform содержит все модели рук и может использоваться для их включения / отключения
+        [Tooltip("Transform, содержащий все модели рук. Можно использовать для их включения / отключения")]
         public Transform RightHandGFXHolder;
+
         private int _selectedHandGFX = 0;
 
-        /// <summary>
-        /// Used for demo IK Hands / Body option
-        /// </summary>
-        [Tooltip("Used for IK Hands / Body option")]
+        /// Используется для опции IK для рук / тела
+        [Tooltip("Используется для опции IK для рук / тела")]
         public CharacterIK IKBody;
 
-        /// <summary>
-        /// This is the start point of a line for UI purposes. We may want to move this around if we change models or controllers.        
-        /// </summary>
+        /// Это начальная точка линии для UI. При смене моделей или контроллеров, возможно, потребуется ее перемещение
         UIPointer uiPoint;
 
         List<Transform> leftHandModels = default;
@@ -52,11 +41,13 @@ namespace BNG {
         Transform activatedRightModel = default;
 
         void Start() {
+            // Получаем компонент UIPointer из дочерних объектов
             uiPoint = GetComponentInChildren<UIPointer>();
 
+            // Кэшируем модели рук
             CacheHandModels();
 
-            // Load new Hands or default
+            // Загружаем новую модель руки или модель по умолчанию
             if (LoadHandSelectionFromPrefs) {
                 ChangeHandsModel(PlayerPrefs.GetInt("HandSelection", DefaultHandsModel), false);
             }
@@ -66,14 +57,14 @@ namespace BNG {
         }
 
         void Update() {
-            // Cycle through hand models with Right Thumbstick
+            // Переключение между моделями рук с помощью правого стика
             if (ToggleHandsInput.GetDown()) {
                 ChangeHandsModel(_selectedHandGFX + 1, LoadHandSelectionFromPrefs);
             }
         }
 
+        // Кэшируем модели рук для быстрого доступа
         public void CacheHandModels() {
-
             leftHandModels = new List<Transform>();
             for(int x = 0; x < LeftHandGFXHolder.childCount; x++) {
                 leftHandModels.Add(LeftHandGFXHolder.GetChild(x));
@@ -85,9 +76,9 @@ namespace BNG {
             }
         }
 
+        // Изменить текущую модель руки
         public void ChangeHandsModel(int childIndex, bool save = false) {
-
-            // Deactivate any previous models
+            // Деактивируем предыдущие модели
             if(activatedLeftModel != null) {
                 activatedLeftModel.gameObject.SetActive(false);
             }
@@ -95,27 +86,24 @@ namespace BNG {
                 activatedRightModel.gameObject.SetActive(false);
             }
 
-            // Activate new Model
-            
-
-            // Loop back to beginning if we went over
+            // Устанавливаем новый индекс модели руки
             _selectedHandGFX = childIndex;
             if (_selectedHandGFX > leftHandModels.Count - 1) {
                 _selectedHandGFX = 0;
             }
 
-            // Activate New
+            // Активируем новую модель руки
             activatedLeftModel = leftHandModels[_selectedHandGFX];
             activatedRightModel = rightHandModels[_selectedHandGFX];
 
             activatedLeftModel.gameObject.SetActive(true);
             activatedRightModel.gameObject.SetActive(true);
 
-            // Update any animators
+            // Обновляем аниматоры для рук
             HandController leftControl = LeftHandGFXHolder.parent.GetComponent<HandController>();
             HandController rightControl = RightHandGFXHolder.parent.GetComponent<HandController>();
 
-            // Physical hands have their own animator controler
+            // У физических рук свой аниматор
             bool isPhysicalHand = activatedLeftModel.name.ToLower().Contains("physical");
             if(isPhysicalHand) {
                 leftControl.HandAnimator = null;
@@ -126,24 +114,22 @@ namespace BNG {
                 rightControl.HandAnimator = activatedRightModel.GetComponentInChildren<Animator>(true);
             }
 
-            // Enable / Disable IK Character. For demo purposes only
+            // Включаем / выключаем IK для тела (только для демо)
             if (IKBody != null) {
                 IKBody.gameObject.SetActive(activatedLeftModel.transform.name.Contains("IK"));
             }
 
-            // Change UI Pointer position depending on if we're using Oculus Hands or Oculus Controller Model
-            // This is for the demo. Typically this would be fixed to a bone or transform
-            // Oculus Touch Controller is positioned near the front
+            // Изменяем позицию указателя UI в зависимости от используемой модели руки или контроллера
             if ((activatedLeftModel.transform.name.StartsWith("OculusTouchForQuestAndRift") || activatedLeftModel.transform.name.StartsWith("ControllerReferences")) && uiPoint != null) {
                 uiPoint.transform.localPosition = new Vector3(0, 0, 0.0462f);
                 uiPoint.transform.localEulerAngles = new Vector3(0, 0f, 0);
             }
-            // Hand Model
             else if (_selectedHandGFX != 0 && uiPoint != null) {
                 uiPoint.transform.localPosition = new Vector3(0.0392f, 0.0033f, 0.0988f);
                 uiPoint.transform.localEulerAngles = new Vector3(0, 0, 0);
             }
 
+            // Если нужно, сохраняем выбор модели руки в PlayerPrefs
             if (save) {
                 PlayerPrefs.SetInt("HandSelection", _selectedHandGFX);
             }
