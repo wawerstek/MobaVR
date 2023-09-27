@@ -99,6 +99,7 @@ namespace MobaVR
                 return;
             }
             
+            /*
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
                 if (!PhotonNetwork.AutomaticallySyncScene)
@@ -127,6 +128,7 @@ namespace MobaVR
 
                 //LoadScene(m_TavernMap);
             }
+            */
         }
 
         private void LoadScene(string sceneName)
