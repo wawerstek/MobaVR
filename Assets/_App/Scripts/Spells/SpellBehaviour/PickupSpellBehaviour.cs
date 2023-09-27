@@ -172,8 +172,13 @@ namespace MobaVR
         /// У игрока не всегда сбрасывается исТриггер
         private void OnRemoteEnter(Grabbable grabbable)
         {
+            if (grabbable == null)
+            {
+                return;
+            }
+            
             AppDebug.Log($"{SpellName}: {nameof(OnRemoteEnter)}: {grabbable}");
-
+            
             if (grabbable.TryGetComponent(out BaseSpell baseSpell))
             {
                 return;
@@ -190,6 +195,11 @@ namespace MobaVR
 
         private void OnRemoteExit(Grabbable grabbable)
         {
+            if (grabbable == null)
+            {
+                return;
+            }
+            
             AppDebug.Log($"{SpellName}: {nameof(OnRemoteExit)}: {grabbable}");
 
             if (grabbable.TryGetComponent(out BaseSpell baseSpell))

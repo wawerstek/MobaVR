@@ -7831,7 +7831,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3566a9917494fb419808b8ed6bad39a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TestAndroid: 1
+  TestAndroid: 0
   PlayerVR: {fileID: 2683195716764533364}
   PlayerPC: {fileID: 716183762}
   PlayerCrate: 0
@@ -13225,19 +13225,7 @@ MonoBehaviour:
   - eventID: 4
     callback:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 565779773}
-          m_TargetAssemblyTypeName: FreeCameraController, Assembly-CSharp
-          m_MethodName: SetActiveControl
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 1
-          m_CallState: 2
+        m_Calls: []
 --- !u!114 &1111235500
 MonoBehaviour:
   m_ObjectHideFlags: 0
