@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using MetaConference;
+using MobaVR.Utils;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
@@ -27,7 +29,7 @@ namespace MobaVR
         [SerializeField] private Team m_RedTeam;
         [SerializeField] private Team m_BlueTeam;
 
-
+        private List<PlayerVR> m_Players = new();
         private bool m_IsPvPMode = true;
         //private PlayerVR m_LocalPlayer;
 
@@ -39,6 +41,18 @@ namespace MobaVR
         {
             get => m_Mode;
             set => m_Mode = value;
+        }
+        public List<PlayerVR> Players => m_Players;
+        public List<PlayerVR> TeamPlayers
+        {
+            get
+            {
+                List<PlayerVR> players = new List<PlayerVR>();
+                players.AddRange(RedTeam.Players);
+                players.AddRange(BlueTeam.Players);
+
+                return players;
+            }
         }
 
         public override void OnEnable()
@@ -96,6 +110,29 @@ namespace MobaVR
         #endregion
 
         #region Player and Team
+        
+        [PunRPC]
+        private void RpcAddPlayer(int idPhotonView)
+        {
+            if (PhotonViewExtension.TryGetComponent(idPhotonView, out PlayerVR player))
+            {
+                if (!m_Players.Contains(player))
+                {
+                    OnAddPlayer?.Invoke(player);
+                    m_Players.Add(player);
+                }
+            }
+        }
+        
+        [PunRPC]
+        private void RpcRemovePlayer(int idPhotonView)
+        {
+            if (PhotonViewExtension.TryGetComponent(idPhotonView, out PlayerVR player))
+            {
+                OnRemovePlayer?.Invoke(player);
+                m_Players.Remove(player);
+            }
+        }
 
         private void InitPlayer()
         {
@@ -109,6 +146,8 @@ namespace MobaVR
             m_LocalPlayer = m_PlayerSpawner.SpawnPlayer(team);
             m_Player = m_LocalPlayer.gameObject;
             team.AddPlayer(m_LocalPlayer);
+            
+            photonView.RPC(nameof(RpcAddPlayer), RpcTarget.AllBuffered, m_LocalPlayer.photonView.ViewID);
         }
 
         public void SwitchTeam()
@@ -318,7 +357,7 @@ namespace MobaVR
         #endregion
 
         #region Photon
-
+        
         public void SetMaster()
         {
             //ResetModes();
@@ -329,6 +368,8 @@ namespace MobaVR
         {
             base.OnDisconnected(cause);
         }
+        
+        
 
         public override void OnLeftRoom()
         {
@@ -352,11 +393,20 @@ namespace MobaVR
 
         public override void OnPlayerLeftRoom(Player otherPlayer)
         {
-            base.OnPlayerLeftRoom(otherPlayer);
-            if (otherPlayer.IsMasterClient)
+            if (PhotonNetwork.IsMasterClient)
             {
+                foreach (PlayerVR playerVR in m_Players)
+                {
+                    if (playerVR.PlayerData.ActorNumber == otherPlayer.ActorNumber)
+                    {
+                        photonView.RPC(nameof(RpcRemovePlayer), RpcTarget.AllBuffered, playerVR.photonView.ViewID);
+                    }
+                }
+                
                 //ResetModes();
             }
+            
+            base.OnPlayerLeftRoom(otherPlayer);
         }
 
         public override void OnMasterClientSwitched(Player newMasterClient)

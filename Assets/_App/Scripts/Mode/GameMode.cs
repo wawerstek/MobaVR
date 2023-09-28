@@ -22,11 +22,20 @@ namespace MobaVR
                     return new List<PlayerVR>();
                 }
 
+                return m_GameSession.Players;
+
+                /*
+                if (m_GameSession == null)
+                {
+                    return new List<PlayerVR>();
+                }
+
                 List<PlayerVR> players = new List<PlayerVR>();
                 players.AddRange(m_GameSession.RedTeam.Players);
                 players.AddRange(m_GameSession.BlueTeam.Players);
 
                 return players;
+                */
             }
         }
 

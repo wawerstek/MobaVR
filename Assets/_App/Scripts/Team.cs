@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using MobaVR.Utils;
 using Photon.Pun;
@@ -14,6 +15,9 @@ namespace MobaVR
         [SerializeField] private int m_Kills = 0;
         [SerializeField] private List<PlayerVR> m_Players = new();
 
+        public Action<PlayerVR> OnAddPlayer;
+        public Action<PlayerVR> OnRemovePlayer;
+        
         public string Name => m_TeamName;
         public TeamType TeamType => m_TeamType;
         public List<PlayerVR> Players => m_Players;
@@ -34,10 +38,12 @@ namespace MobaVR
         }
 
         [PunRPC]
-        private void RpcRemovePlayer(int idPlayer)
+        private void RpcRemovePlayer(int idPhotonView)
         {
-            if (PhotonViewExtension.TryGetComponent(idPlayer, out PlayerVR player))
+            if (PhotonViewExtension.TryGetComponent(idPhotonView, out PlayerVR player))
             {
+                OnRemovePlayer?.Invoke(player);
+                
                 player.OnDestroyPlayer -= OnDestroyPlayer;
                 m_Players.Remove(player);
             }
@@ -49,12 +55,14 @@ namespace MobaVR
         }
 
         [PunRPC]
-        private void RpcAddPlayer(int idPlayer)
+        private void RpcAddPlayer(int idPhotonView)
         {
-            if (PhotonViewExtension.TryGetComponent(idPlayer, out PlayerVR player))
+            if (PhotonViewExtension.TryGetComponent(idPhotonView, out PlayerVR player))
             {
                 if (!m_Players.Contains(player))
                 {
+                    OnAddPlayer?.Invoke(player);
+                    
                     player.OnDestroyPlayer += OnDestroyPlayer;
                     m_Players.Add(player);
                 }
@@ -65,6 +73,8 @@ namespace MobaVR
         {
             if (playerVR != null)
             {
+                OnRemovePlayer?.Invoke(playerVR);
+                
                 playerVR.OnDestroyPlayer -= OnDestroyPlayer;
                 m_Players.Remove(playerVR);
             }
@@ -77,6 +87,7 @@ namespace MobaVR
 
         public override void OnPlayerLeftRoom(Player otherPlayer)
         {
+            //TODO: add OnRemovePlayer??
             base.OnPlayerLeftRoom(otherPlayer);
             m_Players.RemoveAll(player => player == null);
         }

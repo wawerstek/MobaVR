@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using BNG;
 using Photon.Pun;
+using Photon.Realtime;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -31,7 +32,7 @@ namespace MobaVR
         [SerializeField] private Transform m_HeadTarget;
         [SerializeField] private Transform m_LeftHandTarget;
         [SerializeField] private Transform m_RightHandTarget;
-        
+
         [Header("Hands")]
         [SerializeField] private HandController m_LeftHand;
         [SerializeField] private HandController m_RightHand;
@@ -41,7 +42,8 @@ namespace MobaVR
         [SerializeField] private List<Renderer> m_Renderers;
 
         private ChangeTeam m_ChangeTeam;
-        
+
+        [SerializeField] [ReadOnly] private PlayerData m_PlayerData;
         private bool m_IsLocalPlayer = false;
         private bool m_IsInit = false;
         [SerializeField] [ReadOnly] private TeamType m_TeamType = TeamType.RED;
@@ -62,6 +64,7 @@ namespace MobaVR
                 return m_TeamType;
             }
         }
+        public PlayerData PlayerData => m_PlayerData;
         public InputVR InputVR => m_InputVR;
         public Team Team => m_Team;
         public PlayerMode PlayerMode => m_PlayerMode;
@@ -101,12 +104,12 @@ namespace MobaVR
             {
                 TryGetComponent(out m_PlayerMode);
             }
-            
+
             if (m_Damageable == null)
             {
                 TryGetComponent(out m_Damageable);
             }
-            
+
             /*
             if (m_SpellsHandler == null)
             {
@@ -124,7 +127,7 @@ namespace MobaVR
         private void Awake()
         {
             DontDestroyOnLoad(gameObject);
-            
+
             if (m_InputVR != null)
             {
                 m_InputVR.gameObject.SetActive(photonView.IsMine);
@@ -188,7 +191,7 @@ namespace MobaVR
                     m_LeftHandTarget.position = m_InputVR.LeftHandTarget.transform.position;
                     m_LeftHandTarget.rotation = m_InputVR.LeftHandTarget.transform.rotation;
                 }
-                
+
                 if (m_RightHandTarget != null)
                 {
                     m_RightHandTarget.position = m_InputVR.RightHandTarget.transform.position;
@@ -218,7 +221,7 @@ namespace MobaVR
             photonView.RPC(nameof(RpcSetState), RpcTarget.AllBuffered, playerStateSo.State);
         }
 
-        
+
         [PunRPC]
         public void RpcSetState(PlayerState playerState)
         {
@@ -272,10 +275,29 @@ namespace MobaVR
             SetTeam(TeamType.BLUE);
         }
 
+        public void InitPlayer()
+        {
+            photonView.RPC(nameof(RpcInitPlayer), RpcTarget.AllBuffered, PhotonNetwork.LocalPlayer);
+        }
+
+        [PunRPC]
+        private void RpcInitPlayer(Player player)
+        {
+            m_PlayerData = new PlayerData()
+            {
+                Player = player,
+                NickName = player.NickName,
+                IdUser = player.UserId,
+                ActorNumber = player.ActorNumber,
+            };
+
+            OnInitPlayer?.Invoke(this);
+        }
+
         public void SetTeam(TeamType teamType)
         {
             //ChangeTeamColor(teamType);
-            
+
             m_TeamType = teamType;
             OnChangeTeam?.Invoke(m_TeamType);
             photonView.RPC(nameof(SetTeamRpc), RpcTarget.AllBuffered, teamType);
@@ -284,7 +306,7 @@ namespace MobaVR
         public void SetTeam(Team team)
         {
             //ChangeTeamColor(m_TeamType);
-            
+
             m_Team = team;
             m_TeamType = m_Team.TeamType;
             OnChangeTeam?.Invoke(m_TeamType);
@@ -348,9 +370,9 @@ namespace MobaVR
             {
                 return;
             }
-            
+
             m_InputVR.gameObject.SetActive(true);
-            
+
             m_IsLocalPlayer = true;
 
             if (m_CharacterIK != null)
