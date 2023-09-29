@@ -24,6 +24,7 @@ namespace MobaVR
         [SerializeField] private SpellsHandler m_ArcherSpellsHandler;
         [SerializeField] private SpellsHandler m_DefenderSpellsHandler;
 
+        public Action<string> OnClassChange;
 
         private void Start()
         {
@@ -97,6 +98,8 @@ namespace MobaVR
 
                 Clear();
                 role.gameObject.SetActive(true);
+                
+                OnClassChange?.Invoke(role.ClassId);
             }
         }
     }

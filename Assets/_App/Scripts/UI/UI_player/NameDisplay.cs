@@ -1,13 +1,44 @@
+using System;
 using UnityEngine;
 using TMPro;
 using Photon.Pun;
-using System.Text.RegularExpressions; // Для регулярных выражений
+using System.Text.RegularExpressions;
+using MobaVR; // Для регулярных выражений
 
 public class NameDisplay : MonoBehaviourPunCallbacks
                          , IPunObservable
 {
     public TextMeshProUGUI playerNameText;
     private string playerName;
+    private PlayerVR playerVR;
+
+    public override void OnEnable()
+    {
+        base.OnEnable();
+        if (playerVR != null)
+        {
+            playerVR.OnNickNameChange += OnNicknameChange;
+        }
+    }
+
+    public override void OnDisable()
+    {
+        base.OnDisable();
+        if (playerVR != null)
+        {
+            playerVR.OnNickNameChange -= OnNicknameChange;
+        }
+    }
+
+    private void Awake()
+    {
+        playerVR = GetComponentInParent<PlayerVR>();
+    }
+    
+    private void OnNicknameChange(string nickName)
+    {
+        playerNameText.text = nickName;
+    }
 
     public void SetName(string nickName)
     {
@@ -20,6 +51,11 @@ public class NameDisplay : MonoBehaviourPunCallbacks
     [PunRPC]
     private void RpcSetNickname(string nickName)
     {
+        if (playerVR != null)
+        {
+            playerVR.SetNickName(nickName);
+        }
+        
         playerNameText.text = nickName;
     }
     

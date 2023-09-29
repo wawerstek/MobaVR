@@ -21,6 +21,7 @@ namespace MobaVR
 
         [SerializeField] private WizardPlayer m_WizardPlayer;
         [SerializeField] private PlayerMode m_PlayerMode;
+        [SerializeField] private ClassSwitcher m_ClassSwitcher;
         [SerializeField] private Teammate m_Teammate;
         [SerializeField] private DieView m_DieView;
         [SerializeField] private Damageable m_Damageable;
@@ -66,6 +67,7 @@ namespace MobaVR
         }
         public PlayerData PlayerData => m_PlayerData;
         public InputVR InputVR => m_InputVR;
+        public ClassSwitcher ClassSwitcher => m_ClassSwitcher;
         public Team Team => m_Team;
         public PlayerMode PlayerMode => m_PlayerMode;
         public Damageable Damageable => m_Damageable;
@@ -77,6 +79,8 @@ namespace MobaVR
         public Action<PlayerVR> OnInitPlayer;
         public Action<TeamType> OnChangeTeam;
         public Action<TeamType> OnRpcChangeTeam;
+        public Action<TeamType> OnRoleChange;
+        public Action<string> OnNickNameChange;
 
         public Transform BodyTarget => m_BodyTarget;
         public Transform HeadTarget => m_HeadTarget;
@@ -108,6 +112,11 @@ namespace MobaVR
             if (m_Damageable == null)
             {
                 TryGetComponent(out m_Damageable);
+            }
+            
+            if (m_ClassSwitcher == null)
+            {
+                TryGetComponent(out m_ClassSwitcher);
             }
 
             /*
@@ -206,6 +215,18 @@ namespace MobaVR
             photonView.RPC(nameof(SetLocalPlayer), RpcTarget.All);
         }
         */
+
+        public void SetNickName(string nickName)
+        {
+            PhotonNetwork.LocalPlayer.NickName = nickName;
+            photonView.RPC(nameof(RpcSetNickName), RpcTarget.AllBuffered, nickName);
+        }
+
+        [PunRPC]
+        private void RpcSetNickName(string nickName)
+        {
+            OnNickNameChange?.Invoke(nickName);
+        }
 
         public void SetState(PlayerState playerState)
         {

@@ -27,10 +27,17 @@ public class NameSetter : MonoBehaviourPunCallbacks
             return;
         }
 
+        if (gameSession.LocalPlayer != null)
+        {
+            gameSession.LocalPlayer.SetNickName(fullName);
+        }
+        
+        /*
         if (gameSession.LocalPlayer.TryGetComponent(out NameDisplay nameDisplay))
         {
             nameDisplay.SetName(fullName);
         }
+        */
         //PhotonNetwork.LocalPlayer.NickName = fullName;
     }
 }
