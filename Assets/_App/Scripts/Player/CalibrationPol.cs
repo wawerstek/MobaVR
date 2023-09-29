@@ -1,10 +1,12 @@
+using System;
 using BNG;
+using Photon.Pun;
 using RootMotion.FinalIK;
 using UnityEngine;
 
 namespace MobaVR
 {
-    public class CalibrationPol : MonoBehaviour
+    public class CalibrationPol : MonoBehaviourPun
     {
         public BaseGameSession _GameSession;
         [SerializeField] private GameObject _PlayerVR;
@@ -72,7 +74,7 @@ namespace MobaVR
             {
                 _GameSession = FindObjectOfType<BaseGameSession>();
             }
-
+            
             step_1 = false;
             calibr = false;
             // CalibrovkaText.SetActive(true);
@@ -164,7 +166,6 @@ namespace MobaVR
             }
         }
 
-
         private void MoveToPointA()
         {
             // вычисляем вектор разницы между текущей позицией точки С и точкой А
@@ -231,6 +232,30 @@ namespace MobaVR
             _rostPlayer += 0.1f;
 
             _rost.SetHeight(_rostPlayer);
+        }
+        
+        
+        //PUBLIC
+        public void ResetCalibration()
+        {
+            photonView.RPC(nameof(RpcResetCalibration), RpcTarget.All);
+        }
+
+        [PunRPC]
+        private void RpcResetCalibration()
+        {
+            calibr = false;
+        }
+        
+        public void SetHeight()
+        {
+            photonView.RPC(nameof(RpcSetHeight), RpcTarget.All);
+        }
+
+        [PunRPC]
+        private void RpcSetHeight()
+        {
+            kalibr_rost();
         }
     }
 }

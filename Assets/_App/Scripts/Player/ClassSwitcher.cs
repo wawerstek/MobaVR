@@ -24,7 +24,11 @@ namespace MobaVR
         [SerializeField] private SpellsHandler m_ArcherSpellsHandler;
         [SerializeField] private SpellsHandler m_DefenderSpellsHandler;
 
+        private string m_CurrentIdClass;
+        
         public Action<string> OnClassChange;
+
+        public string CurrentIdClass => m_CurrentIdClass;
 
         private void Start()
         {
@@ -93,6 +97,8 @@ namespace MobaVR
             ClassStats role = m_Roles.Find(role => role.ClassId.Equals(idClass));
             if (role != null)
             {
+                m_CurrentIdClass = idClass;
+                
                 m_WizardPlayer.Stats = role.ClassStatsSo;
                 m_SkinCollection.SetAliveSkin(role.Skin);
 

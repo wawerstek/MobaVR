@@ -27,6 +27,7 @@ namespace MobaVR
         [SerializeField] private Damageable m_Damageable;
         [SerializeField] private CharacterIK m_CharacterIK;
         [SerializeField] private SkinCollection m_SkinCollection;
+        [SerializeField] private CalibrationPol m_Calibration;
 
         [Header("IK")]
         [SerializeField] private Transform m_BodyTarget;
@@ -74,12 +75,13 @@ namespace MobaVR
         public WizardPlayer WizardPlayer => m_WizardPlayer;
         public DieView DieView => m_DieView;
         public SkinCollection SkinCollection => m_SkinCollection;
+        public CalibrationPol Calibration => m_Calibration;
 
         public Action<PlayerVR> OnDestroyPlayer;
         public Action<PlayerVR> OnInitPlayer;
         public Action<TeamType> OnChangeTeam;
         public Action<TeamType> OnRpcChangeTeam;
-        public Action<TeamType> OnRoleChange;
+        public Action<string> OnRoleChange;
         public Action<string> OnNickNameChange;
 
         public Transform BodyTarget => m_BodyTarget;
@@ -117,6 +119,11 @@ namespace MobaVR
             if (m_ClassSwitcher == null)
             {
                 TryGetComponent(out m_ClassSwitcher);
+            }
+            
+            if (m_Calibration == null)
+            {
+                m_Calibration = GetComponentInChildren<CalibrationPol>();
             }
 
             /*
@@ -225,6 +232,7 @@ namespace MobaVR
         [PunRPC]
         private void RpcSetNickName(string nickName)
         {
+            m_PlayerData.NickName = nickName;
             OnNickNameChange?.Invoke(nickName);
         }
 
