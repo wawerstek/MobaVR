@@ -162,14 +162,14 @@ namespace MobaVR
                 m_RedTeam.RemovePlayer(m_LocalPlayer);
                 m_BlueTeam.AddPlayer(m_LocalPlayer);
 
-                m_LocalPlayer.SetTeam(m_BlueTeam);
+                //m_LocalPlayer.SetTeamAndSync(m_BlueTeam);
             }
             else
             {
                 m_BlueTeam.RemovePlayer(m_LocalPlayer);
                 m_RedTeam.AddPlayer(m_LocalPlayer);
 
-                m_LocalPlayer.SetTeam(m_RedTeam);
+                //m_LocalPlayer.SetTeamAndSync(m_RedTeam);
             }
 
             //m_LocalPlayer.ChangeTeamOnClick();
@@ -177,24 +177,29 @@ namespace MobaVR
 
         public void SetTeam(TeamType teamType)
         {
-            if (m_LocalPlayer == null)
+            SetTeam(teamType, m_LocalPlayer);
+        }
+        
+        public void SetTeam(TeamType teamType, PlayerVR playerVR)
+        {
+            if (playerVR == null)
             {
                 return;
             }
 
             if (teamType == TeamType.RED)
             {
-                m_BlueTeam.RemovePlayer(m_LocalPlayer);
-                m_RedTeam.AddPlayer(m_LocalPlayer);
+                m_BlueTeam.RemovePlayer(playerVR);
+                m_RedTeam.AddPlayer(playerVR);
 
-                m_LocalPlayer.SetTeam(m_RedTeam);
+                playerVR.SetTeamAndSync(m_RedTeam);
             }
             else
             {
-                m_RedTeam.RemovePlayer(m_LocalPlayer);
-                m_BlueTeam.AddPlayer(m_LocalPlayer);
+                m_RedTeam.RemovePlayer(playerVR);
+                m_BlueTeam.AddPlayer(playerVR);
 
-                m_LocalPlayer.SetTeam(m_BlueTeam);
+                playerVR.SetTeamAndSync(m_BlueTeam);
             }
         }
 

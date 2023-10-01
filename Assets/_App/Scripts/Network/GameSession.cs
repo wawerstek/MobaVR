@@ -69,7 +69,7 @@ namespace MobaVR
                 playerVR.SetLocalPlayer(m_InputVR);
                 //playerVR.SetTeam(team);
                 
-                playerVR.SetTeam(teamType);
+                playerVR.SetTeamAndSync(teamType);
                 //playerVR.SetLocalPlayer(m_InputVR);
             }
         }

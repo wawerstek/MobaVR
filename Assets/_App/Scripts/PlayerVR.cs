@@ -115,12 +115,12 @@ namespace MobaVR
             {
                 TryGetComponent(out m_Damageable);
             }
-            
+
             if (m_ClassSwitcher == null)
             {
                 TryGetComponent(out m_ClassSwitcher);
             }
-            
+
             if (m_Calibration == null)
             {
                 m_Calibration = GetComponentInChildren<CalibrationPol>();
@@ -272,7 +272,7 @@ namespace MobaVR
 
             // Применяем новую команду для всех объектов
             //эта функция меняет у игрока команду в WizardPlayer м Teammate
-            SetTeam(m_TeamType);
+            SetTeamAndSync(m_TeamType);
         }
 
 
@@ -294,6 +294,7 @@ namespace MobaVR
             }
         }
 
+        /*
         public void SetRedTeam()
         {
             SetTeam(TeamType.RED);
@@ -303,6 +304,7 @@ namespace MobaVR
         {
             SetTeam(TeamType.BLUE);
         }
+        */
 
         public void InitPlayer()
         {
@@ -323,29 +325,29 @@ namespace MobaVR
             OnInitPlayer?.Invoke(this);
         }
 
-        public void SetTeam(TeamType teamType)
+        #region Team
+
+        public void SetTeamAndSync(TeamType teamType)
         {
             //ChangeTeamColor(teamType);
 
             m_TeamType = teamType;
             OnChangeTeam?.Invoke(m_TeamType);
-            photonView.RPC(nameof(SetTeamRpc), RpcTarget.AllBuffered, teamType);
+            photonView.RPC(nameof(RpcSetTeamType), RpcTarget.AllBuffered, teamType);
         }
 
-        public void SetTeam(Team team)
+        public void SetTeamAndSync(Team team)
         {
             //ChangeTeamColor(m_TeamType);
 
             m_Team = team;
             m_TeamType = m_Team.TeamType;
             OnChangeTeam?.Invoke(m_TeamType);
-            photonView.RPC(nameof(SetTeamRpc), RpcTarget.AllBuffered, m_TeamType);
+            photonView.RPC(nameof(RpcSetTeamType), RpcTarget.AllBuffered, m_TeamType);
         }
 
-        [PunRPC]
-        public void SetTeamRpc(TeamType teamType)
+        private void SetTeam()
         {
-            m_TeamType = teamType;
             OnRpcChangeTeam?.Invoke(m_TeamType);
             m_SkinCollection.SetTeam(m_TeamType);
 
@@ -374,6 +376,43 @@ namespace MobaVR
                 }
             }
         }
+
+        /// <summary>
+        /// TODO: костыльный метод
+        /// teamType синхронится легко, а команда - нет, поэтому сейчас команда ищется через FindObject
+        /// </summary>
+        /// <param name="teamType"></param>
+        [PunRPC]
+        public void RpcSetTeamType(TeamType teamType)
+        {
+            m_TeamType = teamType;
+            // TODO: костыль
+            ClassicGameSession classicGameSession = FindObjectOfType<ClassicGameSession>();
+            if (classicGameSession != null)
+            {
+                if (m_TeamType == TeamType.RED)
+                {
+                    m_Team = classicGameSession.RedTeam;
+                }
+                else if (m_TeamType == TeamType.BLUE)
+                {
+                    m_Team = classicGameSession.BlueTeam;
+                }
+            }
+
+            SetTeam();
+        }
+
+        public void SetTeam(Team team)
+        {
+            m_TeamType = team.TeamType;
+            m_Team = team;
+
+            SetTeam();
+        }
+
+        #endregion
+
 
         public void SetLocalPlayer()
         {

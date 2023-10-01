@@ -35,7 +35,7 @@ namespace MobaVR
             {
                 return;
             }
-            
+
             if (m_GameSession == null)
             {
                 m_GameSession = FindObjectOfType<ClassicGameSession>(true);
@@ -60,12 +60,27 @@ namespace MobaVR
 
         private void OnAddPlayer(PlayerVR playerVR)
         {
-            PlayerInfoView playerInfo = Instantiate(m_PlayerInfoView);
-            playerInfo.transform.parent = m_PlayersParent;
+            PlayerInfoView playerInfo = Instantiate(m_PlayerInfoView, m_PlayersParent);
             playerInfo.PlayerVR = playerVR;
             m_PlayerInfoViews.Add(playerInfo);
         }
-        
+
+        public void UpdatePlayers()
+        {
+            for (int i = m_PlayerInfoViews.Count - 1; i >= 0; i--)
+            {
+                Destroy(m_PlayerInfoViews[i].gameObject);
+            }
+            
+            m_PlayerInfoViews.Clear();
+
+            PlayerVR[] players = FindObjectsOfType<PlayerVR>();
+            foreach (PlayerVR playerVR in players)
+            {
+                OnAddPlayer(playerVR);
+            }
+        }
+
         private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
         {
             FindGameSession();

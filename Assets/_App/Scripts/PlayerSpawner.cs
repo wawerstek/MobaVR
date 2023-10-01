@@ -32,7 +32,8 @@ namespace MobaVR
                 {
                     playerVR.SetLocalPlayer(m_InputVR);
                     playerVR.InitPlayer();
-                    playerVR.SetTeam(team);
+                    //TODO: need team??
+                    //playerVR.SetTeamAndSync(team);
 
                     return playerVR;
                 }

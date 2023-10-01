@@ -45,6 +45,9 @@ namespace MobaVR
                 OnRemovePlayer?.Invoke(player);
                 
                 player.OnDestroyPlayer -= OnDestroyPlayer;
+                // TODO: remove team??
+                //player.SetTeam(null);
+                
                 m_Players.Remove(player);
             }
         }
@@ -64,6 +67,8 @@ namespace MobaVR
                     OnAddPlayer?.Invoke(player);
                     
                     player.OnDestroyPlayer += OnDestroyPlayer;
+                    player.SetTeam(this);
+                    
                     m_Players.Add(player);
                 }
             }

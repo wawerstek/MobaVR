@@ -12,24 +12,13 @@ namespace MobaVR
         [SerializeField] private CustomDropdown m_TeamDropdown;
         [SerializeField] private CustomDropdown m_RoleDropdown;
 
+        private ClassicGameSession m_GameSession;
         private PlayerVR m_PlayerVR;
 
         public PlayerVR PlayerVR
         {
             get => m_PlayerVR;
-            set
-            {
-                m_PlayerVR = value;
-
-                OnUpdateNickName(m_PlayerVR.PlayerData.NickName);
-                m_PlayerVR.OnNickNameChange += OnUpdateNickName;
-
-                OnUpdateTeam(m_PlayerVR.TeamType);
-                m_PlayerVR.OnRpcChangeTeam += OnUpdateTeam;
-
-                OnUpdateRole(m_PlayerVR.ClassSwitcher.CurrentIdClass);
-                m_PlayerVR.ClassSwitcher.OnClassChange += OnUpdateRole;
-            }
+            set => m_PlayerVR = value;
         }
 
         private void OnDestroy()
@@ -40,6 +29,31 @@ namespace MobaVR
                 m_PlayerVR.OnRpcChangeTeam -= OnUpdateTeam;
                 m_PlayerVR.ClassSwitcher.OnClassChange -= OnUpdateRole;
             }
+        }
+
+        private void Awake()
+        {
+            m_GameSession = FindObjectOfType<ClassicGameSession>();
+        }
+
+        private void Start()
+        {
+            if (m_PlayerVR != null)
+            {
+                SetPlayerData();
+            }
+        }
+
+        private void SetPlayerData()
+        {
+            OnUpdateNickName(m_PlayerVR.PlayerData.NickName);
+            m_PlayerVR.OnNickNameChange += OnUpdateNickName;
+
+            OnUpdateTeam(m_PlayerVR.TeamType);
+            m_PlayerVR.OnRpcChangeTeam += OnUpdateTeam;
+
+            OnUpdateRole(m_PlayerVR.ClassSwitcher.CurrentIdClass);
+            m_PlayerVR.ClassSwitcher.OnClassChange += OnUpdateRole;
         }
 
         public void ResetCalibration()
@@ -93,7 +107,12 @@ namespace MobaVR
                 ? TeamType.RED
                 : TeamType.BLUE;
             
-            m_PlayerVR.SetTeam(teamType);
+            //m_PlayerVR.SetTeam(teamType);
+
+            if (m_GameSession != null)
+            {
+                m_GameSession.SetTeam(teamType, m_PlayerVR);
+            }
         }
 
         #region OnUpdate

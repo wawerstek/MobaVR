@@ -54,14 +54,14 @@ namespace MobaVR
                 m_RedTeam.RemovePlayer(m_LocalPlayer);
                 m_BlueTeam.AddPlayer(m_LocalPlayer);
 
-                m_LocalPlayer.SetTeam(m_BlueTeam);
+                m_LocalPlayer.SetTeamAndSync(m_BlueTeam);
             }
             else
             {
                 m_BlueTeam.RemovePlayer(m_LocalPlayer);
                 m_RedTeam.AddPlayer(m_LocalPlayer);
 
-                m_LocalPlayer.SetTeam(m_RedTeam);
+                m_LocalPlayer.SetTeamAndSync(m_RedTeam);
             }
 
             //m_LocalPlayer.ChangeTeamOnClick();
@@ -79,14 +79,14 @@ namespace MobaVR
                 m_BlueTeam.RemovePlayer(m_LocalPlayer);
                 m_RedTeam.AddPlayer(m_LocalPlayer);
 
-                m_LocalPlayer.SetTeam(m_RedTeam);
+                m_LocalPlayer.SetTeamAndSync(m_RedTeam);
             }
             else
             {
                 m_RedTeam.RemovePlayer(m_LocalPlayer);
                 m_BlueTeam.AddPlayer(m_LocalPlayer);
 
-                m_LocalPlayer.SetTeam(m_BlueTeam);
+                m_LocalPlayer.SetTeamAndSync(m_BlueTeam);
             }
         }
 

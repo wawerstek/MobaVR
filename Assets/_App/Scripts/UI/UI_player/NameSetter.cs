@@ -20,7 +20,7 @@ public class NameSetter : MonoBehaviourPunCallbacks
 
         string randomSuffix = Random.Range(1000, 9999).ToString();
         string fullName = enteredName + randomSuffix;
-
+        
         BaseGameSession gameSession = FindObjectOfType<BaseGameSession>();
         if (gameSession == null || gameSession.LocalPlayer == null)
         {
@@ -29,7 +29,8 @@ public class NameSetter : MonoBehaviourPunCallbacks
 
         if (gameSession.LocalPlayer != null)
         {
-            gameSession.LocalPlayer.SetNickName(fullName);
+            //gameSession.LocalPlayer.SetNickName(fullName);
+            gameSession.LocalPlayer.SetNickName(enteredName);
         }
         
         /*
