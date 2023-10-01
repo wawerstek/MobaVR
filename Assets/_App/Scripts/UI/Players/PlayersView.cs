@@ -9,13 +9,14 @@ namespace MobaVR
 {
     public class PlayersView : MonoBehaviourPunCallbacks
     {
+        [SerializeField] private ManagerDevice m_ManagerDevice;
         [SerializeField] private AdminInfoContentView m_InfoContentView;
         [SerializeField] private AdminStatContentView m_StatContentView;
         [SerializeField] [ReadOnly] private ClassicGameSession m_GameSession;
 
         private void OnDestroy()
         {
-            if (m_GameSession != null)
+            if (m_ManagerDevice.IsAdmin && m_GameSession != null)
             {
                 m_GameSession.OnAddPlayer -= OnAddPlayer;
                 m_GameSession.OnRemovePlayer -= OnRemovePlayer;
@@ -24,13 +25,16 @@ namespace MobaVR
 
         private void Awake()
         {
-            SceneManager.sceneLoaded += OnSceneLoaded;
-            ShowInfoContentView();
+            if (m_ManagerDevice.IsAdmin)
+            {
+                SceneManager.sceneLoaded += OnSceneLoaded;
+                ShowInfoContentView();
+            }
         }
 
         private void FindGameSession()
         {
-            if (m_GameSession != null)
+            if (!m_ManagerDevice.IsAdmin || m_GameSession != null)
             {
                 return;
             }
