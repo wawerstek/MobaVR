@@ -13,7 +13,8 @@ public class ManagerDevice : MonoBehaviour
     
     // Start is called before the first frame update
     [Header("Тестируем андройд")]
-    public bool TestAndroid; //ставим галочку, если хотим запустить в редакторе версию для андройда
+    private bool TestAndroid; //ставим галочку, если хотим запустить в редакторе версию для андройда
+    public bool IsAdmin; //ставим галочку, если хотим запустить в редакторе версию для андройда
 
     [Header("Объекты с камерами")] 
     public GameObject PlayerVR; // префаб игрока для ВР
@@ -33,10 +34,21 @@ public class ManagerDevice : MonoBehaviour
     void Start()
     {
         //роверяем на каком устройстве запущена игра
-        DetectPlatformAndExecuteFunction();
+        //DetectPlatformAndExecuteFunction();
+        SimpleDetectPlatform();
     }
 
- 
+    private void SimpleDetectPlatform()
+    {
+        if (IsAdmin)
+        {
+            FunctionForWindows();
+        }
+        else
+        {
+            FunctionForAndroid();
+        }
+    }
     
     private void DetectPlatformAndExecuteFunction()
     {
