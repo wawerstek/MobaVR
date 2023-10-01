@@ -6,55 +6,11 @@ using UnityEngine;
 
 namespace MobaVR
 {
-    public class PlayerInfoView : MonoBehaviour
+    public class AdminInfoPlayerView : BaseAdminPlayerView
     {
         [SerializeField] private TMP_InputField m_NickNameInput;
         [SerializeField] private CustomDropdown m_TeamDropdown;
         [SerializeField] private CustomDropdown m_RoleDropdown;
-
-        private ClassicGameSession m_GameSession;
-        private PlayerVR m_PlayerVR;
-
-        public PlayerVR PlayerVR
-        {
-            get => m_PlayerVR;
-            set => m_PlayerVR = value;
-        }
-
-        private void OnDestroy()
-        {
-            if (m_PlayerVR != null)
-            {
-                m_PlayerVR.OnNickNameChange -= OnUpdateNickName;
-                m_PlayerVR.OnRpcChangeTeam -= OnUpdateTeam;
-                m_PlayerVR.ClassSwitcher.OnClassChange -= OnUpdateRole;
-            }
-        }
-
-        private void Awake()
-        {
-            m_GameSession = FindObjectOfType<ClassicGameSession>();
-        }
-
-        private void Start()
-        {
-            if (m_PlayerVR != null)
-            {
-                SetPlayerData();
-            }
-        }
-
-        private void SetPlayerData()
-        {
-            OnUpdateNickName(m_PlayerVR.PlayerData.NickName);
-            m_PlayerVR.OnNickNameChange += OnUpdateNickName;
-
-            OnUpdateTeam(m_PlayerVR.TeamType);
-            m_PlayerVR.OnRpcChangeTeam += OnUpdateTeam;
-
-            OnUpdateRole(m_PlayerVR.ClassSwitcher.CurrentIdClass);
-            m_PlayerVR.ClassSwitcher.OnClassChange += OnUpdateRole;
-        }
 
         public void ResetCalibration()
         {
@@ -82,17 +38,17 @@ namespace MobaVR
             {
                 return;
             }
-            
+
             m_PlayerVR.SetNickName(nickName);
         }
-        
+
         public void UpdateRole(string idRole)
         {
             if (m_PlayerVR == null)
             {
                 return;
             }
-            
+
             m_PlayerVR.ClassSwitcher.SetRole(idRole);
         }
 
@@ -106,7 +62,7 @@ namespace MobaVR
             TeamType teamType = teamName.Equals("red", StringComparison.OrdinalIgnoreCase)
                 ? TeamType.RED
                 : TeamType.BLUE;
-            
+
             //m_PlayerVR.SetTeam(teamType);
 
             if (m_GameSession != null)
@@ -117,7 +73,7 @@ namespace MobaVR
 
         #region OnUpdate
 
-        private void OnUpdateRole(string idRole)
+        protected override void OnUpdateRole(string idRole)
         {
             int selectedItemIndex = 0;
             switch (idRole)
@@ -145,12 +101,12 @@ namespace MobaVR
             m_RoleDropdown.UpdateItemLayout();
         }
 
-        private void OnUpdateNickName(string nickName)
+        protected override void OnUpdateNickName(string nickName)
         {
             m_NickNameInput.text = m_PlayerVR.PlayerData.NickName;
         }
 
-        private void OnUpdateTeam(TeamType teamType)
+        protected override void OnUpdateTeam(TeamType teamType)
         {
             int selectedItemIndex = teamType == TeamType.BLUE ? 0 : 1;
             m_TeamDropdown.SetDropdownIndex(selectedItemIndex);

@@ -9,10 +9,8 @@ namespace MobaVR
 {
     public class PlayersView : MonoBehaviourPunCallbacks
     {
-        [SerializeField] private PlayerInfoView m_PlayerInfoView;
-        [SerializeField] private Transform m_PlayersParent;
-
-        [SerializeField] [ReadOnly] private List<PlayerInfoView> m_PlayerInfoViews = new();
+        [SerializeField] private AdminInfoContentView m_InfoContentView;
+        [SerializeField] private AdminStatContentView m_StatContentView;
         [SerializeField] [ReadOnly] private ClassicGameSession m_GameSession;
 
         private void OnDestroy()
@@ -27,6 +25,7 @@ namespace MobaVR
         private void Awake()
         {
             SceneManager.sceneLoaded += OnSceneLoaded;
+            ShowInfoContentView();
         }
 
         private void FindGameSession()
@@ -50,35 +49,32 @@ namespace MobaVR
 
         private void OnRemovePlayer(PlayerVR playerVR)
         {
-            PlayerInfoView playerInfoView = m_PlayerInfoViews.Find(view => view.PlayerVR == playerVR);
-            if (playerInfoView != null)
-            {
-                m_PlayerInfoViews.Remove(playerInfoView);
-                Destroy(playerInfoView.gameObject);
-            }
+            m_InfoContentView.RemovePlayer(playerVR);
+            m_StatContentView.RemovePlayer(playerVR);
         }
 
         private void OnAddPlayer(PlayerVR playerVR)
         {
-            PlayerInfoView playerInfo = Instantiate(m_PlayerInfoView, m_PlayersParent);
-            playerInfo.PlayerVR = playerVR;
-            m_PlayerInfoViews.Add(playerInfo);
+            m_InfoContentView.AddPlayer(playerVR);
+            m_StatContentView.AddPlayer(playerVR);
         }
 
         public void UpdatePlayers()
         {
-            for (int i = m_PlayerInfoViews.Count - 1; i >= 0; i--)
-            {
-                Destroy(m_PlayerInfoViews[i].gameObject);
-            }
-            
-            m_PlayerInfoViews.Clear();
+            m_InfoContentView.UpdatePlayers();
+            m_StatContentView.UpdatePlayers();
+        }
 
-            PlayerVR[] players = FindObjectsOfType<PlayerVR>();
-            foreach (PlayerVR playerVR in players)
-            {
-                OnAddPlayer(playerVR);
-            }
+        public void ShowInfoContentView()
+        {
+            m_InfoContentView.gameObject.SetActive(true);
+            m_StatContentView.gameObject.SetActive(false);
+        }
+
+        public void ShowStatContentView()
+        {
+            m_InfoContentView.gameObject.SetActive(false);
+            m_StatContentView.gameObject.SetActive(true);
         }
 
         private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
