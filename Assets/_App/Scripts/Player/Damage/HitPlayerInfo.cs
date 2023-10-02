@@ -15,7 +15,7 @@ namespace MobaVR
 
         private GameStatistics m_GameStatistics;
 
-        [SerializeField] [ReadOnly] private List<HitDataTime> m_Hits = new();
+        [SerializeField] [ReadOnly] private List<HitData> m_Hits = new();
         private List<PlayerVR> m_HitPlayers = new List<PlayerVR>();
         private PlayerVR m_LastHitPlayer;
         private PlayerVR m_Killer;
@@ -57,10 +57,23 @@ namespace MobaVR
 
             m_LastHitPlayer = hitData.PlayerVR;
 
+            HitData containHitData = m_Hits.Find(data => data.PlayerVR == hitData.PlayerVR);
+            if (containHitData != null)
+            {
+                containHitData.DateTime = DateTime.Now;
+            }
+            else
+            {
+                hitData.DateTime = DateTime.Now;
+                m_Hits.Add(hitData);
+            }
+            
+            /*
             if (!m_HitPlayers.Contains(hitData.PlayerVR))
             {
                 m_HitPlayers.Add(hitData.PlayerVR);
             }
+            */
         }
 
         private void OnPlayerDie(HitData hitData)
@@ -69,13 +82,33 @@ namespace MobaVR
 
             if (m_Killer != null)
             {
-                m_Wizard.PlayerVR.DieView.SetDieInfo(m_Killer.photonView.Owner.NickName);
+                //m_Wizard.PlayerVR.DieView.SetDieInfo(m_Killer.photonView.Owner.NickName);
+                m_Wizard.PlayerVR.DieView.SetDieInfo(m_Killer.PlayerData.NickName);
+                SendDeathData();
             }
         }
 
         private void OnPlayerReborn()
         {
             Reset();
+        }
+
+        private void SendDeathData()
+        {
+            m_Hits.RemoveAll(data =>
+            {
+                DateTime dateTimeNow = DateTime.Now;
+                TimeSpan delta = dateTimeNow - data.DateTime;
+
+                return delta.Milliseconds > m_HitCooldown;
+            });
+            
+            DeathPlayerData deathPlayerData = new DeathPlayerData()
+            {
+                DeadPlayer = m_Wizard.PlayerVR,
+                KillPlayer = m_Killer,
+                AssistPlayers = m_HitPlayers
+            };
         }
 
         private void Reset()
